@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          <code>do things</code>
+          <code>brb building things</code>
         </p>
       </header>
     </div>
