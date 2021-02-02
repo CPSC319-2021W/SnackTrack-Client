@@ -5,7 +5,7 @@ import Landing from "../pages/LandingPage";
 import AuthLogin from "../pages/AuthLogin";
 import SelectLogin from "../pages/SelectLogin";
 import SnackList from "../pages/SnackList";
-import TracsactionHistory from "../pages/TransactionHistory";
+import TransactionHistory from "../pages/TransactionHistory";
 import UserProfile from "../pages/UserProfile";
 
 const Root = () => {
