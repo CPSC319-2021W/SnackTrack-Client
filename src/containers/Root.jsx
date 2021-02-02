@@ -5,7 +5,7 @@ import Landing from "../pages/LandingPage";
 import AuthLogin from "../pages/AuthLogin";
 import SelectLogin from "../pages/SelectLogin";
 import SnackList from "../pages/SnackList";
-import TracsactionsHistory from "../pages/TransactionsHistory";
+import TracsactionHistory from "../pages/TransactionHistory";
 import UserProfile from "../pages/UserProfile";
 
 const Root = () => {
@@ -18,8 +18,8 @@ const Root = () => {
             <Route path="select-login" component={SelectLogin} />
             <Route path="snack-list" component={SnackList} />
             <Route
-              path="transactions-history"
-              component={TracsactionsHistory}
+              path="transaction-history"
+              component={TracsactionHistory}
             />
             <Route path="user-profile" component={UserProfile} />
             <Route exact path="/" component={Landing} />
