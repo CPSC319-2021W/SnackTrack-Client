@@ -1,6 +1,8 @@
-import './index.css';
+import React from 'react';
 
-function App() {
+import '../index.css';
+
+const Root = () => {
   return (
     <div className="App">
       <header className="App-header">
@@ -12,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default Root;
