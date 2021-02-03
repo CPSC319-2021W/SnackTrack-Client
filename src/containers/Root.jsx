@@ -18,7 +18,7 @@ const Root = () => {
             <Route path="/select-login" component={SelectLogin} />
             <Route path="/snack-list" component={SnackList} />
             <Route
-              path="transaction-history"
+              path="/transaction-history"
               component={TransactionHistory}
             />
             <Route path="/user-profile" component={UserProfile} />
