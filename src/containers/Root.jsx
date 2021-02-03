@@ -21,7 +21,7 @@ const Root = () => {
               path="transaction-history"
               component={TransactionHistory}
             />
-            <Route path="user-profile" component={UserProfile} />
+            <Route path="/user-profile" component={UserProfile} />
             <Route exact path="/" component={Landing} />
           </Switch>
         </Router>
