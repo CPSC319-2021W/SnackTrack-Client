@@ -15,7 +15,7 @@ const Root = () => {
         <Router>
           <Switch>
             <Route path="/auth-login" component={AuthLogin} />
-            <Route path="select-login" component={SelectLogin} />
+            <Route path="/select-login" component={SelectLogin} />
             <Route path="/snack-list" component={SnackList} />
             <Route
               path="transaction-history"
