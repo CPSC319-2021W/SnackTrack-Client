@@ -1,0 +1,31 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
+    "plugins": ["react"],
+    "settings": {
+        "react": {
+          "version": "detect"
+        }
+    },
+    "rules": {
+        "jsx-quotes": [1, "prefer-double"],
+        "semi": [2, "always"],
+        "semi-spacing": [2, {
+            "before": false,
+            "after": true
+        }],
+        "quotes": [1, "single", { "avoidEscape": true }],
+        "arrow-spacing": [1, { "before": true, "after": true }],
+        "sort-imports": [1, {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+            "allowSeparatedGroups": true
+        }],
+        "prefer-template": [1]
+    }
+}
