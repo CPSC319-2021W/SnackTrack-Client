@@ -14,8 +14,8 @@ import UserProfile from '../pages/UserProfile';
 
 const Root = () => {
   const dispatch = useDispatch();
-  const token = useSelector(state => state.authReducer.token);
-  const profile = useSelector(state => state.authReducer.profile);
+  const token = useSelector((state) => state.authReducer.token);
+  const profile = useSelector((state) => state.authReducer.profile);
 
   const authSetToken = (token) => dispatch(setToken({ token }));
   const authSetProfile = (profile) => dispatch(setProfile(profile));
@@ -28,18 +28,18 @@ const Root = () => {
             <Route path="/auth-login" component={AuthLogin} />
             <Route path="/select-login" component={SelectLogin} />
             <Route path="/snack-list" component={SnackList} />
-            <Route
-              path="/transaction-history"
-              component={TransactionHistory}
-            />
+            <Route path="/transaction-history" component={TransactionHistory} />
             <Route path="/user-profile" component={UserProfile} />
             <Route exact path="/" component={Landing} />
           </Switch>
         </Router>
-        <div>Token: { token }</div>
+        <div>Token: {token}</div>
         <div>Profile: {profile ? `Welcome, ${profile.username}` : ''}</div>
-          <button onClick={() => authSetToken('fake_token')}>Set Token</button>
-          <button onClick={() => authSetProfile({ id: 1, username: 'FakeUsername'})}>Set Profile</button>
+        <button onClick={() => authSetToken('fake_token')}>Set Token</button>
+        <button
+          onClick={() => authSetProfile({ id: 1, username: 'FakeUsername' })}>
+          Set Profile
+        </button>
         <p>
           <code>brb building things</code>
         </p>
