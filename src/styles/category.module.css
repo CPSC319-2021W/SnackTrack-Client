@@ -1,0 +1,37 @@
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.categoryBox {
+	width: 95px;
+	line-height: 23px;
+	text-align: center;
+	color: #5f5f5f;
+}
+.categoryBox > * {
+	font-size: 18px;
+}
+
+.img {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}
+
+.img:hover {
+	background-color: #a7e6f2;
+}
+
+.img:active {
+	background-color: #a7e6f2;
+}
+
+.button {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+}

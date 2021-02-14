@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro');
+.root {
+    background: #F4F5FD;
+}
+.header {
+    padding-top: 29px;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-style: normal;
+} 
+
+.leftBox > * {
+    justify-content: flex-start;
+    width: 118px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 30px;
+    color: #2E133D;
+}
+
+.suggestBox {
+    margin: 0 0 0 auto;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: right;
+}
+
+.suggestBoxQ {
+    font-weight: normal;
+    color: #5F5F5F;
+}
+
+.suggestBoxLink {
+    font-weight: bold;
+    color: #765EA8;
+}
+.a:link {
+    text-decoration: none;
+}
+.a:visited {
+    text-decoration: none;  
+}
