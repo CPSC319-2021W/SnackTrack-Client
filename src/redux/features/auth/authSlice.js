@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
   token: null,
-  profile: null,
+  profile: null
 };
 
 const authSlice = createSlice({
@@ -16,8 +16,8 @@ const authSlice = createSlice({
     },
     setProfile: (state, action) => {
       state.profile = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const { setToken, setProfile } = authSlice.actions;
