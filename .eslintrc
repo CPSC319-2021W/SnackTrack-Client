@@ -49,6 +49,7 @@
     ],
     "prefer-template": [1],
     "prefer-destructuring": [2, { "object": true, "array": false }],
+    "react/prop-types": 0,
     "react/jsx-pascal-case": 2,
     "react/jsx-first-prop-new-line": 0,
     "react/jsx-indent": [2, 2],
