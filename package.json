@@ -26,7 +26,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn format"
+      "pre-commit": "echo `running pre-commit hooks` && yarn lint && yarn format"
     }
   },
   "eslintConfig": {
