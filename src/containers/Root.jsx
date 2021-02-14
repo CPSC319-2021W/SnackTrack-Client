@@ -1,16 +1,16 @@
-import "../index.css";
+import '../index.css';
 
-import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { setProfile, setToken } from '../redux/features/auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 
-import AuthLogin from "../pages/AuthLogin";
-import Landing from "../pages/LandingPage";
-import React from "react";
-import SelectLogin from "../pages/SelectLogin";
-import SnackList from "../pages/SnackList";
-import TransactionHistory from "../pages/TransactionHistory";
-import UserProfile from "../pages/UserProfile";
+import AuthLogin from '../pages/AuthLogin';
+import Landing from '../pages/LandingPage';
+import SelectLogin from '../pages/SelectLogin';
+import SnackList from '../pages/SnackList';
+import TransactionHistory from '../pages/TransactionHistory';
+import UserProfile from '../pages/UserProfile';
 
 const Root = () => {
   const dispatch = useDispatch();
