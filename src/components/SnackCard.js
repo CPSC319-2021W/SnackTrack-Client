@@ -11,7 +11,14 @@ const SnackCard = (props) => {
   return (
     <Card>
       <CardActionArea onClick={props.onClick}>
-        <CardMedia class='card__image' title={snackName} component='img' src={imageUri} />
+        <div class='card__image'>
+          <CardMedia
+            class='card--resize-image'
+            title={snackName}
+            component='img'
+            src={imageUri}
+          />
+        </div>
         <div class='card__label'>
           <Typography class='card__snackName'>{snackName}</Typography>
           <Typography class='card__price'>
