@@ -61,7 +61,6 @@
     "react/jsx-max-props-per-line": 0,
     "react/jsx-equals-spacing": [2, "never"],
     "react/jsx-closing-tag-location": 2,
-    "react/jsx-closing-bracket-location": [2, "after-props"],
     "react/require-default-props": 1,
     "react/forbid-dom-props": [2, { "forbid": ["style"] }],
     "react/jsx-sort-props": [
