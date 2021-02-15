@@ -1,4 +1,8 @@
 import '../styles/Global.css';
+import { Button } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../styles/theme';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { setProfile, setToken } from '../redux/features/auth/authSlice';
@@ -21,36 +25,44 @@ const Root = () => {
   const authSetProfile = (profile) => dispatch(setProfile(profile));
 
   return (
-    <div className='root-container'>
-      <Router>
-        <Switch>
-          <Route path='/auth-login' component={AuthLogin} />
-          <Route path='/select-login' component={SelectLogin} />
-          <Route path='/snack-list' component={SnackList} />
-          <Route
-            path='/transaction-history'
-            component={TransactionHistory}/>
-          <Route path='/user-profile' component={UserProfile} />
-          <Route exact path='/' component={Landing} />
-        </Switch>
-      </Router>
-      <div>Token: {token}</div>
-      <div>
-        Profile: {profile ? `Welcome, ${profile.username}` : ''}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className='root-container'>
+        <Router>
+          <Switch>
+            <Route path='/auth-login' component={AuthLogin} />
+            <Route path='/select-login' component={SelectLogin} />
+            <Route path='/snack-list' component={SnackList} />
+            <Route
+              path='/transaction-history'
+              component={TransactionHistory}/>
+            <Route path='/user-profile' component={UserProfile} />
+            <Route exact path='/' component={Landing} />
+          </Switch>
+        </Router>
+        <div>Token: {token}</div>
+        <div>
+          Profile: {profile ? `Welcome, ${profile.username}` : ''}
+        </div>
+        <Button
+          variant={'contained'}
+          color={'primary'}
+          onClick={() => authSetToken('fake_token')}>
+          Set Token
+        </Button>
+        <Button
+          variant={'outlined'}
+          color={'secondary'}
+          onClick={() =>
+            authSetProfile({ id: 1, username: 'FakeUsername' })
+          }>
+          Set Profile
+        </Button>
+        <p>
+          <code>brb building things</code>
+        </p>
       </div>
-      <button onClick={() => authSetToken('fake_token')}>
-        Set Token
-      </button>
-      <button
-        onClick={() =>
-          authSetProfile({ id: 1, username: 'FakeUsername' })
-        }>
-        Set Profile
-      </button>
-      <p>
-        <code>brb building things</code>
-      </p>
-    </div>
+    </ThemeProvider>
   );
 };
 
