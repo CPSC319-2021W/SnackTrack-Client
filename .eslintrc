@@ -1,0 +1,93 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "prettier",
+    "prettier/react"
+  ],
+  "plugins": ["react"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "legacyDecorators": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "semi-spacing": [
+      2,
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "quotes": [1, "single", { "avoidEscape": true }],
+    "arrow-spacing": [1, { "before": true, "after": true }],
+    "sort-imports": [
+      1,
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": true
+      }
+    ],
+    "prefer-template": [1],
+    "prefer-destructuring": [2, { "object": true, "array": false }],
+    "react/prop-types": 0,
+    "react/jsx-pascal-case": 2,
+    "react/jsx-first-prop-new-line": 0,
+    "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-handler-names": 2,
+    "react/jsx-curly-spacing": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/jsx-equals-spacing": [2, "never"],
+    "react/jsx-closing-bracket-location": [2, "after-props"],
+    "react/require-default-props": 1,
+    "react/forbid-dom-props": [2, { "forbid": ["style"] }],
+    "react/forbid-prop-types": [2, { "forbid": ["any", "array"] }],
+    "react/jsx-sort-props": [
+      2,
+      {
+        "callbacksLast": true,
+        "shorthandFirst": true,
+        "reservedFirst": true,
+        "noSortAlphabetically": true
+      }
+    ],
+    "react/jsx-wrap-multilines": [
+      2,
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "ignore",
+        "prop": "parens-new-line"
+      }
+    ]
+  },
+  "globals": {
+    "document": true,
+    "window": true,
+    "location": true,
+    "localStorage": true
+  }
+}
