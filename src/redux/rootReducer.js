@@ -3,9 +3,9 @@ import SnackFilterReducer from './features/snackFilterSlice';
 import UsersReducer from './features/users/usersSlice';
 
 const rootReducer = {
-	authReducer: AuthReducer,
+  authReducer: AuthReducer,
   usersReducer: UsersReducer,
-	snackFilterReducer: SnackFilterReducer,
+  snackFilterReducer: SnackFilterReducer
 };
 
 export default rootReducer;
