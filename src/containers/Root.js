@@ -7,7 +7,7 @@ import AuthLogin from '../pages/AuthLogin';
 import Landing from '../pages/LandingPage';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
-import SnackList from '../pages/SnackList';
+import Snacks from '../pages/Snacks';
 import TransactionHistory from '../pages/TransactionHistory';
 import UserProfile from '../pages/UserProfile';
 import { getUser } from '../redux/features/users/usersSlice';
@@ -30,7 +30,7 @@ const Root = () => {
           <Switch>
             <Route path='/auth-login' component={AuthLogin} />
             <Route path='/select-login' component={SelectLogin} />
-            <Route path='/snack-list' component={SnackList} />
+            <Route path='/snacks' component={Snacks} />
             <Route path='/transaction-history' component={TransactionHistory} />
             <Route path='/user-profile' component={UserProfile} />
             <Route exact path='/' component={Landing} />
