@@ -16,7 +16,8 @@ const SnackCard = (props) => {
             class='card--resize-image'
             title={snackName}
             component='img'
-            src={imageUri}/>
+            src={imageUri}
+          />
         </div>
         <div className='card__label'>
           <Typography class='card__snackName'>{snackName}</Typography>
@@ -26,7 +27,8 @@ const SnackCard = (props) => {
               displayType={'text'}
               decimalScale={2}
               fixedDecimalScale={true}
-              prefix={'$'}/>
+              prefix={'$'}
+            />
           </Typography>
         </div>
       </CardActionArea>
