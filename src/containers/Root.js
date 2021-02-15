@@ -1,4 +1,8 @@
-import '../index.css';
+import '../styles/Global.css';
+import { Button } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from '../styles/theme';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,10 +29,10 @@ const Root = () => {
   const getUserById = (userId) => dispatch(getUser(userId));
 
   return (
-    <div className='App'>
-      <header className='App-header'>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className='root-container'>
         <HeaderBar balance={balance} firstName={firstName} />
-
         <Router>
           <Switch>
             <Route path='/auth-login' component={AuthLogin} />
@@ -45,14 +49,23 @@ const Root = () => {
             ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
             : ''}
         </div>
-        <button onClick={() => getUserById(2)}>Get User (Communal View)</button>
-        <button onClick={() => getUserById(7)}>Get User (Authenticated View)</button>
-        <button onClick={() => authSetToken('fake_token')}>Set Token</button>
+        <Button
+          variant={'contained'}
+          color={'primary'}
+          onClick={() => authSetToken('fake_token')}>
+          Set Token
+        </Button>
+        <Button
+          variant={'outlined'}
+          color={'secondary'}
+          onClick={() => getUserById(2)}>
+          Set Profile
+        </Button>
         <p>
           <code>brb building things</code>
         </p>
-      </header>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 
