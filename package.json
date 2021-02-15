@@ -8,8 +8,11 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-number-format": "^4.4.4",
     "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -20,8 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.js src/**/*.jsx --cache --fix",
-    "format": "prettier --write ."
+    "lint": "eslint src/**/*.js --cache --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +48,6 @@
     "@typescript-eslint/parser": "^4.14.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.1",
@@ -55,7 +56,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "4",
     "lint-staged": "^10.5.4",
-    "prettier": "^2.2.1",
     "web-vitals": "^0.2.4"
   },
   "husky": {
@@ -64,7 +64,6 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx}": "eslint --cache --fix",
-    "*.{js,jsx,css,md,html}": "prettier --write"
+    "*.js": "eslint --cache --fix"
   }
 }

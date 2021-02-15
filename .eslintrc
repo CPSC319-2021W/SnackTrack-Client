@@ -2,11 +2,9 @@
   "parser": "babel-eslint",
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "prettier",
-    "prettier/react"
+    "plugin:react/recommended"
   ],
-  "plugins": ["react"],
+            "plugins": ["react"],
   "env": {
     "browser": true,
     "node": true,
@@ -35,6 +33,8 @@
         "after": true
       }
     ],
+    "indent": [2, 2],
+    "comma-dangle": ["error", "never"],
     "quotes": [1, "single", { "avoidEscape": true }],
     "arrow-spacing": [1, { "before": true, "after": true }],
     "sort-imports": [
@@ -47,21 +47,22 @@
         "allowSeparatedGroups": true
       }
     ],
+    "brace-style": [2, "1tbs"],
     "prefer-template": [1],
     "prefer-destructuring": [2, { "object": true, "array": false }],
+    "jsx-quotes": [2, "prefer-single"],
     "react/prop-types": 0,
     "react/jsx-pascal-case": 2,
     "react/jsx-first-prop-new-line": 0,
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
-    "react/jsx-handler-names": 2,
+    "react/jsx-handler-names": 0,
     "react/jsx-curly-spacing": 0,
     "react/jsx-max-props-per-line": 0,
     "react/jsx-equals-spacing": [2, "never"],
-    "react/jsx-closing-bracket-location": [2, "after-props"],
+    "react/jsx-closing-tag-location": 2,
     "react/require-default-props": 1,
     "react/forbid-dom-props": [2, { "forbid": ["style"] }],
-    "react/forbid-prop-types": [2, { "forbid": ["any", "array"] }],
     "react/jsx-sort-props": [
       2,
       {
