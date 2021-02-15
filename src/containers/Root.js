@@ -21,23 +21,23 @@ const Root = () => {
   const authSetProfile = (profile) => dispatch(setProfile(profile));
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <Router>
           <Switch>
-            <Route path="/auth-login" component={AuthLogin} />
-            <Route path="/select-login" component={SelectLogin} />
-            <Route path="/snacks" component={Snacks} />
-            <Route path="/transaction-history" component={TransactionHistory} />
-            <Route path="/user-profile" component={UserProfile} />
-            <Route exact path="/" component={Landing} />
+            <Route path='/auth-login' component={AuthLogin} />
+            <Route path='/select-login' component={SelectLogin} />
+            <Route path='/snacks' component={Snacks} />
+            <Route path='/transaction-history' component={TransactionHistory} />
+            <Route path='/snack-list' component={SnackList} />
+            <Route path='/user-profile' component={UserProfile} />
+            <Route exact path='/' component={Landing} />
           </Switch>
         </Router>
         <div>Token: {token}</div>
         <div>Profile: {profile ? `Welcome, ${profile.username}` : ''}</div>
         <button onClick={() => authSetToken('fake_token')}>Set Token</button>
-        <button
-          onClick={() => authSetProfile({ id: 1, username: 'FakeUsername' })}>
+        <button onClick={() => authSetProfile({ id: 1, username: 'FakeUsername' })}>
           Set Profile
         </button>
         <p>
