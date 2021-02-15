@@ -64,7 +64,6 @@
     "react/jsx-closing-bracket-location": [2, "after-props"],
     "react/require-default-props": 1,
     "react/forbid-dom-props": [2, { "forbid": ["style"] }],
-    "react/forbid-prop-types": [2, { "forbid": ["any", "array"] }],
     "react/jsx-sort-props": [
       2,
       {
