@@ -50,7 +50,7 @@
     "brace-style": [2, "1tbs"],
     "prefer-template": [1],
     "prefer-destructuring": [2, { "object": true, "array": false }],
-    "jsx-quotes": [2, "prefer-double"],
+    "jsx-quotes": [2, "prefer-single"],
     "react/prop-types": 0,
     "react/jsx-pascal-case": 2,
     "react/jsx-first-prop-new-line": 0,

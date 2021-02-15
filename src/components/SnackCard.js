@@ -11,16 +11,16 @@ const SnackCard = (props) => {
   return (
     <Card>
       <CardActionArea onClick={props.onClick}>
-        <div className="card__image">
+        <div className='card__image'>
           <CardMedia
-            class="card--resize-image"
+            class='card--resize-image'
             title={snackName}
-            component="img"
+            component='img'
             src={imageUri}/>
         </div>
-        <div className="card__label">
-          <Typography class="card__snackName">{snackName}</Typography>
-          <Typography class="card__price">
+        <div className='card__label'>
+          <Typography class='card__snackName'>{snackName}</Typography>
+          <Typography class='card__price'>
             <NumberFormat
               value={price / 100}
               displayType={'text'}

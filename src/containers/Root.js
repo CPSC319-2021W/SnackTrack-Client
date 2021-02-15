@@ -21,18 +21,18 @@ const Root = () => {
   const authSetProfile = (profile) => dispatch(setProfile(profile));
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <Router>
           <Switch>
-            <Route path="/auth-login" component={AuthLogin} />
-            <Route path="/select-login" component={SelectLogin} />
-            <Route path="/snack-list" component={SnackList} />
+            <Route path='/auth-login' component={AuthLogin} />
+            <Route path='/select-login' component={SelectLogin} />
+            <Route path='/snack-list' component={SnackList} />
             <Route
-              path="/transaction-history"
+              path='/transaction-history'
               component={TransactionHistory}/>
-            <Route path="/user-profile" component={UserProfile} />
-            <Route exact path="/" component={Landing} />
+            <Route path='/user-profile' component={UserProfile} />
+            <Route exact path='/' component={Landing} />
           </Switch>
         </Router>
         <div>Token: {token}</div>
