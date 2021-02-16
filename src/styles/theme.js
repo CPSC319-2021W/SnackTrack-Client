@@ -1,3 +1,4 @@
+import colors from '../styles/Colors.module.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -7,7 +8,10 @@ const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': 'Source Sans Pro'
+        '@font-face': 'Source Sans Pro',
+        body: {
+          color: colors.DARK_GREY
+        }
       }
     },
     MuiButtonBase: {
