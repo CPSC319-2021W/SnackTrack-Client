@@ -9,7 +9,7 @@ const ttnorms_regular = {
   fontWeight: 400,
   src: `
         local('TTNorms-Regular),
-        url(${TTNormsRegular}) format('ttf')
+        url(${TTNormsRegular}) format('truetype')
     `
 };
 
@@ -19,7 +19,7 @@ const ttnorms_medium = {
   fontWeight: 500,
   src: `
         local('TTNorms-Medium),
-        url(${TTNormsMedium}) format('ttf')
+        url(${TTNormsMedium}) format('truetype')
     `
 };
 
@@ -30,7 +30,7 @@ const ttnorms_bold = {
   src: `
         local('TTNorms),
         local('TTNorms-Bold),
-        url(${TTNormsBold}) format('ttf')
+        url(${TTNormsBold}) format('truetype')
     `
 };
 
@@ -41,7 +41,7 @@ const ttnorms_heavy = {
   src: `
         local('TTNorms),
         local('TTNorms-Heavy),
-        url(${TTNormsHeavy}) format('ttf')
+        url(${TTNormsHeavy}) format('truetype')
     `
 };
 

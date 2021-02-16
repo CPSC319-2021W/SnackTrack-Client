@@ -22,7 +22,7 @@ const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': [ttFontFamily],
+        '@font-face': [...ttFontFamily],
         body: {
           color: colors.DARK_GREY,
           backgroundColor: '#F4F5FD',
