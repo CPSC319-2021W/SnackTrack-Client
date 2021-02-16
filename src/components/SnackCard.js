@@ -9,7 +9,7 @@ const SnackCard = (props) => {
   const { imageUri, snackName, price } = props.snack;
 
   return (
-    <Card className={styles.base}>
+    <Card variant={'outlined'} className={styles.base}>
       <CardActionArea className={styles.action_area} onClick={props.onClick}>
         <div className={styles.image}>
           <CardMedia
