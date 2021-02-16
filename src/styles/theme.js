@@ -10,7 +10,8 @@ const theme = createMuiTheme({
       '@global': {
         '@font-face': 'Source Sans Pro',
         body: {
-          color: colors.DARK_GREY
+          color: colors.DARK_GREY,
+          backgroundColor: '#F4F5FD'
         },
         h1: {
           fontSize: '6rem'

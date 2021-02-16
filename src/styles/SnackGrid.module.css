@@ -1,4 +1,4 @@
-.item {
-  display: flex;
-  justify-content: center;
+.container {
+  width: 100%;
+  margin: 0;
 }
