@@ -10,17 +10,17 @@ const SnackCard = (props) => {
 
   return (
     <Card className={styles.base}>
-      <CardActionArea className={styles.action__area} onClick={props.onClick}>
+      <CardActionArea className={styles.action_area} onClick={props.onClick}>
         <div className={styles.image}>
           <CardMedia
-            className={styles.resize__image}
+            className={styles.resize_image}
             title={snackName}
             component='img'
             src={imageUri}
           />
         </div>
         <div className={styles.label}>
-          <p className={styles.snackName}>{snackName}</p>
+          <p className={styles.snack_name}>{snackName}</p>
           <p className={styles.price}>
             <NumberFormat
               value={price / 100}

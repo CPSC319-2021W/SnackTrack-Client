@@ -11,7 +11,7 @@
   transform: translate3d(0px, -1px, 0px);
 }
 
-.action__area {
+.action_area {
   width: inherit;
   height: inherit;
   display: flex;
@@ -29,7 +29,7 @@
   display: flex;
 }
 
-.resize__image {
+.resize_image {
   height: 180px;
 }
 
@@ -47,7 +47,7 @@
   margin-right: 1rem;
 }
 
-.snackName {
+.snack_name {
   max-width: 60%;
   font-size: 16px;
   text-align: left;

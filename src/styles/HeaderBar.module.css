@@ -11,12 +11,13 @@
   position: fixed;
   left: 5%;
   color: DARK_GREY;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .label {
   color: DARK_GREY;
   font-weight: 600;
+  font-size: 1.125rem;
   margin: 0;
 }
 
