@@ -36,14 +36,22 @@ const category = [
   }
 ];
 
-const CategoryBox = ({name, src}) => {
+const CategoryBox = ({name, src, selected = false}) => {
   const dispatch = useDispatch();
   const snackFilter = useSelector((state) => state.snackFilterReducer.category);
-  const snackFilterSet = (category) => dispatch(setCategory({category}));
+  const snackFilterSet = (category) => dispatch(setCategory(category));
+  const selectFilter = () => {
+    if (!selected) {
+      snackFilterSet(name);
+      selected = true;
+    } else {
+      selected = false;
+    }
+  };
   return (
     <div className={classes.categoryBox}>
       {console.log(snackFilter)}
-      <button className={classes.button} onClick={() => snackFilterSet(name)}>
+      <button className={classes.button} onClick={() => selectFilter(name)}>
         <img src={src} className={classes.img} alt={name} />
         <br />
         {name}
