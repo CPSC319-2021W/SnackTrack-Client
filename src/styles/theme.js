@@ -1,5 +1,6 @@
 import colors from '../styles/Colors.module.css';
 import { createMuiTheme } from '@material-ui/core/styles';
+import ttFontFamily from './fonts';
 
 // import TTNorms from '../assets/fonts/TTNorms-Regular.ttf';
 
@@ -21,7 +22,7 @@ const theme = createMuiTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        // '@font-face': [ttnorms],
+        '@font-face': [ttFontFamily],
         body: {
           color: colors.DARK_GREY,
           backgroundColor: '#F4F5FD',
