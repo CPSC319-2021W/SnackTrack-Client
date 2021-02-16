@@ -39,7 +39,7 @@ const Root = () => {
               <Route path='/auth-login' component={AuthLogin} />
               <Route path='/select-login' component={SelectLogin} />
               <Route path='/snacks' component={Snacks} />
-              <Route path='/transaction-history' component={TransactionHistory} />
+              <Route path='/transactions' component={TransactionHistory} />
               <Route path='/user-profile' component={UserProfile} />
               <Route exact path='/' component={Landing} />
             </Switch>
