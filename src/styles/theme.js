@@ -2,19 +2,6 @@ import colors from '../styles/Colors.module.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 import ttFontFamily from './fonts';
 
-// import TTNorms from '../assets/fonts/TTNorms-Regular.ttf';
-
-// const ttnorms = {
-//   fontFamily: 'TT Norms',
-//   fontStyle: 'normal',
-//   fontWeight: 400,
-//   src: `
-//     local('TTNorms),
-//     local('TTNorms-Regular),
-//     url(${TTNorms}) format('ttf')
-//   `
-// };
-
 const theme = createMuiTheme({
   typography: {
     fontFamily: ['TT Norms', 'sans-serif'].join(',')
