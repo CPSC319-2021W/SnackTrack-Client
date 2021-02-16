@@ -1,6 +1,6 @@
-import '../styles/SnackCard.css';
+import styles from '../styles/SnackCard.module.css';
 
-import { Card, CardActionArea, CardMedia, Typography } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
@@ -9,19 +9,19 @@ const SnackCard = (props) => {
   const { imageUri, snackName, price } = props.snack;
 
   return (
-    <Card>
-      <CardActionArea onClick={props.onClick}>
-        <div className='card__image'>
+    <Card className={styles.base}>
+      <CardActionArea className={styles.action__area} onClick={props.onClick}>
+        <div className={styles.image}>
           <CardMedia
-            className='card--resize-image'
+            className={styles.resize__image}
             title={snackName}
             component='img'
             src={imageUri}
           />
         </div>
-        <div className='card__label'>
-          <Typography className='card__snackName'>{snackName}</Typography>
-          <Typography className='card__price'>
+        <div className={styles.label}>
+          <p className={styles.snackName}>{snackName}</p>
+          <p className={styles.price}>
             <NumberFormat
               value={price / 100}
               displayType={'text'}
@@ -29,7 +29,7 @@ const SnackCard = (props) => {
               fixedDecimalScale={true}
               prefix={'$'}
             />
-          </Typography>
+          </p>
         </div>
       </CardActionArea>
     </Card>

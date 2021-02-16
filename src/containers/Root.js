@@ -1,7 +1,7 @@
 import '../styles/Global.css';
+import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../styles/theme';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
@@ -29,43 +29,42 @@ const Root = () => {
   const getUserById = (userId) => dispatch(getUser(userId));
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className='root-container'>
-        <HeaderBar balance={balance} firstName={firstName} />
-        <Router>
-          <Switch>
-            <Route path='/auth-login' component={AuthLogin} />
-            <Route path='/select-login' component={SelectLogin} />
-            <Route path='/snacks' component={Snacks} />
-            <Route path='/transaction-history' component={TransactionHistory} />
-            <Route path='/user-profile' component={UserProfile} />
-            <Route exact path='/' component={Landing} />
-          </Switch>
-        </Router>
-        <div>Token: {token}</div>
-        <div>
-          {username
-            ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
-            : ''}
+    <StylesProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <div className='root-container'>
+          <HeaderBar balance={balance} firstName={firstName} />
+          <Router>
+            <Switch>
+              <Route path='/auth-login' component={AuthLogin} />
+              <Route path='/select-login' component={SelectLogin} />
+              <Route path='/snacks' component={Snacks} />
+              <Route path='/transaction-history' component={TransactionHistory} />
+              <Route path='/user-profile' component={UserProfile} />
+              <Route exact path='/' component={Landing} />
+            </Switch>
+          </Router>
+          <div>Token: {token}</div>
+          <div>
+            {username
+              ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
+              : ''}
+          </div>
+          <Button
+            variant={'contained'}
+            color={'primary'}
+            onClick={() => authSetToken('fake_token')}>
+            Set Token
+          </Button>
+          <Button
+            variant={'outlined'}
+            color={'secondary'}
+            onClick={() => getUserById(2)}>
+            Set Profile
+          </Button>
         </div>
-        <Button
-          variant={'contained'}
-          color={'primary'}
-          onClick={() => authSetToken('fake_token')}>
-          Set Token
-        </Button>
-        <Button
-          variant={'outlined'}
-          color={'secondary'}
-          onClick={() => getUserById(2)}>
-          Set Profile
-        </Button>
-        <p>
-          <code>brb building things</code>
-        </p>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </StylesProvider>
   );
 };
 
