@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategory } from '../redux/features/snackFilterSlice';
 import candy from '../images/illustrations/candy.svg';
-import classes from '../styles/category.module.css';
+import styles from '../styles/Category.module.css';
 import cookies from '../images/illustrations/cookies.svg';
 import chips from '../images/illustrations/chips.svg';
 import chocolate from '../images/illustrations/chocolate.svg';
@@ -49,10 +49,10 @@ const CategoryBox = ({name, src, selected = false}) => {
     }
   };
   return (
-    <div className={classes.categoryBox}>
+    <div className={styles.categoryBox}>
       {console.log(snackFilter)}
-      <button className={classes.button} onClick={() => selectFilter(name)}>
-        <img src={src} className={classes.img} alt={name} />
+      <button className={styles.button} onClick={() => selectFilter(name)}>
+        <img src={src} className={styles.img} alt={name} />
         <br />
         {name}
       </button>
@@ -61,7 +61,7 @@ const CategoryBox = ({name, src, selected = false}) => {
 };
 
 const CategoryFilter = () => (
-  <div className={classes.container}>
+  <div className={styles.container}>
     {category.map((props, i) => (
       <CategoryBox key={i} {...props} />
     ))}
