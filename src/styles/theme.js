@@ -9,6 +9,16 @@ const theme = createMuiTheme({
       '@global': {
         '@font-face': 'Source Sans Pro'
       }
+    },
+    MuiButtonBase: {
+      root: {
+        fontFamily: 'Source Sans Pro'
+      }
+    }
+  },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true
     }
   }
 });

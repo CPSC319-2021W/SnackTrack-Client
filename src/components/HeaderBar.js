@@ -1,21 +1,21 @@
-import '../styles/HeaderBar.css';
+import styles from '../styles/HeaderBar.module.css';
 
-import { AppBar, Typography } from '@material-ui/core';
+import { AppBar } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
 
-const SnackCard = (props) => {
+const HeaderBar = (props) => {
   const { balance, firstName } = props;
 
   return (
-    <AppBar className='header' color='default'>
-      {balance ? (
+    <AppBar className={styles.header} color='default'>
+      {balance !== null ? (
         <div>
-          <Typography className='header__balance header--default-text-color'>
+          <h6 className={styles.label}>
             Total Amount Owed
-          </Typography>
-          <Typography className='header__balance' variant='h4'>
+          </h6>
+          <h3 className={styles.balance}>
             <NumberFormat
               value={balance / 100}
               displayType={'text'}
@@ -23,19 +23,15 @@ const SnackCard = (props) => {
               fixedDecimalScale={true}
               prefix={'$'}
             />
-          </Typography>
+          </h3>
         </div>
       ) : (
-        <Typography
-          className='header__greeting header--default-text-color'
-          align='left'
-          variant='h5'
-        >
+        <h5 className={styles.greeting}>
           {`Hi, ${firstName}!`}
-        </Typography>
+        </h5>
       )}
     </AppBar>
   );
 };
 
-export default SnackCard;
+export default HeaderBar;
