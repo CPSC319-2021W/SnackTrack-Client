@@ -1,19 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-const INITIAL_STATE = {
-  category: null
-};
+const INITIAL_STATE = [];
 
 const snackFilterSlice = createSlice({
   name: 'snackFilter',
   initialState: INITIAL_STATE,
   reducers: {
+    addCategory: (state, action) => {
+      state.push(action.payload);
+    },
+    removeCategory: (state, action) => {
+      const currFilter = state.filter(curr => curr !== action.payload);
+      console.log(currFilter);
+      state = currFilter;
+    },
     setCategory: (state, action) => {
-      state.category = action.payload;
+      state = action.payload;
     }
   }
 });
 
-export const {setCategory} = snackFilterSlice.actions;
+export const {addCategory, removeCategory, setCategory} = snackFilterSlice.actions;
 
 export default snackFilterSlice.reducer;

@@ -21,10 +21,12 @@
 
 .img:hover {
 	background-color: #a7e6f2;
+	font-weight: bold;
 }
 
 .img:active {
 	background-color: #a7e6f2;
+	font-weight: bold;
 }
 
 .button {
@@ -35,3 +37,12 @@
 	overflow: hidden;
 	outline: none;
 }
+
+.button:hover {
+	font-weight: bold;
+}
+
+.button:active {
+	font-weight: bold;
+}
+

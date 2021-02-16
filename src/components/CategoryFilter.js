@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategory } from '../redux/features/snackFilterSlice';
+import { addCategory, removeCategory } from '../redux/features/snackFilterSlice';
 import candy from '../images/illustrations/candy.svg';
 import styles from '../styles/Category.module.css';
 import cookies from '../images/illustrations/cookies.svg';
@@ -39,12 +39,14 @@ const category = [
 const CategoryBox = ({name, src, selected = false}) => {
   const dispatch = useDispatch();
   const snackFilter = useSelector((state) => state.snackFilterReducer.category);
-  const snackFilterSet = (category) => dispatch(setCategory(category));
+  const snackFilterSet = (category) => dispatch(addCategory(category));
+  const snackFilterDel= (category) => dispatch(removeCategory(category));
   const selectFilter = () => {
     if (!selected) {
       snackFilterSet(name);
       selected = true;
     } else {
+      snackFilterDel(name);
       selected = false;
     }
   };

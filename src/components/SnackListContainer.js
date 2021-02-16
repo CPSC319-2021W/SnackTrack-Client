@@ -5,7 +5,7 @@ import CategoryFilter from './CategoryFilter';
 
 const SnackListContainer = () => (
   <div className={styles.root}>
-    <Container maxWidth='lg'>
+    <Container>
       <div className={styles.header}>
         <div className={styles.leftBox}>
           <p> Snacks List </p>
@@ -22,7 +22,7 @@ const SnackListContainer = () => (
         </div>
       </div>
     </Container>
-    <Container maxWidth='lg'>
+    <Container>
       <CategoryFilter />
     </Container>
   </div>
