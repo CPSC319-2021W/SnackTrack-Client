@@ -5,7 +5,7 @@ import { getPaymentHistory } from '../services/PaymentsService';
 
 const rowsPerPage = 8;
 
-const TransactionHistory = () => {
+const Transactions = () => {
   const [paymentHistory, setPaymentHistory] = useState(getPaymentHistory(0, rowsPerPage));
 
   const handleChangePage = (page) => {
@@ -25,4 +25,4 @@ const TransactionHistory = () => {
     </div>
   );
 };
-export default TransactionHistory;
+export default Transactions;
