@@ -41,8 +41,8 @@ const PaymentsTable = (props) => {
   ];
 
   return (
-    <Card className={styles.paper}>
-      <Table className={styles.table} aria-label='Payments Table'>
+    <Card>
+      <Table aria-label='Payments Table'>
         <TableHead>
           <TableRow>
             <TableCell className={styles.primaryHeader} colSpan={columns.length}>

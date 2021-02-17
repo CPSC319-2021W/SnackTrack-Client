@@ -1,16 +1,3 @@
-.paper {
-  /* TODO: Make Responsive (Ticket: SNAK-124) */
-  width: 360px;
-  height: 590px;
-  max-width: 360px;
-  max-height: 590px;
-}
-
-.table {
-  width: inherit;
-  height: inherit;
-}
-
 .primaryHeader {
   padding: 0;
   padding-left: 1rem;
