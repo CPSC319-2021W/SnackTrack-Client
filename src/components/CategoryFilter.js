@@ -1,7 +1,7 @@
 import { addCategory, removeCategory } from '../redux/features/snackSlice';
 import { useDispatch } from 'react-redux';
 import { defaultCategory } from '../constant';
-import styles from '../styles/Category.module.css';
+import styles from '../styles/category.module.css';
 import React, {useState} from 'react';
 
 const CategoryFilter = () => {

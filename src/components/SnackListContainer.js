@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import React from 'react';
-import styles from '../styles/SnackListContainer.module.css';
+import styles from '../styles/snackListContainer.module.css';
 import CategoryFilter from './CategoryFilter';
 import {Container} from '@material-ui/core';
 import {defaultCategory} from '../constant';
