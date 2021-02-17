@@ -6,7 +6,7 @@ import {Container} from '@material-ui/core';
 import {defaultCategory} from '../constant';
 
 const SnackListContainer = () => {
-  const snackFilter = useSelector((state) => state.snackFilterReducer);
+  const snackFilter = useSelector((state) => state.snackReducer);
   return (
     <div>
       <Container>

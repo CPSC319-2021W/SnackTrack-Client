@@ -1,9 +1,7 @@
-import { addCategory, removeCategory } from '../redux/features/snackFilterSlice';
+import { addCategory, removeCategory } from '../redux/features/snackSlice';
 import { useDispatch } from 'react-redux';
-import {defaultCategory} from '../constant';
+import { defaultCategory } from '../constant';
 import styles from '../styles/Category.module.css';
-
-
 import React, {useState} from 'react';
 
 const CategoryFilter = () => {
@@ -12,17 +10,17 @@ const CategoryFilter = () => {
   const [categories, setCategories] = useState(defaultCategory);  
   const dispatch = useDispatch();
 
-  const snackFilterSet = (category) => dispatch(addCategory(category));
-  const snackFilterDel= (category) => dispatch(removeCategory(category));
+  const addFilter = (category) => dispatch(addCategory(category));
+  const removeFilter = (category) => dispatch(removeCategory(category));
 
   const toggleCategory = i => {
     categories[i].selected = !categories[i].selected;
     setCategories([...categories]);
     if (categories[i].selected) { 
       setFilters([...filters, categories[i].name]); 
-      snackFilterSet(categories[i].name);
+      addFilter(categories[i].name);
     } else {
-      snackFilterDel(categories[i].name);
+      removeFilter (categories[i].name);
       setFilters([...filters.filter(category => category !== categories[i].name)]);     
     }
   };

@@ -1,11 +1,11 @@
 import AuthReducer from './features/auth/authSlice';
-import SnackFilterReducer from './features/snackFilterSlice';
+import SnackReducer from './features/snackSlice';
 import UsersReducer from './features/users/usersSlice';
 
 const rootReducer = {
   authReducer: AuthReducer,
   usersReducer: UsersReducer,
-  snackFilterReducer: SnackFilterReducer
+  snackReducer: SnackReducer
 };
 
 export default rootReducer;
