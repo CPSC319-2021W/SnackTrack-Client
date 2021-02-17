@@ -1,6 +1,6 @@
-.root {
-    background: #F4F5FD;
-}
+@value colors: './Colors.module.css';
+@value DARK_GREY from colors;
+
 .header {
     padding-top: 29px;
     display: flex;
@@ -10,7 +10,7 @@
 
 .leftBox > * {
     justify-content: flex-start;
-    width: 118px;
+    width: 130px;
     height: 30px;
     font-weight: bold;
     font-size: 24px;

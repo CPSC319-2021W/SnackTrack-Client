@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React from 'react';
 import styles from '../styles/SnackListContainer.module.css';
 import CategoryFilter from './CategoryFilter';
@@ -5,8 +6,9 @@ import {Container} from '@material-ui/core';
 import {defaultCategory} from '../constant';
 
 const SnackListContainer = () => {
+  const snackFilter = useSelector((state) => state.snackFilterReducer);
   return (
-    <div className={styles.root}>
+    <div>
       <Container>
         <div className={styles.header}>
           <div className={styles.leftBox}>
@@ -25,8 +27,8 @@ const SnackListContainer = () => {
         </div>
       </Container>
       <Container>
-        {/* <CategoryFilter category={defaultCategory} /> */}
         <CategoryFilter category={defaultCategory} />
+        {console.log(`current filter is ${ snackFilter.categories}`)}
       </Container>
     </div>
   );
