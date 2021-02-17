@@ -1,7 +1,7 @@
 import candy from './images/illustrations/candy.svg';
-import cookies from './images/illustrations/cookies.svg';
 import chips from './images/illustrations/chips.svg';
 import chocolate from './images/illustrations/chocolate.svg';
+import cookies from './images/illustrations/cookies.svg';
 import crackers from './images/illustrations/crackers.svg';
 import fruits from './images/illustrations/fruits.svg';
 

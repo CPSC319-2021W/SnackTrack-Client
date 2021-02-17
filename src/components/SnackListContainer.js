@@ -1,9 +1,9 @@
-import { useSelector } from 'react-redux';
-import React from 'react';
-import styles from '../styles/snackListContainer.module.css';
 import CategoryFilter from './CategoryFilter';
-import {Container} from '@material-ui/core';
-import {defaultCategory} from '../constant';
+import { Container } from '@material-ui/core';
+import React from 'react';
+import { defaultCategory } from '../constant';
+import styles from '../styles/snackListContainer.module.css';
+import { useSelector } from 'react-redux';
 
 const SnackListContainer = () => {
   const snackFilter = useSelector((state) => state.snackReducer);
@@ -28,7 +28,7 @@ const SnackListContainer = () => {
       </Container>
       <Container>
         <CategoryFilter category={defaultCategory} />
-        {console.log(`current filter is ${ snackFilter.categories}`)}
+        {console.log(`current filter is ${snackFilter.categories}`)}
       </Container>
     </div>
   );
