@@ -1,0 +1,101 @@
+.primaryHeader {
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.primaryHeader__text {
+  font-size: 1.17em;
+}
+
+.secondaryHeader {
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.secondaryHeader__text {
+  font-size: 1em;
+}
+
+.cell {
+  height: 52px;
+  max-height: 52px;
+  border-bottom: 0;
+  padding: 12px;
+}
+
+.cell__small {
+  width: 50px;
+}
+
+.cell__medium {
+  width: 150px;
+}
+
+.cell__large {
+  width: 200px;
+}
+
+.status__pending {
+  font-weight: 700;
+  color: #ff9800;
+  background-color: rgb(255, 152, 0, 0.2);
+  padding: 6px 16px;
+  border-radius: 4px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: text;
+}
+
+.status__cancelled {
+  font-weight: 700;
+  color: #f44336;
+  background-color: rgb(244, 67, 54, 0.2);
+  padding: 6px 16px;
+  border-radius: 4px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: text;
+}
+
+.status__paid {
+  font-weight: 700;
+  color: #4caf50;
+  background-color: rgb(76, 175, 80, 0.2);
+  padding: 6px 16px;
+  border-radius: 4px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: text;
+}
+
+.button__pay {
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #765ea8;
+  text-transform: none;
+}
+
+.button__pay:hover {
+  background-color: rgb(118, 94, 168, 0.8);
+}
+
+.button__edit {
+  font-weight: 700;
+  color: #765ea8;
+  background-color: rgb(118, 94, 168, 0.1);
+  border: 2px solid #765ea8;
+  line-height: 1;
+  text-transform: none;
+}
+
+.button__edit:hover {
+  background-color: rgb(118, 94, 168, 0.3);
+}
+
+.MuiCheckbox-colorSecondary {
+  color: blue;
+}
+
+.pagination {
+  border-top: 1px solid rgba(224, 224, 224, 1);
+}

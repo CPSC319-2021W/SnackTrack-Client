@@ -1,0 +1,157 @@
+/* eslint-disable */
+import {
+  Button,
+  Card,
+  Checkbox,
+  Table,
+  TableBody,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TablePagination,
+  TableRow
+} from '@material-ui/core';
+
+import React from 'react';
+import styles from '../styles/TransactionsTable.module.css';
+
+const TransactionsTable = (props) => {
+  const { data, rowsPerPage, onChangePage } = props;
+  const { transactions, currentPage, totalRows, totalPages } = data;
+
+  const emptyRows = () => {
+    const rowsToFill = rowsPerPage - transactions.length;
+    return [...Array(rowsToFill).keys()];
+  };
+
+  const columns = [
+    {
+      id: 'checkbox',
+      label: <Checkbox size='small' />
+    },
+    {
+      id: 'orderDate',
+      label: 'Order Date'
+    },
+    {
+      id: 'snack',
+      label: 'Snack'
+    },
+    {
+      id: 'quantity',
+      label: 'Quantity'
+    },
+    {
+      id: 'status',
+      label: 'Status',
+      format: (status, paymentId) => {
+        if (status === 'CN') {
+          return <span className={styles.status__cancelled}>CANCELLED</span>;
+        } else if (paymentId) {
+          return <span className={styles.status__paid}>PAID</span>;
+        }
+        return <span className={styles.status__pending}>PAYMENT PENDING</span>;
+      }
+    },
+    {
+      id: 'total',
+      label: 'Total',
+      format: (amount) => {
+        amount = amount / 100;
+        return `$${amount.toFixed(2)}`;
+      }
+    },
+    {
+      id: 'actions',
+      label: 'Actions'
+    }
+  ];
+
+  return (
+    <Card className={styles.paper}>
+      <Table className={styles.table} aria-label='Transactions Table'>
+        <TableHead>
+          <TableRow>
+            <TableCell className={styles.primaryHeader} colSpan={columns.length - 1}>
+              <h3 className={styles.primaryHeader__text}>Orders</h3>
+            </TableCell>
+            <TableCell>
+              <Button className={styles.button__pay}>Pay For Orders</Button>
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            {columns.map((column) => (
+              <TableCell
+                key={column.id}
+                className={`${styles.secondaryHeader} ${styles.cell}`}
+              >
+                <h4 className={styles.secondaryHeader__text}>{column.label}</h4>
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {transactions.map((transaction, i) => {
+            return (
+              <TableRow key={i} tabIndex={-1}>
+                {columns.map((column) => {
+                  const value = transaction[column.id];
+                  return (
+                    <TableCell
+                      key={column.id}
+                      className={`${styles.cell} ${styles.cell__small} ${
+                        column.id === 'status' ? styles.cell__large : null
+                      } ${column.id !== 'checkbox' ? styles.cell__medium : null}`}
+                    >
+                      {column.format && typeof value === 'number'
+                        ? column.format(value)
+                        : column.id === 'status'
+                        ? column.format(value, transaction['paymentId'])
+                        : value}
+                      {column.id === 'checkbox' &&
+                      transactions[i].status === 'PR' &&
+                      transactions[i].paymentId == null ? (
+                        <Checkbox size='small' />
+                      ) : null}
+                      {column.id === 'actions' &&
+                      transactions[i].status === 'PR' &&
+                      transactions[i].paymentId == null ? (
+                        <Button className={styles.button__edit} variant='outlined'>
+                          Edit Order
+                        </Button>
+                      ) : null}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })}
+          {emptyRows().map((row) => {
+            return (
+              <TableRow key={row} tabIndex={-1}>
+                {columns.map((column) => {
+                  return <TableCell key={column.id} className={styles.cell} />;
+                })}
+              </TableRow>
+            );
+          })}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              className={styles.pagination}
+              count={totalRows}
+              page={currentPage}
+              rowsPerPage={rowsPerPage}
+              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${totalPages}`}
+              rowsPerPageOptions={[rowsPerPage]}
+              onChangePage={(event, page) => onChangePage(page)}
+            />
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </Card>
+  );
+};
+
+export default TransactionsTable;
