@@ -1,17 +1,19 @@
+import TTNormsFontFamily from './fonts';
 import colors from '../styles/Colors.module.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Source Sans Pro'
+    fontFamily: ['TT Norms', 'sans-serif'].join(',')
   },
   overrides: {
     MuiCssBaseline: {
       '@global': {
-        '@font-face': 'Source Sans Pro',
+        '@font-face': [...TTNormsFontFamily],
         body: {
           color: colors.DARK_GREY,
-          backgroundColor: '#F4F5FD'
+          backgroundColor: '#F4F5FD',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h1: {
           fontSize: '6rem'

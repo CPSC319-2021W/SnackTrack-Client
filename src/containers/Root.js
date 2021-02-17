@@ -44,12 +44,12 @@ const Root = () => {
               <Route exact path='/' component={Landing} />
             </Switch>
           </Router>
-          <div>Token: {token}</div>
-          <div>
+          <p>Token: {token}</p>
+          <h4>
             {username
               ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
               : ''}
-          </div>
+          </h4>
           <Button
             variant={'contained'}
             color={'primary'}
