@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/SnackListContainer.module.css';
-import {Container} from '@material-ui/core';
 import CategoryFilter from './CategoryFilter';
+import {Container} from '@material-ui/core';
 
 const SnackListContainer = () => (
   <div className={styles.root}>
