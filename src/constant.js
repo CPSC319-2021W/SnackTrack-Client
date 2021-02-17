@@ -8,26 +8,32 @@ import fruits from './images/illustrations/fruits.svg';
 export const defaultCategory = [
   {
     name: 'Chocolate',
-    src: chocolate
+    src: chocolate,
+    selected: false
   },
   {
     name: 'Candy',
-    src: candy
+    src: candy,
+    selected: false
   },
   {
     name: 'Cookies',
-    src: cookies
+    src: cookies,
+    selected: false
   },
   {
     name: 'Crackers',
-    src: crackers
+    src: crackers,
+    selected: false
   },
   {
     name: 'Chips',
-    src: chips
+    src: chips,
+    selected: false
   },
   {
     name: 'Fruits',
-    src: fruits
+    src: fruits,
+    selected: false
   }
 ];

@@ -11,8 +11,9 @@ const snackFilterSlice = createSlice({
     },
     removeCategory: (state, action) => {
       const currFilter = state.filter(curr => curr !== action.payload);
-      console.log(currFilter);
+      //console.log(currFilter);
       state = currFilter;
+      //state = action.payload;
     },
     setCategory: (state, action) => {
       state = action.payload;

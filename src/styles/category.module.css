@@ -29,6 +29,14 @@
 	font-weight: bold;
 }
 
+.imgToggle {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	background-color: #a7e6f2;
+	font-weight: bold;
+}
+
 .button {
 	background-color: transparent;
 	background-repeat: no-repeat;
@@ -43,6 +51,16 @@
 }
 
 .button:active {
+	font-weight: bold;
+}
+
+.buttonToggle {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
 	font-weight: bold;
 }
 
