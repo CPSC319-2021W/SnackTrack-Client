@@ -1,24 +1,33 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY, VIOLET from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
 .header {
   height: 100px;
   display: flex;
   justify-content: center;
+  background-color: white;
+  box-shadow: DEFAULT_SHADOW;
 }
 
 .greeting {
   position: fixed;
   left: 5%;
-  color: #505050;
-  font-weight: 700;
+  color: DARK_GREY;
+  font-weight: 600;
 }
 
 .label {
-  color: #505050;
+  color: DARK_GREY;
   font-weight: 600;
+  font-size: 1.125rem;
   margin: 0;
 }
 
 .balance {
-  color: #2e133d;
+  color: VIOLET;
   font-weight: 700;
   margin: 0;
 }

@@ -1,22 +1,22 @@
 import '../styles/Global.css';
-import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../styles/theme';
 
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AuthLogin from '../pages/AuthLogin';
+import { Button } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import HeaderBar from '../components/HeaderBar';
 import Landing from '../pages/LandingPage';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
-import TransactionHistory from '../pages/TransactionHistory';
+import Transactions from '../pages/Transactions';
 import UserProfile from '../pages/UserProfile';
 import { getUser } from '../redux/features/users/usersSlice';
 import { setToken } from '../redux/features/auth/authSlice';
+import theme from '../styles/theme';
 
 const Root = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const Root = () => {
               <Route path='/auth-login' component={AuthLogin} />
               <Route path='/select-login' component={SelectLogin} />
               <Route path='/snacks' component={Snacks} />
-              <Route path='/transaction-history' component={TransactionHistory} />
+              <Route path='/transactions' component={Transactions} />
               <Route path='/user-profile' component={UserProfile} />
               <Route exact path='/' component={Landing} />
             </Switch>
@@ -53,13 +53,11 @@ const Root = () => {
           <Button
             variant={'contained'}
             color={'primary'}
-            onClick={() => authSetToken('fake_token')}>
+            onClick={() => authSetToken('fake_token')}
+          >
             Set Token
           </Button>
-          <Button
-            variant={'outlined'}
-            color={'secondary'}
-            onClick={() => getUserById(2)}>
+          <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
           </Button>
         </div>

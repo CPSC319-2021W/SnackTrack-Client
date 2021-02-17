@@ -15,7 +15,7 @@ const HeaderBar = (props) => {
           <h6 className={styles.label}>
             Total Amount Owed
           </h6>
-          <h3 className={styles.balance}>
+          <h4 className={styles.balance}>
             <NumberFormat
               value={balance / 100}
               displayType={'text'}
@@ -23,7 +23,7 @@ const HeaderBar = (props) => {
               fixedDecimalScale={true}
               prefix={'$'}
             />
-          </h3>
+          </h4>
         </div>
       ) : (
         <h5 className={styles.greeting}>

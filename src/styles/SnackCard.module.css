@@ -1,14 +1,23 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
 .base {
   width: 240px;
   height: 260px;
+  transition: .2s box-shadow, .15s transform;
+  color: white;
 }
 
 .base:hover {
-  box-shadow: rgba(0, 0, 0, 0.22) 0px 19px 43px;
-  transform: translate3d(0px, -1px, 0px);
+  transform: translateY(-0.125rem);
+  box-shadow: DEFAULT_SHADOW;
+  color: white;
 }
 
-.action__area {
+.action_area {
   width: inherit;
   height: inherit;
   display: flex;
@@ -17,17 +26,14 @@
 }
 
 .image {
-  height: 90%;
-  max-width: 90%;
-  max-height: 90%;
-  margin-top: 10px;
+  height: 100%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
 }
 
-.resize__image {
-  height: 180px;
+.resize_image {
+  max-height: 200px;
 }
 
 .label {
@@ -40,15 +46,38 @@
 .price {
   font-size: 18px;
   font-weight: bold;
-  color: #5f5f5f;
+  color: DARK_GREY;
   margin-right: 1rem;
 }
 
-.snackName {
+.snack_name {
   max-width: 60%;
   font-size: 16px;
   text-align: left;
-  color: #5f5f5f;
+  color: DARK_GREY;
   margin-left: 1rem;
   word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .base {
+    width: 130px;
+    height: 140px;
+  }
+
+  .resize_image {
+    max-height: 104px;
+  }
+
+  .snack_name {
+    font-size: 14px;
+    margin: 0.5rem 0rem 0.5rem 0.5rem;
+    /* margin-left: 0.25rem */
+  }
+
+  .price {
+    font-size: 16px;
+    margin: 0.5rem;
+    /* margin-right: 0.25rem */
+  }
 }
