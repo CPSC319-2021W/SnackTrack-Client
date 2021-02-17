@@ -3,9 +3,8 @@ import { React, useState } from 'react';
 import PaymentsTable from '../components/PaymentsTable';
 import { getPaymentHistory } from '../services/PaymentsService';
 
-const rowsPerPage = 8;
-
 const Transactions = () => {
+  const [rowsPerPage] = useState(8);
   const [paymentHistory, setPaymentHistory] = useState(getPaymentHistory(0, rowsPerPage));
 
   const handleChangePage = (page) => {
