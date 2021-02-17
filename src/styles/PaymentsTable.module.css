@@ -1,0 +1,41 @@
+.paper {
+  /* TODO: Make Responsive */
+  width: 360px;
+  height: 590px;
+  max-width: 360px;
+  max-height: 590px;
+}
+
+.table {
+  width: inherit;
+  height: inherit;
+}
+
+.primaryHeader {
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.primaryHeader__text {
+  font-size: 1.17em;
+}
+
+.secondaryHeader {
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.secondaryHeader__text {
+  font-size: 1em;
+}
+
+.cell {
+  width: 125px;
+  height: 52px;
+  max-height: 52px;
+  border-bottom: 0;
+}
+
+.pagination {
+  border-top: 1px solid rgba(224, 224, 224, 1);
+}
