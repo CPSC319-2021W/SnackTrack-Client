@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import { isCancelled, isPaid, isPaymentPending } from '../helpers/TransactionsHelpers';
+import { isCancelled, isPaid } from '../helpers/TransactionsHelpers';
 
 import React from 'react';
 import styles from '../styles/TransactionsTable.module.css';
