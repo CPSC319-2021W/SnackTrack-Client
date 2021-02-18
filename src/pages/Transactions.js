@@ -10,9 +10,8 @@ import TransactionsTable from '../components/TransactionsTable';
 import { getPaymentHistory } from '../services/PaymentsService';
 import { useSelector } from 'react-redux';
 
-const rowsPerPage = 8;
-
 const Transactions = () => {
+  const [rowsPerPage] = useState(8);
   const { userId, username } = useSelector((state) => state.usersReducer);
   const [paymentsResponse, setPaymentsResponse] = useState(
     getPaymentHistory(0, rowsPerPage)

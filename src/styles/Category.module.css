@@ -1,0 +1,70 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY from colors;
+
+.container {
+	display: flex;
+	flex-direction: row;
+}
+
+.categoryBox {
+	width: 95px;
+	line-height: 23px;
+	text-align: center;
+	color: DARK_GREY;
+}
+
+.categoryBox > * {
+	font-size: 18px;
+}
+
+.img {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+}
+
+.img:hover {
+	background-color: #a7e6f2;
+	font-weight: bold;
+}
+
+.img:active {
+	background-color: #a7e6f2;
+	font-weight: bold;
+}
+
+.imgToggle {
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	background-color: #a7e6f2;
+	font-weight: bold;
+}
+
+.button {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+}
+
+.button:hover {
+	font-weight: bold;
+}
+
+.button:active {
+	font-weight: bold;
+}
+
+.buttonToggle {
+	background-color: transparent;
+	background-repeat: no-repeat;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	outline: none;
+	font-weight: bold;
+}
+
