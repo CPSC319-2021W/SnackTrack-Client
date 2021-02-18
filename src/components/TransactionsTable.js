@@ -135,13 +135,13 @@ const TransactionsTable = (props) => {
                       transactions[i].payment_id == null ? (
                         <Checkbox
                           size='small'
+                          checked={checkIsSelected(transactions[i].transaction_id)}
                           onClick={() =>
                             onSelectTransaction(
                               transactions[i].transaction_id,
                               transactions[i].transaction_amount
                             )
                           }
-                          checked={checkIsSelected(transactions[i].transaction_id)}
                         />
                       ) : null}
                       {column.id === 'actions' &&
