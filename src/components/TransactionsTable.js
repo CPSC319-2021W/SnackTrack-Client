@@ -128,29 +128,29 @@ const TransactionsTable = (props) => {
                       {column.format && typeof value === 'number'
                         ? column.format(value)
                         : column.id === 'status'
-                        ? column.format(value, transaction['payment_id'])
-                        : value}
+                          ? column.format(value, transaction['payment_id'])
+                          : value}
                       {column.id === 'checkbox' &&
                       transactions[i].status === 'PR' &&
                       transactions[i].payment_id == null ? (
                         <Checkbox
-                          size='small'
-                          checked={checkIsSelected(transactions[i].transaction_id)}
-                          onClick={() =>
-                            onSelectTransaction(
-                              transactions[i].transaction_id,
-                              transactions[i].transaction_amount
-                            )
-                          }
-                        />
-                      ) : null}
+                            size='small'
+                            checked={checkIsSelected(transactions[i].transaction_id)}
+                            onClick={() =>
+                              onSelectTransaction(
+                                transactions[i].transaction_id,
+                                transactions[i].transaction_amount
+                              )
+                            }
+                          />
+                        ) : null}
                       {column.id === 'actions' &&
                       transactions[i].status === 'PR' &&
                       transactions[i].payment_id == null ? (
                         <Button className={styles.button__edit} variant='outlined'>
-                          Edit Order
-                        </Button>
-                      ) : null}
+                            Edit Order
+                          </Button>
+                        ) : null}
                     </TableCell>
                   );
                 })}
