@@ -1,0 +1,157 @@
+.icon_container {
+    width: 100px;
+    height: 100px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+.icon_container:active {
+    border: none;
+}
+
+/* .icon_button:hover {
+    cursor: pointer;
+    transform: translateY(-20px);
+} */
+
+/* fruits */
+
+.active #apple {
+    -webkit-animation: apple 0.1s ease-out forwards;
+    animation: apple 0.1s ease-out forwards;
+}
+  
+#apple {
+    transition: transform 0.1s;
+}
+  
+#apple:hover {
+    transform: translateY(-20px);
+}
+  
+@keyframes apple {
+    0% {
+        -webkit-transform: rotate(0deg) translateY(0);
+        transform: rotate(0deg) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: rotate(5deg) translateY(-6px);
+        transform: rotate(5deg) translateY(-6px);
+        -webkit-transform-origin: 100% 0%;
+        transform-origin: 100% 0%;
+    }
+}
+  
+.active #leaf {
+    -webkit-animation: leaf 0.1s ease-out forwards;
+    animation: leaf 0.1s ease-out forwards;
+}
+  
+@keyframes leaf {
+    0% {
+        -webkit-transform: rotate(0deg) translateY(0);
+        transform: rotate(0deg) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+}
+    100% {
+        -webkit-transform: rotate(-5deg) translateY(-65px);
+        transform: rotate(-5deg) translateY(-65px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+  
+.active #apple_background {
+    -webkit-animation: apple_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: apple_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+  
+@keyframes apple_background {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        -webkit-transform-origin: 50% 60%;
+        transform-origin: 50% 60%;
+    }
+}
+
+/* candy */
+
+.active #candy {
+    -webkit-animation: candy 0.25s 2 linear;
+    animation: candy 0.25s 2 linear;
+}
+  
+#candy {
+    transition: transform 0.1s;
+}
+  
+#candy:hover {
+    transform: translateY(-20px);
+    cursor: pointer;
+}
+  
+@keyframes candy {
+    0% {
+        -webkit-transform: rotate(0) translateY(0);
+        transform: rotate(0) translateY(0);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: rotate(360deg) translateY(-20px);
+        transform: rotate(360deg) translateY(-20px);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+}
+  
+/* .active #leaf {
+    -webkit-animation: leaf 0.1s ease-out forwards;
+    animation: leaf 0.1s ease-out forwards;
+}
+  
+@keyframes leaf {
+    0% {
+        -webkit-transform: rotate(0deg) translateY(0);
+        transform: rotate(0deg) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+}
+    100% {
+        -webkit-transform: rotate(-5deg) translateY(-65px);
+        transform: rotate(-5deg) translateY(-65px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+} */
+  
+.active #candy_background {
+    -webkit-animation: candy_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: candy_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+  
+@keyframes candy_background {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        -webkit-transform-origin: 50% 65%;
+        transform-origin: 50% 65%;
+    }
+}
