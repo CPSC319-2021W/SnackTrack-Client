@@ -13,7 +13,7 @@ const INITIAL_STATE = {
   balance: null,
   isActive: null,
   isAdmin: null,
-  isAuthenticated: null,
+  isAuthenticated: false,
   error: null
 };
 
@@ -28,11 +28,11 @@ const usersSlice = createSlice({
   reducers: {
     simpleLogin: (state, action) => {
       const {
-        userId,
-        firstName,
+        user_id,
+        first_name,
       } = action.payload;
-      state.userId = userId;
-      state.firstName = firstName;
+      state.userId = user_id;
+      state.firstName = first_name;
     }
   },
   extraReducers: {
