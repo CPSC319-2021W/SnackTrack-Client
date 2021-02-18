@@ -30,11 +30,11 @@ const Root = () => {
 
   const onSuccess = (res) => {
     authLogoutSuccess();
-    console.log(res);
+    console.log('success: ', res);
   };
 
   const onFailure = (res) => {
-    console.log(res);
+    console.log('failed: ', res);
   };
 
   const { signOut } = useGoogleLogout({
