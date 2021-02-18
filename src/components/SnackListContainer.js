@@ -1,8 +1,8 @@
 import CategoryFilter from './CategoryFilter';
 import { Container } from '@material-ui/core';
 import React from 'react';
-import { defaultCategory } from '../constant';
-import styles from '../styles/snackListContainer.module.css';
+import { defaultCategories } from '../constants';
+import styles from '../styles/SnackListContainer.module.css';
 import { useSelector } from 'react-redux';
 
 const SnackListContainer = () => {
@@ -27,7 +27,7 @@ const SnackListContainer = () => {
         </div>
       </Container>
       <Container>
-        <CategoryFilter category={defaultCategory} />
+        <CategoryFilter category={defaultCategories} />
         {console.log(`current filter is ${snackFilter.categories}`)}
       </Container>
     </div>

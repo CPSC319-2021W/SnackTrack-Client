@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { addCategory, removeCategory } from '../redux/features/snackSlice';
-import { defaultCategory } from '../constant';
-import styles from '../styles/category.module.css';
+
+import { defaultCategories } from '../constants';
+import styles from '../styles/Category.module.css';
 import { useDispatch } from 'react-redux';
 
 const CategoryFilter = () => {
 
   const [filters, setFilters] = useState([]);
-  const [categories, setCategories] = useState(defaultCategory);  
+  const [categories, setCategories] = useState(defaultCategories);  
   const dispatch = useDispatch();
 
   const addFilter = (category) => dispatch(addCategory(category));

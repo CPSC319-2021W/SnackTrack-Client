@@ -5,7 +5,7 @@ import cookies from './images/illustrations/cookies.svg';
 import crackers from './images/illustrations/crackers.svg';
 import fruits from './images/illustrations/fruits.svg';
 
-export const defaultCategory = [
+export const defaultCategories = [
   {
     name: 'Chocolate',
     src: chocolate,
