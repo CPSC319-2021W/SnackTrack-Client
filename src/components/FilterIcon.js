@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { DEFAULT_CATEGORIES } from '../constants';
 
 import { ReactComponent as Candy } from '../assets/icons/candy.svg';
+import { ReactComponent as Chips } from '../assets/icons/chips.svg';
 import { ReactComponent as Chocolate } from '../assets/icons/chocolate.svg';
 import { ReactComponent as Fruits } from '../assets/icons/fruits.svg';
 
@@ -29,6 +30,12 @@ const FilterIcon = ({ type }) => {
     case DEFAULT_CATEGORIES.CHOCOLATE:
       return (
         <Chocolate
+          className={classNames({ 'icon_button': true, 'active': active })} 
+          onClick={() => setActive(prevActive => !prevActive)} />
+      );
+    case DEFAULT_CATEGORIES.CHIPS:
+      return (
+        <Chips
           className={classNames({ 'icon_button': true, 'active': active })} 
           onClick={() => setActive(prevActive => !prevActive)} />
       );

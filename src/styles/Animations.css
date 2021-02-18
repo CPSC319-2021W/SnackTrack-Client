@@ -24,6 +24,7 @@
   
 #apple {
     transition: transform 0.1s;
+    cursor: pointer;
 }
   
 #apple:hover {
@@ -316,7 +317,7 @@
     }
 }
 
-/* fruits */
+/* chocolate */
 
 .active #chocolate_bar {
     -webkit-animation: chocolate_bar 0.2s ease-out forwards;
@@ -390,5 +391,102 @@
         transform: scale(2.5);
         -webkit-transform-origin: 50% 53%;
         transform-origin: 50% 53%;
+    }
+}
+
+/* chips */
+
+.active #chip_bag {
+    -webkit-animation: chip_bag 0.2s ease-out forwards;
+    animation: chip_bag 0.2s ease-out forwards;
+}
+  
+#chip_bag {
+    transition: transform 0.1s;
+    cursor: pointer;
+}
+  
+#chip_bag:hover {
+    transform: translateY(-20px);
+}
+  
+@keyframes chip_bag {
+    0%, 100% {
+        -webkit-transform: translate(0, 30px);
+        transform: translate(0, 30px);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    15% {
+        -webkit-transform: translate(-30px, 30px) rotate(-6deg);
+        transform: translate(-30px, 30px) rotate(-6deg);
+    }
+    30% {
+        -webkit-transform: translate(15px, 30px) rotate(6deg);
+        transform: translate(15px, 30px) rotate(6deg);
+    }
+    75% {
+        -webkit-transform: translate(-6px, 30px) rotate(-1.2deg);
+        transform: translate(-6px, 30px) rotate(-1.2deg);
+    }
+}
+  
+.active #chip_1 {
+    -webkit-animation: chip_1 0.15s ease-out forwards;
+    animation: chip_1 0.15s ease-out forwards;
+}
+  
+@keyframes chip_1 {
+    0% {
+        -webkit-transform: rotate(0deg) translate(0, 0);
+        transform: rotate(0deg) translate(0, 0);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+}
+    100% {
+        -webkit-transform: rotate(35deg) translate(20px, 5px);
+        transform: rotate(35deg) translate(20px, 5px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #chip_2 {
+    -webkit-animation: chip_2 0.1s ease-out forwards;
+    animation: chip_2 0.1s ease-out forwards;
+}
+  
+@keyframes chip_2 {
+    0% {
+        -webkit-transform: rotate(0deg) translate(0);
+        transform: rotate(0deg) translate(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+}
+    100% {
+        -webkit-transform: rotate(-10deg) translate(-10px, -170px);
+        transform: rotate(-10deg) translate(-10px, -170px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+  
+.active #chip_background {
+    -webkit-animation: chip_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: chip_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+  
+@keyframes chip_background {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
     }
 }
