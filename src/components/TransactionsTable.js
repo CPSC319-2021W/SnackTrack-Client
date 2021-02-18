@@ -11,6 +11,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import { isCancelled, isPaid, isPaymentPending } from '../helpers/TransactionsHelpers';
 
 import React from 'react';
 import styles from '../styles/TransactionsTable.module.css';
@@ -61,9 +62,9 @@ const TransactionsTable = (props) => {
       id: 'status',
       label: 'Status',
       format: (status, paymentId) => {
-        if (status === 'CN') {
+        if (isCancelled(status)) {
           return <span className={styles.status__cancelled}>CANCELLED</span>;
-        } else if (paymentId) {
+        } else if (isPaid(paymentId)) {
           return <span className={styles.status__paid}>PAID</span>;
         }
         return <span className={styles.status__pending}>PAYMENT PENDING</span>;
@@ -135,9 +136,8 @@ const TransactionsTable = (props) => {
                       transactions[i].payment_id == null ? (
                         <Checkbox
                           size='small'
-                          onClick={(event) =>
+                          onClick={() =>
                             onSelectTransaction(
-                              event,
                               transactions[i].transaction_id,
                               transactions[i].transaction_amount
                             )

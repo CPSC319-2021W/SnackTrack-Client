@@ -1,5 +1,9 @@
 /* eslint-disable */
 import { React, useEffect, useState } from 'react';
+import {
+  calculateTransactionsSum,
+  isPaymentPending
+} from '../helpers/TransactionsHelpers.js';
 import { getUserTransactions, makePayment } from '../services/TransactionsService';
 
 import PaymentsTable from '../components/PaymentsTable';
@@ -10,150 +14,146 @@ import { useSelector } from 'react-redux';
 const rowsPerPage = 8;
 
 const Transactions = () => {
-  const { username } = useSelector((state) => state.usersReducer);
-  const [paymentHistory, setPaymentHistory] = useState(getPaymentHistory(0, rowsPerPage));
-  const [paginatedTransactions, setPaginatedTransactions] = useState(
+  const { userId, username } = useSelector((state) => state.usersReducer);
+  const [paymentsResponse, setPaymentsResponse] = useState(
+    getPaymentHistory(0, rowsPerPage)
+  );
+  const [transactionsResponse, setTransactionsResponse] = useState(
     getUserTransactions(0, rowsPerPage)
   );
   const [selectedTransactions, setSelectedTransactions] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
-  const [paymentAmount, setPaymentAmount] = useState(0);
+  const [subtotalAmount, setSubtotalAmount] = useState(0);
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
-  const transactionsOnPage = paginatedTransactions.transactions
-    .filter(
-      (transaction) => transaction.payment_id == null && transaction.status === 'PR'
-    )
-    .map((transaction) => {
-      return {
-        transactionId: transaction.transaction_id,
-        total: transaction.transaction_amount
-      };
-    });
-  const transactionsToAdd = paginatedTransactions.transactions
-    .filter(
-      (transaction) =>
-        transaction.payment_id == null &&
-        transaction.status === 'PR' &&
-        selectedTransactions.indexOf(transaction.transaction_id) === -1
-    )
-    .map((transaction) => {
-      return {
-        transactionId: transaction.transaction_id,
-        total: transaction.transaction_amount
-      };
-    });
-  const transactionIdsToAdd = transactionsToAdd.map(
-    (transaction) => transaction.transactionId
+  const { currentPage, transactions } = transactionsResponse;
+  const uncheckedTransactions = transactions.filter(
+    (transaction) =>
+      isPaymentPending(transaction.payment_id, transaction.status) &&
+      selectedTransactions.indexOf(transaction.transaction_id) === -1
   );
-  const transactionIdsOnPage = transactionsOnPage.map(
-    (transaction) => transaction.transactionId
+  const uncheckedTransactionsIds = uncheckedTransactions.map(
+    (transaction) => transaction.transaction_id
   );
-  const totalOnPage = transactionsOnPage
-    .map((transaction) => transaction.total)
-    .reduce((a, b) => a + b, 0);
-  const totalToAdd = transactionsToAdd
-    .map((transaction) => transaction.total)
-    .reduce((a, b) => a + b, 0);
 
   const handlePaymentChangePage = (page) => {
-    setPaymentHistory(getPaymentHistory(page, rowsPerPage));
+    setPaymentsResponse(getPaymentHistory(page, rowsPerPage));
   };
 
   const handleTransactionChangePage = (page) => {
-    setPaginatedTransactions(getUserTransactions(page, rowsPerPage));
+    setTransactionsResponse(getUserTransactions(page, rowsPerPage));
   };
 
-  const removeFromSelectedPage = (page) => {
-    const index = selectedPages.indexOf(page);
-    let newSelectedPages = [];
+  const handlePayForOrders = () => {
+    if (selectedTransactions.length > 0)
+      makePayment(userId, selectedTransactions, subtotalAmount, username);
+  };
 
-    if (index === 0) {
-      newSelectedPages = newSelectedPages.concat(selectedPages.slice(1));
-    } else if (index === selectedPages.length - 1) {
-      newSelectedPages = newSelectedPages.concat(selectedPages.slice(0, -1));
-    } else if (index > 0) {
-      newSelectedPages = newSelectedPages.concat(
-        selectedPages.slice(0, index),
-        selectedPages.slice(index + 1)
-      );
-    }
-
-    return newSelectedPages;
+  const handleSelectOneTransaction = (name, amount) => {
+    const newSelected = selectOneTransaction(name, amount);
+    setSelectedTransactions(newSelected);
   };
 
   const handleSelectAllTransactions = (event) => {
-    let newSelectedPages = [];
-    let newSelectedTransactions = [];
     if (event.target.checked) {
-      newSelectedPages = newSelectedPages.concat(
-        selectedPages,
-        paginatedTransactions.currentPage
-      );
-      newSelectedTransactions = newSelectedTransactions.concat(
-        selectedTransactions,
-        transactionIdsToAdd
-      );
+      const uncheckedTransactionsAmount = calculateTransactionsSum(uncheckedTransactions);
+      const newSelectedPages = selectAll('pages');
+      const newSelectedTransactions = selectAll('transactions');
+
       setSelectedPages(newSelectedPages);
       setSelectedTransactions(newSelectedTransactions);
-      setPaymentAmount(paymentAmount + totalToAdd);
+      setSubtotalAmount(subtotalAmount + uncheckedTransactionsAmount);
     } else {
-      newSelectedPages = removeFromSelectedPage(paginatedTransactions.currentPage);
-
-      newSelectedTransactions = newSelectedTransactions.concat(selectedTransactions);
-      let selectedIndex;
-      for (const transaction of transactionIdsOnPage) {
-        // Refactor into helper for reuse in handleSelectTransaction
-        selectedIndex = newSelectedTransactions.indexOf(transaction);
-
-        if (selectedIndex === 0) {
-          newSelectedTransactions = newSelectedTransactions.slice(1);
-        } else if (selectedIndex === selectedTransactions.length - 1) {
-          newSelectedTransactions = newSelectedTransactions.slice(0, -1);
-        } else if (selectedIndex > 0) {
-          (newSelectedTransactions = selectedTransactions.slice(0, selectedIndex)),
-            selectedTransactions.slice(selectedIndex + 1);
-        }
-      }
+      const unpaidTransactions = transactions.filter((transaction) =>
+        isPaymentPending(transaction.payment_id, transaction.status)
+      );
+      const unpaidTransactionIds = unpaidTransactions.map(
+        (transaction) => transaction.transaction_id
+      );
+      const pageTransactionsTotal = calculateTransactionsSum(unpaidTransactions);
+      const newSelectedPages = deselectAll(currentPage, 'pages');
+      const newSelectedTransactions = deselectAll(unpaidTransactionIds, 'transactions');
 
       setSelectedPages(newSelectedPages);
       setSelectedTransactions(newSelectedTransactions);
-      setPaymentAmount(paymentAmount - totalOnPage);
+      setSubtotalAmount(subtotalAmount - pageTransactionsTotal);
     }
   };
 
-  const handleSelectTransaction = (event, name, amount) => {
-    const selectedIndex = selectedTransactions.indexOf(name);
-    let newSelected = [];
+  const selectOneTransaction = (transaction, amount) => {
+    const index = selectedTransactions.indexOf(transaction);
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selectedTransactions, name);
-      setPaymentAmount(paymentAmount + amount);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selectedTransactions.slice(1));
-      setPaymentAmount(paymentAmount - amount);
-    } else if (selectedIndex === selectedTransactions.length - 1) {
-      newSelected = newSelected.concat(selectedTransactions.slice(0, -1));
-      setPaymentAmount(paymentAmount - amount);
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selectedTransactions.slice(0, selectedIndex),
-        selectedTransactions.slice(selectedIndex + 1)
+    const transactionIsNotSelected = () => {
+      return index === -1;
+    };
+
+    const transactionIsFirstItem = () => {
+      return index === 0;
+    };
+
+    const transactionIsLastItem = () => {
+      return index === selectedTransactions.length - 1;
+    };
+
+    const transactionIsSelected = () => {
+      return index > 0;
+    };
+
+    if (transactionIsNotSelected()) {
+      setSubtotalAmount(subtotalAmount + amount);
+      return [].concat(selectedTransactions, transaction);
+    } else if (transactionIsFirstItem()) {
+      setSubtotalAmount(subtotalAmount - amount);
+      return [].concat(selectedTransactions.slice(1));
+    } else if (transactionIsLastItem()) {
+      setSubtotalAmount(subtotalAmount - amount);
+      return [].concat(selectedTransactions.slice(0, -1));
+    } else if (transactionIsSelected()) {
+      setSubtotalAmount(subtotalAmount - amount);
+      return [].concat(
+        selectedTransactions.slice(0, index),
+        selectedTransactions.slice(index + 1)
       );
-      setPaymentAmount(paymentAmount - amount);
     }
+  };
 
-    setSelectedTransactions(newSelected);
+  const selectAll = (type) => {
+    if (type === 'transactions') {
+      return [].concat(selectedTransactions, uncheckedTransactionsIds);
+    } else if (type === 'pages') {
+      return [].concat(selectedPages, currentPage);
+    }
+  };
+
+  const deselectOne = (arr, deselection) => {
+    const index = arr.indexOf(deselection);
+    let newArray = [];
+    if (index === 0) {
+      newArray = newArray.concat(arr.slice(1));
+    } else if (index === arr.length - 1) {
+      newArray = newArray.concat(arr.slice(0, -1));
+    } else if (index > 0) {
+      newArray = newArray.concat(arr.slice(0, index), arr.slice(index + 1));
+    }
+    return newArray;
+  };
+
+  const deselectAll = (deselection, type) => {
+    if (type === 'transactions') {
+      let transactionsToDeselect = selectedTransactions;
+
+      for (const transaction of deselection) {
+        transactionsToDeselect = deselectOne(transactionsToDeselect, transaction);
+      }
+
+      return transactionsToDeselect;
+    } else if (type === 'pages') {
+      return deselectOne(selectedPages, deselection);
+    }
   };
 
   const isTransactionSelected = (name) => selectedTransactions.indexOf(name) !== -1;
 
   const isAllTransactionsSelected = (page) => selectedPages.indexOf(page) !== -1;
-
-  const handlePayForOrders = () => {
-    const userId = paginatedTransactions.transactions[0].user_id;
-    if (selectedTransactions.length > 0)
-      makePayment(userId, selectedTransactions, paymentAmount, username);
-  };
 
   useEffect(() => {
     if (selectedTransactions.length === 0) {
@@ -164,11 +164,11 @@ const Transactions = () => {
   }, [selectedTransactions]);
 
   useEffect(() => {
-    const selectedIndex = selectedPages.indexOf(paginatedTransactions.currentPage);
-    if (transactionIdsToAdd.length === 0 && selectedIndex === -1)
+    const index = selectedPages.indexOf(currentPage);
+    if (uncheckedTransactionsIds.length === 0 && index === -1)
       handleSelectAllTransactions({ target: { checked: true } });
-    else if (transactionIdsToAdd.length > 0 && selectedIndex !== -1) {
-      const newSelectedPages = removeFromSelectedPage(paginatedTransactions.currentPage);
+    else if (uncheckedTransactionsIds.length > 0 && index !== -1) {
+      const newSelectedPages = deselectOne(selectedPages, currentPage);
       setSelectedPages(newSelectedPages);
     }
   }, [selectedTransactions]);
@@ -180,18 +180,18 @@ const Transactions = () => {
       </p>
 
       <TransactionsTable
-        data={paginatedTransactions}
+        data={transactionsResponse}
         rowsPerPage={rowsPerPage}
         payForOrdersDisabled={payForOrdersDisabled}
         checkIsSelected={isTransactionSelected}
         checkIsAllSelected={isAllTransactionsSelected}
         onChangePage={handleTransactionChangePage}
         onSelectAllTransactions={handleSelectAllTransactions}
-        onSelectTransaction={handleSelectTransaction}
+        onSelectTransaction={handleSelectOneTransaction}
         onPayForOrders={handlePayForOrders}
       />
       <PaymentsTable
-        data={paymentHistory}
+        data={paymentsResponse}
         rowsPerPage={rowsPerPage}
         onChangePage={handlePaymentChangePage}
       />
