@@ -5,7 +5,7 @@ import FilterIcon from '../components/FilterIcon';
 const Snacks = () => (
   <div>
     <p>Snacks Page</p>
-    <FilterIcon type={'Crackers'} />
+    <FilterIcon type={'Cookies'} />
   </div>
 );
 
