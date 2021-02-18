@@ -135,7 +135,7 @@ const TransactionsTable = (props) => {
                         transactions[i].payment_id,
                         transactions[i].status
                       ) ? (
-                        <Checkbox
+                          <Checkbox
                             size='small'
                             checked={checkIsSelected(transactions[i].transaction_id)}
                             onClick={() =>
@@ -151,7 +151,7 @@ const TransactionsTable = (props) => {
                         transactions[i].payment_id,
                         transactions[i].status
                       ) ? (
-                        <Button className={styles.button__edit} variant='outlined'>
+                          <Button className={styles.button__edit} variant='outlined'>
                             Edit Order
                           </Button>
                         ) : null}
