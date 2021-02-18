@@ -28,9 +28,9 @@ const Root = () => {
   const getUserById = (userId) => dispatch(getUser(userId));
   const authLogoutSuccess = () => dispatch(setLogout());
 
-  const onSuccess = (res) => {
+  const onSuccess = () => {
     authLogoutSuccess();
-    console.log('success: ', res);
+    console.log('success');
   };
 
   const onFailure = (res) => {
