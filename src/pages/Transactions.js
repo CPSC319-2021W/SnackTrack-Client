@@ -164,9 +164,18 @@ const Transactions = () => {
 
   useEffect(() => {
     const index = selectedPages.indexOf(currentPage);
-    if (uncheckedTransactionsIds.length === 0 && index === -1)
+
+    const allItemsChecked = () => {
+      return uncheckedTransactionsIds.length === 0 && index === -1;
+    };
+
+    const someItemsUnchecked = () => {
+      return uncheckedTransactionsIds.length > 0 && index !== -1;
+    };
+
+    if (allItemsChecked()) {
       handleSelectAllTransactions({ target: { checked: true } });
-    else if (uncheckedTransactionsIds.length > 0 && index !== -1) {
+    } else if (someItemsUnchecked()) {
       const newSelectedPages = deselectOne(selectedPages, currentPage);
       setSelectedPages(newSelectedPages);
     }

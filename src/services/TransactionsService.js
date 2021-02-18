@@ -2,10 +2,15 @@ import httpClient from './axios.config.js';
 import { mockTransactionDBCall } from '../mockServer';
 
 const getUserTransactions = (page, rowsPerPage) => {
-  // TODO: Replace with API Call (Ticket: SNAK-)
-  // const response = await httpClient.get(`/users/${userId}/transactions`, {
-  //   params: { page: page, size: rowsPerPage }
-  // });
+  // TODO: Replace with API Call (Ticket: SNAK-144)
+  // try {
+  //   const response = await httpClient.get(`/users/${userId}/transactions`, {
+  //     params: { page: page, size: rowsPerPage }
+  //   });
+  // } catch (err) {
+  //   // TODO: Handle 404
+  //   console.log(err.toString());
+  // }
   return mockTransactionDBCall(page, rowsPerPage);
 };
 
