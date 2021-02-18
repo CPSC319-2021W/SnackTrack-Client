@@ -315,3 +315,80 @@
         transform-origin: 50% 65%;
     }
 }
+
+/* fruits */
+
+.active #chocolate_bar {
+    -webkit-animation: chocolate_bar 0.2s ease-out forwards;
+    animation: chocolate_bar 0.2s ease-out forwards;
+}
+  
+#chocolate_bar {
+    transition: transform 0.1s;
+    cursor: pointer;
+}
+  
+#chocolate_bar:hover {
+    transform: translateY(-20px);
+}
+  
+@keyframes chocolate_bar {
+    0%, 100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    15% {
+        -webkit-transform: translateX(-30px) rotate(-6deg);
+        transform: translateX(-30px) rotate(-6deg);
+    }
+    30% {
+        -webkit-transform: translateX(15px) rotate(6deg);
+        transform: translateX(15px) rotate(6deg);
+    }
+    75% {
+        -webkit-transform: translateX(-6px) rotate(-1.2deg);
+        transform: translateX(-6px) rotate(-1.2deg);
+    }
+}
+  
+.active #chocolate_bit {
+    -webkit-animation: chocolate_bit 0.1s ease-out forwards;
+    animation: chocolate_bit 0.1s ease-out forwards;
+}
+  
+@keyframes chocolate_bit {
+    0% {
+        -webkit-transform: rotate(0deg) translateY(0);
+        transform: rotate(0deg) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+}
+    100% {
+        -webkit-transform: rotate(-7deg) translateY(-90px);
+        transform: rotate(-7deg) translateY(-90px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+  
+.active #chocolate_background {
+    -webkit-animation: chocolate_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: chocolate_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+  
+@keyframes chocolate_background {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        -webkit-transform-origin: 50% 53%;
+        transform-origin: 50% 53%;
+    }
+}
