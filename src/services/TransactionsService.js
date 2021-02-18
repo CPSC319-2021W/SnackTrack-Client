@@ -1,5 +1,5 @@
 import httpClient from './axios.config.js';
-import { mockTransactionDBCall } from '../mockServer';
+import { mockDBCall } from '../mockServer';
 
 const getUserTransactions = (page, rowsPerPage) => {
   // TODO: Replace with API Call (Ticket: SNAK-144)
@@ -11,7 +11,7 @@ const getUserTransactions = (page, rowsPerPage) => {
   //   // TODO: Handle 404
   //   console.log(err.toString());
   // }
-  return mockTransactionDBCall(page, rowsPerPage);
+  return mockDBCall('transactions', page, rowsPerPage);
 };
 
 const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
