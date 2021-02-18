@@ -2,7 +2,7 @@ const isPaid = (paymentId) => {
   return paymentId !== null;
 };
 
-const isCancelled = (paymentId) => {
+const isCancelled = (status) => {
   return status === 'CN';
 };
 

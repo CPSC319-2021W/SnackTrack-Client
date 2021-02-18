@@ -1,4 +1,3 @@
-/* eslint-disable */
 import httpClient from './axios.config.js';
 import { mockTransactionDBCall } from '../mockServer';
 
