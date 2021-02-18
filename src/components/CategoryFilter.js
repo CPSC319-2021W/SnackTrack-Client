@@ -6,7 +6,6 @@ import styles from '../styles/Category.module.css';
 import { useDispatch } from 'react-redux';
 
 const CategoryFilter = () => {
-
   const [filters, setFilters] = useState([]);
   const [categories, setCategories] = useState(defaultCategories);  
   const dispatch = useDispatch();
