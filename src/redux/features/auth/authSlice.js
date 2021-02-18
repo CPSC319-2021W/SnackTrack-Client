@@ -1,25 +1,35 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
-  token: null,
-  profile: null
+  profile: { token: null, email: null, firstName: null, lastName: null, imageUri: null }
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: INITIAL_STATE,
   reducers: {
-    // TODO: Implement Reducers
-    setToken: (state, action) => {
-      const { token } = action.payload;
-      state.token = token;
+    setLoginSuccess: (state, action) => {
+      const { googleId, email, givenName, familyName, imageUrl } = action.payload.profile;
+      state.profile = {
+        token: googleId,
+        email: email,
+        firstName: givenName,
+        lastName: familyName,
+        imageUri: imageUrl
+      };
     },
-    setProfile: (state, action) => {
-      state.profile = action.payload;
+    setLogout: (state) => {
+      state.profile = {
+        token: null,
+        email: null,
+        firstName: null,
+        lastName: null,
+        imageUri: null
+      };
     }
   }
 });
 
-export const { setToken, setProfile } = authSlice.actions;
+export const { setLoginSuccess, setLogout } = authSlice.actions;
 
 export default authSlice.reducer;
