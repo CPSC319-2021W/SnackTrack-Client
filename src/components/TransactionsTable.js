@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import { isCancelled, isPaid } from '../helpers/TransactionsHelpers';
+import { isCancelled, isPaid, isPaymentPending } from '../helpers/TransactionsHelpers';
 
 import React from 'react';
 import styles from '../styles/TransactionsTable.module.css';
@@ -131,8 +131,10 @@ const TransactionsTable = (props) => {
                           ? column.format(value, transaction['payment_id'])
                           : value}
                       {column.id === 'checkbox' &&
-                      transactions[i].status === 'PR' &&
-                      transactions[i].payment_id == null ? (
+                      isPaymentPending(
+                        transactions[i].payment_id,
+                        transactions[i].status
+                      ) ? (
                         <Checkbox
                             size='small'
                             checked={checkIsSelected(transactions[i].transaction_id)}
@@ -145,8 +147,10 @@ const TransactionsTable = (props) => {
                           />
                         ) : null}
                       {column.id === 'actions' &&
-                      transactions[i].status === 'PR' &&
-                      transactions[i].payment_id == null ? (
+                      isPaymentPending(
+                        transactions[i].payment_id,
+                        transactions[i].status
+                      ) ? (
                         <Button className={styles.button__edit} variant='outlined'>
                             Edit Order
                           </Button>

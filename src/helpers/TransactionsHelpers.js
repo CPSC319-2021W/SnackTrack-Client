@@ -15,4 +15,5 @@ const calculateTransactionsSum = (arr) => {
     .map((transaction) => transaction.transaction_amount)
     .reduce((a, b) => a + b, 0);
 };
+
 export { isPaid, isPaymentPending, isCancelled, calculateTransactionsSum };
