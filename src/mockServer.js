@@ -44,88 +44,84 @@ const mockTransactionData = [
   {
     transactions: [
       {
-        user_id: 1,
         transaction_id: 1,
-        orderDate: '2020/01/21',
-        snack: 'Banana',
+        snack_name: 'Banana',
+        transaction_amount: 300,
         quantity: 12,
-        status: 'PR',
-        total: 300,
-        actions: ''
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 2,
-        orderDate: '2020/01/21',
-        snack: 'Banana',
+        snack_name: 'Banana',
+        transaction_amount: 300,
         quantity: 12,
-        status: 'PR',
-        total: 300,
-        actions: ''
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 3,
-        orderDate: '2020/01/21',
-        snack: 'Banana',
+        snack_name: 'Banana',
+        transaction_amount: 300,
         quantity: 12,
-        status: 'PR',
-        total: 300,
-        actions: ''
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 4,
-        orderDate: '2020/01/12',
-        snack: 'Banana',
+        snack_name: 'Banana',
+        transaction_amount: 300,
         quantity: 12,
-        status: 'CN',
-        total: 300,
-        actions: ''
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'CN'
       },
       {
-        user_id: 1,
         transaction_id: 5,
-        orderDate: '2020/01/12',
-        snack: 'Banana',
-        quantity: 1,
-        paymentId: 1,
-        status: 'PR',
-        total: 1000,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: 1,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 6,
-        orderDate: '2020/01/12',
-        snack: 'KitKat',
-        quantity: 1,
-        paymentId: 1,
-        status: 'PR',
-        total: 25,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'CN'
       },
       {
-        user_id: 1,
         transaction_id: 7,
-        orderDate: '2020/01/10',
-        snack: 'KitKat',
-        quantity: 1,
-        paymentId: 1,
-        status: 'PR',
-        total: 125,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: 1,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 8,
-        orderDate: '2020/01/10',
-        snack: 'KitKat',
-        quantity: 1,
-        paymentId: 1,
-        status: 'PR',
-        total: 100,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: 1,
+        status: 'PR'
       }
     ],
     totalRows: 10,
@@ -135,36 +131,29 @@ const mockTransactionData = [
   {
     transactions: [
       {
-        user_id: 1,
         transaction_id: 9,
-        orderDate: '2020/01/01',
-        snack: 'KitKat',
-        quantity: 1,
-        paymentId: 1,
-        status: 'PR',
-        total: 125,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: 1,
+        status: 'PR'
       },
       {
-        user_id: 1,
         transaction_id: 10,
-        orderDate: '2020/01/01',
-        snack: 'KitKat',
-        quantity: 1,
-        status: 'PR',
-        total: 125,
-        actions: ''
+        snack_name: 'Banana',
+        transaction_amount: 300,
+        quantity: 12,
+        transaction_dtm: '2020/01/21',
+        user_id: 1,
+        payment_id: null,
+        status: 'PR'
       }
     ],
     totalRows: 10,
     totalPages: 2,
     currentPage: 1
-  },
-  {
-    transactions: [],
-    totalRows: 0,
-    totalPages: 1,
-    currentPage: 0
   }
 ];
 
