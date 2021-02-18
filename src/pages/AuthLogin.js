@@ -1,9 +1,9 @@
 import { Button, Card } from '@material-ui/core';
-import React, { useEffect } from 'react';
 import { loginFailure, loginSuccess } from '../helpers/AuthLoginHelper';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { setLoginSuccess } from '../redux/features/auth/authSlice';
 import styles from '../styles/AuthLogin.module.css';
@@ -24,10 +24,6 @@ const AuthLogin = () => {
     onFailure: loginFailure,
     clientId: process.env.REACT_APP_CLIENT_ID,
     isSignedIn: true
-  });
-
-  useEffect(() => {
-    console.log(profile);
   });
 
   return (

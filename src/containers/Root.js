@@ -30,7 +30,6 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
-    console.log('success');
   };
 
   const onFailure = (res) => {
@@ -59,7 +58,6 @@ const Root = () => {
               <Route exact path='/' component={Landing} />
             </Switch>
           </Router>
-
           <h4>
             {username
               ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
