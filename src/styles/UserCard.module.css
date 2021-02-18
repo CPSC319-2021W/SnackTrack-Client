@@ -1,0 +1,23 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
+.base {
+    width: 100%;
+    height: 100px;
+    color: white;
+}
+
+.base:hover {
+    box-shadow: DEFAULT_SHADOW;
+  }
+
+.action_area {
+    width: inherit;
+    height: inherit;
+}
+
+
+

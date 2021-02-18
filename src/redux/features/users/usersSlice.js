@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   balance: null,
   isActive: null,
   isAdmin: null,
+  isAuthenticated: null,
   error: null
 };
 
@@ -24,6 +25,16 @@ const getUser = createAsyncThunk('users/getUserStatus', async (userId, thunkAPI)
 const usersSlice = createSlice({
   name: 'users',
   initialState: INITIAL_STATE,
+  reducers: {
+    simpleLogin: (state, action) => {
+      const {
+        userId,
+        firstName,
+      } = action.payload;
+      state.userId = userId;
+      state.firstName = firstName;
+    }
+  },
   extraReducers: {
     [getUser.fulfilled]: (state, action) => {
       const {
@@ -34,7 +45,8 @@ const usersSlice = createSlice({
         last_name,
         balance,
         is_active,
-        is_admin
+        is_admin,
+        is_authenticated
       } = action.payload;
       state.userId = user_id;
       state.username = username;
@@ -44,6 +56,7 @@ const usersSlice = createSlice({
       state.balance = balance;
       state.isActive = is_active;
       state.isAdmin = is_admin;
+      state.isAuthenticated = is_authenticated;
     },
     [getUser.rejected]: (state, action) => {
       state.userId = null;
@@ -54,6 +67,7 @@ const usersSlice = createSlice({
       state.balance = null;
       state.isActive = null;
       state.isAdmin = null;
+      state.isAuthenticated = null;
       state.error = action.payload;
     }
   }
@@ -61,6 +75,6 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-// export const { reducerNames } = usersSlice.actions;
+export const { simpleLogin } = usersSlice.actions;
 
 export default usersSlice.reducer;
