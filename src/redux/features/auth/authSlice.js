@@ -19,13 +19,7 @@ const authSlice = createSlice({
       };
     },
     setLogout: (state) => {
-      state.profile = {
-        token: null,
-        email: null,
-        firstName: null,
-        lastName: null,
-        imageUri: null
-      };
+      state.profile = { INITIAL_STATE };
     }
   }
 });
