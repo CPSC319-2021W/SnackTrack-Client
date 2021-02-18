@@ -1,11 +1,11 @@
 import React from 'react';
 
-import FilterIcon from '../components/FilterIcon';
+import CategoryFilter from '../components/CategoryFilter';
 
 const Snacks = () => (
   <div>
     <p>Snacks Page</p>
-    <FilterIcon type={'Cookies'} />
+    <CategoryFilter />
   </div>
 );
 

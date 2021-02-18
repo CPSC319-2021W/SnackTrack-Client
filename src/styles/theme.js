@@ -15,6 +15,9 @@ const theme = createMuiTheme({
           backgroundColor: '#F4F5FD',
           fontVariantLigatures: 'no-common-ligatures'
         },
+        p: {
+          fontFamily: 'TT Norms'
+        },
         h1: {
           fontSize: '6rem'
         },

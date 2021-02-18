@@ -1,29 +1,12 @@
-.icon_container {
-    width: 100px;
-    height: 100px;
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-}
-
-.icon_container:active {
-    border: none;
-}
-
-/* .icon_button:hover {
-    cursor: pointer;
-    transform: translateY(-20px);
-} */
-
 /* fruits */
   
-#fruits {
+#fruits_svg {
     transition: transform 0.1s;
     cursor: pointer;
 }
   
-#fruits:hover {
-    transform: translateY(-20px);
+#fruits_svg:hover {
+    transform: translateY(-2px);
 }
 
 .active #fruit_base {
@@ -88,12 +71,12 @@
 
 /* candy */
 
-#candy {
+#candy_svg {
     transition: transform 0.1s;
 }
   
-#candy:hover {
-    transform: translateY(-20px);
+#candy_svg:hover {
+    transform: translateY(-2px);
     cursor: pointer;
 }
 
@@ -318,14 +301,14 @@
 }
 
 /* chocolate */
-  
-#chocolate {
+
+#chocolate_svg {
     transition: transform 0.1s;
     cursor: pointer;
 }
-  
-#chocolate:hover {
-    transform: translateY(-20px);
+
+#chocolate_svg:hover {
+    transform: translateY(-2px);
 }
 
 .active #chocolate_bar {
@@ -367,8 +350,8 @@
         transform-origin: 0% 0%;
 }
     100% {
-        -webkit-transform: rotate(-7deg) translateY(-90px);
-        transform: rotate(-7deg) translateY(-90px);
+        -webkit-transform: rotate(-7deg) translateY(-85px);
+        transform: rotate(-7deg) translateY(-85px);
         -webkit-transform-origin: 100% 100%;
         transform-origin: 100% 100%;
     }
@@ -398,14 +381,11 @@
   
 #chips_svg {
     cursor: pointer;
-}
-
-#chip_bag {
     transition: transform 0.1s;
 }
   
-#chip_bag:hover {
-    transform: translateY(-20px);
+#chips_svg:hover {
+    transform: translateY(-2px);
 }
 
 .active #chip_bag {
@@ -496,12 +476,12 @@
 
 /* crackers */
   
-#crackers {
+#crackers_svg {
     transition: transform 0.1s;
 }
   
-#crackers:hover {
-    transform: translateY(-20px);
+#crackers_svg:hover {
+    transform: translateY(-2px);
     cursor: pointer;
 }
 
@@ -690,10 +670,10 @@
         transform-origin: 50% 50%;
     }
     100% {
-        -webkit-transform: scale(2.5);
-        transform: scale(2.5);
-        -webkit-transform-origin: 50% 65%;
-        transform-origin: 50% 65%;
+        -webkit-transform: scale(3.5);
+        transform: scale(3.5);
+        -webkit-transform-origin: 50% 58%;
+        transform-origin: 50% 58%;
     }
 }
 
@@ -701,14 +681,11 @@
   
 #cookies_svg {
     cursor: pointer;
-}
-
-#cookie_base {
     transition: transform 0.1s;
 }
   
-#cookie_base:hover {
-    transform: translateY(-20px);
+#cookies_svg:hover {
+    transform: translateY(-2px);
 }
 
 .active #cookie_base {
