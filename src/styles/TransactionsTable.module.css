@@ -20,7 +20,7 @@
   height: 52px;
   max-height: 52px;
   border-bottom: 0;
-  padding: 12px;
+  padding: 0px;
 }
 
 .cell__small {
@@ -33,6 +33,10 @@
 
 .cell__large {
   width: 200px;
+}
+
+.cell__pay {
+  padding: 0;
 }
 
 .status__pending {
@@ -73,10 +77,16 @@
   color: #ffffff;
   background-color: #765ea8;
   text-transform: none;
+  padding: 10px;
 }
 
 .button__pay:hover {
-  background-color: rgb(118, 94, 168, 0.8);
+  background-color: rgb(118, 94, 168, 0.9);
+}
+
+.button__pay:disabled {
+  color: #ffffff;
+  background-color: rgb(118, 94, 168, 0.4);
 }
 
 .button__edit {

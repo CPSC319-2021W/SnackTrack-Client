@@ -44,6 +44,8 @@ const mockTransactionData = [
   {
     transactions: [
       {
+        user_id: 1,
+        transaction_id: 1,
         orderDate: '2020/01/21',
         snack: 'Banana',
         quantity: 12,
@@ -52,6 +54,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 2,
         orderDate: '2020/01/21',
         snack: 'Banana',
         quantity: 12,
@@ -60,6 +64,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 3,
         orderDate: '2020/01/21',
         snack: 'Banana',
         quantity: 12,
@@ -68,6 +74,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 4,
         orderDate: '2020/01/12',
         snack: 'Banana',
         quantity: 12,
@@ -76,6 +84,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 5,
         orderDate: '2020/01/12',
         snack: 'Banana',
         quantity: 1,
@@ -85,6 +95,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 6,
         orderDate: '2020/01/12',
         snack: 'KitKat',
         quantity: 1,
@@ -94,6 +106,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 7,
         orderDate: '2020/01/10',
         snack: 'KitKat',
         quantity: 1,
@@ -103,6 +117,8 @@ const mockTransactionData = [
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 8,
         orderDate: '2020/01/10',
         snack: 'KitKat',
         quantity: 1,
@@ -119,23 +135,24 @@ const mockTransactionData = [
   {
     transactions: [
       {
+        user_id: 1,
+        transaction_id: 9,
         orderDate: '2020/01/01',
         snack: 'KitKat',
         quantity: 1,
         paymentId: 1,
         status: 'PR',
         total: 125,
-
         actions: ''
       },
       {
+        user_id: 1,
+        transaction_id: 10,
         orderDate: '2020/01/01',
         snack: 'KitKat',
         quantity: 1,
-        paymentId: 1,
         status: 'PR',
         total: 125,
-
         actions: ''
       }
     ],

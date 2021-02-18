@@ -16,7 +16,17 @@ import React from 'react';
 import styles from '../styles/TransactionsTable.module.css';
 
 const TransactionsTable = (props) => {
-  const { data, rowsPerPage, onChangePage } = props;
+  const {
+    data,
+    rowsPerPage,
+    onChangePage,
+    onSelectAllTransactions,
+    onSelectTransaction,
+    checkIsSelected,
+    checkIsAllSelected,
+    onPayForOrders,
+    payForOrdersDisabled
+  } = props;
   const { transactions, currentPage, totalRows, totalPages } = data;
 
   const emptyRows = () => {
@@ -27,7 +37,13 @@ const TransactionsTable = (props) => {
   const columns = [
     {
       id: 'checkbox',
-      label: <Checkbox size='small' />
+      label: (
+        <Checkbox
+          size='small'
+          checked={checkIsAllSelected(currentPage)}
+          onClick={(event) => onSelectAllTransactions(event)}
+        />
+      )
     },
     {
       id: 'orderDate',
@@ -75,8 +91,14 @@ const TransactionsTable = (props) => {
             <TableCell className={styles.primaryHeader} colSpan={columns.length - 1}>
               <h3 className={styles.primaryHeader__text}>Orders</h3>
             </TableCell>
-            <TableCell>
-              <Button className={styles.button__pay}>Pay For Orders</Button>
+            <TableCell className={styles.cell__pay}>
+              <Button
+                className={styles.button__pay}
+                disabled={payForOrdersDisabled}
+                onClick={() => onPayForOrders()}
+              >
+                Pay For Orders
+              </Button>
             </TableCell>
           </TableRow>
           <TableRow>
@@ -111,7 +133,17 @@ const TransactionsTable = (props) => {
                       {column.id === 'checkbox' &&
                       transactions[i].status === 'PR' &&
                       transactions[i].paymentId == null ? (
-                        <Checkbox size='small' />
+                        <Checkbox
+                          size='small'
+                          onClick={(event) =>
+                            onSelectTransaction(
+                              event,
+                              transactions[i].transaction_id,
+                              transactions[i].total
+                            )
+                          }
+                          checked={checkIsSelected(transactions[i].transaction_id)}
+                        />
                       ) : null}
                       {column.id === 'actions' &&
                       transactions[i].status === 'PR' &&
