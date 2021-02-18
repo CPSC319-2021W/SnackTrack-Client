@@ -22,7 +22,8 @@ const AuthLogin = () => {
   const { signIn } = useGoogleLogin({
     onSuccess,
     onFailure: loginFailure,
-    clientId: process.env.REACT_APP_CLIENT_ID
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    isSignedIn: true
   });
 
   useEffect(() => {
