@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { React, useEffect, useState } from 'react';
-import { getTransactions, makePayment } from '../services/TransactionsService';
+import { getUserTransactions, makePayment } from '../services/TransactionsService';
 
 import PaymentsTable from '../components/PaymentsTable';
 import TransactionsTable from '../components/TransactionsTable';
@@ -13,26 +13,34 @@ const Transactions = () => {
   const { username } = useSelector((state) => state.usersReducer);
   const [paymentHistory, setPaymentHistory] = useState(getPaymentHistory(0, rowsPerPage));
   const [paginatedTransactions, setPaginatedTransactions] = useState(
-    getTransactions(0, rowsPerPage)
+    getUserTransactions(0, rowsPerPage)
   );
   const [selectedTransactions, setSelectedTransactions] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [paymentAmount, setPaymentAmount] = useState(0);
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const transactionsOnPage = paginatedTransactions.transactions
-    .filter((transaction) => transaction.paymentId == null && transaction.status === 'PR')
+    .filter(
+      (transaction) => transaction.payment_id == null && transaction.status === 'PR'
+    )
     .map((transaction) => {
-      return { transactionId: transaction.transaction_id, total: transaction.total };
+      return {
+        transactionId: transaction.transaction_id,
+        total: transaction.transaction_amount
+      };
     });
   const transactionsToAdd = paginatedTransactions.transactions
     .filter(
       (transaction) =>
-        transaction.paymentId == null &&
+        transaction.payment_id == null &&
         transaction.status === 'PR' &&
         selectedTransactions.indexOf(transaction.transaction_id) === -1
     )
     .map((transaction) => {
-      return { transactionId: transaction.transaction_id, total: transaction.total };
+      return {
+        transactionId: transaction.transaction_id,
+        total: transaction.transaction_amount
+      };
     });
   const transactionIdsToAdd = transactionsToAdd.map(
     (transaction) => transaction.transactionId
@@ -52,7 +60,7 @@ const Transactions = () => {
   };
 
   const handleTransactionChangePage = (page) => {
-    setPaginatedTransactions(getTransactions(page, rowsPerPage));
+    setPaginatedTransactions(getUserTransactions(page, rowsPerPage));
   };
 
   const removeFromSelectedPage = (page) => {

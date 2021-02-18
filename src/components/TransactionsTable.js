@@ -46,11 +46,11 @@ const TransactionsTable = (props) => {
       )
     },
     {
-      id: 'orderDate',
+      id: 'transaction_dtm',
       label: 'Order Date'
     },
     {
-      id: 'snack',
+      id: 'snack_name',
       label: 'Snack'
     },
     {
@@ -70,7 +70,7 @@ const TransactionsTable = (props) => {
       }
     },
     {
-      id: 'total',
+      id: 'transaction_amount',
       label: 'Total',
       format: (amount) => {
         amount = amount / 100;
@@ -128,18 +128,18 @@ const TransactionsTable = (props) => {
                       {column.format && typeof value === 'number'
                         ? column.format(value)
                         : column.id === 'status'
-                        ? column.format(value, transaction['paymentId'])
+                        ? column.format(value, transaction['payment_id'])
                         : value}
                       {column.id === 'checkbox' &&
                       transactions[i].status === 'PR' &&
-                      transactions[i].paymentId == null ? (
+                      transactions[i].payment_id == null ? (
                         <Checkbox
                           size='small'
                           onClick={(event) =>
                             onSelectTransaction(
                               event,
                               transactions[i].transaction_id,
-                              transactions[i].total
+                              transactions[i].transaction_amount
                             )
                           }
                           checked={checkIsSelected(transactions[i].transaction_id)}
@@ -147,7 +147,7 @@ const TransactionsTable = (props) => {
                       ) : null}
                       {column.id === 'actions' &&
                       transactions[i].status === 'PR' &&
-                      transactions[i].paymentId == null ? (
+                      transactions[i].payment_id == null ? (
                         <Button className={styles.button__edit} variant='outlined'>
                           Edit Order
                         </Button>
