@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="candy" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:#B2D5FF;}
@@ -30,7 +30,7 @@
 	<path id="purple_bit" class="st11" d="M321,303.5c0,5.5-4.5,10-10,10s-10-4.5-10-10s4.5-10,10-10S321,298,321,303.5z"/>
 	<path id="red_bit_3" class="st5" d="M255.2,253.5c0,5.5-4.5,10-10,10s-10-4.5-10-10s4.5-10,10-10S255.2,248,255.2,253.5z"/>
 </g>
-<g id="candy">
+<g id="candy_base">
 	<g>
 		<path class="st6" d="M433.2,212.7c-14.5-14.5-10-18.9-24.5-33.4s-18.9-10-33.4-24.5c-11.3-11.2-11.2-16.3-17.1-24.8
 			c-2.5-3.6-7.8-4-10.3-0.8c-27.7,35.9-17.1,95.3-17.1,95.3l0.9,17l14.9,14.9l17,0.9c0,0,59.4,10.5,95.3-17.1

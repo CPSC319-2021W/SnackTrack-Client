@@ -16,22 +16,22 @@
 } */
 
 /* fruits */
-
-.active #apple {
-    -webkit-animation: apple 0.1s ease-out forwards;
-    animation: apple 0.1s ease-out forwards;
-}
   
-#apple {
+#fruits {
     transition: transform 0.1s;
     cursor: pointer;
 }
   
-#apple:hover {
+#fruits:hover {
     transform: translateY(-20px);
 }
+
+.active #fruit_base {
+    -webkit-animation: fruit_base 0.1s ease-out forwards;
+    animation: fruit_base 0.1s ease-out forwards;
+}
   
-@keyframes apple {
+@keyframes fruit_base {
     0% {
         -webkit-transform: rotate(0deg) translateY(0);
         transform: rotate(0deg) translateY(0);
@@ -66,12 +66,12 @@
     }
 }
   
-.active #apple_background {
-    -webkit-animation: apple_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
-    animation: apple_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+.active #fruit_background {
+    -webkit-animation: fruit_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: fruit_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
 }
   
-@keyframes apple_background {
+@keyframes fruit_background {
     0% {
         -webkit-transform: scale(1);
         transform: scale(1);
@@ -88,11 +88,6 @@
 
 /* candy */
 
-.active #candy {
-    -webkit-animation: candy 0.2s 1 linear;
-    animation: candy 0.2s 1 linear;
-}
-  
 #candy {
     transition: transform 0.1s;
 }
@@ -101,8 +96,13 @@
     transform: translateY(-20px);
     cursor: pointer;
 }
+
+.active #candy_base {
+    -webkit-animation: candy_base 0.2s 1 linear;
+    animation: candy_base 0.2s 1 linear;
+}
   
-@keyframes candy {
+@keyframes candy_base {
     0% {
         -webkit-transform: rotate(0) translateY(0);
         transform: rotate(0) translateY(0);
@@ -318,19 +318,19 @@
 }
 
 /* chocolate */
-
-.active #chocolate_bar {
-    -webkit-animation: chocolate_bar 0.2s ease-out forwards;
-    animation: chocolate_bar 0.2s ease-out forwards;
-}
   
-#chocolate_bar {
+#chocolate {
     transition: transform 0.1s;
     cursor: pointer;
 }
   
-#chocolate_bar:hover {
+#chocolate:hover {
     transform: translateY(-20px);
+}
+
+.active #chocolate_bar {
+    -webkit-animation: chocolate_bar 0.2s ease-out forwards;
+    animation: chocolate_bar 0.2s ease-out forwards;
 }
   
 @keyframes chocolate_bar {
@@ -395,19 +395,22 @@
 }
 
 /* chips */
-
-.active #chip_bag {
-    -webkit-animation: chip_bag 0.2s ease-out forwards;
-    animation: chip_bag 0.2s ease-out forwards;
-}
   
+#chips {
+    cursor: pointer;
+}
+
 #chip_bag {
     transition: transform 0.1s;
-    cursor: pointer;
 }
   
 #chip_bag:hover {
     transform: translateY(-20px);
+}
+
+.active #chip_bag {
+    -webkit-animation: chip_bag 0.2s ease-out forwards;
+    animation: chip_bag 0.2s ease-out forwards;
 }
   
 @keyframes chip_bag {
@@ -488,5 +491,208 @@
         transform: scale(2.5);
         -webkit-transform-origin: 50% 50%;
         transform-origin: 50% 50%;
+    }
+}
+
+/* crackers */
+  
+#crackers {
+    transition: transform 0.1s;
+}
+  
+#crackers:hover {
+    transform: translateY(-20px);
+    cursor: pointer;
+}
+
+.active #cracker_1 {
+    -webkit-animation: cracker_1 0.2s 1 both;
+    animation: cracker_1 0.2s 1 both;
+}
+  
+@keyframes cracker_1 {
+    0%, 100% {
+        -webkit-transform: translateY(0) rotate(0);
+        transform: translateY(0) rotate(0);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    30% {
+        -webkit-transform: translateY(-15px) rotate(-6deg);
+        transform: translateY(-15px) rotate(-6deg);
+    }
+    45% {
+        -webkit-transform: translateY(15px) rotate(3.6deg);
+        transform: translateY(15px) rotate(3.6deg);
+    }
+    60% {
+        -webkit-transform: translateY(-9px) rotate(-2.4deg);
+        transform: translateY(-9px) rotate(-2.4deg);
+    }
+    75% {
+        -webkit-transform: translateY(6px) rotate(1.2deg);
+        transform: translateY(6px) rotate(1.2deg);
+    }
+}
+
+.active #cracker_2 {
+    -webkit-animation: cracker_2 0.2s 1 both;
+    animation: cracker_2 0.2s 1 both;
+}
+  
+@keyframes cracker_2 {
+    0%, 100% {
+        -webkit-transform: translateY(0) rotate(0);
+        transform: translateY(0) rotate(0);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    30% {
+        -webkit-transform: translateY(15px) rotate(6deg);
+        transform: translateY(15px) rotate(6deg);
+    }
+    75% {
+        -webkit-transform: translateY(-6px) rotate(-1.2deg);
+        transform: translateY(-6px) rotate(-1.2deg);
+    }
+}
+  
+.active #cracker_bit_1 {
+    -webkit-animation: cracker_bit_1 0.1s ease-out forwards;
+    animation: cracker_bit_1 0.1s ease-out forwards;
+}
+  
+@keyframes cracker_bit_1 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(26px) translateY(-110px);
+        transform: translateX(26px) translateY(-110px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #cracker_bit_2 {
+    -webkit-animation: cracker_bit_2 0.1s ease-out forwards;
+    animation: cracker_bit_2 0.1s ease-out forwards;
+}
+  
+@keyframes cracker_bit_2 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(-90px) translateY(-90px);
+        transform: translateX(-90px) translateY(-90px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #cracker_bit_3 {
+    -webkit-animation: cracker_bit_3 0.1s ease-out forwards;
+    animation: cracker_bit_3 0.1s ease-out forwards;
+}
+  
+@keyframes cracker_bit_3 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(-176px) translateY(60px);
+        transform: translateX(-176px) translateY(60px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #cracker_bit_4 {
+    -webkit-animation: cracker_bit_4 0.1s ease-out forwards;
+    animation: cracker_bit_4 0.1s ease-out forwards;
+}
+  
+@keyframes cracker_bit_4 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(-130px) translateY(190px);
+        transform: translateX(-130px) translateY(190px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #cracker_bit_5 {
+    -webkit-animation: cracker_bit_5 0.1s ease-out forwards;
+    animation: cracker_bit_5 0.1s ease-out forwards;
+}
+  
+@keyframes cracker_bit_5 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(10px) translateY(-110px);
+        transform: translateX(10px) translateY(-110px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+
+.active #cracker_bit_6 {
+    -webkit-animation: cracker_bit_6 0.1s ease-out forwards;
+    animation: cracker_bit_6 0.1s ease-out forwards;
+}
+
+@keyframes cracker_bit_6 {
+    0% {
+        -webkit-transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
+        -webkit-transform-origin: 0% 0%;
+        transform-origin: 0% 0%;
+    }
+    100% {
+        -webkit-transform: translateX(-193px) translateY(0px);
+        transform: translateX(-193px) translateY(0px);
+        -webkit-transform-origin: 100% 100%;
+        transform-origin: 100% 100%;
+    }
+}
+  
+.active #crackers_background {
+    -webkit-animation: crackers_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+    animation: crackers_background 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+  
+@keyframes crackers_background {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+    }
+    100% {
+        -webkit-transform: scale(2.5);
+        transform: scale(2.5);
+        -webkit-transform-origin: 50% 65%;
+        transform-origin: 50% 65%;
     }
 }
