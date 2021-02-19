@@ -15,18 +15,32 @@ import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
 import UserProfile from '../pages/UserProfile';
 import { getUser } from '../redux/features/users/usersSlice';
-import { setToken } from '../redux/features/auth/authSlice';
+import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
+import { useGoogleLogout } from 'react-google-login';
 
 const Root = () => {
   const dispatch = useDispatch();
   const { username, firstName, emailAddress, balance } = useSelector(
     (state) => state.usersReducer
   );
-  const token = useSelector((state) => state.authReducer.token);
 
-  const authSetToken = (token) => dispatch(setToken({ token }));
   const getUserById = (userId) => dispatch(getUser(userId));
+  const authLogoutSuccess = () => dispatch(setLogout());
+
+  const onSuccess = () => {
+    authLogoutSuccess();
+  };
+
+  const onFailure = (res) => {
+    console.log('failed: ', res);
+  };
+
+  const { signOut } = useGoogleLogout({
+    onFailure: onFailure,
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    onLogoutSuccess: onSuccess
+  });
 
   return (
     <StylesProvider injectFirst>
@@ -44,21 +58,20 @@ const Root = () => {
               <Route exact path='/' component={Landing} />
             </Switch>
           </Router>
-          <p>Token: {token}</p>
           <h4>
             {username
               ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
               : ''}
           </h4>
-          <Button
-            variant={'contained'}
-            color={'primary'}
-            onClick={() => authSetToken('fake_token')}
-          >
-            Set Token
-          </Button>
           <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
+          </Button>
+          <Button
+            clientid={process.env.REACT_APP_CLIENT_ID}
+            variant='outlined'
+            onClick={signOut}
+          >
+            LOG OUT FROM GOOGLE
           </Button>
         </div>
       </ThemeProvider>
