@@ -6,28 +6,78 @@
 
 .header {
   height: 100px;
-  display: flex;
-  justify-content: center;
-  background-color: white;
+  flex-direction: row;
+  background-color: VIOLET;
   box-shadow: DEFAULT_SHADOW;
 }
 
-.greeting {
-  position: fixed;
-  left: 5%;
-  color: DARK_GREY;
-  font-weight: 600;
+.bar {
+  height: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .label {
-  color: DARK_GREY;
+  display: inline-block;
+  margin-right: 2rem;
+}
+
+.label__text {
+  color: #ffffff;
   font-weight: 600;
   font-size: 1.125rem;
   margin: 0;
 }
 
-.balance {
-  color: VIOLET;
+.label__balance {
+  color: #ffffff;
   font-weight: 700;
   margin: 0;
+}
+
+.icon__base {
+  border-radius: 50%;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  margin-left: 3rem;
+  opacity: 50%;
+}
+
+.icon__margin-right {
+  margin-right: 3rem;
+}
+
+.icon__base:hover {
+  font-weight: bold;
+  opacity: 100%;
+  cursor: pointer;
+}
+
+.greeting {
+  position: fixed;
+  left: 3rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.button_logout {
+  height: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  position: fixed;
+  right: 0;
+  padding: 0;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border: 0;
+  opacity: 50%;
+}
+
+.button_logout:hover {
+  opacity: 100%;
 }
