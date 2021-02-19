@@ -57,7 +57,6 @@ const Root = () => {
             <Route path='/user-profile' component={UserProfile} />
             <Route exact path='/' component={Landing} />
           </Switch>
-          <p>Token: {token}</p>
           <h4>
             {username
               ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
