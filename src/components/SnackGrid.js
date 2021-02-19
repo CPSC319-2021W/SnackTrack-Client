@@ -1,8 +1,7 @@
-import styles from '../styles/SnackGrid.module.css';
-
 import { Grid } from '@material-ui/core';
 import React from 'react';
 import SnackCard from './SnackCard';
+import styles from '../styles/SnackGrid.module.css';
 
 const SnackGrid = (props) => {
   const { snacks, onClick } = props;
@@ -11,7 +10,7 @@ const SnackGrid = (props) => {
       {snacks.map((snack, index) => {
         return (
           <Grid key={index} item className={styles.item} lg={3} md={4} sm={6}>
-            <SnackCard snack={snack} onClick={() => onClick(snack.snackName)} />
+            <SnackCard snack={snack} onClick={onClick} />
           </Grid>
         );
       })}
