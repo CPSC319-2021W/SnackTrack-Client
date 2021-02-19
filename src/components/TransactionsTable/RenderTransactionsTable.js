@@ -10,12 +10,12 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import { isCancelled, isPaid, isPaymentPending } from '../helpers/TransactionsHelpers';
+import { isCancelled, isPaid, isPaymentPending } from '../../helpers/TransactionsHelpers';
 
 import React from 'react';
-import styles from '../styles/TransactionsTable.module.css';
+import styles from '../../styles/TransactionsTable.module.css';
 
-const TransactionsTable = (props) => {
+const RenderTransactionsTable = (props) => {
   const {
     data,
     rowsPerPage,
@@ -147,10 +147,10 @@ const TransactionsTable = (props) => {
                           />
                         ) : null}
                       {column.id === 'actions' &&
-                      isPaymentPending(
-                        transactions[i].payment_id,
-                        transactions[i].status
-                      ) ? (
+                        isPaymentPending(
+                          transactions[i].payment_id,
+                          transactions[i].status
+                        ) ? (
                           <Button className={styles.button__edit} variant='outlined'>
                             Edit Order
                           </Button>
@@ -189,4 +189,4 @@ const TransactionsTable = (props) => {
   );
 };
 
-export default TransactionsTable;
+export default RenderTransactionsTable;
