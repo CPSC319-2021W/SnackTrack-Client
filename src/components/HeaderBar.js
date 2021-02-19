@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { AppBar } from '@material-ui/core';
-import NumberFormat from 'react-number-format';
-import React from 'react';
-import styles from '../styles/HeaderBar.module.css';
-=======
 import { AppBar, Button } from '@material-ui/core';
 import React, { useState } from 'react';
 
@@ -13,7 +7,6 @@ import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
->>>>>>> dev
 
 const HeaderBar = (props) => {
   const { balance, firstName, history, handleLogOut, clientid } = props;
