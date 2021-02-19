@@ -5,7 +5,7 @@ import PaymentsTable from '../components/PaymentsTable';
 import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
 
-const Orders = () => {
+const Transactions = () => {
   const [rowsPerPage] = useState(8);
   const [paymentsResponse, setPaymentsResponse] = useState(
     getPaymentHistory(0, rowsPerPage)
@@ -40,4 +40,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Transactions;
