@@ -1,9 +1,7 @@
-import styles from '../styles/HeaderBar.module.css';
-
 import { AppBar } from '@material-ui/core';
-
 import NumberFormat from 'react-number-format';
 import React from 'react';
+import styles from '../styles/HeaderBar.module.css';
 
 const HeaderBar = (props) => {
   const { balance, firstName } = props;
@@ -12,9 +10,7 @@ const HeaderBar = (props) => {
     <AppBar className={styles.header} color='default'>
       {balance !== null ? (
         <div>
-          <h6 className={styles.label}>
-            Total Amount Owed
-          </h6>
+          <h6 className={styles.label}>Total Amount Owed</h6>
           <h4 className={styles.balance}>
             <NumberFormat
               value={balance / 100}
@@ -26,9 +22,7 @@ const HeaderBar = (props) => {
           </h4>
         </div>
       ) : (
-        <h5 className={styles.greeting}>
-          {`Hi, ${firstName}!`}
-        </h5>
+        <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
       )}
     </AppBar>
   );
