@@ -30,6 +30,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
+    history.push('/auth-login');
   };
 
   const onFailure = (res) => {
