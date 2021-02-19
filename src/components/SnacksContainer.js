@@ -26,7 +26,7 @@ const SnacksContainer = () => {
         </div>
       </div>
       <CategoryFilter />
-      <div className={styles.snackGrid}>
+      <div>
         {(currFilter.length === 0) ? (
           <SnackGrid snacks={snacks.snacks} onClick={alert} />
         ) : (
