@@ -1,7 +1,7 @@
 import httpClient from './axios.config.js';
 import { mockDBCall } from '../mockServer';
 
-const getUserTransactions = (page, rowsPerPage) => {
+const getUserOrders = (page, rowsPerPage) => {
   // TODO: Replace with API Call (Ticket: SNAK-144)
   // try {
   //   const response = await httpClient.get(`/users/${userId}/transactions`, {
@@ -34,4 +34,4 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor) => 
   );
 };
 
-export { getUserTransactions, makePayment };
+export { getUserOrders, makePayment };

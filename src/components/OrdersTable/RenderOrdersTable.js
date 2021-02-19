@@ -10,18 +10,18 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import { isCancelled, isPaid, isPaymentPending } from '../../helpers/TransactionsHelpers';
+import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpers';
 
 import React from 'react';
-import styles from '../../styles/TransactionsTable.module.css';
+import styles from '../../styles/OrdersTable.module.css';
 
-const RenderTransactionsTable = (props) => {
+const RenderOrdersTable = (props) => {
   const {
     data,
     rowsPerPage,
     onChangePage,
-    onSelectAllTransactions,
-    onSelectTransaction,
+    onSelectAllOrders,
+    onSelectOrder,
     checkIsSelected,
     checkIsAllSelected,
     onPayForOrders,
@@ -41,12 +41,12 @@ const RenderTransactionsTable = (props) => {
         <Checkbox
           size='small'
           checked={checkIsAllSelected(currentPage)}
-          onClick={(event) => onSelectAllTransactions(event)}
+          onClick={(event) => onSelectAllOrders(event)}
         />
       )
     },
     {
-      id: 'transaction_dtm',
+      id: 'order_dtm',
       label: 'Order Date'
     },
     {
@@ -70,7 +70,7 @@ const RenderTransactionsTable = (props) => {
       }
     },
     {
-      id: 'transaction_amount',
+      id: 'transction_amount',
       label: 'Total',
       format: (amount) => {
         amount = amount / 100;
@@ -85,7 +85,7 @@ const RenderTransactionsTable = (props) => {
 
   return (
     <Card className={styles.paper}>
-      <Table className={styles.table} aria-label='Transactions Table'>
+      <Table className={styles.table} aria-label='Orders Table'>
         <TableHead>
           <TableRow>
             <TableCell className={styles.primaryHeader} colSpan={columns.length - 1}>
@@ -113,11 +113,11 @@ const RenderTransactionsTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {transactions.map((transaction, i) => {
+          {transactions.map((order, i) => {
             return (
               <TableRow key={i} tabIndex={-1}>
                 {columns.map((column) => {
-                  const value = transaction[column.id];
+                  const value = order[column.id];
                   return (
                     <TableCell
                       key={column.id}
@@ -128,18 +128,15 @@ const RenderTransactionsTable = (props) => {
                       {column.format && typeof value === 'number'
                         ? column.format(value)
                         : column.id === 'status'
-                          ? column.format(value, transaction['payment_id'])
+                          ? column.format(value, order['payment_id'])
                           : value}
                       {column.id === 'checkbox' &&
-                      isPaymentPending(
-                        transactions[i].payment_id,
-                        transactions[i].status
-                      ) ? (
+                      isPaymentPending(transactions[i].payment_id, transactions[i].status) ? (
                           <Checkbox
                             size='small'
                             checked={checkIsSelected(transactions[i].transaction_id)}
                             onClick={() =>
-                              onSelectTransaction(
+                              onSelectOrder(
                                 transactions[i].transaction_id,
                                 transactions[i].transaction_amount
                               )
@@ -147,10 +144,7 @@ const RenderTransactionsTable = (props) => {
                           />
                         ) : null}
                       {column.id === 'actions' &&
-                        isPaymentPending(
-                          transactions[i].payment_id,
-                          transactions[i].status
-                        ) ? (
+                        isPaymentPending(transactions[i].payment_id, transactions[i].status) ? (
                           <Button className={styles.button__edit} variant='outlined'>
                             Edit Order
                           </Button>
@@ -189,4 +183,4 @@ const RenderTransactionsTable = (props) => {
   );
 };
 
-export default RenderTransactionsTable;
+export default RenderOrdersTable;

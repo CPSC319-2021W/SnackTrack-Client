@@ -1,25 +1,23 @@
 import { React, useState } from 'react';
 
+import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
-import TransactionsTable from '../components/TransactionsTable/TransactionsTable';
 import { getPaymentHistory } from '../services/PaymentsService';
-import { getUserTransactions } from '../services/TransactionsService';
+import { getUserOrders } from '../services/OrdersService';
 
-const Transactions = () => {
+const Orders = () => {
   const [rowsPerPage] = useState(8);
   const [paymentsResponse, setPaymentsResponse] = useState(
     getPaymentHistory(0, rowsPerPage)
   );
-  const [transactionsResponse, setTransactionsResponse] = useState(
-    getUserTransactions(0, rowsPerPage)
-  );
+  const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
 
   const handlePaymentChangePage = (page) => {
     setPaymentsResponse(getPaymentHistory(page, rowsPerPage));
   };
 
-  const handleTransactionChangePage = (page) => {
-    setTransactionsResponse(getUserTransactions(page, rowsPerPage));
+  const handleOrderChangePage = (page) => {
+    setOrdersResponse(getUserOrders(page, rowsPerPage));
   };
 
   return (
@@ -28,10 +26,10 @@ const Transactions = () => {
         <code>Orders</code>
       </p>
 
-      <TransactionsTable
-        data={transactionsResponse}
+      <OrdersTable
+        data={ordersResponse}
         rowsPerPage={rowsPerPage}
-        onChangePage={handleTransactionChangePage}
+        onChangePage={handleOrderChangePage}
       />
       <PaymentsTable
         data={paymentsResponse}
@@ -42,4 +40,4 @@ const Transactions = () => {
   );
 };
 
-export default Transactions;
+export default Orders;
