@@ -2,7 +2,6 @@ import CategoryFilter from './CategoryFilter';
 import { Container } from '@material-ui/core';
 import React from 'react';
 import SnackGrid from './SnackGrid';
-import { defaultCategories } from '../constants';
 import {snacks} from '../mockSnacks';
 import styles from '../styles/SnacksContainer.module.css';
 import { useSelector } from 'react-redux';
@@ -30,16 +29,15 @@ const SnacksContainer = () => {
         </div>
       </Container>
       <Container>
-        <CategoryFilter category={defaultCategories} />
-        {console.log(currFilter.length)}
+        <CategoryFilter />
         <div className={styles.snackGrid}>
           {(currFilter.length === 0) ? (
             <><SnackGrid snacks={snacks.snacks} onClick={alert} />
-              {console.log('here')}
             </>
           ) : (
-            <><SnackGrid snacks={snacks.snacks} onClick={alert} />
-              {console.log('unFiltered here')}
+            <><SnackGrid snacks={snacks.snacks.filter((item) => {
+              return currFilter.includes(item.snack_type);
+            })} onClick={alert} />
             </>
           )}
         </div>

@@ -1,0 +1,55 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY from colors;
+@value LIGHT_GREY from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
+.base {
+    width: 100%;
+    height: 100px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.base:hover {
+    box-shadow: DEFAULT_SHADOW;
+}
+
+.action_area {
+    width: inherit;
+    height: inherit;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.text {
+    max-width: 80%;
+    flex: 0.80 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    font-size: 1rem;
+    color: DARK_GREY;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text > p {
+    margin: 0px;
+}
+
+.fullname {
+    font-weight: bold;
+}

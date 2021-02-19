@@ -1,39 +1,35 @@
-import candy from './images/illustrations/candy.svg';
-import chips from './images/illustrations/chips.svg';
-import chocolate from './images/illustrations/chocolate.svg';
-import cookies from './images/illustrations/cookies.svg';
-import crackers from './images/illustrations/crackers.svg';
-import fruits from './images/illustrations/fruits.svg';
+export const DEFAULT_CATEGORIES = {
+  CHOCOLATE: 'Chocolate',
+  CANDY: 'Candy',
+  COOKIES: 'Cookies',
+  CRACKERS: 'Crackers',
+  CHIPS: 'Chips',
+  FRUITS: 'Fruits'
+};
 
-export const defaultCategories = [
+export const CATEGORIES_LIST = [
   {
-    name: 'Chocolate',
-    src: chocolate,
+    name: DEFAULT_CATEGORIES.CHOCOLATE,
     selected: false
   },
   {
-    name: 'Candy',
-    src: candy,
+    name: DEFAULT_CATEGORIES.CANDY,
     selected: false
   },
   {
-    name: 'Cookies',
-    src: cookies,
+    name: DEFAULT_CATEGORIES.COOKIES,
     selected: false
   },
   {
-    name: 'Crackers',
-    src: crackers,
+    name: DEFAULT_CATEGORIES.CRACKERS,
     selected: false
   },
   {
-    name: 'Chips',
-    src: chips,
+    name: DEFAULT_CATEGORIES.CHIPS,
     selected: false
   },
   {
-    name: 'Fruits',
-    src: fruits,
+    name: DEFAULT_CATEGORIES.FRUITS,
     selected: false
   }
 ];
