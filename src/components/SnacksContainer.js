@@ -9,6 +9,14 @@ import { useSelector } from 'react-redux';
 
 const SnacksContainer = () => {
   const snackFilter = useSelector((state) => state.snackReducer);
+  const currFilter = snackFilter.categories;
+  // const filteredSnack = (item) => {
+  //   currFilter.forEach(cate => {
+  //     if (cate === item.snack_type) {
+  //       return true;
+  //     }
+  //   });
+  // };
   return (
     <div>
       <Container>
@@ -30,9 +38,18 @@ const SnacksContainer = () => {
       </Container>
       <Container>
         <CategoryFilter category={defaultCategories} />
-        {console.log(`current filter is ${snackFilter.categories}`)}
+        {console.log(currFilter.length)}
         <div className={styles.snackGrid}>
-          <SnackGrid snacks={snacks.snacks} onClick={alert} />
+          {(currFilter.length === 0) ? (
+            <><SnackGrid snacks={snacks.snacks} onClick={alert} />
+              {console.log('here')}
+            </>
+            
+          ) : (
+            <><SnackGrid snacks={snacks.snacks} onClick={alert} />
+              {console.log('unFiltered here')}
+            </>
+          )}
         </div>
       </Container>
     </div>
