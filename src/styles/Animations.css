@@ -1,13 +1,4 @@
 /* fruits */
-  
-#fruits_svg {
-    transition: transform 0.1s;
-    cursor: pointer;
-}
-  
-#fruits_svg:hover {
-    transform: translateY(-2px);
-}
 
 .active #fruit_base {
     -webkit-animation: fruit_base 0.3s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
@@ -81,15 +72,6 @@
 }
 
 /* candy */
-
-#candy_svg {
-    transition: transform 0.1s;
-}
-  
-#candy_svg:hover {
-    transform: translateY(-2px);
-    cursor: pointer;
-}
 
 .active #candy_base {
     -webkit-animation: candy_base 0.2s 1 linear;
@@ -313,15 +295,6 @@
 
 /* chocolate */
 
-#chocolate_svg {
-    transition: transform 0.1s;
-    cursor: pointer;
-}
-
-#chocolate_svg:hover {
-    transform: translateY(-2px);
-}
-
 .active #chocolate_bar {
     -webkit-animation: chocolate_bar 0.2s ease-out forwards;
             animation: chocolate_bar 0.2s ease-out forwards;
@@ -390,15 +363,6 @@
 }
 
 /* chips */
-  
-#chips_svg {
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-  
-#chips_svg:hover {
-    transform: translateY(-2px);
-}
 
 .active #chip_bag {
     -webkit-animation: chip_bag 0.2s ease-out forwards;
@@ -488,15 +452,6 @@
 }
 
 /* crackers */
-  
-#crackers_svg {
-    transition: transform 0.1s;
-}
-  
-#crackers_svg:hover {
-    transform: translateY(-2px);
-    cursor: pointer;
-}
 
 .active #cracker_1 {
     -webkit-animation: cracker_1 0.2s 1 both;
@@ -693,15 +648,6 @@
 }
 
 /* cookies */
-  
-#cookies_svg {
-    cursor: pointer;
-    transition: transform 0.1s;
-}
-  
-#cookies_svg:hover {
-    transform: translateY(-2px);
-}
 
 .active #cookie_base {
     -webkit-animation: cookie_base 0.2s 1 both;
