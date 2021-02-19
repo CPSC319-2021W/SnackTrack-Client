@@ -31,7 +31,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
-    console.log('good');
+    history.push('/auth-login');
   };
 
   const onFailure = (res) => {
