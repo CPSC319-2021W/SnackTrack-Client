@@ -25,15 +25,15 @@
     }
   },
   "rules": {
-    "semi": [2, "always"],
+    "semi": [1, "always"],
     "semi-spacing": [
-      2,
+      1,
       {
         "before": false,
         "after": true
       }
     ],
-    "indent": [2, 2],
+    "indent": [1, 2],
     "comma-dangle": ["error", "never"],
     "quotes": [1, "single", { "avoidEscape": true }],
     "arrow-spacing": [1, { "before": true, "after": true }],
@@ -47,24 +47,23 @@
         "allowSeparatedGroups": true
       }
     ],
-    "brace-style": [2, "1tbs"],
+    "brace-style": [1, "1tbs"],
     "prefer-template": [1],
-    "prefer-destructuring": [2, { "object": true, "array": false }],
-    "jsx-quotes": [2, "prefer-single"],
+    "prefer-destructuring": [1, { "object": true, "array": false }],
+    "jsx-quotes": [1, "prefer-single"],
     "react/prop-types": 0,
-    "react/jsx-pascal-case": 2,
+    "react/jsx-pascal-case": 1,
     "react/jsx-first-prop-new-line": 0,
-    "react/jsx-indent": [2, 2],
-    "react/jsx-indent-props": [2, 2],
     "react/jsx-handler-names": 0,
     "react/jsx-curly-spacing": 0,
     "react/jsx-max-props-per-line": 0,
-    "react/jsx-equals-spacing": [2, "never"],
-    "react/jsx-closing-tag-location": 2,
+    "react/jsx-equals-spacing": [1, "never"],
+    "react/jsx-closing-tag-location": 1,
     "react/require-default-props": 1,
-    "react/forbid-dom-props": [2, { "forbid": ["style"] }],
+    "react/forbid-dom-props": [1, { "forbid": ["style"] }],
+    "react/display-name": 0,
     "react/jsx-sort-props": [
-      2,
+      1,
       {
         "callbacksLast": true,
         "shorthandFirst": true,
@@ -73,7 +72,7 @@
       }
     ],
     "react/jsx-wrap-multilines": [
-      2,
+      1,
       {
         "declaration": "parens-new-line",
         "assignment": "parens-new-line",
