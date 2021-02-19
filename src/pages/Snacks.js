@@ -1,5 +1,5 @@
-import React from 'react';
 import CategoryFilter from '../components/CategoryFilter';
+import React from 'react';
 import SnackCard from '../components/SnackCard';
 
 const Snacks = () => {
