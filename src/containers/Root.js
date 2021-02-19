@@ -1,6 +1,6 @@
 import '../styles/Global.css';
 
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,6 +20,7 @@ import theme from '../styles/theme';
 
 const Root = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { username, firstName, emailAddress, balance } = useSelector(
     (state) => state.usersReducer
   );
@@ -27,23 +28,20 @@ const Root = () => {
 
   const authSetToken = (token) => dispatch(setToken({ token }));
   const getUserById = (userId) => dispatch(getUser(userId));
-
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className='root-container'>
-          <HeaderBar balance={balance} firstName={firstName} />
-          <Router>
-            <Switch>
-              <Route path='/auth-login' component={AuthLogin} />
-              <Route path='/select-login' component={SelectLogin} />
-              <Route path='/snacks' component={Snacks} />
-              <Route path='/transactions' component={Transactions} />
-              <Route path='/user-profile' component={UserProfile} />
-              <Route exact path='/' component={Landing} />
-            </Switch>
-          </Router>
+          <HeaderBar balance={balance} firstName={firstName} history={history} />
+          <Switch>
+            <Route path='/auth-login' component={AuthLogin} />
+            <Route path='/select-login' component={SelectLogin} />
+            <Route path='/snacks' component={Snacks} />
+            <Route path='/transactions' component={Transactions} />
+            <Route path='/user-profile' component={UserProfile} />
+            <Route exact path='/' component={Landing} />
+          </Switch>
           <p>Token: {token}</p>
           <h4>
             {username
