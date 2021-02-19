@@ -4,14 +4,12 @@ import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import { getUserById } from '../services/UserService';
 
 const SelectLogin = () => {
-  // // TODO: temporary, remove the single card when making UserLoginList component
+  // // TODO: temporary, remove these calls when making UserLoginList component (SNAK-)
   const [loaded, isLoaded] = useState(false);
   const [user, setUser] = useState(undefined);
 
   useEffect(() => {
-    if (typeof user !== 'undefined') {
-      isLoaded(true);
-    }
+    isLoaded(typeof user !== 'undefined');
   }, [user]);
 
   useEffect(() => {

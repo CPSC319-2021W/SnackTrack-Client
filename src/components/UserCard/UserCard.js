@@ -22,8 +22,6 @@ const UserCard = (props) => {
 
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
 
-
-
   return (
     <Card variant={'outlined'} className={styles.base}>
       <CardActionArea className={styles.action_area} onClick={login}>
@@ -40,8 +38,5 @@ const UserCard = (props) => {
     </Card>
   );
 };
-
-{/* <Skeleton className={styles.fullname} variant={'text'} />
-<Skeleton variant={'text'} /> */}
 
 export default UserCard; 
