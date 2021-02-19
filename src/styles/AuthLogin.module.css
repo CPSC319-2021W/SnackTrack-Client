@@ -1,0 +1,22 @@
+@value colors: './Colors.module.css';
+@value PURPLE from colors;
+@value VIOLET from colors;
+
+.card {
+  margin-top: 200px;
+  padding: 8rem;
+}
+
+.button__login {
+  color: #ffffff;
+  font-weight: 700;
+  background-color: PURPLE;
+  border-radius: 50px;
+  text-transform: none;
+  padding: 1rem 2rem;
+  letter-spacing: 0.05rem;
+}
+
+.button__login:hover {
+  background-color: rgb(118, 94, 168, 0.9);
+}

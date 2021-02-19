@@ -1,0 +1,20 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY, LIGHT_GREY, VIOLET from colors;
+
+.searchBar {
+  color: DARK_GREY;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: white;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0rem;
+  margin-bottom: 1rem;
+}
+
+.icon__base {
+  height: 1rem;
+  width: 1rem;
+  position: relative;
+  bottom: 0.5rem;
+  left: 0.3rem;
+}
