@@ -1,6 +1,6 @@
 import '../styles/Global.css';
 
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,6 +21,7 @@ import { useGoogleLogout } from 'react-google-login';
 
 const Root = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const { username, firstName, emailAddress, balance } = useSelector(
     (state) => state.usersReducer
   );
@@ -30,6 +31,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
+    history.push('/auth-login');
   };
 
   const onFailure = (res) => {
@@ -47,17 +49,21 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className='root-container'>
-          <HeaderBar balance={balance} firstName={firstName} />
-          <Router>
-            <Switch>
-              <Route path='/auth-login' component={AuthLogin} />
-              <Route path='/select-login' component={SelectLogin} />
-              <Route path='/snacks' component={Snacks} />
-              <Route path='/transactions' component={Transactions} />
-              <Route path='/user-profile' component={UserProfile} />
-              <Route exact path='/' component={Landing} />
-            </Switch>
-          </Router>
+          <HeaderBar
+            balance={balance}
+            firstName={firstName}
+            history={history}
+            clientid={process.env.REACT_APP_CLIENT_ID}
+            handleLogOut={signOut}
+          />
+          <Switch>
+            <Route path='/auth-login' component={AuthLogin} />
+            <Route path='/select-login' component={SelectLogin} />
+            <Route path='/snacks' component={Snacks} />
+            <Route path='/transactions' component={Transactions} />
+            <Route path='/user-profile' component={UserProfile} />
+            <Route exact path='/' component={Landing} />
+          </Switch>
           <h4>
             {username
               ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
@@ -65,13 +71,6 @@ const Root = () => {
           </h4>
           <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
-          </Button>
-          <Button
-            clientid={process.env.REACT_APP_CLIENT_ID}
-            variant='outlined'
-            onClick={signOut}
-          >
-            LOG OUT FROM GOOGLE
           </Button>
         </div>
       </ThemeProvider>

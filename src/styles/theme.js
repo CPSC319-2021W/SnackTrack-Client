@@ -16,25 +16,39 @@ const theme = createMuiTheme({
           fontVariantLigatures: 'no-common-ligatures'
         },
         p: {
-          fontFamily: 'TT Norms'
+          color: colors.DARK_GREY,
+          fontFamily: 'TT Norms',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h1: {
-          fontSize: '6rem'
+          color: colors.DARK_GREY,
+          fontSize: '6rem',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h2: {
-          fontSize: '3.75rem'
+          color: colors.DARK_GREY,
+          fontSize: '3.75rem',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h3: {
-          fontSize: '3rem'
+          color: colors.DARK_GREY,
+          fontSize: '3rem',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h4: {
-          fontSize: '2.125rem'
+          color: colors.DARK_GREY,
+          fontSize: '2.125rem',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h5: {
-          fontSize: '1.5rem'
+          color: colors.DARK_GREY,
+          fontSize: '1.5rem',
+          fontVariantLigatures: 'no-common-ligatures'
         },
         h6: {
-          fontSize: '1.25rem'
+          color: colors.DARK_GREY,
+          fontSize: '1.25rem',
+          fontVariantLigatures: 'no-common-ligatures'
         }
       }
     },

@@ -1,16 +1,10 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
 import CategoryFilter from '../components/CategoryFilter';
+import React from 'react';
 import SnackCard from '../components/SnackCard';
 
 const Snacks = () => {
-  const profile = useSelector((state) => state.authReducer.profile);
-
   return (
     <div>
-      {!profile?.token ? <Redirect to='/auth-login' /> : null}
       <p>Snacks Page</p>
       <CategoryFilter />
       <SnackCard
