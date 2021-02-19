@@ -57,6 +57,12 @@
   cursor: pointer;
 }
 
+.icon__active {
+  font-weight: bold;
+  opacity: 100%;
+  cursor: pointer;
+}
+
 .greeting {
   position: fixed;
   left: 3rem;

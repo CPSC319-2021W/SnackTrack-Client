@@ -1,7 +1,8 @@
 import { AppBar, Button } from '@material-ui/core';
+import React, { useState } from 'react';
 
 import NumberFormat from 'react-number-format';
-import React from 'react';
+import classNames from 'classnames';
 import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
@@ -9,6 +10,8 @@ import transactionsIcon from '../assets/icons/dollar.svg';
 
 const HeaderBar = (props) => {
   const { balance, firstName, history, handleLogOut, clientid } = props;
+  const [onSnacks, setOnSnacks] = useState(false);
+  const [onTransactions, setOnTransactions] = useState(false);
 
   return (
     <AppBar className={styles.header}>
@@ -16,16 +19,30 @@ const HeaderBar = (props) => {
         <div className={styles.bar}>
           <div>
             <img
-              className={styles.icon__base}
+              className={classNames({
+                [styles.icon__base]: true,
+                [styles.icon__active]: onSnacks
+              })}
               src={snacksIcon}
               alt='snacks'
-              onClick={() => history.push('/snacks')}
+              onClick={() => {
+                setOnTransactions(false);
+                setOnSnacks(true);
+                history.push('/snacks');
+              }}
             />
             <img
-              className={styles.icon__base}
+              className={classNames({
+                [styles.icon__base]: true,
+                [styles.icon__active]: onTransactions
+              })}
               src={transactionsIcon}
               alt='transactions'
-              onClick={() => history.push('/transactions')}
+              onClick={() => {
+                setOnTransactions(true);
+                setOnSnacks(false);
+                history.push('/transactions');
+              }}
             />
           </div>
           <div className={styles.label}>
