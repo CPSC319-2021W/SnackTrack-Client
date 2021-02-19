@@ -31,6 +31,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
+    console.log('good');
   };
 
   const onFailure = (res) => {
@@ -48,7 +49,13 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className='root-container'>
-          <HeaderBar balance={balance} firstName={firstName} history={history} />
+          <HeaderBar
+            balance={balance}
+            firstName={firstName}
+            history={history}
+            clientid={process.env.REACT_APP_CLIENT_ID}
+            handleLogOut={signOut}
+          />
           <Switch>
             <Route path='/auth-login' component={AuthLogin} />
             <Route path='/select-login' component={SelectLogin} />
@@ -64,13 +71,6 @@ const Root = () => {
           </h4>
           <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
-          </Button>
-          <Button
-            clientid={process.env.REACT_APP_CLIENT_ID}
-            variant='outlined'
-            onClick={signOut}
-          >
-            LOG OUT FROM GOOGLE
           </Button>
         </div>
       </ThemeProvider>

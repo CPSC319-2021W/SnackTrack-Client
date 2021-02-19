@@ -8,7 +8,7 @@ import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
 
 const HeaderBar = (props) => {
-  const { balance, firstName, history } = props;
+  const { balance, firstName, history, handleLogOut, clientid } = props;
 
   return (
     <AppBar className={styles.header}>
@@ -49,7 +49,12 @@ const HeaderBar = (props) => {
       ) : (
         <div className={styles.bar}>
           <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
-          <Button className={styles.button_logout} variant='outlined'>
+          <Button
+            className={styles.button_logout}
+            variant='outlined'
+            clientid={clientid}
+            onClick={handleLogOut}
+          >
             LOG OUT
           </Button>
         </div>
