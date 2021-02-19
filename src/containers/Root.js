@@ -1,6 +1,4 @@
-import '../styles/Global.css';
-
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -22,7 +20,8 @@ import { useGoogleLogout } from 'react-google-login';
 
 const Root = () => {
   const dispatch = useDispatch();
-  const { username, emailAddress, balance } = useSelector(
+  const history = useHistory();
+  const { username, firstName, emailAddress, balance } = useSelector(
     (state) => state.usersReducer
   );
 
@@ -47,18 +46,16 @@ const Root = () => {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Router>
-          <Switch>
-            <Route path='/auth-login' component={AuthLogin} />
-            <Route path='/select-login' component={SelectLogin} />
-            <Layout>
-              <Route path='/snacks' component={Snacks} />
-              <Route path='/transactions' component={Transactions} />
-              <Route path='/user-profile' component={UserProfile} />
-            </Layout>
-            <Route exact path='/' component={Landing} />
-          </Switch>
-        </Router>
+        <Switch>
+          <Route path='/auth-login' component={AuthLogin} />
+          <Route path='/select-login' component={SelectLogin} />
+          <Layout firstName={firstName} balance={balance} logOut={signOut} history={history}>
+            <Route path='/snacks' component={Snacks} />
+            <Route path='/transactions' component={Transactions} />
+            <Route path='/user-profile' component={UserProfile} />
+          </Layout>
+          <Route exact path='/' component={Landing} />
+        </Switch>
         <h4>
           {username
             ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`

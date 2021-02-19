@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 
 import { Container } from '@material-ui/core';
 import HeaderBar from './HeaderBar';
@@ -7,18 +6,21 @@ import HeaderBar from './HeaderBar';
 import styles from '../styles/Layout.module.css';
 
 const Layout = (props) => {
-  const { children } = props;
-  const { firstName, balance } = useSelector(
-    (state) => state.usersReducer
-  );
+  const { children, firstName, balance, logOut, history } = props;
 
   return (
-    <Fragment>
-      <HeaderBar balance={balance} firstName={firstName} />
-      <Container fixed className={styles.base}>
+    <div className={styles.base}>
+      <HeaderBar
+        balance={balance}
+        firstName={firstName}
+        history={history}
+        clientid={process.env.REACT_APP_CLIENT_ID}
+        handleLogOut={logOut}
+      />
+      <Container fixed className={styles.content}>
         { children }
       </Container>
-    </Fragment>
+    </div>
   );
 };
 
