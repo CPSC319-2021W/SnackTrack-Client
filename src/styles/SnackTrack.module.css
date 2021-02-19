@@ -1,0 +1,7 @@
+@value colors: './Colors.module.css';
+@value VIOLET from colors;
+
+.SnackTrack {
+  color: VIOLET;
+  font-weight: 700;
+}
