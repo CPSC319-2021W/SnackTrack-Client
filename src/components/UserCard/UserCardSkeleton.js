@@ -3,7 +3,6 @@ import styles from '../../styles/UserCard.module.css';
 import { Card } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 
-
 import React from 'react';
 
 const UserCardSkeleton = () => { 
