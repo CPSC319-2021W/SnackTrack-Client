@@ -2,12 +2,11 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import Layout from '../components/Layout';
-
 import AuthLogin from '../pages/AuthLogin';
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Landing from '../pages/LandingPage';
+import Layout from '../components/Layout';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
