@@ -7,7 +7,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import appStyles from '../styles/SnackTrack.module.css';
 import { setLoginSuccess } from '../redux/features/auth/authSlice';
-import styles from '../styles/AuthLogin.module.css';
+import styles from '../styles/Login.module.css';
 import { useGoogleLogin } from 'react-google-login';
 
 const AuthLogin = () => {
@@ -28,7 +28,7 @@ const AuthLogin = () => {
   });
 
   return (
-    <div>
+    <div className={styles.container}>
       {profile?.token ? <Redirect to='/snacks' /> : null}
       <Card className={styles.card}>
         <img className={styles.none} src={GalvanizeLogo} alt='Galvanize Logo' />
