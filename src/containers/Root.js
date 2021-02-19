@@ -65,13 +65,6 @@ const Root = () => {
         <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
         </Button>
-        <Button
-          clientid={process.env.REACT_APP_CLIENT_ID}
-          variant='outlined'
-          onClick={signOut}
-        >
-          LOG OUT FROM GOOGLE
-        </Button>
       </ThemeProvider>
     </StylesProvider>
   );
