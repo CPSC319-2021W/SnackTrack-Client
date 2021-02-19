@@ -1,7 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import SnackCard from '../components/SnackCard';
 import { useSelector } from 'react-redux';
+
+import CategoryFilter from '../components/CategoryFilter';
+import SnackCard from '../components/SnackCard';
 
 const Snacks = () => {
   const profile = useSelector((state) => state.authReducer.profile);
@@ -10,6 +12,7 @@ const Snacks = () => {
     <div>
       {!profile?.token ? <Redirect to='/auth-login' /> : null}
       <p>Snacks Page</p>
+      <CategoryFilter />
       <SnackCard
         snack={{
           imageUri:
