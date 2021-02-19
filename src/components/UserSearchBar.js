@@ -19,11 +19,11 @@ const UserSearchBar = () => {
       className={styles.searchBar}
       autoFocus={true}
       disableUnderline={true}
-      startAdornment={
+      startAdornment={(
         <InputAdornment position='start' variant='filled'>
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
-      }
+      )}
       placeholder='Enter your name...'
       value={searchValue}
       onChange={handleChange}

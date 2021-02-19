@@ -102,9 +102,9 @@ const mockData = {
     },
     {
       user_id: 3,
-      username: 'FakeTomatoes',
-      first_name: 'Fake',
-      last_name: 'Tomatoes',
+      username: 'HyeSunAn',
+      first_name: 'HyeSun',
+      last_name: 'An',
       email_address: 'asd@gmail.com',
       balance: 0,
       is_active: true,
