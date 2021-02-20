@@ -24,15 +24,17 @@ const Orders = (props) => {
   const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
       try {
-        await makePayment(userId, selectedOrders, subtotalAmount, username);
+        const payment = await makePayment(
+          userId,
+          selectedOrders,
+          subtotalAmount,
+          username
+        );
+        // TODO: Add to front end's table
+        console.log(payment);
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
         onHandleApiResponse('ERROR');
-        console.log(
-          `Not Implemented: MockPayment for $${
-            subtotalAmount / 100
-          }, transactionIds [${selectedOrders}], userId ${userId}, processedBy ${username}`
-        );
       }
   };
 
