@@ -1,11 +1,11 @@
 import CategoryFilter from './CategoryFilter';
 import React from 'react';
 import SnackGrid from './SnackGrid';
-import {snacks} from '../mockSnacks';
 import styles from '../styles/SnacksContainer.module.css';
 import { useSelector } from 'react-redux';
 
-const SnacksContainer = () => {
+const SnacksContainer = (props) => {  
+  const {snacks} = props;
   const snackFilter = useSelector((state) => state.snackReducer);
   const currFilter = snackFilter.categories;
   return (
@@ -28,9 +28,9 @@ const SnacksContainer = () => {
       <CategoryFilter />
       <div>
         {(currFilter.length === 0) ? (
-          <SnackGrid snacks={snacks.snacks} onClick={alert} />
+          <SnackGrid snacks={snacks} onClick={alert} />
         ) : (
-          <SnackGrid snacks={snacks.snacks.filter((item) => {
+          <SnackGrid snacks={snacks.filter((item) => {
             return currFilter.includes(item.snack_type);
           })} onClick={alert} />
         )}

@@ -1,5 +1,5 @@
 
-const snacks = {
+const mockSnacks = {
   'snacks': [
     {
       'snack_id': 8,
@@ -69,4 +69,4 @@ const snacks = {
   ]
 };
 
-export { snacks };
+export { mockSnacks };
