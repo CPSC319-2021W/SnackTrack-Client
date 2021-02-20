@@ -1,0 +1,13 @@
+.toast__base {
+  font-weight: 600;
+}
+
+.toast__success {
+  color: #4caf50;
+  background-color: #dbefdc;
+}
+
+.toast__error {
+  color: #f44337;
+  background-color: #fdd9d7;
+}

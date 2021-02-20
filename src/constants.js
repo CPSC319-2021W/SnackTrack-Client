@@ -33,3 +33,20 @@ export const CATEGORIES_LIST = [
     selected: false
   }
 ];
+
+export const NOTIFICATIONS = {
+  ORDER_SUCCESS: { type: 'success', message: 'Snack tracked! Enjoy!' },
+  PAYMENT_SUCCESS: { type: 'success', message: 'Payment submitted. Thank you!' },
+  SUGGESTION: {
+    type: 'success',
+    message: 'Suggestion sent by carrier pigeon. Keep your eyes out for new snacks!'
+  },
+  SAVE_PROFILE_SUCCESS: {
+    type: 'success',
+    message: 'Changes to your user profile is saved.'
+  },
+  ERROR: {
+    type: 'error',
+    message: 'Uh-oh! Something went wrong. Please try again later.'
+  }
+};

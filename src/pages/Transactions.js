@@ -1,7 +1,9 @@
 import { React, useState } from 'react';
 
+import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
+import ToastNotification from '../components/ToastNotification';
 import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
 
@@ -11,6 +13,8 @@ const Transactions = () => {
     getPaymentHistory(0, rowsPerPage)
   );
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
+  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
+  const [apiResponse, setApiResponse] = useState('ERROR');
 
   const handlePaymentChangePage = (page) => {
     setPaymentsResponse(getPaymentHistory(page, rowsPerPage));
@@ -18,6 +22,14 @@ const Transactions = () => {
 
   const handleOrderChangePage = (page) => {
     setOrdersResponse(getUserOrders(page, rowsPerPage));
+  };
+  const handleClose = () => {
+    setIsSnackBarOpen(false);
+  };
+
+  const handleApiResponse = (response) => {
+    setApiResponse(response);
+    setIsSnackBarOpen(true);
   };
 
   return (
@@ -30,11 +42,18 @@ const Transactions = () => {
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
         onChangePage={handleOrderChangePage}
+        onHandleApiResponse={handleApiResponse}
       />
       <PaymentsTable
         data={paymentsResponse}
         rowsPerPage={rowsPerPage}
         onChangePage={handlePaymentChangePage}
+        setSnackBar={handleApiResponse}
+      />
+      <ToastNotification
+        open={isSnackBarOpen}
+        notification={NOTIFICATIONS[apiResponse]}
+        onClose={handleClose}
       />
     </div>
   );
