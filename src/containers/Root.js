@@ -1,5 +1,3 @@
-import '../styles/Global.css';
-
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthLogin from '../pages/AuthLogin';
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HeaderBar from '../components/HeaderBar';
 import Landing from '../pages/LandingPage';
+import Layout from '../components/Layout';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
 import UserProfile from '../pages/UserProfile';
-import { getUser } from '../redux/features/users/usersSlice';
+import { setBalance } from '../redux/features/users/usersSlice';
 import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
 import { useGoogleLogout } from 'react-google-login';
@@ -26,7 +24,10 @@ const Root = () => {
     (state) => state.usersReducer
   );
 
-  const getUserById = (userId) => dispatch(getUser(userId));
+  const toggleHeader = () => {
+    balance === null ? dispatch(setBalance(0)) : dispatch(setBalance(null));
+  };
+
   const authLogoutSuccess = () => dispatch(setLogout());
 
   const onSuccess = () => {
@@ -48,31 +49,29 @@ const Root = () => {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className='root-container'>
-          <HeaderBar
-            balance={balance}
+        <Switch>
+          <Route path='/auth-login' component={AuthLogin} />
+          <Route path='/select-login' component={SelectLogin} />
+          <Layout
             firstName={firstName}
+            balance={balance}
+            logOut={signOut}
             history={history}
-            clientid={process.env.REACT_APP_CLIENT_ID}
-            handleLogOut={signOut}
-          />
-          <Switch>
-            <Route path='/auth-login' component={AuthLogin} />
-            <Route path='/select-login' component={SelectLogin} />
+          >
             <Route path='/snacks' component={Snacks} />
             <Route path='/transactions' component={Transactions} />
             <Route path='/user-profile' component={UserProfile} />
-            <Route exact path='/' component={Landing} />
-          </Switch>
-          <h4>
-            {username
-              ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
-              : ''}
-          </h4>
-          <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
-            Set Profile
-          </Button>
-        </div>
+          </Layout>
+          <Route exact path='/' component={Landing} />
+        </Switch>
+        <h4>
+          {username
+            ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
+            : ''}
+        </h4>
+        <Button variant={'outlined'} color={'secondary'} onClick={toggleHeader}>
+          Toggle Header
+        </Button>
       </ThemeProvider>
     </StylesProvider>
   );

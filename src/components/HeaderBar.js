@@ -12,8 +12,10 @@ import useStyles from '../styles/HeaderBarStyles';
 const HeaderBar = (props) => {
   const classes = useStyles();
   const { balance, firstName, history, handleLogOut, clientid } = props;
-  const [onSnacks, setOnSnacks] = useState(false);
-  const [onTransactions, setOnTransactions] = useState(false);
+  const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
+  const [onTransactions, setOnTransactions] = useState(
+    history.location.pathname === '/transactions'
+  );
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {

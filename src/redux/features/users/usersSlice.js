@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { getUserById } from '../../../services/UserService';
@@ -17,7 +15,7 @@ const INITIAL_STATE = {
   error: null
 };
 
-const getUser = createAsyncThunk('users/getUserStatus', async (userId, thunkAPI) => {
+const getUser = createAsyncThunk('users/getUserStatus', async (userId) => {
   const user = await getUserById(userId);
   return user;
 });
@@ -27,12 +25,12 @@ const usersSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     simpleLogin: (state, action) => {
-      const {
-        user_id,
-        first_name,
-      } = action.payload;
+      const { user_id, first_name } = action.payload;
       state.userId = user_id;
       state.firstName = first_name;
+    },
+    setBalance: (state, action) => {
+      state.balance = action.payload;
     }
   },
   extraReducers: {
@@ -75,6 +73,6 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-export const { simpleLogin } = usersSlice.actions;
+export const { simpleLogin, setBalance } = usersSlice.actions;
 
 export default usersSlice.reducer;

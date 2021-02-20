@@ -1,4 +1,5 @@
 import httpClient from './axios.config.js';
+import { mockDBCall } from '../mockServer';
 
 const getUserById = async (userId) => {
   try {
@@ -10,4 +11,8 @@ const getUserById = async (userId) => {
   }
 };
 
-export { getUserById };
+const getUsers = () => {
+  return mockDBCall('users', 0, 14);
+};
+
+export { getUserById, getUsers };
