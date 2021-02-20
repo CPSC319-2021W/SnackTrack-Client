@@ -16,7 +16,7 @@ const getUsers = () => {
 };
 
 const authenticate = async () => {
-  // endpoint currently not implemented
+  // TODO: Will be uncommented in SNAK-191 when endpoint is completed
   // try {
   //   const response = await httpClient.post('/authenticate', { token });
   //   return response;
