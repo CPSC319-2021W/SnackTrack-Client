@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     color: '#765EA8',
     fontWeight: '600',
     padding: '1rem 4rem',
-    borderBottom: '1px solid black'
+    borderBottom: '1.5px solid #E4E4E4'
   }
 });
 
