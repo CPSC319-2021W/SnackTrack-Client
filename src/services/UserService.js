@@ -15,4 +15,17 @@ const getUsers = () => {
   return mockDBCall('users', 0, 14);
 };
 
-export { getUserById, getUsers };
+const authenticate = async () => {
+  // endpoint currently not implemented
+  // try {
+  //   const response = await httpClient.post('/authenticate', { token });
+  //   return response;
+  // } catch (err) {
+  //   // handle error
+  //   console.log(err);
+  // }
+  const response = getUserById(1);
+  return response;
+};
+
+export { getUserById, getUsers, authenticate };

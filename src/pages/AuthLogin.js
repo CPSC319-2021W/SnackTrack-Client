@@ -1,23 +1,26 @@
 import { Button, Card } from '@material-ui/core';
-import { loginFailure, loginSuccess } from '../helpers/AuthLoginHelper';
+import { loginFailure, refreshTokenSetup } from '../helpers/AuthLoginHelper';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import appStyles from '../styles/SnackTrack.module.css';
-import { setLoginSuccess } from '../redux/features/auth/authSlice';
+import { authenticate } from '../services/UserService';
+import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
 import { useGoogleLogin } from 'react-google-login';
 
 const AuthLogin = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.authReducer.profile);
-  const authLoginSuccess = (profile) => dispatch(setLoginSuccess({ profile }));
+  const profile = useSelector((state) => state.usersReducer.profile);
+  const setProfile = (profile) => dispatch(setUser(profile));
 
-  const onSuccess = (res) => {
-    authLoginSuccess(res.profileObj);
-    loginSuccess(res);
+  const onSuccess = async (googleUser) => {
+    const token = googleUser.getAuthResponse().id_token;
+    const userResponse = await authenticate(token);
+    setProfile(userResponse);
+    refreshTokenSetup(googleUser);
   };
 
   const { signIn } = useGoogleLogin({

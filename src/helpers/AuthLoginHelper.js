@@ -1,7 +1,3 @@
-const loginSuccess = (res) => {
-  refreshTokenSetup(res);
-};
-
 const loginFailure = (res) => {
   console.log('[Login Failed] currentUser: ', res);
 };
@@ -19,4 +15,4 @@ const refreshTokenSetup = (res) => {
   setTimeout(refreshToken, refreshTiming);
 };
 
-export { loginSuccess, loginFailure };
+export { refreshTokenSetup, loginFailure };

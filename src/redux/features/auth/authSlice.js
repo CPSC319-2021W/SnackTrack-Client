@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
-  profile: { token: null, email: null, firstName: null, lastName: null, imageUri: null }
+  profile: { userId: null, email: null, firstName: null, lastName: null, imageUri: null }
 };
 
 const authSlice = createSlice({
@@ -9,13 +9,13 @@ const authSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     setLoginSuccess: (state, action) => {
-      const { googleId, email, givenName, familyName, imageUrl } = action.payload.profile;
+      const { user_id, email_address, first_name, last_name, image_uri } = action.payload;
       state.profile = {
-        token: googleId,
-        email: email,
-        firstName: givenName,
-        lastName: familyName,
-        imageUri: imageUrl
+        userId: user_id,
+        email: email_address,
+        firstName: first_name,
+        lastName: last_name,
+        imageUri: image_uri
       };
     },
     setLogout: (state) => {
