@@ -24,7 +24,6 @@ const AuthLogin = () => {
     setProfile(userResponse);
     refreshTokenSetup(googleUser);
     history.push('/snacks');
-    setIsLoading(false);
   };
 
   const { signIn } = useGoogleLogin({
