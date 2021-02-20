@@ -37,6 +37,16 @@
     "comma-dangle": ["error", "never"],
     "quotes": [1, "single", { "avoidEscape": true }],
     "arrow-spacing": [1, { "before": true, "after": true }],
+    "sort-imports": [
+      1,
+      {
+        "ignoreCase": false,
+        "ignoreDeclarationSort": false,
+        "ignoreMemberSort": false,
+        "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+        "allowSeparatedGroups": true
+      }
+    ],
     "brace-style": [1, "1tbs"],
     "prefer-template": [1],
     "prefer-destructuring": [1, { "object": true, "array": false }],

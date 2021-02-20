@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import styles from '../styles/Snacks.module.css';
 
