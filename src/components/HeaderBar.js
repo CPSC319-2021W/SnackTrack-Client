@@ -105,7 +105,7 @@ const HeaderBar = (props) => {
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            transformOrigin={{ vertical: 'tp[', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             onClose={handleClose}
           >
             {isAdmin ? (
