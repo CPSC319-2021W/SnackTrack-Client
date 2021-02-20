@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import classNames from 'classnames';
 
 import { DEFAULT_CATEGORIES } from '../constants';
@@ -14,38 +14,72 @@ import { ReactComponent as Crackers } from '../assets/icons/crackers.svg';
 import { ReactComponent as Fruits } from '../assets/icons/fruits.svg';
 
 const FilterIcon = ({ type, isSelected }) => {
+  const [hover, setHover] = useState(false);
+
+  const renderLabel = () => {
+    return (
+      <p className={classNames({
+        [styles.unselectable]: true,
+        [styles.categoryText]: true,
+        [styles.selectedText]: isSelected || hover })}>
+        { type }
+      </p>
+    );
+  };
+
+  const getClasses = () => {
+    return (
+      classNames({
+        [styles.filter_hover]: hover,
+        [styles.icon_button]: true,
+        'active': isSelected
+      })
+    );
+  };
 
   const renderSwitch = () => {
     switch(type) {
-    case DEFAULT_CATEGORIES.FRUITS:
-      return (
-        <Fruits
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
-      );
     case DEFAULT_CATEGORIES.CANDY:
       return (
-        <Candy
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
-      );
-    case DEFAULT_CATEGORIES.CHOCOLATE:
-      return (
-        <Chocolate
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
+        <Fragment>
+          <Candy className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.CHIPS:
       return (
-        <Chips
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
+        <Fragment>
+          <Chips className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
       );
-    case DEFAULT_CATEGORIES.CRACKERS:
+    case DEFAULT_CATEGORIES.CHOCOLATE:
       return (
-        <Crackers
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
+        <Fragment>
+          <Chocolate className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.COOKIES:
       return (
-        <Cookies
-          className={classNames({ [styles.icon_button]: true, 'active': isSelected })} />
+        <Fragment>
+          <Cookies className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
+      );
+    case DEFAULT_CATEGORIES.CRACKERS:
+      return (
+        <Fragment>
+          <Crackers className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
+      );
+    case DEFAULT_CATEGORIES.FRUITS:
+      return (
+        <Fragment>
+          <Fruits className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
       );
     default:
       break;
@@ -53,7 +87,7 @@ const FilterIcon = ({ type, isSelected }) => {
   };
   
   return (
-    <div>
+    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       { renderSwitch() }
     </div>
   );

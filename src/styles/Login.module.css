@@ -1,6 +1,5 @@
 @value colors: './Colors.module.css';
-@value PURPLE from colors;
-@value VIOLET from colors;
+@value PURPLE, VIOLET from colors;
 
 .card {
   margin-top: 200px;
@@ -19,4 +18,12 @@
 
 .button__login:hover {
   background-color: rgb(118, 94, 168, 0.9);
+}
+
+.container {
+  max-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

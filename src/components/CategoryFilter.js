@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 
 import { addCategory, removeCategory } from '../redux/features/snackSlice';
@@ -34,11 +33,6 @@ const CategoryFilter = () => {
         <div key={i} className={styles.categoryBox}>
           <button className={styles.buttonToggle} onClick={() => toggleCategory(i)}>
             <FilterIcon type={name} isSelected={selected} />
-            <p className={classNames({
-              [styles.categoryText]: true,
-              [styles.selectedText]: selected })}>
-              { name }
-            </p>
           </button>
         </div>
       ))}
