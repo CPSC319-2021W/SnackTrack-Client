@@ -25,12 +25,13 @@ const usersSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     simpleLogin: (state, action) => {
-      const { user_id, first_name } = action.payload;
-      state.userId = user_id;
-      state.firstName = first_name;
+      const { user_id, first_name, last_name } = action.payload;
+      state.profile.userId = user_id;
+      state.profile.firstName = first_name;
+      state.profile.lastName = last_name;
     },
     setBalance: (state, action) => {
-      state.balance = action.payload;
+      state.profile.balance = action.payload;
     },
     setUser: (state, action) => {
       const {
