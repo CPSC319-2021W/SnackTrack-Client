@@ -24,15 +24,23 @@ const HeaderBar = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (event) => {
+  const handleClose = () => {
     setAnchorEl(null);
-    if (event.target.innerHTML === 'Log out') {
-      handleLogOut();
-    } else if (event.target.innerHTML === 'Profile') {
-      history.push('/user-profile');
-    } else {
-      history.push('/admin');
-    }
+  };
+
+  const routeToAdmin = () => {
+    setAnchorEl(null);
+    history.push('/admin');
+  };
+
+  const routeToProfile = () => {
+    setAnchorEl(null);
+    history.push('/user-profile');
+  };
+
+  const routeToLogOut = () => {
+    setAnchorEl(null);
+    handleLogOut();
   };
 
   return (
@@ -80,7 +88,6 @@ const HeaderBar = (props) => {
             </h4>
           </div>
           <img
-            // className={`${styles.icon__base} ${styles['icon__margin-right']}`}
             className={classNames({
               [styles.icon__base]: true,
               [styles['icon__margin-right']]: true,
@@ -98,16 +105,18 @@ const HeaderBar = (props) => {
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'tp[', horizontal: 'right' }}
           >
             {isAdmin ? (
-              <MenuItem className={classes.menuItem} onClick={handleClose}>
+              <MenuItem className={classes.menuItem} onClick={routeToAdmin}>
                 ADMIN
               </MenuItem>
             ) : null}
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <MenuItem className={classes.menuItem} onClick={routeToProfile}>
               Profile
             </MenuItem>
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
+            <MenuItem className={classes.menuItem} onClick={routeToLogOut}>
               Log out
             </MenuItem>
           </Menu>
