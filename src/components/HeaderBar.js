@@ -1,4 +1,4 @@
-import { AppBar, Button } from '@material-ui/core';
+import { AppBar, Button, Menu, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import NumberFormat from 'react-number-format';
@@ -7,11 +7,22 @@ import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
+import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
+  const classes = useStyles();
   const { balance, firstName, history, handleLogOut, clientid } = props;
   const [onSnacks, setOnSnacks] = useState(false);
   const [onTransactions, setOnTransactions] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <AppBar className={styles.header}>
@@ -58,10 +69,35 @@ const HeaderBar = (props) => {
             </h4>
           </div>
           <img
-            className={`${styles.icon__base} ${styles['icon__margin-right']}`}
+            // className={`${styles.icon__base} ${styles['icon__margin-right']}`}
+            className={classNames({
+              [styles.icon__base]: true,
+              [styles['icon__margin-right']]: true,
+              [styles.icon__active]: Boolean(anchorEl)
+            })}
             src={profileIcon}
+            aria-describedby={anchorEl ? 'simple-popover' : undefined}
             alt='profile'
+            onClick={handleClick}
           />
+          <Menu
+            keepMounted
+            className={classes.menu}
+            id='user-menu'
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem className={classes.menuItem} onClick={handleClose}>
+              ADMIN
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={handleClose}>
+              Profile
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={handleClose}>
+              Log out
+            </MenuItem>
+          </Menu>
         </div>
       ) : (
         <div className={styles.bar}>
