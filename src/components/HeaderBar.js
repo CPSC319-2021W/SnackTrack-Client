@@ -10,8 +10,10 @@ import transactionsIcon from '../assets/icons/dollar.svg';
 
 const HeaderBar = (props) => {
   const { balance, firstName, history, handleLogOut, clientid } = props;
-  const [onSnacks, setOnSnacks] = useState(false);
-  const [onTransactions, setOnTransactions] = useState(false);
+  const [onSnacks, setOnSnacks] = useState(window.location.pathname === '/snacks');
+  const [onTransactions, setOnTransactions] = useState(
+    window.location.pathname === '/transactions'
+  );
 
   return (
     <AppBar className={styles.header}>
