@@ -7,11 +7,13 @@ import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
+import { useSelector } from 'react-redux';
 import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
   const classes = useStyles();
   const { balance, firstName, history, handleLogOut, clientid } = props;
+  const { isAdmin } = useSelector((state) => state.usersReducer);
   const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
   const [onTransactions, setOnTransactions] = useState(
     history.location.pathname === '/transactions'
@@ -90,9 +92,11 @@ const HeaderBar = (props) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem className={classes.menuItem} onClick={handleClose}>
-              ADMIN
-            </MenuItem>
+            {isAdmin ? (
+              <MenuItem className={classes.menuItem} onClick={handleClose}>
+                ADMIN
+              </MenuItem>
+            ) : null}
             <MenuItem className={classes.menuItem} onClick={handleClose}>
               Profile
             </MenuItem>
