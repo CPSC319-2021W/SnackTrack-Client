@@ -8,7 +8,6 @@ import { CATEGORIES_LIST } from '../../constants';
 import styles from '../../styles/Category.module.css';
 
 const CategoryFilter = () => {
-  const [filters, setFilters] = useState([]);
   const [categories, setCategories] = useState(CATEGORIES_LIST);  
   const dispatch = useDispatch();
 
@@ -18,12 +17,10 @@ const CategoryFilter = () => {
   const toggleCategory = (i) => {
     categories[i].selected = !categories[i].selected;
     setCategories([...categories]);
-    if (categories[i].selected) { 
-      setFilters([...filters, categories[i].name]); 
-      addFilter(categories[i].name);
+    if (categories[i].selected) {
+      addFilter(categories[i].id);
     } else {
-      removeFilter (categories[i].name);
-      setFilters([...filters.filter(category => category !== categories[i].name)]);     
+      removeFilter(categories[i].id);  
     }
   };
   

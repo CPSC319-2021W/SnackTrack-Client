@@ -14,7 +14,7 @@ const SnacksContainer = (props) => {
         ) : (
           <SnackGrid
             snacks={snacks.filter((item) => {
-              return filters.includes(item.snack_type);
+              return filters.includes(item.snack_type_id);
             })}
             onClick={alert}
           />
