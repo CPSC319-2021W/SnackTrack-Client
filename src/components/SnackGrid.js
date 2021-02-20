@@ -5,6 +5,7 @@ import styles from '../styles/SnackGrid.module.css';
 
 const SnackGrid = (props) => {
   const { snacks, onClick } = props;
+
   return (
     <Grid container spacing={2} className={styles.container}>
       {snacks.map((snack, index) => {
