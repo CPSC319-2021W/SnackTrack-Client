@@ -46,7 +46,7 @@ const usersSlice = createSlice({
       state.profile = {
         userId: user_id,
         username: username,
-        email: email_address,
+        emailAddress: email_address,
         firstName: first_name,
         lastName: last_name,
         imageUri: image_uri,
