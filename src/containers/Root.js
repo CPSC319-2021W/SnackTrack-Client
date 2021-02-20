@@ -12,7 +12,7 @@ import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
 import UserProfile from '../pages/UserProfile';
-import { getUser } from '../redux/features/users/usersSlice';
+import { setBalance } from '../redux/features/users/usersSlice';
 import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
 import { useGoogleLogout } from 'react-google-login';
@@ -24,7 +24,10 @@ const Root = () => {
     (state) => state.usersReducer
   );
 
-  const getUserById = (userId) => dispatch(getUser(userId));
+  const toggleHeader = () => {
+    balance === null ? dispatch(setBalance(0)) : dispatch(setBalance(null));
+  };
+
   const authLogoutSuccess = () => dispatch(setLogout());
 
   const onSuccess = () => {
@@ -49,7 +52,12 @@ const Root = () => {
         <Switch>
           <Route path='/auth-login' component={AuthLogin} />
           <Route path='/select-login' component={SelectLogin} />
-          <Layout firstName={firstName} balance={balance} logOut={signOut} history={history}>
+          <Layout
+            firstName={firstName}
+            balance={balance}
+            logOut={signOut}
+            history={history}
+          >
             <Route path='/snacks' component={Snacks} />
             <Route path='/transactions' component={Transactions} />
             <Route path='/user-profile' component={UserProfile} />
@@ -61,8 +69,8 @@ const Root = () => {
             ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
             : ''}
         </h4>
-        <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
-            Set Profile
+        <Button variant={'outlined'} color={'secondary'} onClick={toggleHeader}>
+          Toggle Header
         </Button>
       </ThemeProvider>
     </StylesProvider>
