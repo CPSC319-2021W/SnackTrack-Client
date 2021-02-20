@@ -4,8 +4,7 @@ import SnackGrid from './SnackGrid';
 import styles from '../styles/SnacksContainer.module.css';
 import { useSelector } from 'react-redux';
 
-const SnacksContainer = (props) => {  
-  const {snacks} = props;
+const SnacksContainer = (snacks) => {  
   const snackFilter = useSelector((state) => state.snackReducer);
   const currFilter = snackFilter.categories;
   return (
