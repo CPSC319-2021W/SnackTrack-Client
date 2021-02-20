@@ -56,6 +56,22 @@ const theme = createMuiTheme({
       root: {
         fontFamily: 'Source Sans Pro'
       }
+    },
+    MuiCheckbox: {
+      root: {
+        color: colors.PURPLE,
+        '&&:hover': {
+          backgroundColor: 'transparent'
+        }
+      },
+      colorSecondary: {
+        '&$checked': {
+          color: colors.PURPLE,
+          '&:hover': {
+            backgroundColor: 'transparent'
+          }
+        }
+      }
     }
   },
   props: {

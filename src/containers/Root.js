@@ -1,5 +1,3 @@
-import '../styles/Global.css';
-
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthLogin from '../pages/AuthLogin';
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HeaderBar from '../components/HeaderBar';
 import Landing from '../pages/LandingPage';
+import Layout from '../components/Layout';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
@@ -48,31 +46,24 @@ const Root = () => {
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className='root-container'>
-          <HeaderBar
-            balance={balance}
-            firstName={firstName}
-            history={history}
-            clientid={process.env.REACT_APP_CLIENT_ID}
-            handleLogOut={signOut}
-          />
-          <Switch>
-            <Route path='/auth-login' component={AuthLogin} />
-            <Route path='/select-login' component={SelectLogin} />
+        <Switch>
+          <Route path='/auth-login' component={AuthLogin} />
+          <Route path='/select-login' component={SelectLogin} />
+          <Layout firstName={firstName} balance={balance} logOut={signOut} history={history}>
             <Route path='/snacks' component={Snacks} />
             <Route path='/transactions' component={Transactions} />
             <Route path='/user-profile' component={UserProfile} />
-            <Route exact path='/' component={Landing} />
-          </Switch>
-          <h4>
-            {username
-              ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
-              : ''}
-          </h4>
-          <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
+          </Layout>
+          <Route exact path='/' component={Landing} />
+        </Switch>
+        <h4>
+          {username
+            ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
+            : ''}
+        </h4>
+        <Button variant={'outlined'} color={'secondary'} onClick={() => getUserById(2)}>
             Set Profile
-          </Button>
-        </div>
+        </Button>
       </ThemeProvider>
     </StylesProvider>
   );
