@@ -50,3 +50,9 @@ export const NOTIFICATIONS = {
     message: 'Uh-oh! Something went wrong. Please try again later.'
   }
 };
+
+export const TRANSACTION_TYPES = {
+  PURCHASE: 1,
+  CANCEL: 2,
+  PENDING: 3
+};
