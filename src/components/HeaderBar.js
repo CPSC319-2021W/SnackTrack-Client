@@ -29,17 +29,17 @@ const HeaderBar = (props) => {
   };
 
   const routeToAdmin = () => {
-    setAnchorEl(null);
+    handleClose();
     history.push('/admin');
   };
 
   const routeToProfile = () => {
-    setAnchorEl(null);
+    handleClose();
     history.push('/user-profile');
   };
 
   const routeToLogOut = () => {
-    setAnchorEl(null);
+    handleClose();
     handleLogOut();
   };
 
