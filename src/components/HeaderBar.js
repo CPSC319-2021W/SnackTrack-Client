@@ -10,9 +10,9 @@ import transactionsIcon from '../assets/icons/dollar.svg';
 
 const HeaderBar = (props) => {
   const { balance, firstName, history, handleLogOut, clientid } = props;
-  const [onSnacks, setOnSnacks] = useState(window.location.pathname === '/snacks');
+  const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
   const [onTransactions, setOnTransactions] = useState(
-    window.location.pathname === '/transactions'
+    history.location.pathname === '/transactions'
   );
 
   return (
