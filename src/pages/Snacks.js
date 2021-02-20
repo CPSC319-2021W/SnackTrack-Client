@@ -1,21 +1,20 @@
-import CategoryFilter from '../components/CategoryFilter';
-import React from 'react';
-import SnackCard from '../components/SnackCard';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import SnacksContainer from '../components/SnacksList/SnacksContainer';
 
 const Snacks = () => {
+  const dispatch = useDispatch();
+  const { snacks, categories } = useSelector((state) => state.snacksReducer);
+
+  useEffect(() => {
+    dispatch(fetchSnacks());
+  }, [dispatch]);
+
   return (
     <div>
-      <p>Snacks Page</p>
-      <CategoryFilter />
-      <SnackCard
-        snack={{
-          imageUri:
-            'https://www.hersheys.com/content/dam/smartlabelproductsimage/kitkat/00034000002467-0010.png',
-          snackName: 'KitKat',
-          price: 200
-        }}
-        onClick={alert}
-      />
+      <SnacksContainer snacks={snacks} filters={categories} />
     </div>
   );
 };

@@ -1,26 +1,26 @@
-import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-
-import NumberFormat from 'react-number-format';
 import React from 'react';
-import styles from '../styles/SnackCard.module.css';
+import NumberFormat from 'react-number-format';
+
+import { Card, CardActionArea, CardMedia } from '@material-ui/core';
+import styles from '../../styles/SnackCard.module.css';
 
 const SnackCard = (props) => {
-  const { imageUri, snackName, price } = props.snack;
+  const { image_uri, snack_name, price } = props.snack;
   const { onClick } = props;
 
   return (
     <Card variant={'outlined'} className={styles.base}>
-      <CardActionArea className={styles.action_area} onClick={() => onClick(snackName)}>
+      <CardActionArea className={styles.action_area} onClick={() => onClick(snack_name)}>
         <div className={styles.image}>
           <CardMedia
             className={styles.resize_image}
-            title={snackName}
+            title={snack_name}
             component='img'
-            src={imageUri}
+            src={image_uri}
           />
         </div>
         <div className={styles.label}>
-          <p className={styles.snack_name}>{snackName}</p>
+          <p className={styles.snack_name}>{snack_name}</p>
           <p className={styles.price}>
             <NumberFormat
               value={price / 100}

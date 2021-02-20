@@ -47,8 +47,8 @@ const Transactions = () => {
       <PaymentsTable
         data={paymentsResponse}
         rowsPerPage={rowsPerPage}
-        onChangePage={handlePaymentChangePage}
         setSnackBar={handleApiResponse}
+        onChangePage={handlePaymentChangePage}
       />
       <ToastNotification
         open={isSnackBarOpen}

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { addCategory, removeCategory } from '../redux/features/snackSlice';
+import { addCategory, removeCategory } from '../../redux/features/snacks/snacksSlice';
 import FilterIcon from './FilterIcon';
 
-import { CATEGORIES_LIST } from '../constants';
-import styles from '../styles/Category.module.css';
+import { CATEGORIES_LIST } from '../../constants';
+import styles from '../../styles/Category.module.css';
 
 const CategoryFilter = () => {
   const [filters, setFilters] = useState([]);
