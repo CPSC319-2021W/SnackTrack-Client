@@ -24,8 +24,15 @@ const HeaderBar = (props) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (event) => {
     setAnchorEl(null);
+    if (event.target.innerHTML === 'Log out') {
+      handleLogOut();
+    } else if (event.target.innerHTML === 'Profile') {
+      history.push('/user-profile');
+    } else {
+      history.push('/admin');
+    }
   };
 
   return (
