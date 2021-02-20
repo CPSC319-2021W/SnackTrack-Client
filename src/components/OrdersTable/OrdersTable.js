@@ -6,7 +6,7 @@ import { makePayment } from '../../services/OrdersService';
 import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
-  const { data, rowsPerPage, onChangePage } = props;
+  const { data, rowsPerPage, onChangePage, onHandleApiResponse } = props;
   const { currentPage, transactions } = data;
   const { userId, username } = useSelector((state) => state.usersReducer);
 
@@ -21,9 +21,19 @@ const Orders = (props) => {
   );
   const uncheckedOrdersIds = uncheckedOrders.map((order) => order.transaction_id);
 
-  const handlePayForOrders = () => {
+  const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
-      makePayment(userId, selectedOrders, subtotalAmount, username);
+      try {
+        await makePayment(userId, selectedOrders, subtotalAmount, username);
+        onHandleApiResponse('PAYMENT_SUCCESS');
+      } catch (err) {
+        onHandleApiResponse('ERROR');
+        console.log(
+          `Not Implemented: MockPayment for $${
+            subtotalAmount / 100
+          }, transactionIds [${selectedOrders}], userId ${userId}, processedBy ${username}`
+        );
+      }
   };
 
   const handleSelectOneOrder = (name, amount) => {
