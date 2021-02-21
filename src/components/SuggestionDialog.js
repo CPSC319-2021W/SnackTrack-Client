@@ -3,7 +3,7 @@ import { Button, Card, Dialog, Divider, Input } from '@material-ui/core';
 import React from 'react';
 import styles from '../styles/SuggestionDialog.module.css';
 
-const SnackCard = (props) => {
+const SuggestionDialog = (props) => {
   const { open, onSubmit, handleClose, onChangeText } = props;
 
   return (
@@ -32,4 +32,4 @@ const SnackCard = (props) => {
   );
 };
 
-export default SnackCard;
+export default SuggestionDialog;
