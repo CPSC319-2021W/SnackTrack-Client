@@ -31,7 +31,7 @@ const Transactions = () => {
   const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const handlePaymentChangePage = async (page) => {
-    const paymentResponse = await getPaymentHistory(page, rowsPerPage);
+    const paymentResponse = await getUserPayments(userId, page, rowsPerPage);
     setPaymentsResponse(paymentResponse);
   };
 

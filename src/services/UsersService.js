@@ -28,9 +28,11 @@ const getUserById = async (userId) => {
   }
 };
 
-const getUserPayments = async (userId) => {
+const getUserPayments = async (userId, page, rowsPerPage) => {
   try {
-    const { data } = await httpClient.get(`/users/${userId}/payments`);
+    const { data } = await httpClient.get(
+      `/users/${userId}/payments/?page=${page}&size=${rowsPerPage}`
+    );
     return data;
   } catch (err) {
     // TODO: Handle 404
