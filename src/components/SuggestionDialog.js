@@ -22,7 +22,7 @@ const SnackCard = (props) => {
           disableUnderline={true}
           onChange={onChangeText}
           onKeyPress={onSubmit}
-        ></Input>
+        />
         <Divider />
         <Button className={styles.button} onClick={onSubmit}>
           Send
