@@ -1,0 +1,36 @@
+.actionArea {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button__base {
+  font-weight: 700;
+  text-transform: none;
+  padding: 8px;
+  width: 100px;
+  height: 40px;
+}
+
+.button__approve {
+  color: #ffffff;
+  background-color: #765ea8;
+  float: right;
+}
+
+.button__approve:hover {
+  background-color: rgb(118, 94, 168, 0.9);
+}
+
+.button__approve:disabled {
+  color: #ffffff;
+  background-color: rgb(118, 94, 168, 0.4);
+}
+
+.button__decline {
+  color: #765ea8;
+  background-color: rgb(118, 94, 168, 0.1);
+}
+
+.button__decline:hover {
+  background-color: rgb(118, 94, 168, 0.15);
+}

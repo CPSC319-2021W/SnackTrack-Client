@@ -45,8 +45,16 @@ export const NOTIFICATIONS = {
     type: 'success',
     message: 'Changes to your user profile is saved.'
   },
+  CLAIM_SUCCESS: {
+    type: 'sucess',
+    message: 'Thanks! These orders will appear in your transaction history.'
+  },
   ERROR: {
     type: 'error',
     message: 'Uh-oh! Something went wrong. Please try again later.'
+  },
+  CLAIM_ERROR: {
+    type: 'error',
+    message: 'Please approve or decline pending orders before making new purchases.'
   }
 };
