@@ -24,4 +24,8 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor) => 
   return data;
 };
 
-export { getUserOrders, makePayment };
+const makeOrder = (userId, quantity) => {
+  console.log(userId, quantity);
+};
+
+export { getUserOrders, makePayment, makeOrder };
