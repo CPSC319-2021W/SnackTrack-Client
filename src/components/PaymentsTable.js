@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 
 import React from 'react';
-import styles from '../styles/PaymentsTable.module.css';
+import styles from '../styles/Table.module.css';
 
 const PaymentsTable = (props) => {
   const { data, rowsPerPage, onChangePage } = props;
