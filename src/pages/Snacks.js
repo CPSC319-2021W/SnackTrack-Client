@@ -27,8 +27,12 @@ const Snacks = () => {
   };
 
   const handleSubmit = (event) => {
+    const submission = suggestionText.trim();
+    if (submission === '') {
+      return;
+    }
     if (event.key === 'Enter' || event.type === 'click') {
-      makeSuggestion(userId, suggestionText);
+      makeSuggestion(userId, submission);
       setIsSuggestionOpen(false);
       setSuggestionText('');
     }
