@@ -21,7 +21,6 @@ const PendingOrdersDialog = (props) => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isApproveDisabled, setIsApproveDisabled] = useState(true);
-  const [isDeclineDisabled, setIsDeclineDisabled] = useState(false);
 
   const selectAllOrders = () => {
     let ordersToSelect = pendingOrders.map((order) => order.transaction_id);
@@ -114,10 +113,8 @@ const PendingOrdersDialog = (props) => {
 
   useEffect(() => {
     if (selectedOrders.length > 0) {
-      setIsDeclineDisabled(true);
       setIsApproveDisabled(false);
     } else {
-      setIsDeclineDisabled(false);
       setIsApproveDisabled(true);
     }
   }, [selectedOrders]);
@@ -221,7 +218,7 @@ const PendingOrdersDialog = (props) => {
             <TableCell colSpan={2}>
               <Button
                 className={`${dialogStyles.button__base} ${dialogStyles.button__decline}`}
-                disabled={isDeclineDisabled}
+                disabled={!isApproveDisabled}
                 onClick={declineAllOrders}
               >
                 Decline all

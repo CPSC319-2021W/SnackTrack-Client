@@ -37,6 +37,10 @@ const Snacks = () => {
     setToastNotificationOpen(false);
   };
 
+  const handleCloseNotAllowed = () => {
+    setToastNotificationOpen(true);
+  };
+
   useEffect(() => {
     dispatch(fetchSnacks());
   }, [dispatch]);
@@ -61,7 +65,7 @@ const Snacks = () => {
         pendingOrders={pendingOrders}
         open={dialogOpen}
         handleOnClose={handleCloseDialog}
-        handleCloseNotAllowed={setToastNotificationOpen}
+        handleCloseNotAllowed={handleCloseNotAllowed}
       />
       <ToastNotification
         open={toastNotificationOpen}
