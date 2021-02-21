@@ -37,5 +37,10 @@
     margin: 0;
     cursor: pointer;
     text-decoration: none;
+    transition: 0.1s;
+}
+
+.suggestLabel:hover {
+  color: DARK_PURPLE;
 }
   

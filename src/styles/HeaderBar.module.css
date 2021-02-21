@@ -40,11 +40,12 @@
 
 .icon__base {
   display: inline-block;
-  width: 2rem;
-  height: 2rem;
+  width: 3rem;
+  height: 3rem;
+  padding: 0 0.45rem;
   margin-left: 3rem;
   opacity: 50%;
-  transition-duration: 0.1;
+  transition: 0.1s;
 }
 
 .icon__margin-right {
@@ -87,4 +88,12 @@
 
 .button_logout:hover {
   opacity: 100%;
+}
+
+.unselectable {
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
