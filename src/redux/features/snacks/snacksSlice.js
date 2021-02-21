@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   snacks: [],
   categories: [],
   loading: false,
-  error: []
+  error: null
 };
 
 const fetchSnacks = createAsyncThunk('users/fetchSnacks', async () => {
