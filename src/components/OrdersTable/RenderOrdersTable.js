@@ -140,6 +140,7 @@ const RenderOrdersTable = (props) => {
         </TableHead>
         <TableBody>
           {transactions.map((order, i) => {
+            console.log(order);
             return (
               <TableRow key={i} tabIndex={-1} className={classNames({
                 [styles.row]: !checkIsSelected(transactions[i].transaction_id),
@@ -154,10 +155,10 @@ const RenderOrdersTable = (props) => {
                         column.id === 'transaction_type_id' ? styles.cell__large : null
                       } ${column.id !== 'checkbox' ? styles.cell__medium : null}`}
                     >
-                      {column.format && typeof value === 'number'
-                        ? column.format(value)
-                        : column.id === 'transaction_type_id'
-                          ? column.format(value, order['payment_id'])
+                      {column.id === 'transaction_type_id'
+                        ? column.format(value, order.payment_id)
+                        : column.format && typeof value === 'number'
+                          ? column.format(value)
                           : value}
                       {column.id === 'checkbox' &&
                       isPaymentPending(
