@@ -121,7 +121,7 @@ const PendingOrdersDialog = (props) => {
 
   useEffect(() => {
     const allItemsChecked = () => {
-      return pendingOrders.length === selectedOrders.length;
+      return pendingOrders.length > 0 && pendingOrders.length === selectedOrders.length;
     };
 
     if (allItemsChecked()) {
