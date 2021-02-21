@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 const Orders = (props) => {
   const { data, rowsPerPage, onChangePage, onHandleApiResponse } = props;
   const { currentPage, transactions } = data;
-  const { userId, username } = useSelector((state) => state.usersReducer);
+  const { userId, username } = useSelector((state) => state.usersReducer.profile);
 
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);

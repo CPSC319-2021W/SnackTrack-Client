@@ -10,7 +10,7 @@ const authenticate = async () => {
   //   // handle error
   //   console.log(err);
   // }
-  const response = getUserById(1);
+  const response = await getUserById(1);
   return response;
 };
 
