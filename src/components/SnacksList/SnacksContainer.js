@@ -10,7 +10,7 @@ const SnacksContainer = (props) => {
   const { snacks, filters } = props;
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
-  const [snackQuantity, setSnackQuantity] = useState('');
+  const [snackQuantity, setSnackQuantity] = useState('1');
 
   const handleCloseSnackOrder = () => {
     setIsSnackOrderOpen(false);
@@ -28,7 +28,7 @@ const SnacksContainer = (props) => {
     if (event.key === 'Enter' || event.type === 'click') {
       makeOrder(userId, snackQuantity);
       setIsSnackOrderOpen(false);
-      setSnackQuantity('');
+      setSnackQuantity('1');
     }
   };
   

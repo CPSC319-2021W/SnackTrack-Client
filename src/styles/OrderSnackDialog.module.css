@@ -2,7 +2,8 @@
 @value LIGHT_GREY from colors;
 
 .card {
-  width: 300px;
+  width: 400px;
+  height: 350px;
   display: flex;
   flex-direction: column;
 }
