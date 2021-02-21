@@ -31,7 +31,7 @@ const Orders = (props) => {
           subtotalAmount,
           username
         );
-        // TODO: Add to front end's table
+        // TODO: Add to front end's table after response
         console.log(payment);
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
