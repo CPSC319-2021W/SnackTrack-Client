@@ -7,7 +7,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 2,
@@ -17,7 +17,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 3,
@@ -27,7 +27,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 4,
@@ -37,7 +37,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'CN'
+    transaction_type_id: 2
   },
   {
     transaction_id: 5,
@@ -47,7 +47,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: 1,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 6,
@@ -57,7 +57,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'CN'
+    transaction_type_id: 2
   },
   {
     transaction_id: 7,
@@ -67,7 +67,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: 1,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 8,
@@ -77,7 +77,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: 1,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 9,
@@ -87,7 +87,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: 1,
-    status: 'PR'
+    transaction_type_id: 1
   },
   {
     transaction_id: 10,
@@ -97,7 +97,7 @@ const mockOrderData = [
     transaction_dtm: '2020/01/21',
     user_id: 1,
     payment_id: null,
-    status: 'PR'
+    transaction_type_id: 1
   }
 ];
 
