@@ -7,23 +7,23 @@ import ToastNotification from '../components/ToastNotification';
 import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
 
-const emptyPaymentsResponse = {
+const INITIAL_PAYMENTS = {
   total_rows: 0,
   payments: [],
   total_pages: 1,
   current_page: 0
 };
 
-// const emptyOrdersResponse = {
+// const INITIAL_ORDERS = {
 //   total_rows: 0,
-//   payments: [],
+//   transactions: [],
 //   total_pages: 1,
 //   current_page: 0
 // };
 
 const Transactions = () => {
   const [rowsPerPage] = useState(8);
-  const [paymentsResponse, setPaymentsResponse] = useState(emptyPaymentsResponse);
+  const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
