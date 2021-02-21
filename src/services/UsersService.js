@@ -40,4 +40,8 @@ const getUserPayments = async (userId, page, rowsPerPage) => {
   }
 };
 
-export { authenticate, getUsers, getUserById, getUserPayments };
+const makeSuggestion = (userId, suggestionText) => {
+  console.log(userId, suggestionText);
+};
+
+export { authenticate, getUsers, getUserById, getUserPayments, makeSuggestion };

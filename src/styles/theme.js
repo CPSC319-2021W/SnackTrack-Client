@@ -77,6 +77,11 @@ const theme = createMuiTheme({
       colorPrimary: {
         color: colors.LIGHT_GREY
       }
+    },
+    MuiInput: {
+      input: {
+        fontSize: '1rem'
+      }
     }
   },
   props: {

@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NOTIFICATIONS } from '../constants';
 import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
+import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import { makeSuggestion } from '../services/UsersService';
 import { mockPendingOrders } from '../mockSnackData';
 import styles from '../styles/Snacks.module.css';
 
@@ -16,6 +18,33 @@ const Snacks = () => {
   const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
   const [pendingOrders, setPendingOrders] = useState([]);
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
+  const { userId } = useSelector((state) => state.usersReducer.profile);
+  const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
+  const [suggestionText, setSuggestionText] = useState('');
+
+  const handleCloseSuggestion = () => {
+    setIsSuggestionOpen(false);
+  };
+
+  const openSuggestion = () => {
+    setIsSuggestionOpen(true);
+  };
+
+  const handleChangeText = (event) => {
+    setSuggestionText(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    const submission = suggestionText.trim();
+    if (submission === '') {
+      return;
+    }
+    if (event.key === 'Enter' || event.type === 'click') {
+      makeSuggestion(userId, submission);
+      setIsSuggestionOpen(false);
+      setSuggestionText('');
+    }
+  };
 
   const togglePendingOrders = () => {
     if (pendingOrders.length === 0) {
@@ -53,19 +82,24 @@ const Snacks = () => {
         </div>
         <div className={styles.suggestBox}>
           <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
-          <div className={styles.suggestBoxLink}>
-            <a className={styles.a} href='http://localhost:3000/'>
-              Suggest a snack!
-            </a>
-          </div>
+          <p className={styles.suggestLabel} onClick={openSuggestion}>
+            Suggest a snack!
+          </p>
         </div>
       </div>
-      <SnacksContainer snacks={snacks} filters={selectedFilters} />
+      <SnacksContainer snacks={snacks} filters={selectedFilters} />{' '}
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
         open={pendingDialogOpen}
         handleOnClose={handleCloseDialog}
         handleCloseNotAllowed={handleCloseNotAllowed}
+      />
+      <SuggestionDialog
+        open={isSuggestionOpen}
+        value={suggestionText}
+        handleClose={handleCloseSuggestion}
+        onSubmit={handleSubmit}
+        onChangeText={handleChangeText}
       />
       <ToastNotification
         open={toastNotificationOpen}
