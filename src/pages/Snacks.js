@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
-import { makeSuggestion } from '../services/UserService';
+import { makeSuggestion } from '../services/UsersService';
 import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
