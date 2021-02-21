@@ -1,9 +1,13 @@
 @value colors: './Colors.module.css';
-@value PURPLE, VIOLET from colors;
+@value PURPLE, DARK_PURPLE from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
 
 .card {
   margin-top: 200px;
   padding: 8rem;
+  box-shadow: DEFAULT_SHADOW;
 }
 
 .button__login {
@@ -13,13 +17,14 @@
   font-weight: 700;
   background-color: PURPLE;
   border-radius: 50px;
+  border: 0;
   text-transform: none;
   padding: 1rem 2rem;
   letter-spacing: 0.05rem;
 }
 
 .button__login:hover {
-  background-color: rgb(118, 94, 168, 0.9);
+  background-color: DARK_PURPLE;
 }
 
 .container {

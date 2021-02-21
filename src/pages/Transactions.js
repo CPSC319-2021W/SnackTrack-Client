@@ -1,12 +1,14 @@
 import { React, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { NOTIFICATIONS } from '../constants';
+import { getUserOrders } from '../services/OrdersService';
+import { getUserPayments } from '../services/UsersService';
+
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import ToastNotification from '../components/ToastNotification';
-import { getUserOrders } from '../services/OrdersService';
-import { getUserPayments } from '../services/UsersService';
-import { useSelector } from 'react-redux';
+import styles from '../styles/Page.module.css';
 
 const INITIAL_PAYMENTS = {
   total_rows: 0,
@@ -28,11 +30,14 @@ const Transactions = () => {
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
+  const [paymentsError, setPaymentsError] = useState(false);
   const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getUserPayments(userId, page, rowsPerPage);
-    setPaymentsResponse(paymentResponse);
+    paymentResponse instanceof Error
+      ? setIsSnackBarOpen(true)
+      : setPaymentsResponse(paymentResponse);
   };
 
   const handleOrderChangePage = (page) => {
@@ -49,15 +54,21 @@ const Transactions = () => {
 
   useEffect(async () => {
     const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
-    setPaymentsResponse(paymentResponse);
+    if (paymentResponse instanceof Error) {
+      setIsSnackBarOpen(true);
+      setPaymentsError(true);
+    } else {
+      setPaymentsResponse(paymentResponse);
+    }
   }, []);
 
   return (
-    <div>
-      <p>
-        <code>Orders</code>
-      </p>
-
+    <div className={styles.base}>
+      <div className={styles.header}>
+        <h5 className={styles.title}>
+          Transactions
+        </h5>
+      </div>
       <OrdersTable
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
@@ -65,6 +76,7 @@ const Transactions = () => {
         onChangePage={handleOrderChangePage}
       />
       <PaymentsTable
+        error={paymentsError}
         data={paymentsResponse}
         rowsPerPage={rowsPerPage}
         setSnackBar={handleApiResponse}
