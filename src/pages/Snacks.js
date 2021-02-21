@@ -64,9 +64,9 @@ const Snacks = () => {
       />
       <ToastNotification
         open={toastNotificationOpen}
-        onClose={handleCloseToastNotification}
         notification={NOTIFICATIONS[apiResponse]}
-      ></ToastNotification>
+        onClose={handleCloseToastNotification}
+      />
     </div>
   );
 };

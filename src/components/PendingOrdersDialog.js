@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   Button,
   Checkbox,
@@ -115,10 +114,6 @@ const PendingOrdersDialog = (props) => {
     handleOnClose();
   };
 
-  const onCloseNotAllowed = () => {
-    setToastNotificationOpen(true);
-  };
-
   useEffect(() => {
     if (selectedOrders.length > 0) {
       setIsDeclineDisabled(true);
@@ -214,8 +209,8 @@ const PendingOrdersDialog = (props) => {
                       {column.id === 'transaction_amount'
                         ? column.format(value)
                         : column.id === 'checkbox'
-                        ? column.format(i)
-                        : value}
+                          ? column.format(i)
+                          : value}
                     </TableCell>
                   );
                 })}
