@@ -46,7 +46,7 @@ export const NOTIFICATIONS = {
     message: 'Changes to your user profile is saved.'
   },
   CLAIM_SUCCESS: {
-    type: 'sucess',
+    type: 'success',
     message: 'Thanks! These orders will appear in your transaction history.'
   },
   ERROR: {

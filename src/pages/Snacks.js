@@ -9,10 +9,12 @@ import ToastNotification from '../components/ToastNotification';
 const Snacks = () => {
   const [dialogOpen, setDialogOpen] = useState(true);
   const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
-  const { CLAIM_ERROR } = NOTIFICATIONS;
+  const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
 
   const handleCloseDialog = () => {
+    setApiResponse('CLAIM_SUCCESS');
     setDialogOpen(false);
+    setToastNotificationOpen(true);
   };
 
   const handleCloseToastNotification = () => {
@@ -63,7 +65,7 @@ const Snacks = () => {
       <ToastNotification
         open={toastNotificationOpen}
         onClose={handleCloseToastNotification}
-        notification={CLAIM_ERROR}
+        notification={NOTIFICATIONS[apiResponse]}
       ></ToastNotification>
     </div>
   );
