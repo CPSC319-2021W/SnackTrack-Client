@@ -140,7 +140,6 @@ const RenderOrdersTable = (props) => {
         </TableHead>
         <TableBody>
           {transactions.map((order, i) => {
-            console.log(order);
             return (
               <TableRow key={i} tabIndex={-1} className={classNames({
                 [styles.row]: !checkIsSelected(transactions[i].transaction_id),

@@ -71,17 +71,17 @@
 
 .status__pending {
   color: ORANGE;
-  background-color: #FFE7CA;
+  background-color: #ffe7ca;
 }
 
 .status__cancelled {
   color: RED;
-  background-color: #FDD9D7;
+  background-color: #fdd9d7;
 }
 
 .status__paid {
   color: GREEN;
-  background-color: #DBEFDC;
+  background-color: #dbefdc;
 }
 
 .button__pay {
@@ -89,7 +89,6 @@
   color: #ffffff;
   background-color: PURPLE;
   text-transform: none;
-
 }
 
 .button__pay:hover {
@@ -121,11 +120,11 @@
 }
 
 .row:hover {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .row__selected {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .paper {
