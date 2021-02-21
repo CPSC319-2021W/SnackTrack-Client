@@ -3,16 +3,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getUserById } from '../../../services/UserService';
 
 const INITIAL_STATE = {
-  userId: null,
-  username: null,
-  emailAddress: null,
-  firstName: null,
-  lastName: null,
-  balance: null,
-  isActive: null,
-  isAdmin: null,
-  isAuthenticated: false,
-  error: null
+  profile: {
+    userId: null,
+    username: null,
+    emailAddress: null,
+    firstName: null,
+    lastName: null,
+    imageUri: null,
+    balance: null,
+    isAdmin: null
+  }
 };
 
 const getUser = createAsyncThunk('users/getUserStatus', async (userId) => {
@@ -25,12 +25,35 @@ const usersSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     simpleLogin: (state, action) => {
-      const { user_id, first_name } = action.payload;
-      state.userId = user_id;
-      state.firstName = first_name;
+      const { user_id, first_name, last_name } = action.payload;
+      state.profile.userId = user_id;
+      state.profile.firstName = first_name;
+      state.profile.lastName = last_name;
     },
     setBalance: (state, action) => {
-      state.balance = action.payload;
+      state.profile.balance = action.payload;
+    },
+    setUser: (state, action) => {
+      const {
+        user_id,
+        username,
+        email_address,
+        first_name,
+        last_name,
+        image_uri,
+        balance,
+        is_admin
+      } = action.payload;
+      state.profile = {
+        userId: user_id,
+        username: username,
+        emailAddress: email_address,
+        firstName: first_name,
+        lastName: last_name,
+        imageUri: image_uri,
+        balance: balance,
+        isAdmin: is_admin
+      };
     }
   },
   extraReducers: {
@@ -73,6 +96,6 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-export const { simpleLogin, setBalance } = usersSlice.actions;
+export const { simpleLogin, setBalance, setUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

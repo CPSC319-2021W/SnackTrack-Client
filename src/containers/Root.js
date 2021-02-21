@@ -20,9 +20,7 @@ import { useGoogleLogout } from 'react-google-login';
 const Root = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { username, firstName, emailAddress, balance } = useSelector(
-    (state) => state.usersReducer
-  );
+  const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
 
   const toggleHeader = () => {
     balance === null ? dispatch(setBalance(0)) : dispatch(setBalance(null));
@@ -64,11 +62,6 @@ const Root = () => {
           </Layout>
           <Route exact path='/' component={Landing} />
         </Switch>
-        <h4>
-          {username
-            ? `Welcome, ${emailAddress}. You're currently carrying a balance of $${balance}.`
-            : ''}
-        </h4>
         <Button variant={'outlined'} color={'secondary'} onClick={toggleHeader}>
           Toggle Header
         </Button>

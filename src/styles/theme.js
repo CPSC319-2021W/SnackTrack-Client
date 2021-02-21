@@ -72,6 +72,11 @@ const theme = createMuiTheme({
           }
         }
       }
+    },
+    MuiCircularProgress: {
+      colorPrimary: {
+        color: colors.LIGHT_GREY
+      }
     }
   },
   props: {
