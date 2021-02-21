@@ -28,4 +28,8 @@ const authenticate = async () => {
   return response;
 };
 
-export { getUserById, getUsers, authenticate };
+const makeSuggestion = (userId, suggestionText) => {
+  console.log(userId, suggestionText);
+};
+
+export { getUserById, getUsers, authenticate, makeSuggestion };

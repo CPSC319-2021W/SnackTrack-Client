@@ -1,13 +1,38 @@
-import React, { useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
 
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
+import SuggestionDialog from '../components/SuggestionDialog';
+import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import { makeSuggestion } from '../services/UserService';
 import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
+  const { userId } = useSelector((state) => state.usersReducer.profile);
+  const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
+  const [suggestionText, setSuggestionText] = useState('');
+
+  const handleCloseSuggestion = () => {
+    setIsSuggestionOpen(false);
+  };
+
+  const openSuggestion = () => {
+    setIsSuggestionOpen(true);
+  };
+
+  const handleChangeText = (event) => {
+    setSuggestionText(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    if (event.key === 'Enter' || event.type === 'click') {
+      makeSuggestion(userId, suggestionText);
+      setIsSuggestionOpen(false);
+      setSuggestionText('');
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchSnacks());
@@ -21,14 +46,19 @@ const Snacks = () => {
         </div>
         <div className={styles.suggestBox}>
           <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
-          <div className={styles.suggestBoxLink}>
-            <a className={styles.a} href='http://localhost:3000/'>
-              Suggest a snack!
-            </a>
-          </div>
+          <p className={styles.suggestLabel} onClick={openSuggestion}>
+            Suggest a snack!
+          </p>
         </div>
       </div>
       <SnacksContainer snacks={snacks} filters={selectedFilters} />
+      <SuggestionDialog
+        open={isSuggestionOpen}
+        value={suggestionText}
+        handleClose={handleCloseSuggestion}
+        onSubmit={handleSubmit}
+        onChangeText={handleChangeText}
+      />
     </div>
   );
 };
