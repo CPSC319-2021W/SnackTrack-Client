@@ -73,7 +73,7 @@
 
 .button_logout {
   height: inherit;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #ffffff;
   position: fixed;
@@ -83,7 +83,7 @@
   padding-right: 3rem;
   border: 0;
   opacity: 50%;
-  transition-duration: 0.1s;
+  transition: 0.1s;
 }
 
 .button_logout:hover {
