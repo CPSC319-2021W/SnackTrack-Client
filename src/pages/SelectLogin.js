@@ -1,16 +1,15 @@
 import { React, useEffect, useState } from 'react';
 
 import Fuse from 'fuse.js';
-// import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
 import { getUsers } from '../services/UsersService';
+import pageStyle from '../styles/SelectLogin.module.css';
 import styles from '../styles/SnackTrack.module.css';
 import { useSelector } from 'react-redux';
 
 const SelectLogin = () => {
-  // // TODO: temporary, remove these calls when making UserLoginList component (SNAK-)
   const [loaded, isLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState(users);
@@ -53,7 +52,6 @@ const SelectLogin = () => {
 
   if (loaded) {
     if (usersToDisplay.length > 0) {
-      // loginList = <UserCard user={usersToDisplay[0]} />;
       loginList = <UserLoginList users={usersToDisplay}/>;
     } else {
       loginList = <p>{"we couldn't find you. try again"}</p>;
@@ -62,11 +60,14 @@ const SelectLogin = () => {
     loginList = <UserCardSkeleton />;
   }
 
+  // TODO: change pageStyle.container width and height
   return (
     <div>
       <h3 className={styles.SnackTrack}>SnackTrack</h3>
       <UserSearchBar />
-      {loginList}
+      <div className={pageStyle.container}>
+        {loginList}
+      </div>
     </div>
   );
 };

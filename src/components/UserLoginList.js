@@ -9,7 +9,7 @@ const UserLoginList = (props) => {
   const usersToDisplay = users.map((user) => <UserCard key={user.user_id} user={user}/>);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.list}>
       { usersToDisplay }
     </div>
   );
