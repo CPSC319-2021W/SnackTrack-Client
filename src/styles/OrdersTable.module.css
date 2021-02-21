@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value PURPLE, LIGHT_PURPLE, MID_PURPLE, DARK_PURPLE, MID_GREY, LIGHT_GREY from colors;
+@value PURPLE, LIGHT_PURPLE, MID_PURPLE, DARK_PURPLE, MID_GREY, LIGHT_GREY, ORANGE, RED, GREEN from colors;
 
 .header {
   padding: 1rem 0;
@@ -17,7 +17,6 @@
 
 .header__row {
   background-color: LIGHT_PURPLE;
-  /* border-bottom: 1px solid rgba(224, 224, 224, 1); */
 }
 
 .secondaryHeader {
@@ -68,17 +67,17 @@
 }
 
 .status__pending {
-  color: #ff9800;
-  background-color: #FFF7EE;
+  color: ORANGE;
+  background-color: #FFE7CA;
 }
 
 .status__cancelled {
-  color: #f44336;
+  color: RED;
   background-color: #FDD9D7;
 }
 
 .status__paid {
-  color: #4caf50;
+  color: GREEN;
   background-color: #DBEFDC;
 }
 
