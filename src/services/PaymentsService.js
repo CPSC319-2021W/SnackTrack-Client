@@ -1,9 +1,13 @@
-// import httpClient from './axios.config.js';
-import { mockDBCall } from '../mockServer';
+import httpClient from './axios.config.js';
 
-const getPaymentHistory = (page, rowsPerPage) => {
-  // TODO: Replace with API Call (Ticket: SNAK-126)
-  return mockDBCall('payments', page, rowsPerPage);
+const getPaymentHistory = async (page, rowsPerPage) => {
+  // TODO: Change to correct call for a user's payment history, maybe move to UsersService? (SNAK-196)
+  try {
+    const response = await httpClient.get(`/payments/?page=${page}&size=${rowsPerPage}`);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export { getPaymentHistory };

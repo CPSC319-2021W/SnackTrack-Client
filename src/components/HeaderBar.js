@@ -1,4 +1,4 @@
-import { AppBar, Button } from '@material-ui/core';
+import { AppBar, Button, Menu, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import NumberFormat from 'react-number-format';
@@ -7,11 +7,41 @@ import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
+import { useSelector } from 'react-redux';
+import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
+  const classes = useStyles();
   const { balance, firstName, history, handleLogOut, clientid } = props;
-  const [onSnacks, setOnSnacks] = useState(false);
-  const [onTransactions, setOnTransactions] = useState(false);
+  const { isAdmin } = useSelector((state) => state.usersReducer);
+  const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
+  const [onTransactions, setOnTransactions] = useState(
+    history.location.pathname === '/transactions'
+  );
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const routeToAdmin = () => {
+    handleClose();
+    history.push('/admin');
+  };
+
+  const routeToProfile = () => {
+    handleClose();
+    history.push('/user-profile');
+  };
+
+  const routeToLogOut = () => {
+    handleClose();
+    handleLogOut();
+  };
 
   return (
     <AppBar className={styles.header}>
@@ -58,10 +88,38 @@ const HeaderBar = (props) => {
             </h4>
           </div>
           <img
-            className={`${styles.icon__base} ${styles['icon__margin-right']}`}
+            className={classNames({
+              [styles.icon__base]: true,
+              [styles['icon__margin-right']]: true,
+              [styles.icon__active]: Boolean(anchorEl)
+            })}
             src={profileIcon}
+            aria-describedby={anchorEl ? 'simple-popover' : undefined}
             alt='profile'
+            onClick={handleClick}
           />
+          <Menu
+            keepMounted
+            className={classes.menu}
+            id='user-menu'
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            onClose={handleClose}
+          >
+            {isAdmin ? (
+              <MenuItem className={classes.menuItem} onClick={routeToAdmin}>
+                ADMIN
+              </MenuItem>
+            ) : null}
+            <MenuItem className={classes.menuItem} onClick={routeToProfile}>
+              Profile
+            </MenuItem>
+            <MenuItem className={classes.menuItem} onClick={routeToLogOut}>
+              Log out
+            </MenuItem>
+          </Menu>
         </div>
       ) : (
         <div className={styles.bar}>

@@ -1,23 +1,29 @@
-import { Button, Card } from '@material-ui/core';
-import { loginFailure, loginSuccess } from '../helpers/AuthLoginHelper';
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Card, CircularProgress } from '@material-ui/core';
+import React, { useState } from 'react';
+import { loginFailure, refreshTokenSetup } from '../helpers/AuthLoginHelper';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
-import React from 'react';
-import { Redirect } from 'react-router-dom';
 import appStyles from '../styles/SnackTrack.module.css';
-import { setLoginSuccess } from '../redux/features/auth/authSlice';
+import { authenticate } from '../services/UserService';
+import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
+import { useDispatch } from 'react-redux';
 import { useGoogleLogin } from 'react-google-login';
+import { useHistory } from 'react-router-dom';
 
 const AuthLogin = () => {
   const dispatch = useDispatch();
-  const profile = useSelector((state) => state.authReducer.profile);
-  const authLoginSuccess = (profile) => dispatch(setLoginSuccess({ profile }));
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const setProfile = (profile) => dispatch(setUser(profile));
 
-  const onSuccess = (res) => {
-    authLoginSuccess(res.profileObj);
-    loginSuccess(res);
+  const onSuccess = async (googleUser) => {
+    setIsLoading(true);
+    const token = googleUser.getAuthResponse().id_token;
+    const userResponse = await authenticate(token);
+    setProfile(userResponse);
+    refreshTokenSetup(googleUser);
+    history.push('/snacks');
   };
 
   const { signIn } = useGoogleLogin({
@@ -27,14 +33,22 @@ const AuthLogin = () => {
     isSignedIn: true
   });
 
+  const handleLogIn = () => {
+    setIsLoading(true);
+    signIn();
+  };
+
   return (
     <div className={styles.container}>
-      {profile?.token ? <Redirect to='/snacks' /> : null}
       <Card className={styles.card}>
         <img className={styles.none} src={GalvanizeLogo} alt='Galvanize Logo' />
         <h2 className={appStyles.SnackTrack}>SnackTrack</h2>
-        <Button className={styles.button__login} variant='outlined' onClick={signIn}>
-          Log in with Google
+        <Button className={styles.button__login} variant='outlined' onClick={handleLogIn}>
+          {isLoading ? (
+            <CircularProgress size={30} thickness={5} />
+          ) : (
+            'Log in with Google'
+          )}
         </Button>
       </Card>
     </div>

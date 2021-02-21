@@ -6,7 +6,7 @@ import { makePayment } from '../../services/OrdersService';
 import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
-  const { data, rowsPerPage, onChangePage } = props;
+  const { data, rowsPerPage, onChangePage, onHandleApiResponse } = props;
   const { currentPage, transactions } = data;
   const { userId, username } = useSelector((state) => state.usersReducer);
 
@@ -16,14 +16,26 @@ const Orders = (props) => {
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const uncheckedOrders = transactions.filter(
     (order) =>
-      isPaymentPending(order.payment_id, order.status) &&
+      isPaymentPending(order.payment_id, order.transaction_type_id) &&
       selectedOrders.indexOf(order.transaction_id) === -1
   );
   const uncheckedOrdersIds = uncheckedOrders.map((order) => order.transaction_id);
 
-  const handlePayForOrders = () => {
+  const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
-      makePayment(userId, selectedOrders, subtotalAmount, username);
+      try {
+        const payment = await makePayment(
+          userId,
+          selectedOrders,
+          subtotalAmount,
+          username
+        );
+        // TODO: Add to front end's table
+        console.log(payment);
+        onHandleApiResponse('PAYMENT_SUCCESS');
+      } catch (err) {
+        onHandleApiResponse('ERROR');
+      }
   };
 
   const handleSelectOneOrder = (name, amount) => {
@@ -42,7 +54,7 @@ const Orders = (props) => {
       setSubtotalAmount(subtotalAmount + uncheckedOrdersAmount);
     } else {
       const unpaidOrders = transactions.filter((order) =>
-        isPaymentPending(order.payment_id, order.status)
+        isPaymentPending(order.payment_id, order.transaction_type_id)
       );
       const unpaidOrderIds = unpaidOrders.map((order) => order.transaction_id);
       const pageOrdersTotal = calculateOrdersSum(unpaidOrders);

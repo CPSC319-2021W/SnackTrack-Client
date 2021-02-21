@@ -46,7 +46,7 @@ const RenderOrdersTable = (props) => {
       )
     },
     {
-      id: 'order_dtm',
+      id: 'transaction_dtm',
       label: 'Order Date'
     },
     {
@@ -58,7 +58,7 @@ const RenderOrdersTable = (props) => {
       label: 'Quantity'
     },
     {
-      id: 'status',
+      id: 'transaction_type_id',
       label: 'Status',
       format: (status, paymentId) => {
         if (isCancelled(status)) {
@@ -70,7 +70,7 @@ const RenderOrdersTable = (props) => {
       }
     },
     {
-      id: 'transction_amount',
+      id: 'transaction_amount',
       label: 'Total',
       format: (amount) => {
         amount = amount / 100;
@@ -122,16 +122,19 @@ const RenderOrdersTable = (props) => {
                     <TableCell
                       key={column.id}
                       className={`${styles.cell} ${styles.cell__small} ${
-                        column.id === 'status' ? styles.cell__large : null
+                        column.id === 'transaction_type_id' ? styles.cell__large : null
                       } ${column.id !== 'checkbox' ? styles.cell__medium : null}`}
                     >
                       {column.format && typeof value === 'number'
                         ? column.format(value)
-                        : column.id === 'status'
+                        : column.id === 'transaction_type_id'
                           ? column.format(value, order['payment_id'])
                           : value}
                       {column.id === 'checkbox' &&
-                      isPaymentPending(transactions[i].payment_id, transactions[i].status) ? (
+                      isPaymentPending(
+                        transactions[i].payment_id,
+                        transactions[i].transaction_type_id
+                      ) ? (
                           <Checkbox
                             size='small'
                             checked={checkIsSelected(transactions[i].transaction_id)}
@@ -144,9 +147,12 @@ const RenderOrdersTable = (props) => {
                           />
                         ) : null}
                       {column.id === 'actions' &&
-                        isPaymentPending(transactions[i].payment_id, transactions[i].status) ? (
+                      isPaymentPending(
+                        transactions[i].payment_id,
+                        transactions[i].transaction_type_id
+                      ) ? (
                           <Button className={styles.button__edit} variant='outlined'>
-                            Edit Order
+                           Edit Order
                           </Button>
                         ) : null}
                     </TableCell>
