@@ -1,7 +1,8 @@
-import { Grid } from '@material-ui/core';
 import React from 'react';
+
+import { Grid } from '@material-ui/core';
 import SnackCard from './SnackCard';
-import styles from '../styles/SnackGrid.module.css';
+import styles from '../../styles/SnackGrid.module.css';
 
 const SnackGrid = (props) => {
   const { snacks, onClick } = props;
