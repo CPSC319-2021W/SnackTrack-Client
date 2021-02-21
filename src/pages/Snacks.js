@@ -7,7 +7,7 @@ import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
-  const { snacks, categories } = useSelector((state) => state.snacksReducer);
+  const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
 
   useEffect(() => {
     dispatch(fetchSnacks());
@@ -28,7 +28,7 @@ const Snacks = () => {
           </div>
         </div>
       </div>
-      <SnacksContainer snacks={snacks} filters={categories} />
+      <SnacksContainer snacks={snacks} filters={selectedFilters} />
     </div>
   );
 };

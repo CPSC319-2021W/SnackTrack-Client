@@ -4,12 +4,12 @@ import { getSnacks } from '../../../services/SnacksService';
 
 const INITIAL_STATE = {
   snacks: [],
-  categories: [],
+  selectedFilters: [],
   loading: false,
   error: null
 };
 
-const fetchSnacks = createAsyncThunk('users/fetchSnacks', async () => {
+const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async () => {
   const snacks = await getSnacks();
   return snacks;
 });
@@ -19,10 +19,10 @@ const snacksSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addCategory: (state, action) => {
-      state.categories.push(action.payload);
+      state.selectedFilters.push(action.payload);
     },
     removeCategory: (state, action) => {
-      state.categories = state.categories.filter(category => category !== action.payload);
+      state.selectedFilters = state.selectedFilters.filter(category => category !== action.payload);
     }
   },
   extraReducers: {
@@ -36,7 +36,7 @@ const snacksSlice = createSlice({
     },
     [fetchSnacks.rejected]: (state, action) => {
       state.loading = false;
-      state.error = [...action.payload];
+      state.error = action.payload;
     }
   }
 });
