@@ -28,6 +28,7 @@ const Transactions = () => {
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
+  const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getPaymentHistory(page, rowsPerPage);
@@ -47,7 +48,7 @@ const Transactions = () => {
   };
 
   useEffect(async () => {
-    const paymentResponse = await getPaymentHistory(0, rowsPerPage);
+    const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
     setPaymentsResponse(paymentResponse);
   }, []);
 
