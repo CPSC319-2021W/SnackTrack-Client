@@ -7,13 +7,14 @@
 .base {
   width: 240px;
   height: 260px;
-  transition: .2s box-shadow, .15s transform;
+  border: 0;
+  box-shadow: DEFAULT_SHADOW;
   color: white;
+  transition: .15s transform;
 }
 
 .base:hover {
   transform: translateY(-0.125rem);
-  box-shadow: DEFAULT_SHADOW;
   color: white;
 }
 

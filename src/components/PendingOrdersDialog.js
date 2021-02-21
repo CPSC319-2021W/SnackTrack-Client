@@ -5,7 +5,7 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
+  TableContainer,
   TableHead,
   TableRow
 } from '@material-ui/core';
@@ -174,69 +174,64 @@ const PendingOrdersDialog = (props) => {
   ];
 
   return (
-    <Dialog open={open} onClose={handleCloseNotAllowed}>
-      <Table aria-label='Pending Orders'>
-        <TableHead>
-          <TableRow>
-            <TableCell className={styles.primaryHeader} colSpan={columns.length}>
-              <h3 className={styles.primaryHeader__text}>Pending Orders</h3>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            {columns.map((column) => (
-              <TableCell
-                key={column.id}
-                className={`${styles.secondaryHeader} ${styles.cell}`}
-              >
-                <h4 className={styles.secondaryHeader__text}>{column.label}</h4>
+    <Dialog maxWidth={'md'} open={open} onClose={handleCloseNotAllowed}>
+      <TableContainer>
+        <Table aria-label='Pending Orders'>
+          <TableHead>
+            <TableRow className={styles.header}>
+              <TableCell className={styles.primaryHeader} colSpan={columns.length}>
+                <h3 className={styles.primaryHeader__text}>Pending Orders</h3>
               </TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {pendingOrders.map((order, i) => {
-            return (
-              <TableRow key={i} tabIndex={-1}>
-                {columns.map((column) => {
-                  const value = order[column.id];
-                  return (
-                    <TableCell key={column.id} className={styles.cell}>
-                      {column.id === 'transaction_amount'
-                        ? column.format(value)
-                        : column.id === 'checkbox'
-                          ? column.format(i)
-                          : value}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan={2}>
-              <Button
-                className={`${dialogStyles.button__base} ${dialogStyles.button__decline}`}
-                disabled={!isApproveDisabled}
-                onClick={declineAllOrders}
-              >
-                Decline all
-              </Button>
-            </TableCell>
-            <TableCell />
-            <TableCell colSpan={2}>
-              <Button
-                className={`${dialogStyles.button__base} ${dialogStyles.button__approve}`}
-                disabled={isApproveDisabled}
-                onClick={approveOrders}
-              >
-                Approve
-              </Button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
-      </Table>
+            </TableRow>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  className={`${styles.secondaryHeader} ${styles.cell}`}
+                >
+                  <h4 className={styles.secondaryHeader__text}>{column.label}</h4>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {pendingOrders.map((order, i) => {
+              return (
+                <TableRow key={i} tabIndex={-1}>
+                  {columns.map((column) => {
+                    const value = order[column.id];
+                    return (
+                      <TableCell key={column.id} className={styles.cell}>
+                        {column.id === 'transaction_amount'
+                          ? column.format(value)
+                          : column.id === 'checkbox'
+                            ? column.format(i)
+                            : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div className={styles.footer}>
+        <Button
+          className={`${dialogStyles.button__base} ${dialogStyles.button__decline}`}
+          disabled={!isApproveDisabled}
+          onClick={declineAllOrders}
+        >
+          Decline all
+        </Button>
+        <Button
+          className={`${dialogStyles.button__base} ${dialogStyles.button__approve}`}
+          disabled={isApproveDisabled}
+          onClick={approveOrders}
+        >
+            Approve
+        </Button>
+      </div>
     </Dialog>
   );
 };

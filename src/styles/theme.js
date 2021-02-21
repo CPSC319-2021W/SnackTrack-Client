@@ -82,6 +82,13 @@ const theme = createMuiTheme({
       input: {
         fontSize: '1rem'
       }
+    },
+    MuiTableCell: {
+      root: {
+        '&:last-child': {
+          paddingRight: 25
+        }
+      }
     }
   },
   props: {
