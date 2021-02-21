@@ -11,7 +11,7 @@ import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [pendingDialogOpen, setPendingDialogOpen] = useState(false);
   const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
   const [pendingOrders, setPendingOrders] = useState([]);
@@ -20,16 +20,16 @@ const Snacks = () => {
   const togglePendingOrders = () => {
     if (pendingOrders.length === 0) {
       setPendingOrders(mockPendingOrders);
-      setDialogOpen(true);
+      setPendingDialogOpen(true);
     } else {
-      setDialogOpen(false);
+      setPendingDialogOpen(false);
       setPendingOrders([]);
     }
   };
 
   const handleCloseDialog = () => {
     setApiResponse('CLAIM_SUCCESS');
-    setDialogOpen(false);
+    setPendingDialogOpen(false);
     setToastNotificationOpen(true);
   };
 
@@ -63,7 +63,7 @@ const Snacks = () => {
       <SnacksContainer snacks={snacks} filters={selectedFilters} />
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
-        open={dialogOpen}
+        open={pendingDialogOpen}
         handleOnClose={handleCloseDialog}
         handleCloseNotAllowed={handleCloseNotAllowed}
       />
