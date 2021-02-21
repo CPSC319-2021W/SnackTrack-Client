@@ -104,9 +104,9 @@ const HeaderBar = (props) => {
             id='user-menu'
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}
-            onClose={handleClose}
             anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             transformOrigin={{ vertical: 'tp[', horizontal: 'right' }}
+            onClose={handleClose}
           >
             {isAdmin ? (
               <MenuItem className={classes.menuItem} onClick={routeToAdmin}>
