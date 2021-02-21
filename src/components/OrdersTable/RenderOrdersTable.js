@@ -13,12 +13,14 @@ import {
 import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpers';
 
 import React from 'react';
+import classNames from 'classnames';
 import styles from '../../styles/OrdersTable.module.css';
 
 const RenderOrdersTable = (props) => {
   const {
     data,
     rowsPerPage,
+    selectedOrders,
     onChangePage,
     onSelectAllOrders,
     onSelectOrder,
@@ -62,11 +64,32 @@ const RenderOrdersTable = (props) => {
       label: 'Status',
       format: (status, paymentId) => {
         if (isCancelled(status)) {
-          return <span className={styles.status__cancelled}>CANCELLED</span>;
+          return (
+            <span className={classNames({
+              [styles.status__bar]: true,
+              [styles.status__cancelled]: true
+            })}>
+              CANCELLED
+            </span>
+          );
         } else if (isPaid(paymentId)) {
-          return <span className={styles.status__paid}>PAID</span>;
+          return (
+            <span className={classNames({
+              [styles.status__bar]: true,
+              [styles.status__paid]: true
+            })}>
+              PAID
+            </span>
+          );
         }
-        return <span className={styles.status__pending}>PAYMENT PENDING</span>;
+        return (
+          <span className={classNames({
+            [styles.status__bar]: true,
+            [styles.status__pending]: true
+          })}>
+            PENDING
+          </span>
+        );
       }
     },
     {
@@ -87,7 +110,7 @@ const RenderOrdersTable = (props) => {
     <Card className={styles.paper}>
       <Table className={styles.table} aria-label='Orders Table'>
         <TableHead>
-          <TableRow>
+          <TableRow className={styles.header}>
             <TableCell className={styles.primaryHeader} colSpan={columns.length - 1}>
               <h3 className={styles.primaryHeader__text}>Orders</h3>
             </TableCell>
@@ -97,11 +120,14 @@ const RenderOrdersTable = (props) => {
                 disabled={payForOrdersDisabled}
                 onClick={() => onPayForOrders()}
               >
-                Pay For Orders
+                Pay for
+                { selectedOrders.length > 1
+                  ? ` ${ selectedOrders.length } Orders`
+                  : ' Order' }
               </Button>
             </TableCell>
           </TableRow>
-          <TableRow>
+          <TableRow className={styles.header__row}>
             {columns.map((column) => (
               <TableCell
                 key={column.id}
@@ -115,7 +141,10 @@ const RenderOrdersTable = (props) => {
         <TableBody>
           {transactions.map((order, i) => {
             return (
-              <TableRow key={i} tabIndex={-1}>
+              <TableRow key={i} tabIndex={-1} className={classNames({
+                [styles.row]: !checkIsSelected(transactions[i].transaction_id),
+                [styles.row__selected]: checkIsSelected(transactions[i].transaction_id)
+              })}>
                 {columns.map((column) => {
                   const value = order[column.id];
                   return (

@@ -169,6 +169,7 @@ const Orders = (props) => {
     <RenderOrdersTable
       data={data}
       rowsPerPage={rowsPerPage}
+      selectedOrders={selectedOrders}
       payForOrdersDisabled={payForOrdersDisabled}
       checkIsSelected={isOrderSelected}
       checkIsAllSelected={isAllOrdersSelected}
