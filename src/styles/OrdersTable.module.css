@@ -1,6 +1,9 @@
 @value colors: './Colors.module.css';
 @value PURPLE, LIGHT_PURPLE, MID_PURPLE, DARK_PURPLE, MID_GREY, LIGHT_GREY, ORANGE, RED, GREEN from colors;
 
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
 .header {
   padding: 1rem 0;
   border-bottom: 1px solid rgba(224, 224, 224, 1);
@@ -105,6 +108,7 @@
   border: none;
   line-height: 1;
   text-transform: none;
+  border-radius: 3px;
 }
 
 .button__edit:hover {
@@ -122,4 +126,8 @@
 
 .row__selected {
   background-color: #F7F7F7;
+}
+
+.paper {
+  box-shadow: DEFAULT_SHADOW;
 }
