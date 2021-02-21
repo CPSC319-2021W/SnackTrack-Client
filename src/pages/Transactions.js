@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
@@ -7,17 +7,30 @@ import ToastNotification from '../components/ToastNotification';
 import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
 
+const INITIAL_PAYMENTS = {
+  total_rows: 0,
+  payments: [],
+  total_pages: 1,
+  current_page: 0
+};
+
+// const INITIAL_ORDERS = {
+//   total_rows: 0,
+//   transactions: [],
+//   total_pages: 1,
+//   current_page: 0
+// };
+
 const Transactions = () => {
   const [rowsPerPage] = useState(8);
-  const [paymentsResponse, setPaymentsResponse] = useState(
-    getPaymentHistory(0, rowsPerPage)
-  );
+  const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
 
-  const handlePaymentChangePage = (page) => {
-    setPaymentsResponse(getPaymentHistory(page, rowsPerPage));
+  const handlePaymentChangePage = async (page) => {
+    const paymentResponse = await getPaymentHistory(page, rowsPerPage);
+    setPaymentsResponse(paymentResponse);
   };
 
   const handleOrderChangePage = (page) => {
@@ -32,6 +45,11 @@ const Transactions = () => {
     setIsSnackBarOpen(true);
   };
 
+  useEffect(async () => {
+    const paymentResponse = await getPaymentHistory(0, rowsPerPage);
+    setPaymentsResponse(paymentResponse);
+  }, []);
+
   return (
     <div>
       <p>
@@ -41,8 +59,8 @@ const Transactions = () => {
       <OrdersTable
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
-        onChangePage={handleOrderChangePage}
         onHandleApiResponse={handleApiResponse}
+        onChangePage={handleOrderChangePage}
       />
       <PaymentsTable
         data={paymentsResponse}

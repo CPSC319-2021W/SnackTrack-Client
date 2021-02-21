@@ -1,15 +1,19 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import CategoryFilter from '../components/CategoryFilter';
 import { NOTIFICATIONS } from '../constants';
 import PendingOrdersDialog from '../components/PendingOrdersDialog';
-import SnackCard from '../components/SnackCard';
+import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import ToastNotification from '../components/ToastNotification';
+import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
+  const dispatch = useDispatch();
   const [dialogOpen, setDialogOpen] = useState(true);
   const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
+  const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
 
   const handleCloseDialog = () => {
     setApiResponse('CLAIM_SUCCESS');
@@ -21,19 +25,26 @@ const Snacks = () => {
     setToastNotificationOpen(false);
   };
 
+  useEffect(() => {
+    dispatch(fetchSnacks());
+  }, [dispatch]);
+
   return (
     <div>
-      <p>Snacks Page</p>
-      <CategoryFilter />
-      <SnackCard
-        snack={{
-          imageUri:
-            'https://www.hersheys.com/content/dam/smartlabelproductsimage/kitkat/00034000002467-0010.png',
-          snackName: 'KitKat',
-          price: 200
-        }}
-        onClick={alert}
-      />
+      <div className={styles.header}>
+        <div className={styles.leftBox}>
+          <p> Snacks </p>
+        </div>
+        <div className={styles.suggestBox}>
+          <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
+          <div className={styles.suggestBoxLink}>
+            <a className={styles.a} href='http://localhost:3000/'>
+              Suggest a snack!
+            </a>
+          </div>
+        </div>
+      </div>
+      <SnacksContainer snacks={snacks} filters={selectedFilters} />
       <PendingOrdersDialog
         pendingOrders={[
           {

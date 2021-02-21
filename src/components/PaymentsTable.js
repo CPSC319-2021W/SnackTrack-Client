@@ -10,11 +10,15 @@ import {
 } from '@material-ui/core';
 
 import React from 'react';
+import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const PaymentsTable = (props) => {
   const { data, rowsPerPage, onChangePage } = props;
-  const { payments, currentPage, totalRows, totalPages } = data;
+  const { payments } = data;
+  const currentPage = data.current_page;
+  const totalRows = data.total_rows;
+  const totalPages = data.total_pages;
 
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - payments.length;
@@ -23,11 +27,14 @@ const PaymentsTable = (props) => {
 
   const columns = [
     {
-      id: 'paymentDate',
-      label: 'Payment Date'
+      id: 'payment_dtm',
+      label: 'Payment Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATETIME_MED);
+      }
     },
     {
-      id: 'paymentAmount',
+      id: 'payment_amount',
       label: 'Amount',
       format: (amount) => {
         amount = amount / 100;
@@ -35,7 +42,7 @@ const PaymentsTable = (props) => {
       }
     },
     {
-      id: 'processedBy',
+      id: 'created_by',
       label: 'Processed By'
     }
   ];
@@ -68,7 +75,7 @@ const PaymentsTable = (props) => {
                   const value = payment[column.id];
                   return (
                     <TableCell key={column.id} className={styles.cell}>
-                      {column.format && typeof value === 'number'
+                      {column.id === 'payment_amount' || column.id === 'payment_dtm'
                         ? column.format(value)
                         : value}
                     </TableCell>

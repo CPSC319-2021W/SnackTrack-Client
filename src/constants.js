@@ -1,34 +1,40 @@
 export const DEFAULT_CATEGORIES = {
   CHOCOLATE: 'Chocolate',
   CANDY: 'Candy',
+  CHIPS: 'Chips',
   COOKIES: 'Cookies',
   CRACKERS: 'Crackers',
-  CHIPS: 'Chips',
   FRUITS: 'Fruits'
 };
 
 export const CATEGORIES_LIST = [
   {
+    id: 1,
     name: DEFAULT_CATEGORIES.CHOCOLATE,
     selected: false
   },
   {
+    id: 2,
     name: DEFAULT_CATEGORIES.CANDY,
     selected: false
   },
   {
-    name: DEFAULT_CATEGORIES.COOKIES,
-    selected: false
-  },
-  {
-    name: DEFAULT_CATEGORIES.CRACKERS,
-    selected: false
-  },
-  {
+    id: 3,
     name: DEFAULT_CATEGORIES.CHIPS,
     selected: false
   },
   {
+    id: 4,
+    name: DEFAULT_CATEGORIES.COOKIES,
+    selected: false
+  },
+  {
+    id: 5,
+    name: DEFAULT_CATEGORIES.CRACKERS,
+    selected: false
+  },
+  {
+    id: 6,
     name: DEFAULT_CATEGORIES.FRUITS,
     selected: false
   }
@@ -57,4 +63,10 @@ export const NOTIFICATIONS = {
     type: 'error',
     message: 'Please approve or decline pending orders before making new purchases.'
   }
+};
+
+export const TRANSACTION_TYPES = {
+  PURCHASE: 1,
+  CANCEL: 2,
+  PENDING: 3
 };

@@ -15,12 +15,13 @@ const getUserOrders = (page, rowsPerPage) => {
 };
 
 const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
-  await httpClient.post('/payments', {
+  const { data } = await httpClient.post('/payments', {
     user_id: userId,
     payment_amount: paymentAmount,
-    transactions_ids: transactionIds,
+    transaction_ids: transactionIds,
     created_by: processor
   });
+  return data;
 };
 
 const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {

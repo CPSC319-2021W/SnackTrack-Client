@@ -17,7 +17,7 @@ const Orders = (props) => {
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const uncheckedOrders = transactions.filter(
     (order) =>
-      isPaymentPending(order.payment_id, order.status) &&
+      isPaymentPending(order.payment_id, order.transaction_type_id) &&
       selectedOrders.indexOf(order.transaction_id) === -1
   );
   const uncheckedOrdersIds = uncheckedOrders.map((order) => order.transaction_id);
@@ -25,15 +25,17 @@ const Orders = (props) => {
   const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
       try {
-        await makePayment(userId, selectedOrders, subtotalAmount, username);
+        const payment = await makePayment(
+          userId,
+          selectedOrders,
+          subtotalAmount,
+          username
+        );
+        // TODO: Add to front end's table
+        console.log(payment);
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
         onHandleApiResponse('ERROR');
-        console.log(
-          `Not Implemented: MockPayment for $${
-            subtotalAmount / 100
-          }, transactionIds [${selectedOrders}], userId ${userId}, processedBy ${username}`
-        );
       }
   };
 
@@ -53,7 +55,7 @@ const Orders = (props) => {
       setSubtotalAmount(subtotalAmount + uncheckedOrdersAmount);
     } else {
       const unpaidOrders = transactions.filter((order) =>
-        isPaymentPending(order.payment_id, order.status)
+        isPaymentPending(order.payment_id, order.transaction_type_id)
       );
       const unpaidOrderIds = unpaidOrders.map((order) => order.transaction_id);
       const pageOrdersTotal = calculateOrdersSum(unpaidOrders);
