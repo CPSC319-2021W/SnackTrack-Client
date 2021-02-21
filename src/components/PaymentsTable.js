@@ -11,7 +11,7 @@ import {
 
 import React from 'react';
 import { DateTime as dt } from 'luxon';
-import styles from '../styles/PaymentsTable.module.css';
+import styles from '../styles/Table.module.css';
 
 const PaymentsTable = (props) => {
   const { data, rowsPerPage, onChangePage } = props;

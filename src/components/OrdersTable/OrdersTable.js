@@ -2,6 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
 
 import RenderOrdersTable from './RenderOrdersTable';
+import { deselectOne } from '../../helpers/CheckboxHelpers';
 import { makePayment } from '../../services/OrdersService';
 import { useSelector } from 'react-redux';
 
@@ -30,7 +31,7 @@ const Orders = (props) => {
           subtotalAmount,
           username
         );
-        // TODO: Add to front end's table
+        // TODO: Add to front end's table after response
         console.log(payment);
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
@@ -107,19 +108,6 @@ const Orders = (props) => {
     } else if (type === 'pages') {
       return [].concat(selectedPages, currentPage);
     }
-  };
-
-  const deselectOne = (arr, deselection) => {
-    const index = arr.indexOf(deselection);
-    let newArray = [];
-    if (index === 0) {
-      newArray = newArray.concat(arr.slice(1));
-    } else if (index === arr.length - 1) {
-      newArray = newArray.concat(arr.slice(0, -1));
-    } else if (index > 0) {
-      newArray = newArray.concat(arr.slice(0, index), arr.slice(index + 1));
-    }
-    return newArray;
   };
 
   const deselectAll = (deselection, type) => {

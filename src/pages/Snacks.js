@@ -1,14 +1,22 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { NOTIFICATIONS } from '../constants';
+import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
+import ToastNotification from '../components/ToastNotification';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
 import { makeSuggestion } from '../services/UsersService';
+import { mockPendingOrders } from '../mockSnackData';
 import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
+  const [pendingDialogOpen, setPendingDialogOpen] = useState(false);
+  const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
+  const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
+  const [pendingOrders, setPendingOrders] = useState([]);
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
@@ -38,6 +46,30 @@ const Snacks = () => {
     }
   };
 
+  const togglePendingOrders = () => {
+    if (pendingOrders.length === 0) {
+      setPendingOrders(mockPendingOrders);
+      setPendingDialogOpen(true);
+    } else {
+      setPendingDialogOpen(false);
+      setPendingOrders([]);
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setApiResponse('CLAIM_SUCCESS');
+    setPendingDialogOpen(false);
+    setToastNotificationOpen(true);
+  };
+
+  const handleCloseToastNotification = () => {
+    setToastNotificationOpen(false);
+  };
+
+  const handleCloseNotAllowed = () => {
+    setToastNotificationOpen(true);
+  };
+
   useEffect(() => {
     dispatch(fetchSnacks());
   }, [dispatch]);
@@ -55,7 +87,13 @@ const Snacks = () => {
           </p>
         </div>
       </div>
-      <SnacksContainer snacks={snacks} filters={selectedFilters} />
+      <SnacksContainer snacks={snacks} filters={selectedFilters} />{' '}
+      <PendingOrdersDialog
+        pendingOrders={pendingOrders}
+        open={pendingDialogOpen}
+        handleOnClose={handleCloseDialog}
+        handleCloseNotAllowed={handleCloseNotAllowed}
+      />
       <SuggestionDialog
         open={isSuggestionOpen}
         value={suggestionText}
@@ -63,6 +101,12 @@ const Snacks = () => {
         onSubmit={handleSubmit}
         onChangeText={handleChangeText}
       />
+      <ToastNotification
+        open={toastNotificationOpen}
+        notification={NOTIFICATIONS[apiResponse]}
+        onClose={handleCloseToastNotification}
+      />
+      <button onClick={togglePendingOrders}>Toggle Pending Orders</button>
     </div>
   );
 };
