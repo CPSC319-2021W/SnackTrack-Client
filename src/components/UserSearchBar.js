@@ -1,18 +1,31 @@
 import { Input, InputAdornment } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import search from '../assets/icons/search.svg';
 import { setValue } from '../redux/features/searchbar/searchbarSlice';
 import styles from '../styles/UserSearchBar.module.css';
 
 const UserSearchBar = () => {
+  // Interval to wait after the user stops typing before updating the Redux store
+  // Improves performance, stops filtering on each keystroke
+  const WAIT_INTERVAL = 200;
+
   const dispatch = useDispatch();
-  const { searchValue } = useSelector((state) => state.searchbarReducer);
+  const [value, updateValue] = useState('');
 
   const handleChange = (event) => {
-    dispatch(setValue(event.target.value));
+    updateValue(event.target.value);
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(setValue(value));
+    }, WAIT_INTERVAL);
+
+    // remove the previous timer if value changed
+    return () => clearTimeout(timeout);
+  }, [value]);
 
   return (
     <Input
@@ -25,7 +38,7 @@ const UserSearchBar = () => {
         </InputAdornment>
       )}
       placeholder='Enter your name...'
-      value={searchValue}
+      value={value}
       onChange={handleChange}
     />
   );
