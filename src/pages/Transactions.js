@@ -4,8 +4,9 @@ import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import ToastNotification from '../components/ToastNotification';
-import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
+import { getUserPayments } from '../services/UsersService';
+import { useSelector } from 'react-redux';
 
 const INITIAL_PAYMENTS = {
   total_rows: 0,

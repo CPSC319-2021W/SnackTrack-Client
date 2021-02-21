@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getUserById } from '../../../services/UserService';
+import { getUserById } from '../../../services/UsersService';
 
 const INITIAL_STATE = {
   userId: null,
@@ -15,7 +15,7 @@ const INITIAL_STATE = {
   error: null
 };
 
-const getUser = createAsyncThunk('users/getUserStatus', async (userId) => {
+const getUser = createAsyncThunk('users/getUsersStatus', async (userId) => {
   const user = await getUserById(userId);
   return user;
 });
