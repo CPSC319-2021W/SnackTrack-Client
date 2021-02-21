@@ -60,7 +60,7 @@
 .status__bar {
   font-size: 0.7rem;
   font-weight: 700;
-  padding: 6px 16px;
+  padding: 5px 14px;
   border-radius: 3px;
   line-height: 1;
   box-shadow: none;
@@ -87,7 +87,7 @@
   color: #ffffff;
   background-color: PURPLE;
   text-transform: none;
-  padding: 10px;
+
 }
 
 .button__pay:hover {

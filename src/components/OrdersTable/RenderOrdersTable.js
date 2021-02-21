@@ -180,7 +180,7 @@ const RenderOrdersTable = (props) => {
                         transactions[i].payment_id,
                         transactions[i].transaction_type_id
                       ) ? (
-                          <Button className={styles.button__edit} variant='outlined'>
+                          <Button className={styles.button__edit}>
                            Edit Order
                           </Button>
                         ) : null}
