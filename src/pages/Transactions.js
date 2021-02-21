@@ -4,8 +4,9 @@ import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import ToastNotification from '../components/ToastNotification';
-import { getPaymentHistory } from '../services/PaymentsService';
 import { getUserOrders } from '../services/OrdersService';
+import { getUserPayments } from '../services/UsersService';
+import { useSelector } from 'react-redux';
 
 const INITIAL_PAYMENTS = {
   total_rows: 0,
@@ -27,9 +28,10 @@ const Transactions = () => {
   const [ordersResponse, setOrdersResponse] = useState(getUserOrders(0, rowsPerPage));
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
+  const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const handlePaymentChangePage = async (page) => {
-    const paymentResponse = await getPaymentHistory(page, rowsPerPage);
+    const paymentResponse = await getUserPayments(userId, page, rowsPerPage);
     setPaymentsResponse(paymentResponse);
   };
 
@@ -46,7 +48,7 @@ const Transactions = () => {
   };
 
   useEffect(async () => {
-    const paymentResponse = await getPaymentHistory(0, rowsPerPage);
+    const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
     setPaymentsResponse(paymentResponse);
   }, []);
 
