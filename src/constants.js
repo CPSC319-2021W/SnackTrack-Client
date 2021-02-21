@@ -47,7 +47,7 @@ export const NOTIFICATIONS = {
   },
   CLAIM_SUCCESS: {
     type: 'success',
-    message: 'Thanks! These orders will appear in your transaction history.'
+    message: 'Thanks! Orders that were approved will appear in your transaction history.'
   },
   ERROR: {
     type: 'error',
