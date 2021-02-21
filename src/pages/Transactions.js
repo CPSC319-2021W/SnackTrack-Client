@@ -61,8 +61,8 @@ const Transactions = () => {
       <OrdersTable
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
-        onChangePage={handleOrderChangePage}
         onHandleApiResponse={handleApiResponse}
+        onChangePage={handleOrderChangePage}
       />
       <PaymentsTable
         data={paymentsResponse}

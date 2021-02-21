@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { Container } from '@material-ui/core';
 import HeaderBar from './HeaderBar';
-
+import React from 'react';
 import styles from '../styles/Layout.module.css';
 
 const Layout = (props) => {
@@ -18,7 +16,7 @@ const Layout = (props) => {
         handleLogOut={logOut}
       />
       <Container fixed className={styles.content}>
-        { children }
+        {children}
       </Container>
     </div>
   );
