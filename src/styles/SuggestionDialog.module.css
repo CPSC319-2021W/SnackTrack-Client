@@ -1,0 +1,45 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY from colors;
+
+.card {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin: 1rem;
+}
+
+.label {
+  font-size: 1.25rem;
+  margin: 1rem;
+}
+
+.input {
+  color: DARK_GREY;
+  font-size: 1rem;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0rem;
+  margin: 1rem;
+  margin-top: 0;
+}
+
+.button {
+  width: 80px;
+  height: 40px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #765ea8;
+  text-transform: none;
+  margin: 0.75rem;
+  margin-right: 1rem;
+  align-self: flex-end;
+}
+
+.button:hover {
+  background-color: rgb(118, 94, 168, 0.9);
+}

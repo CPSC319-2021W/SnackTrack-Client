@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserSearchBar from '../components/UserSearchBar';
-import { getUsers } from '../services/UserService';
+import { getUsers } from '../services/UsersService';
 import styles from '../styles/SnackTrack.module.css';
 import { useSelector } from 'react-redux';
 

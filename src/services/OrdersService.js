@@ -24,8 +24,20 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor) => 
   return data;
 };
 
+const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
+  // try {
+  //   await httpClient.post('/payments', {
+  //   user_id: userId,
+  //   payment_amount: paymentAmount,
+  //   transactions_ids: transactionIds,
+  //   created_by: processor
+  // }); } catch (err) {
+  // }
+  throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
+};
+
 const makeOrder = (userId, quantity) => {
   console.log(userId, quantity);
 };
 
-export { getUserOrders, makePayment, makeOrder };
+export { getUserOrders, makePayment, claimPendingOrders, makeOrder};

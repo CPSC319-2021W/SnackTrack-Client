@@ -4,7 +4,7 @@ import { loginFailure, refreshTokenSetup } from '../helpers/AuthLoginHelper';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
 import appStyles from '../styles/SnackTrack.module.css';
-import { authenticate } from '../services/UserService';
+import { authenticate } from '../services/UsersService';
 import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
 import { useDispatch } from 'react-redux';

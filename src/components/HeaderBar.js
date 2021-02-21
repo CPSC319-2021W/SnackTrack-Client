@@ -13,7 +13,7 @@ import useStyles from '../styles/HeaderBarStyles';
 const HeaderBar = (props) => {
   const classes = useStyles();
   const { balance, firstName, history, handleLogOut, clientid } = props;
-  const { isAdmin } = useSelector((state) => state.usersReducer);
+  const { isAdmin } = useSelector((state) => state.usersReducer.profile);
   const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
   const [onTransactions, setOnTransactions] = useState(
     history.location.pathname === '/transactions'
