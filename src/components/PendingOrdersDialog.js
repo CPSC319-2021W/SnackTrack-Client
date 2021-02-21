@@ -30,11 +30,9 @@ const PendingOrdersDialog = (props) => {
 
   const deselectAllOrders = () => {
     let ordersToDeselect = [];
-
     for (const order of selectedOrders) {
       ordersToDeselect = deselectOne(ordersToDeselect, order);
     }
-
     return ordersToDeselect;
   };
 
@@ -209,8 +207,8 @@ const PendingOrdersDialog = (props) => {
                       {column.id === 'transaction_amount'
                         ? column.format(value)
                         : column.id === 'checkbox'
-                          ? column.format(i)
-                          : value}
+                        ? column.format(i)
+                        : value}
                     </TableCell>
                   );
                 })}

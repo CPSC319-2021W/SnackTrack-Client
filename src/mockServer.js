@@ -1,6 +1,6 @@
 import mockOrderData from './mockOrderData';
 import mockPaymentData from './mockPaymentData';
-import mockSnackData from './mockSnackData';
+import { mockSnackData } from './mockSnackData';
 import mockUserData from './mockUserData';
 
 const mockData = {

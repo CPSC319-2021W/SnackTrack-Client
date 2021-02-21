@@ -6,14 +6,26 @@ import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import ToastNotification from '../components/ToastNotification';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import { mockPendingOrders } from '../mockSnackData';
 import styles from '../styles/Snacks.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
-  const [dialogOpen, setDialogOpen] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
+  const [pendingOrders, setPendingOrders] = useState([]);
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
+
+  const togglePendingOrders = () => {
+    if (pendingOrders.length === 0) {
+      setPendingOrders(mockPendingOrders);
+      setDialogOpen(true);
+    } else {
+      setDialogOpen(false);
+      setPendingOrders([]);
+    }
+  };
 
   const handleCloseDialog = () => {
     setApiResponse('CLAIM_SUCCESS');
@@ -46,29 +58,7 @@ const Snacks = () => {
       </div>
       <SnacksContainer snacks={snacks} filters={selectedFilters} />
       <PendingOrdersDialog
-        pendingOrders={[
-          {
-            transaction_id: 15,
-            transaction_dtm: '2020/01/03',
-            snack_name: 'Banana',
-            quantity: 12,
-            transaction_amount: 300
-          },
-          {
-            transaction_id: 12,
-            transaction_dtm: '2020/01/02',
-            snack_name: 'Banana',
-            quantity: 12,
-            transaction_amount: 300
-          },
-          {
-            transaction_id: 2,
-            transaction_dtm: '2020/01/01',
-            snack_name: 'Banana',
-            quantity: 12,
-            transaction_amount: 300
-          }
-        ]}
+        pendingOrders={pendingOrders}
         open={dialogOpen}
         handleOnClose={handleCloseDialog}
         handleCloseNotAllowed={setToastNotificationOpen}
@@ -78,6 +68,7 @@ const Snacks = () => {
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleCloseToastNotification}
       />
+      <button onClick={togglePendingOrders}>Toggle Pending Orders</button>
     </div>
   );
 };
