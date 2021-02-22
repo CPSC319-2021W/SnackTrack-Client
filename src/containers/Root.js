@@ -1,12 +1,12 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { ROUTES } from '../constants';
 
 import AuthLogin from '../pages/AuthLogin';
 import { Button } from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Landing from '../pages/LandingPage';
-import Layout from '../components/Layout';
+import Fallback from '../pages/Fallback';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
@@ -17,10 +17,13 @@ import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
 import { useGoogleLogout } from 'react-google-login';
 
+import CommonRoute from '../routes/CommonRoute';
+import PrivateRoute from '../routes/PrivateRoute';
+
 const Root = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
+  const { balance } = useSelector((state) => state.usersReducer.profile);
 
   const toggleHeader = () => {
     balance === null ? dispatch(setBalance(0)) : dispatch(setBalance(null));
@@ -30,7 +33,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
-    history.push('/auth-login');
+    history.push(ROUTES.LOGIN);
   };
 
   const onFailure = (res) => {
@@ -48,19 +51,12 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-          <Route path='/auth-login' component={AuthLogin} />
-          <Route path='/select-login' component={SelectLogin} />
-          <Layout
-            firstName={firstName}
-            balance={balance}
-            logOut={signOut}
-            history={history}
-          >
-            <Route path='/snacks' component={Snacks} />
-            <Route path='/transactions' component={Transactions} />
-            <Route path='/user-profile' component={UserProfile} />
-          </Layout>
-          <Route exact path='/' component={Landing} />
+          <Route exact path={ROUTES.LOGIN} component={AuthLogin} />
+          <Route path={ROUTES.SELECT} component={SelectLogin} />
+          <CommonRoute path={ROUTES.SNACKS} signOut={signOut} component={Snacks} />
+          <PrivateRoute path={ROUTES.TRANSACTIONS} signOut={signOut} component={Transactions} />
+          <PrivateRoute path={ROUTES.PROFILE} signOut={signOut} component={UserProfile} />
+          <Route component={Fallback} />
         </Switch>
         <Button variant={'outlined'} color={'secondary'} onClick={toggleHeader}>
           Toggle Header

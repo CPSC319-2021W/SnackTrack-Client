@@ -1,24 +1,27 @@
 import { AppBar, Button, Menu, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
+import { ROUTES } from '../constants';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import NumberFormat from 'react-number-format';
 import classNames from 'classnames';
+
 import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
-import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
-import { useSelector } from 'react-redux';
+
+import styles from '../styles/HeaderBar.module.css';
 import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
   const classes = useStyles();
-  const { balance, firstName, history, handleLogOut, clientid } = props;
+  const history = useHistory();
+  const { balance, firstName, handleLogOut, clientid } = props;
   const { isAdmin } = useSelector((state) => state.usersReducer.profile);
-  const [onSnacks, setOnSnacks] = useState(history.location.pathname === '/snacks');
-  const [onTransactions, setOnTransactions] = useState(
-    history.location.pathname === '/transactions'
-  );
   const [anchorEl, setAnchorEl] = useState(null);
+
+  const { pathname } = history.location;
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,12 +33,12 @@ const HeaderBar = (props) => {
 
   const routeToAdmin = () => {
     handleClose();
-    history.push('/admin');
+    history.push(ROUTES.ADMIN);
   };
 
   const routeToProfile = () => {
     handleClose();
-    history.push('/user-profile');
+    history.push(ROUTES.PROFILE);
   };
 
   const routeToLogOut = () => {
@@ -52,28 +55,24 @@ const HeaderBar = (props) => {
               className={classNames({
                 [styles.unselectable]: true,
                 [styles.icon__base]: true,
-                [styles.icon__active]: onSnacks
+                [styles.icon__active]: pathname === ROUTES.SNACKS
               })}
               src={snacksIcon}
               alt='snacks'
               onClick={() => {
-                setOnTransactions(false);
-                setOnSnacks(true);
-                history.push('/snacks');
+                history.push(ROUTES.SNACKS);
               }}
             />
             <img
               className={classNames({
                 [styles.unselectable]: true,
                 [styles.icon__base]: true,
-                [styles.icon__active]: onTransactions
+                [styles.icon__active]: pathname === ROUTES.TRANSACTIONS
               })}
               src={transactionsIcon}
               alt='transactions'
               onClick={() => {
-                setOnTransactions(true);
-                setOnSnacks(false);
-                history.push('/transactions');
+                history.push(ROUTES.TRANSACTIONS);
               }}
             />
           </div>
