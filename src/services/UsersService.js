@@ -28,6 +28,18 @@ const getUserById = async (userId) => {
   }
 };
 
+const getUserOrders = async (userId, page, rowsPerPage) => {
+  try {
+    const { data } = await httpClient.get(
+      `/users/${userId}/transactions/?page=${page}&size=${rowsPerPage}`
+    );
+    return data;
+  } catch (err) {
+    // TODO: Handle 404
+    console.log(err.toString());
+  }
+};
+
 const getUserPayments = async (userId, page, rowsPerPage) => {
   try {
     const { data } = await httpClient.get(
@@ -45,4 +57,11 @@ const makeSuggestion = (userId, suggestionText) => {
   console.log(userId, suggestionText);
 };
 
-export { authenticate, getUsers, getUserById, getUserPayments, makeSuggestion };
+export {
+  authenticate,
+  getUsers,
+  getUserById,
+  getUserOrders,
+  getUserPayments,
+  makeSuggestion
+};

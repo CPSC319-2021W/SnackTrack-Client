@@ -14,8 +14,8 @@ const SnacksContainer = (props) => {
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
-  const { selectedSnack } = useSelector(state => state.snacksReducer);
-  
+  const { selectedSnack } = useSelector((state) => state.snacksReducer);
+
   const selectSnack = (snackId) => {
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
   };
@@ -35,15 +35,21 @@ const SnacksContainer = (props) => {
 
   const handleSubmit = (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
-      //TODO: needed to change for API call 
+      //TODO: needed to change for API call
       const transaction_type_id = 0;
       const transaction_amount = snackQuantity * selectedSnack.price;
-      makeOrder(userId, transaction_type_id, selectedSnack.snack_id, transaction_amount, snackQuantity);
+      makeOrder(
+        userId,
+        transaction_type_id,
+        selectedSnack.snack_id,
+        transaction_amount,
+        snackQuantity
+      );
       setIsSnackOrderOpen(false);
       setSnackQuantity();
     }
   };
-  
+
   return (
     <div>
       <CategoryFilter />
