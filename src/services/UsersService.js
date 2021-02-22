@@ -15,7 +15,7 @@ const authenticate = async () => {
 };
 
 const getUsers = () => {
-  return mockDBCall('users', 0, 14);
+  return mockDBCall('users', 0, 1000);
 };
 
 const getUserById = async (userId) => {

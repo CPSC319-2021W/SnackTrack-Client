@@ -1,35 +1,40 @@
 import { React, useEffect, useState } from 'react';
 
 import Fuse from 'fuse.js';
-import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
+import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
 import { getUsers } from '../services/UsersService';
+import pageStyle from '../styles/SelectLogin.module.css';
 import styles from '../styles/SnackTrack.module.css';
 import { useSelector } from 'react-redux';
 
 const SelectLogin = () => {
-  // // TODO: temporary, remove these calls when making UserLoginList component (SNAK-)
   const [loaded, isLoaded] = useState(false);
   const [users, setUsers] = useState([]);
-  const [usersToDisplay, setUsersToDisplay] = useState([]);
+  const [usersToDisplay, setUsersToDisplay] = useState(users);
   const { searchValue } = useSelector((state) => state.searchbarReducer);
 
+  const options = {
+    keys: ['first_name', 'last_name', 'username']
+  };
+
   const handleSearch = (value) => {
-    const options = {
-      keys: ['first_name', 'last_name', 'username']
-    };
-    const fuse = new Fuse(users, options);
-    const results = fuse.search(value);
-    const filteredUsers = results.map((itemIndexPair) => {
-      return itemIndexPair.item;
-    });
-    setUsersToDisplay(filteredUsers);
+    if (value === '') {
+      setUsersToDisplay(users);
+    } else {
+      const fuse = new Fuse(users, options);
+      const results = fuse.search(value);
+      const filteredUsers = results.map((itemIndexPair) => {
+        return itemIndexPair.item;
+      });
+      setUsersToDisplay(filteredUsers);
+    }
   };
 
   useEffect(() => {
     handleSearch(searchValue);
-  }, [searchValue]);
+  }, [loaded, searchValue]);
 
   useEffect(() => {
     isLoaded(users.length > 0);
@@ -43,24 +48,26 @@ const SelectLogin = () => {
     getAllUsers();
   }, []);
 
-  let card;
+  let loginList;
+
   if (loaded) {
-    if (searchValue === '') {
-      card = <UserCard user={users[0]} />;
-    } else if (usersToDisplay.length > 0) {
-      card = <UserCard user={usersToDisplay[0]} />;
+    if (usersToDisplay.length > 0) {
+      loginList = <UserLoginList users={usersToDisplay}/>;
     } else {
-      card = <p>{"we couldn't find you. try again"}</p>;
+      loginList = <p>{"we couldn't find you. try again"}</p>;
     }
   } else {
-    card = <UserCardSkeleton />;
+    loginList = <UserCardSkeleton />;
   }
 
+  // TODO: change pageStyle.container width and height
   return (
     <div>
       <h3 className={styles.SnackTrack}>SnackTrack</h3>
       <UserSearchBar />
-      {card}
+      <div className={pageStyle.container}>
+        {loginList}
+      </div>
     </div>
   );
 };
