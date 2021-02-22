@@ -46,6 +46,10 @@ const Root = () => {
     onLogoutSuccess: onSuccess
   });
 
+  const switchUser = () => {
+    history.push(ROUTES.SELECT);
+  };
+
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -53,7 +57,7 @@ const Root = () => {
         <Switch>
           <Route exact path={ROUTES.LOGIN} component={AuthLogin} />
           <Route path={ROUTES.SELECT} component={SelectLogin} />
-          <CommonRoute path={ROUTES.SNACKS} signOut={signOut} component={Snacks} />
+          <CommonRoute path={ROUTES.SNACKS} signOut={signOut} switchUser={switchUser} component={Snacks} />
           <PrivateRoute path={ROUTES.TRANSACTIONS} signOut={signOut} component={Transactions} />
           <PrivateRoute path={ROUTES.PROFILE} signOut={signOut} component={UserProfile} />
           <Route component={Fallback} />

@@ -10,16 +10,8 @@ import styles from '../styles/Layout.module.css';
 
 import { ROUTES } from '../constants';
 
-const CommonRoute = ({ component: Component, signOut, ...rest}) => {
+const CommonRoute = ({ component: Component, signOut, switchUser, ...rest}) => {
   const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
-
-  const isAuthenticated = () => {
-    if (firstName && balance) {
-      return ROUTES.LOGIN;
-    } else {
-      return ROUTES.SELECT;
-    }
-  };
 
   return (
     <Route {...rest} render={(props) => (
@@ -30,14 +22,14 @@ const CommonRoute = ({ component: Component, signOut, ...rest}) => {
               firstName={firstName}
               balance={balance}
               clientid={process.env.REACT_APP_CLIENT_ID}
-              handleLogOut={signOut}
+              handleLogOut={firstName && balance !== null ? signOut : switchUser}
             />
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
           </div>
         )
-        : <Redirect to={isAuthenticated()} />
+        : <Redirect to={firstName && balance !== null ? ROUTES.LOGIN : ROUTES.SELECT} />
     )} />
   );
 };
