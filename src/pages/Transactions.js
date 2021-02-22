@@ -51,17 +51,25 @@ const Transactions = () => {
     setIsSnackBarOpen(true);
   };
 
-  useEffect(async () => {
-    const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
-    const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
-    setOrdersResponse(orderResponse);
-    setPaymentsResponse(paymentResponse);
+  const handleMakePayment = async () => {
+    await handleOrderChangePage(0);
+    await handlePaymentChangePage(0);
+  };
 
-    if (paymentResponse instanceof Error) {
+  useEffect(async () => {
+    try {
+      const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
+      setOrdersResponse(orderResponse);
+    } catch (err) {
       setIsSnackBarOpen(true);
       setPaymentsError(true);
-    } else {
+    }
+    try {
+      const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
       setPaymentsResponse(paymentResponse);
+    } catch (err) {
+      setIsSnackBarOpen(true);
+      setPaymentsError(true);
     }
   }, []);
 
@@ -75,6 +83,7 @@ const Transactions = () => {
         rowsPerPage={rowsPerPage}
         onHandleApiResponse={handleApiResponse}
         onChangePage={handleOrderChangePage}
+        onMakePayment={handleMakePayment}
       />
       <PaymentsTable
         error={paymentsError}

@@ -7,7 +7,7 @@ import { makePayment } from '../../services/OrdersService';
 import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
-  const { data, rowsPerPage, onChangePage, onHandleApiResponse } = props;
+  const { data, rowsPerPage, onChangePage, onHandleApiResponse, onMakePayment } = props;
   const { current_page, transactions } = data;
   const { userId, username } = useSelector((state) => state.usersReducer.profile);
 
@@ -22,16 +22,21 @@ const Orders = (props) => {
     return uncheckedOrders.length === 0 && selectedOrders.length === 0;
   };
 
+  const clearLocalStates = () => {
+    setSelectedOrders([]);
+    setSelectedPages([]);
+    setSubtotalAmount(0);
+    setPayForOrdersDisabled(true);
+    setUncheckedOrders([]);
+    setUncheckedOrdersIds([]);
+  };
+
   const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
       try {
-        const payment = await makePayment(
-          userId,
-          selectedOrders,
-          subtotalAmount,
-          username
-        );
-        console.log(payment);
+        await makePayment(userId, selectedOrders, subtotalAmount, username);
+        await onMakePayment();
+        clearLocalStates();
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
         onHandleApiResponse('ERROR');
@@ -52,8 +57,7 @@ const Orders = (props) => {
 
     if (allItemsChecked()) {
       handleSelectAllOrders({ target: { checked: true } });
-    }
-    if (someItemsUnchecked()) {
+    } else if (someItemsUnchecked()) {
       const newSelectedPages = deselectOne(selectedPages, current_page);
       setSelectedPages(newSelectedPages);
     }
