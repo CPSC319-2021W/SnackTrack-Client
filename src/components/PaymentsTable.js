@@ -30,7 +30,7 @@ const PaymentsTable = (props) => {
       id: 'payment_dtm',
       label: 'Payment Date',
       format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATETIME_MED);
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
       }
     },
     {

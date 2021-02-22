@@ -8,19 +8,15 @@ import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
   const { data, rowsPerPage, onChangePage, onHandleApiResponse } = props;
-  const { currentPage, transactions } = data;
+  const { current_page, transactions } = data;
   const { userId, username } = useSelector((state) => state.usersReducer.profile);
 
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
-  const uncheckedOrders = transactions.filter(
-    (order) =>
-      isPaymentPending(order.payment_id, order.transaction_type_id) &&
-      selectedOrders.indexOf(order.transaction_id) === -1
-  );
-  const uncheckedOrdersIds = uncheckedOrders.map((order) => order.transaction_id);
+  const [uncheckedOrders, setUncheckedOrders] = useState([]);
+  const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
 
   const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
@@ -31,7 +27,6 @@ const Orders = (props) => {
           subtotalAmount,
           username
         );
-        // TODO: Add to front end's table after response
         console.log(payment);
         onHandleApiResponse('PAYMENT_SUCCESS');
       } catch (err) {
@@ -42,29 +37,21 @@ const Orders = (props) => {
   const handleSelectOneOrder = (name, amount) => {
     const newSelected = selectOneOrder(name, amount);
     setSelectedOrders(newSelected);
-  };
 
-  const handleSelectAllOrders = (event) => {
-    if (event.target.checked) {
-      const uncheckedOrdersAmount = calculateOrdersSum(uncheckedOrders);
-      const newSelectedPages = selectAll('pages');
-      const newSelectedOrders = selectAll('orders');
+    const allItemsChecked = () => {
+      return newSelected.length === rowsPerPage;
+    };
 
+    const someItemsUnchecked = () => {
+      return newSelected.length < rowsPerPage;
+    };
+
+    if (allItemsChecked()) {
+      handleSelectAllOrders({ target: { checked: true } });
+    }
+    if (someItemsUnchecked()) {
+      const newSelectedPages = deselectOne(selectedPages, current_page);
       setSelectedPages(newSelectedPages);
-      setSelectedOrders(newSelectedOrders);
-      setSubtotalAmount(subtotalAmount + uncheckedOrdersAmount);
-    } else {
-      const unpaidOrders = transactions.filter((order) =>
-        isPaymentPending(order.payment_id, order.transaction_type_id)
-      );
-      const unpaidOrderIds = unpaidOrders.map((order) => order.transaction_id);
-      const pageOrdersTotal = calculateOrdersSum(unpaidOrders);
-      const newSelectedPages = deselectAll(currentPage, 'pages');
-      const newSelectedOrders = deselectAll(unpaidOrderIds, 'orders');
-
-      setSelectedPages(newSelectedPages);
-      setSelectedOrders(newSelectedOrders);
-      setSubtotalAmount(subtotalAmount - pageOrdersTotal);
     }
   };
 
@@ -102,12 +89,34 @@ const Orders = (props) => {
     }
   };
 
-  const selectAll = (type) => {
-    if (type === 'orders') {
-      return [].concat(selectedOrders, uncheckedOrdersIds);
-    } else if (type === 'pages') {
-      return [].concat(selectedPages, currentPage);
+  const handleSelectAllOrders = (event) => {
+    if (event.target.checked) {
+      const uncheckedOrdersAmount = calculateOrdersSum(uncheckedOrders);
+      const [newSelectedOrders, newSelectedPages] = selectAll();
+
+      setSelectedPages(newSelectedPages);
+      setSelectedOrders(newSelectedOrders);
+      setSubtotalAmount(subtotalAmount + uncheckedOrdersAmount);
+    } else {
+      const unpaidOrders = transactions.filter((order) =>
+        isPaymentPending(order.payment_id, order.transaction_type_id)
+      );
+      const unpaidOrderIds = unpaidOrders.map((order) => order.transaction_id);
+      const pageOrdersTotal = calculateOrdersSum(unpaidOrders);
+      const newSelectedPages = deselectAll(current_page, 'pages');
+      const newSelectedOrders = deselectAll(unpaidOrderIds, 'orders');
+
+      setSelectedPages(newSelectedPages);
+      setSelectedOrders(newSelectedOrders);
+      setSubtotalAmount(subtotalAmount - pageOrdersTotal);
     }
+  };
+
+  const selectAll = () => {
+    return [
+      [].concat(selectedOrders, uncheckedOrdersIds),
+      [].concat(selectedPages, current_page)
+    ];
   };
 
   const deselectAll = (deselection, type) => {
@@ -129,29 +138,24 @@ const Orders = (props) => {
   const isAllOrdersSelected = (page) => selectedPages.indexOf(page) !== -1;
 
   useEffect(() => {
+    setUncheckedOrders(
+      transactions.filter(
+        (order) =>
+          isPaymentPending(order.payment_id, order.transaction_type_id) &&
+          selectedOrders.indexOf(order.transaction_id) === -1
+      )
+    );
+  }, [transactions, selectedOrders]);
+
+  useEffect(() => {
+    setUncheckedOrdersIds(uncheckedOrders.map((order) => order.transaction_id));
+  }, [uncheckedOrders]);
+
+  useEffect(() => {
     if (selectedOrders.length === 0) {
       setPayForOrdersDisabled(true);
     } else {
       setPayForOrdersDisabled(false);
-    }
-  }, [selectedOrders]);
-
-  useEffect(() => {
-    const index = selectedPages.indexOf(currentPage);
-
-    const allItemsChecked = () => {
-      return uncheckedOrdersIds.length === 0 && index === -1;
-    };
-
-    const someItemsUnchecked = () => {
-      return uncheckedOrdersIds.length > 0 && index !== -1;
-    };
-
-    if (allItemsChecked()) {
-      handleSelectAllOrders({ target: { checked: true } });
-    } else if (someItemsUnchecked()) {
-      const newSelectedPages = deselectOne(selectedPages, currentPage);
-      setSelectedPages(newSelectedPages);
     }
   }, [selectedOrders]);
 

@@ -1,7 +1,7 @@
 import httpClient from './axios.config.js';
 import { mockDBCall } from '../mockServer';
 
-const getUserOrders = (page, rowsPerPage) => {
+const getOrders = (page, rowsPerPage) => {
   // TODO: Replace with API Call (Ticket: SNAK-144)
   // try {
   //   const response = await httpClient.get(`/users/${userId}/transactions`, {
@@ -36,4 +36,4 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
   throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
 };
 
-export { getUserOrders, makePayment, claimPendingOrders };
+export { getOrders, makePayment, claimPendingOrders };

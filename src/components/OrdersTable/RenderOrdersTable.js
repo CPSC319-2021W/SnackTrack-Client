@@ -14,6 +14,7 @@ import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpe
 
 import React from 'react';
 import classNames from 'classnames';
+import { DateTime as dt } from 'luxon';
 import styles from '../../styles/OrdersTable.module.css';
 
 const RenderOrdersTable = (props) => {
@@ -29,10 +30,14 @@ const RenderOrdersTable = (props) => {
     onPayForOrders,
     payForOrdersDisabled
   } = props;
-  const { transactions, currentPage, totalRows, totalPages } = data;
+  const { transactions, current_page, total_rows, total_pages } = data;
 
   const emptyRows = () => {
-    const rowsToFill = rowsPerPage - transactions.length;
+    let numRows = 0;
+    if (transactions != null) {
+      numRows = transactions.length;
+    }
+    const rowsToFill = rowsPerPage - numRows;
     return [...Array(rowsToFill).keys()];
   };
 
@@ -42,14 +47,17 @@ const RenderOrdersTable = (props) => {
       label: (
         <Checkbox
           size='small'
-          checked={checkIsAllSelected(currentPage)}
+          checked={checkIsAllSelected(current_page)}
           onClick={(event) => onSelectAllOrders(event)}
         />
       )
     },
     {
       id: 'transaction_dtm',
-      label: 'Order Date'
+      label: 'Order Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+      }
     },
     {
       id: 'snack_name',
@@ -65,28 +73,34 @@ const RenderOrdersTable = (props) => {
       format: (status, paymentId) => {
         if (isCancelled(status)) {
           return (
-            <span className={classNames({
-              [styles.status__bar]: true,
-              [styles.status__cancelled]: true
-            })}>
+            <span
+              className={classNames({
+                [styles.status__bar]: true,
+                [styles.status__cancelled]: true
+              })}
+            >
               CANCELLED
             </span>
           );
         } else if (isPaid(paymentId)) {
           return (
-            <span className={classNames({
-              [styles.status__bar]: true,
-              [styles.status__paid]: true
-            })}>
+            <span
+              className={classNames({
+                [styles.status__bar]: true,
+                [styles.status__paid]: true
+              })}
+            >
               PAID
             </span>
           );
         }
         return (
-          <span className={classNames({
-            [styles.status__bar]: true,
-            [styles.status__pending]: true
-          })}>
+          <span
+            className={classNames({
+              [styles.status__bar]: true,
+              [styles.status__pending]: true
+            })}
+          >
             PENDING
           </span>
         );
@@ -121,9 +135,9 @@ const RenderOrdersTable = (props) => {
                 onClick={() => onPayForOrders()}
               >
                 Pay for
-                { selectedOrders.length > 1
-                  ? ` ${ selectedOrders.length } Orders`
-                  : ' Order' }
+                {selectedOrders.length > 1
+                  ? ` ${selectedOrders.length} Orders`
+                  : ' Order'}
               </Button>
             </TableCell>
           </TableRow>
@@ -139,12 +153,16 @@ const RenderOrdersTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {transactions.map((order, i) => {
+          {transactions ? transactions.map((order, i) => {
             return (
-              <TableRow key={i} tabIndex={-1} className={classNames({
-                [styles.row]: !checkIsSelected(transactions[i].transaction_id),
-                [styles.row__selected]: checkIsSelected(transactions[i].transaction_id)
-              })}>
+              <TableRow
+                key={i}
+                tabIndex={-1}
+                className={classNames({
+                  [styles.row]: !checkIsSelected(transactions[i].transaction_id),
+                  [styles.row__selected]: checkIsSelected(transactions[i].transaction_id)
+                })}
+              >
                 {columns.map((column) => {
                   const value = order[column.id];
                   return (
@@ -156,7 +174,9 @@ const RenderOrdersTable = (props) => {
                     >
                       {column.id === 'transaction_type_id'
                         ? column.format(value, order.payment_id)
-                        : column.format && typeof value === 'number'
+                        : column.id === 'transaction_type_id' ||
+                          column.id === 'transaction_amount' ||
+                          column.id === 'transaction_dtm'
                           ? column.format(value)
                           : value}
                       {column.id === 'checkbox' &&
@@ -180,16 +200,14 @@ const RenderOrdersTable = (props) => {
                         transactions[i].payment_id,
                         transactions[i].transaction_type_id
                       ) ? (
-                          <Button className={styles.button__edit}>
-                           Edit Order
-                          </Button>
+                          <Button className={styles.button__edit}>Edit Order</Button>
                         ) : null}
                     </TableCell>
                   );
                 })}
               </TableRow>
             );
-          })}
+          }): null}
           {emptyRows().map((row) => {
             return (
               <TableRow key={row} tabIndex={-1}>
@@ -204,10 +222,10 @@ const RenderOrdersTable = (props) => {
           <TableRow>
             <TablePagination
               className={styles.pagination}
-              count={totalRows}
-              page={currentPage}
+              count={total_rows}
+              page={current_page}
               rowsPerPage={rowsPerPage}
-              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${totalPages}`}
+              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
               rowsPerPageOptions={[rowsPerPage]}
               onChangePage={(event, page) => onChangePage(page)}
             />
