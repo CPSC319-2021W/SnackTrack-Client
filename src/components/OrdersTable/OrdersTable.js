@@ -18,6 +18,10 @@ const Orders = (props) => {
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
 
+  const isCheckboxDisabled = () => {
+    return uncheckedOrders.length === 0 && selectedOrders.length === 0;
+  };
+
   const handlePayForOrders = async () => {
     if (selectedOrders.length > 0)
       try {
@@ -167,6 +171,7 @@ const Orders = (props) => {
       payForOrdersDisabled={payForOrdersDisabled}
       checkIsSelected={isOrderSelected}
       checkIsAllSelected={isAllOrdersSelected}
+      isCheckboxDisabled={isCheckboxDisabled()}
       onChangePage={onChangePage}
       onSelectAllOrders={handleSelectAllOrders}
       onSelectOrder={handleSelectOneOrder}

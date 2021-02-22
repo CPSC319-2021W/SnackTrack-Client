@@ -29,7 +29,8 @@ const RenderOrdersTable = (props) => {
     checkIsSelected,
     checkIsAllSelected,
     onPayForOrders,
-    payForOrdersDisabled
+    payForOrdersDisabled,
+    isCheckboxDisabled
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
 
@@ -48,6 +49,7 @@ const RenderOrdersTable = (props) => {
       label: (
         <Checkbox
           size='small'
+          disabled={isCheckboxDisabled}
           checked={checkIsAllSelected(current_page)}
           onClick={(event) => onSelectAllOrders(event)}
         />
