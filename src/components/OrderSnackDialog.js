@@ -42,6 +42,7 @@ const OrderSnackDialog = (props) => {
               className={styles.input}
               disableUnderline={true}
               defaultValue={1}
+              type='number'
               onChange={onChangeQuantity}
               onKeyPress={onSubmit}
             />
