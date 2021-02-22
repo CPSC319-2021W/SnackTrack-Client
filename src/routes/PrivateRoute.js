@@ -13,7 +13,7 @@ const CommonRoute = ({ component: Component, signOut, ...rest}) => {
   const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
   return (
     <Route {...rest} render={(props) => (
-      firstName !== null
+      balance !== null
         ? (
           <div className={styles.base}>
             <HeaderBar
