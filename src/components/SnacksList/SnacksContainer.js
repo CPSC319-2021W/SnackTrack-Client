@@ -14,6 +14,7 @@ const SnacksContainer = (props) => {
   const [isLoaded, setLoaded] = useState(snacks.length > 0);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
+  
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
 
@@ -34,10 +35,6 @@ const SnacksContainer = (props) => {
     setSnackQuantity(event.target.value);
   };
 
-  useEffect(() => {
-    setLoaded(snacks.length > 0);
-  }, [snacks]);
-
   const handleSubmit = (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       //TODO: needed to change for API call
@@ -54,6 +51,10 @@ const SnacksContainer = (props) => {
       setSnackQuantity();
     }
   };
+
+  useEffect(() => {
+    setLoaded(snacks.length > 0);
+  }, [snacks]);
 
   return (
     <div>
