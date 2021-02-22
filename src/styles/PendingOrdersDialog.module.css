@@ -1,3 +1,6 @@
+@value colors: './Colors.module.css';
+@value PURPLE, DARK_PURPLE, MID_PURPLE, LIGHT_PURPLE, MID_GREY, LIGHT_GREY from colors;
+
 .actionArea {
   display: flex;
   justify-content: flex-end;
@@ -13,24 +16,30 @@
 
 .button__approve {
   color: #ffffff;
-  background-color: #765ea8;
+  background-color: PURPLE;
   float: right;
 }
 
 .button__approve:hover {
-  background-color: rgb(118, 94, 168, 0.9);
+  background-color: DARK_PURPLE;
 }
 
 .button__approve:disabled {
-  color: #ffffff;
-  background-color: rgb(118, 94, 168, 0.4);
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
 }
 
 .button__decline {
-  color: #765ea8;
-  background-color: rgb(118, 94, 168, 0.1);
+  color: PURPLE;
+  background-color: LIGHT_PURPLE;
 }
 
 .button__decline:hover {
-  background-color: rgb(118, 94, 168, 0.15);
+  color: DARK_PURPLE;
+  background-color: MID_PURPLE;
+}
+
+.button__decline:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
 }
