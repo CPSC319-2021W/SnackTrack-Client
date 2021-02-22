@@ -13,12 +13,10 @@ const SnacksContainer = (props) => {
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
-  const snack = useSelector(state => state.snacksReducer.selectedSnack);
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
   const { selectedSnack } = useSelector(state => state.snacksReducer);
   
   const selectSnack = (snackId) => {
-    console.log(snack);
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
   };
 

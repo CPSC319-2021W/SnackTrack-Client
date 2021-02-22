@@ -4,7 +4,7 @@ import { getSnacks } from '../../../services/SnacksService';
 
 const INITIAL_STATE = {
   snacks: [],
-  selectedSnack: {image_uri: null, snack_id: null, price: null, snack_name: null, description: null},
+  selectedSnack: { snack_id: null, snack_name: null, description: null, image_uri: null,  price: null },
   selectedFilters: [],
   loading: false,
   error: null

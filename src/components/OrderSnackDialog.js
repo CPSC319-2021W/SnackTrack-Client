@@ -23,17 +23,17 @@ const OrderSnackDialog = (props) => {
           <p className={styles.headerPrice}>
             <NumberFormat
               value={price / 100}
-              displayType={'text'}
+              displayType='text'
               decimalScale={2}
               fixedDecimalScale={true}
-              prefix={'$'}
+              prefix='$'
             />
           </p>
         </div>
         <Divider />
         <div className={styles.body}>
           <div className={styles.bodyImg}>
-            <img src={image_uri} alt={snack_name} width='150' height='150' />
+            <img src={image_uri} alt={snack_name} />
           </div>
           <div className={styles.bodyDecription}>
             <p className={styles.description}>{description}</p>

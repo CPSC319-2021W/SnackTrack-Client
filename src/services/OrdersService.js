@@ -38,6 +38,7 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
 
 const makeOrder = (userId, transactionTypeId, snackId, transactionAmount, quantity) => {
   //TODO: API call for add neq transactions 
+  console.log('Snack purchased!');
   console.log(userId, transactionTypeId, snackId, transactionAmount, quantity);
 };
 

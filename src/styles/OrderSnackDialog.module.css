@@ -35,6 +35,12 @@
   width: 200px;
 }
 
+.bodyImg > * {
+  width: 150px;
+  height: 150px;
+}
+
+
 .bodyDescription {
   align-self: flex-start;
 }
