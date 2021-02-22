@@ -4,7 +4,7 @@ import React from 'react';
 import styles from '../styles/SuggestionDialog.module.css';
 
 const SuggestionDialog = (props) => {
-  const { open, onSubmit, handleClose, onChangeText } = props;
+  const { open, value, onSubmit, handleClose, onChangeText } = props;
 
   return (
     <Dialog
@@ -14,17 +14,21 @@ const SuggestionDialog = (props) => {
       onSubmit={onSubmit}
     >
       <Card variant='outlined' className={styles.card}>
-        <h4 className={styles.header}>Suggest a snack</h4>
-        <Divider />
+        <div className={styles.header}>
+          <h4 className={styles.header__text}>Suggest a snack</h4>
+        </div>
         <p className={styles.label}>What would you like to snack on next?</p>
         <Input
-          className={styles.input}
+          className={styles.input__base}
           disableUnderline={true}
           onChange={onChangeText}
           onKeyPress={onSubmit}
         />
         <Divider />
-        <Button className={styles.button} onClick={onSubmit}>
+        <Button
+          disabled={!value.trim()}
+          className={styles.button}
+          onClick={onSubmit}>
           Send
         </Button>
       </Card>

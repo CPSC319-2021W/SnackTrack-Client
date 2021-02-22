@@ -80,7 +80,16 @@ const theme = createMuiTheme({
     },
     MuiInput: {
       input: {
-        fontSize: '1rem'
+        fontSize: '1rem',
+        paddingLeft: '7px',
+        paddingRight: '7px'
+      }
+    },
+    MuiTableCell: {
+      root: {
+        '&:last-child': {
+          paddingRight: 25
+        }
       }
     }
   },

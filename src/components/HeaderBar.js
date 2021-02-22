@@ -50,6 +50,7 @@ const HeaderBar = (props) => {
           <div>
             <img
               className={classNames({
+                [styles.unselectable]: true,
                 [styles.icon__base]: true,
                 [styles.icon__active]: onSnacks
               })}
@@ -63,6 +64,7 @@ const HeaderBar = (props) => {
             />
             <img
               className={classNames({
+                [styles.unselectable]: true,
                 [styles.icon__base]: true,
                 [styles.icon__active]: onTransactions
               })}
@@ -89,6 +91,7 @@ const HeaderBar = (props) => {
           </div>
           <img
             className={classNames({
+              [styles.unselectable]: true,
               [styles.icon__base]: true,
               [styles['icon__margin-right']]: true,
               [styles.icon__active]: Boolean(anchorEl)

@@ -5,6 +5,7 @@ import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import ToastNotification from '../components/ToastNotification';
+import styles from '../styles/Page.module.css';
 import { useSelector } from 'react-redux';
 
 const INITIAL_PAYMENTS = {
@@ -28,10 +29,13 @@ const Transactions = () => {
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [isSnackBarOpen, setIsSnackBarOpen] = useState(false);
   const [apiResponse, setApiResponse] = useState('ERROR');
+  const [paymentsError, setPaymentsError] = useState(false);
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getUserPayments(userId, page, rowsPerPage);
-    setPaymentsResponse(paymentResponse);
+    paymentResponse instanceof Error
+      ? setIsSnackBarOpen(true)
+      : setPaymentsResponse(paymentResponse);
   };
 
   const handleOrderChangePage = async (page) => {
@@ -52,14 +56,20 @@ const Transactions = () => {
     const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
     setOrdersResponse(orderResponse);
     setPaymentsResponse(paymentResponse);
+
+    if (paymentResponse instanceof Error) {
+      setIsSnackBarOpen(true);
+      setPaymentsError(true);
+    } else {
+      setPaymentsResponse(paymentResponse);
+    }
   }, []);
 
   return (
-    <div>
-      <p>
-        <code>Orders</code>
-      </p>
-
+    <div className={styles.base}>
+      <div className={styles.header}>
+        <h5 className={styles.title}>Transactions</h5>
+      </div>
       <OrdersTable
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
@@ -67,6 +77,7 @@ const Transactions = () => {
         onChangePage={handleOrderChangePage}
       />
       <PaymentsTable
+        error={paymentsError}
         data={paymentsResponse}
         rowsPerPage={rowsPerPage}
         setSnackBar={handleApiResponse}

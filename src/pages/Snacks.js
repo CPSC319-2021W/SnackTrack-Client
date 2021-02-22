@@ -9,7 +9,7 @@ import ToastNotification from '../components/ToastNotification';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
 import { makeSuggestion } from '../services/UsersService';
 import { mockPendingOrders } from '../mockSnackData';
-import styles from '../styles/Snacks.module.css';
+import styles from '../styles/Page.module.css';
 
 const Snacks = () => {
   const dispatch = useDispatch();
@@ -75,13 +75,15 @@ const Snacks = () => {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={styles.base}>
       <div className={styles.header}>
-        <div className={styles.leftBox}>
-          <p> Snacks </p>
-        </div>
+        <h5 className={styles.title}>
+          Choose a snack or a category to start!
+        </h5>
         <div className={styles.suggestBox}>
-          <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
+          <div className={styles.suggestBoxQ}>
+            {"Can't find what you want?"}
+          </div>
           <p className={styles.suggestLabel} onClick={openSuggestion}>
             Suggest a snack!
           </p>

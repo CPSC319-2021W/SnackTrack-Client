@@ -4,7 +4,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 1
@@ -14,7 +14,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 1
@@ -24,7 +24,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 1
@@ -34,7 +34,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 2
@@ -44,7 +44,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: 1,
     transaction_type_id: 1
@@ -54,7 +54,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 2
@@ -64,7 +64,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: 1,
     transaction_type_id: 1
@@ -74,7 +74,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: 1,
     transaction_type_id: 1
@@ -84,7 +84,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: 1,
     transaction_type_id: 1
@@ -94,7 +94,7 @@ const mockOrderData = [
     snack_name: 'Banana',
     transaction_amount: 300,
     quantity: 12,
-    transaction_dtm: '2020/01/21',
+    transaction_dtm: '2021-02-21T03:27:51Z',
     user_id: 1,
     payment_id: null,
     transaction_type_id: 1
