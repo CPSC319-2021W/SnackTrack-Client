@@ -133,7 +133,7 @@ const HeaderBar = (props) => {
             clientid={clientid}
             onClick={handleLogOut}
           >
-            LOG OUT
+            CHANGE USERS
           </Button>
         </div>
       )}
