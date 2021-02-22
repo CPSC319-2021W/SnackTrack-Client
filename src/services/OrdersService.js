@@ -36,4 +36,14 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
   throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
 };
 
+<<<<<<< HEAD
 export { getOrders, makePayment, claimPendingOrders };
+=======
+const makeOrder = (userId, transactionTypeId, snackId, transactionAmount, quantity) => {
+  //TODO: API call for add neq transactions 
+  console.log('Snack purchased!');
+  console.log(userId, transactionTypeId, snackId, transactionAmount, quantity);
+};
+
+export { getUserOrders, makePayment, claimPendingOrders, makeOrder};
+>>>>>>> dev

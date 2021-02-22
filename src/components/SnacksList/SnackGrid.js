@@ -1,6 +1,5 @@
-import React from 'react';
-
 import { Grid } from '@material-ui/core';
+import React from 'react';
 import SnackCard from './SnackCard';
 import styles from '../../styles/SnackGrid.module.css';
 
