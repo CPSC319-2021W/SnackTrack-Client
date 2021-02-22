@@ -1,17 +1,15 @@
 import { AppBar, Button, Menu, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
-import { ROUTES } from '../constants';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import NumberFormat from 'react-number-format';
+import { ROUTES } from '../constants';
 import classNames from 'classnames';
-
 import profileIcon from '../assets/icons/user.svg';
 import snacksIcon from '../assets/icons/utensils.svg';
-import transactionsIcon from '../assets/icons/dollar.svg';
-
 import styles from '../styles/HeaderBar.module.css';
+import transactionsIcon from '../assets/icons/dollar.svg';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
@@ -132,7 +130,7 @@ const HeaderBar = (props) => {
             clientid={clientid}
             onClick={handleLogOut}
           >
-            CHANGE USERS
+            EXIT SESSION
           </Button>
         </div>
       )}
