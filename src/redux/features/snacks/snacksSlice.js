@@ -4,6 +4,7 @@ import { getSnacks } from '../../../services/SnacksService';
 
 const INITIAL_STATE = {
   snacks: [],
+  selectedSnack: {image_uri: null, snack_id: null, price: null, snack_name: null, description: null},
   selectedFilters: [],
   loading: false,
   error: null
@@ -23,6 +24,9 @@ const snacksSlice = createSlice({
     },
     removeCategory: (state, action) => {
       state.selectedFilters = state.selectedFilters.filter(category => category !== action.payload);
+    },
+    selectOneSnack: (state, action) => {
+      state.selectedSnack = action.payload;
     }
   },
   extraReducers: {
@@ -43,6 +47,6 @@ const snacksSlice = createSlice({
 
 export { fetchSnacks };
 
-export const { addCategory, removeCategory } = snacksSlice.actions;
+export const { addCategory, removeCategory, selectOneSnack } = snacksSlice.actions;
 
 export default snacksSlice.reducer;

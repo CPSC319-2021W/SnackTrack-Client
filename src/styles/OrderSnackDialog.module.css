@@ -1,27 +1,28 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY from colors;
+@value LIGHT_GREY, MID_GREY, DARK_GREY, PURPLE, DARK_PURPLE from colors;
 
 .card {
   width: 400px;
-  height: 350px;
+  min-height: 350px;
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  margin: 1rem;
+  margin: 0.8rem;
   display: flex;
   flex-direction: row;
 }
 
 .headerTitle {
   font-size: 18px;
+  width: 300px;
   align-self: flex-start;
 }
 
 .headerPrice {
   font-size: 18px;
-  align-self: flex-end;
+  font-weight: bold;
 }
 
 .body {
@@ -31,16 +32,21 @@
 }
 
 .bodyImg {
-  width: 175px;
-  align-self: flex-start;
+  width: 200px;
 }
 
 .bodyDescription {
-  align-self: flex-end;
+  align-self: flex-start;
 }
 
-.label {
-  font-size: 12px;
+.description {
+  font-size: 15px;
+  margin: 1rem;
+}
+
+.quantity {
+  font-size: 15px;
+  font-weight: bold;
   margin: 1rem;
 }
 
@@ -56,6 +62,10 @@
   margin-top: 0;
 }
 
+.input > * {
+  text-align: center;
+}
+
 .button {
   width: 80px;
   height: 40px;
@@ -69,5 +79,10 @@
 }
 
 .button:hover {
-  background-color: rgb(118, 94, 168, 0.9);
+  background-color: DARK_PURPLE;
+}
+
+.button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
 }
