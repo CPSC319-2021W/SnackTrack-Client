@@ -1,22 +1,31 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY from colors;
+@value LIGHT_GREY, MID_GREY, DARK_GREY, PURPLE, DARK_PURPLE from colors;
 
 .card {
-  width: 500px;
   display: flex;
   flex-direction: column;
+  width: 350px;
 }
 
 .header {
-  margin: 1rem;
+  padding: 0 1rem;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+  vertical-align: middle;
+  line-height: 1.5rem;
+  font-weight: 500;
+}
+
+.header__text {
+  font-size: 1.2rem;
+  margin: 1rem 0;
 }
 
 .label {
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin: 1rem;
 }
 
-.input {
+.input__base {
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
@@ -41,5 +50,10 @@
 }
 
 .button:hover {
-  background-color: rgb(118, 94, 168, 0.9);
+  background-color: DARK_PURPLE;
+}
+
+.button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
 }
