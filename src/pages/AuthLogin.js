@@ -35,6 +35,7 @@ const AuthLogin = () => {
     onSuccess,
     onFailure: loginFailure,
     clientId: process.env.REACT_APP_CLIENT_ID,
+    prompt: 'consent',
     isSignedIn: true
   });
 
