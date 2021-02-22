@@ -9,10 +9,10 @@ const UserCardSkeleton = () => {
   return (
     <Card variant={'outlined'} className={styles.base}>
       <div className={styles.action_area}>
-        <Skeleton variant={'circle'} className={styles.image} />
+        <Skeleton variant={'circle'} animation={'wave'} className={styles.image} />
         <div className={styles.text}>
-          <Skeleton className={styles.fullname} variant={'text'} />
-          <Skeleton variant={'text'} />
+          <Skeleton variant={'text'} animation={'wave'} className={styles.fullname}/>
+          <Skeleton variant={'text'} animation={'wave'}/>
         </div>
       </div>
     </Card>
