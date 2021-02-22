@@ -1,7 +1,12 @@
-const mockData = {};
+import mockUserData from './mockUserData';
+
+const mockData = {
+  users: mockUserData
+};
 
 const recordName = {
   // TODO: enter the record name the DB returns for the record type
+  users: 'users'
 };
 
 // ASSUMES: page >=0, rowsPerPage > 0
