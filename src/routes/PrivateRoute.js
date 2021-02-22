@@ -9,7 +9,7 @@ import styles from '../styles/Layout.module.css';
 
 import { ROUTES } from '../constants';
 
-const CommonRoute = ({ component: Component, signOut, ...rest}) => {
+const PrivateRoute = ({ component: Component, signOut, ...rest}) => {
   const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
   return (
     <Route {...rest} render={(props) => (
@@ -32,4 +32,4 @@ const CommonRoute = ({ component: Component, signOut, ...rest}) => {
   );
 };
 
-export default CommonRoute;
+export default PrivateRoute;
