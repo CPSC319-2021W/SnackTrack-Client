@@ -15,6 +15,7 @@ import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpe
 
 import React from 'react';
 import classNames from 'classnames';
+import { DateTime as dt } from 'luxon';
 import styles from '../../styles/Table.module.css';
 
 const RenderOrdersTable = (props) => {
@@ -50,7 +51,10 @@ const RenderOrdersTable = (props) => {
     },
     {
       id: 'transaction_dtm',
-      label: 'Order Date'
+      label: 'Order Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+      }
     },
     {
       id: 'snack_name',
@@ -158,7 +162,7 @@ const RenderOrdersTable = (props) => {
                       >
                         {column.id === 'transaction_type_id'
                           ? column.format(value, order.payment_id)
-                          : column.format && typeof value === 'number'
+                          : column.id === 'transaction_amount' || column.id === 'transaction_dtm'
                             ? column.format(value)
                             : value}
                         {column.id === 'checkbox' &&

@@ -14,6 +14,7 @@ import { React, useEffect, useState } from 'react';
 import { claimPendingOrders } from '../services/OrdersService';
 import { deselectOne } from '../helpers/CheckboxHelpers';
 import dialogStyles from '../styles/PendingOrdersDialog.module.css';
+import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const PendingOrdersDialog = (props) => {
@@ -153,7 +154,10 @@ const PendingOrdersDialog = (props) => {
     },
     {
       id: 'transaction_dtm',
-      label: 'Order Date'
+      label: 'Order Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+      }
     },
     {
       id: 'snack_name',
@@ -202,7 +206,8 @@ const PendingOrdersDialog = (props) => {
                     const value = order[column.id];
                     return (
                       <TableCell key={column.id} className={styles.cell}>
-                        {column.id === 'transaction_amount'
+                        {column.id === 'transaction_amount' ||
+                        column.id === 'transaction_dtm'
                           ? column.format(value)
                           : column.id === 'checkbox'
                             ? column.format(i)
@@ -229,7 +234,7 @@ const PendingOrdersDialog = (props) => {
           disabled={isApproveDisabled}
           onClick={approveOrders}
         >
-            Approve
+          Approve
         </Button>
       </div>
     </Dialog>

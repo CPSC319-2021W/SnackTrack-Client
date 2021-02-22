@@ -1,10 +1,10 @@
 import { Button, Card, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react';
-import { loginFailure, refreshTokenSetup } from '../helpers/AuthLoginHelper';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
 import appStyles from '../styles/SnackTrack.module.css';
 import { authenticate } from '../services/UsersService';
+import { refreshTokenSetup } from '../helpers/AuthLoginHelper';
 import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
 import { useDispatch } from 'react-redux';
@@ -26,10 +26,16 @@ const AuthLogin = () => {
     history.push('/snacks');
   };
 
+  const loginFailure = (res) => {
+    setIsLoading(false);
+    console.log('[Login Failed] currentUser: ', res);
+  };
+
   const { signIn } = useGoogleLogin({
     onSuccess,
     onFailure: loginFailure,
     clientId: process.env.REACT_APP_CLIENT_ID,
+    prompt: 'consent',
     isSignedIn: true
   });
 
