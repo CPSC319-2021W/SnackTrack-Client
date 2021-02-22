@@ -22,14 +22,14 @@ const CommonRoute = ({ component: Component, signOut, switchUser, ...rest}) => {
               firstName={firstName}
               balance={balance}
               clientid={process.env.REACT_APP_CLIENT_ID}
-              handleLogOut={firstName && balance !== null ? signOut : switchUser}
+              handleLogOut={balance !== null ? signOut : switchUser}
             />
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
           </div>
         )
-        : <Redirect to={firstName && balance !== null ? ROUTES.LOGIN : ROUTES.SELECT} />
+        : <Redirect to={ROUTES.LOGIN} />
     )} />
   );
 };
