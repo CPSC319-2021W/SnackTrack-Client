@@ -4,14 +4,13 @@ import React from 'react';
 import styles from '../styles/Layout.module.css';
 
 const Layout = (props) => {
-  const { children, firstName, balance, logOut, history } = props;
+  const { children, firstName, balance, logOut } = props;
 
   return (
     <div className={styles.base}>
       <HeaderBar
         balance={balance}
         firstName={firstName}
-        history={history}
         clientid={process.env.REACT_APP_CLIENT_ID}
         handleLogOut={logOut}
       />

@@ -1,3 +1,12 @@
+export const ROUTES = {
+  LOGIN: '/',
+  SELECT: '/select-login',
+  SNACKS: '/snacks',
+  TRANSACTIONS: '/transactions',
+  PROFILE: '/profile',
+  ADMIN: '/admin'
+};
+
 export const DEFAULT_CATEGORIES = {
   CHOCOLATE: 'Chocolate',
   CANDY: 'Candy',

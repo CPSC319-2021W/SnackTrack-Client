@@ -2,9 +2,11 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 
 import AuthLogin from '../pages/AuthLogin';
+import CommonRoute from '../routes/CommonRoute';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Landing from '../pages/LandingPage';
-import Layout from '../components/Layout';
+import Fallback from '../pages/Fallback';
+import PrivateRoute from '../routes/PrivateRoute';
+import { ROUTES } from '../constants';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
@@ -23,7 +25,7 @@ const Root = () => {
 
   const onSuccess = () => {
     authLogoutSuccess();
-    history.push('/auth-login');
+    history.push(ROUTES.LOGIN);
   };
 
   const onFailure = (res) => {
@@ -36,19 +38,30 @@ const Root = () => {
     onLogoutSuccess: onSuccess
   });
 
+  const switchUser = () => {
+    history.push(ROUTES.SELECT);
+  };
+
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-          <Route path='/auth-login' component={AuthLogin} />
-          <Route path='/select-login' component={SelectLogin} />
-          <Layout logOut={signOut} history={history}>
-            <Route path='/snacks' component={Snacks} />
-            <Route path='/transactions' component={Transactions} />
-            <Route path='/user-profile' component={UserProfile} />
-          </Layout>
-          <Route exact path='/' component={Landing} />
+          <Route exact path={ROUTES.LOGIN} component={AuthLogin} />
+          <Route path={ROUTES.SELECT} component={SelectLogin} />
+          <CommonRoute
+            path={ROUTES.SNACKS}
+            signOut={signOut}
+            switchUser={switchUser}
+            component={Snacks}
+          />
+          <PrivateRoute
+            path={ROUTES.TRANSACTIONS}
+            signOut={signOut}
+            component={Transactions}
+          />
+          <PrivateRoute path={ROUTES.PROFILE} signOut={signOut} component={UserProfile} />
+          <Route component={Fallback} />
         </Switch>
       </ThemeProvider>
     </StylesProvider>
