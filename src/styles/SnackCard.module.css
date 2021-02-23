@@ -291,6 +291,12 @@
   }
 }
 
+@media (max-width: 411px) {
+  .base {
+    width: 172px;
+  }
+}
+
 @media (max-width: 375px) {
   .base {
     width: 154px;
