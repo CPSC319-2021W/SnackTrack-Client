@@ -4,7 +4,7 @@ import SnackCard from './SnackCard/SnackCard';
 import SnackCardSkeleton from './SnackCard/SnackCardSkeleton';
 import styles from '../../styles/SnackGrid.module.css';
 
-const DEFAULT_SNACK_COUNT = 8;
+const DEFAULT_SNACK_COUNT = 10;
 
 const SnackGrid = (props) => {
   const { snacks, onClick, loaded } = props;

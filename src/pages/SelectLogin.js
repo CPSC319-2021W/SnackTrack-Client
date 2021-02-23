@@ -51,7 +51,7 @@ const SelectLogin = () => {
 
   if (loaded) {
     if (usersToDisplay.length > 0) {
-      loginList = <UserLoginList users={usersToDisplay}/>;
+      loginList = <UserLoginList users={usersToDisplay} />;
     } else {
       loginList = <p>{"we couldn't find you. try again"}</p>;
     }
@@ -74,9 +74,7 @@ const SelectLogin = () => {
     <div className={styles.container}>
       <h2 className={styles.title}>SnackTrack</h2>
       <UserSearchBar />
-      <div className={styles.list__container}>
-        {loginList}
-      </div>
+      <div className={styles.list__container}>{loginList}</div>
     </div>
   );
 };
