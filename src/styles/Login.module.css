@@ -52,6 +52,10 @@
 .container {
   margin: 0 auto;
   float: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo__container {
