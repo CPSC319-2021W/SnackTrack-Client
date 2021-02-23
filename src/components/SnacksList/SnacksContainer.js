@@ -38,9 +38,8 @@ const SnacksContainer = (props) => {
 
   const handleChangeQuantity = (event) => {
     const { value } = event.target;
-    if (value > 0) {
-      setSnackQuantity(value);
-    }
+    // TODO: Check value is >= 0 but allow ''
+    setSnackQuantity(value);
   };
 
   const handleSubmit = async (event) => {
@@ -52,13 +51,14 @@ const SnacksContainer = (props) => {
       if (isAuthenticated(balance)) {
         transactionTypeId = PURCHASE;
       }
+      // TODO: if value is '' or 0, throw more specific error
       try {
         await makeOrder(
           userId,
           transactionTypeId,
           selectedSnack.snack_id,
           transactionAmount,
-          parseInt(snackQuantity)
+          snackQuantity
         );
         onApiResponse('ORDER_SUCCESS');
         openToastNotification(true);
