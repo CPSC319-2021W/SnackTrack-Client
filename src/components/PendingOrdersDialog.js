@@ -210,8 +210,8 @@ const PendingOrdersDialog = (props) => {
                         column.id === 'transaction_dtm'
                           ? column.format(value)
                           : column.id === 'checkbox'
-                          ? column.format(i)
-                          : value}
+                            ? column.format(i)
+                            : value}
                       </TableCell>
                     );
                   })}
