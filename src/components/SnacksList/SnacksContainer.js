@@ -60,7 +60,7 @@ const SnacksContainer = (props) => {
           transactionTypeId,
           selectedSnack.snack_id,
           transactionAmount,
-          snackQuantity
+          parseInt(snackQuantity)
         );
         onApiResponse('ORDER_SUCCESS');
         openToastNotification(true);
