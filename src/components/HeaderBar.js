@@ -75,7 +75,7 @@ const HeaderBar = (props) => {
             />
           </div>
           <div className={styles.label}>
-            <h6 className={styles.label__text}>Total Amount Owed</h6>
+            <h6 className={styles.label__text}>Total Amount Owing</h6>
             <h4 className={styles.label__balance}>
               <NumberFormat
                 value={balance / 100}
