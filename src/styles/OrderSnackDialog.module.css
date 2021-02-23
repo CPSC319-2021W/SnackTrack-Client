@@ -42,10 +42,6 @@
   display: flex;
 }
 
-.resize_image {
-  max-height: 200px;
-}
-
 .body__info {
   align-self: flex-start;
 }

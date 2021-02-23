@@ -16,6 +16,7 @@
 
 .primaryHeader__text {
   font-size: 1.2rem;
+  margin: 1rem 0;
 }
 
 .header__row {
@@ -60,10 +61,11 @@
 }
 
 .cell__pay {
-  padding-right: 1rem;
+  padding: 0;
   display: flex;
   justify-content: flex-end;
   border-bottom: 0;
+  margin: 1rem 0;
 }
 
 .status__bar {

@@ -34,7 +34,6 @@ const OrderSnackDialog = (props) => {
         <div className={styles.body}>
           <div className={styles.image}>
             <CardMedia
-              className={styles.resize_image}
               title={snack_name}
               component='img'
               src={image_uri}
