@@ -41,15 +41,17 @@ const OrderSnackDialog = (props) => {
           </div>
           <div className={styles.body__info}>
             <p className={styles.description}>{description}</p>
-            <p className={styles.quantity}>Quantity</p>
-            <Input
-              className={styles.input}
-              disableUnderline={true}
-              defaultValue={1}
-              type='number'
-              onChange={onChangeQuantity}
-              onKeyPress={onSubmit}
-            />
+            <div className={styles.quant__container}>
+              <p className={styles.quantity}>Quantity</p>
+              <Input
+                className={styles.input}
+                disableUnderline={true}
+                defaultValue={1}
+                type='number'
+                onChange={onChangeQuantity}
+                onKeyPress={onSubmit}
+              />
+            </div>
           </div>
         </div>
         <Divider />
