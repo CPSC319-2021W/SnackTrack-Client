@@ -32,13 +32,14 @@ const SnacksContainer = (props) => {
   };
 
   const openSnackOrder = (snackId) => {
+    setSnackQuantity(1);
     setIsSnackOrderOpen(true);
     selectSnack(snackId);
   };
 
   const handleChangeQuantity = (event) => {
     const { value } = event.target;
-    if (value > 0) {
+    if (value >= 0 || value === '') {
       setSnackQuantity(value);
     }
   };
@@ -52,6 +53,7 @@ const SnacksContainer = (props) => {
       if (isAuthenticated(balance)) {
         transactionTypeId = PURCHASE;
       }
+      // TODO: if value is '' or 0, throw more specific error
       try {
         await makeOrder(
           userId,
