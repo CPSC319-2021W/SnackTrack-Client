@@ -4,17 +4,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import CategoryFilter from './CategoryFilter';
 import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
-import { makeOrder } from '../../services/OrdersService';
+import { TRANSACTION_TYPES } from '../../constants';
+import { isAuthenticated } from '../../helpers/AuthHelper';
+import { makeOrder } from '../../services/TransactionsService';
 import { selectOneSnack } from '../../redux/features/snacks/snacksSlice';
+import { setBalance } from '../../redux/features/users/usersSlice';
 
 const SnacksContainer = (props) => {
   const dispatch = useDispatch();
-  const { snacks, filters } = props;
-  const { userId } = useSelector((state) => state.usersReducer.profile);
+  const { snacks, filters, onApiResponse, openToastNotification } = props;
+  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
-  const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
+
+  const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
+
+  const updateBalance = (balance) => dispatch(setBalance(balance));
 
   const selectSnack = (snackId) => {
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
@@ -33,20 +39,32 @@ const SnacksContainer = (props) => {
     setSnackQuantity(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
-      //TODO: needed to change for API call
-      const transaction_type_id = 0;
-      const transaction_amount = snackQuantity * selectedSnack.price;
-      makeOrder(
-        userId,
-        transaction_type_id,
-        selectedSnack.snack_id,
-        transaction_amount,
-        snackQuantity
-      );
+      const transactionAmount = snackQuantity * selectedSnack.price;
+      const { PENDING, PURCHASE } = TRANSACTION_TYPES;
+      let transactionTypeId = PENDING;
+      // TODO: Pass in token once we have auth set up
+      if (isAuthenticated(balance)) {
+        transactionTypeId = PURCHASE;
+      }
+      try {
+        await makeOrder(
+          userId,
+          transactionTypeId,
+          selectedSnack.snack_name,
+          transactionAmount,
+          parseInt(snackQuantity)
+        );
+        onApiResponse('ORDER_SUCCESS');
+        openToastNotification(true);
+        updateBalance(balance + transactionAmount);
+      } catch (err) {
+        console.log(err);
+        onApiResponse('ERROR');
+        openToastNotification(true);
+      }
       setIsSnackOrderOpen(false);
-      setSnackQuantity();
     }
   };
 

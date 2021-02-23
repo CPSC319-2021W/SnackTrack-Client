@@ -3,7 +3,7 @@ import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelper
 
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
-import { makePayment } from '../../services/OrdersService';
+import { makePayment } from '../../services/TransactionsService';
 import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
