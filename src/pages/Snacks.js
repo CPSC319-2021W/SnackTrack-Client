@@ -18,7 +18,7 @@ const Snacks = () => {
   const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
   const [pendingOrders, setPendingOrders] = useState([]);
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
-  const { userId } = useSelector((state) => state.usersReducer.profile);
+  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
 
@@ -46,15 +46,15 @@ const Snacks = () => {
     }
   };
 
-  const togglePendingOrders = () => {
-    if (pendingOrders.length === 0) {
-      setPendingOrders(mockPendingOrders);
-      setPendingDialogOpen(true);
-    } else {
-      setPendingDialogOpen(false);
-      setPendingOrders([]);
-    }
-  };
+  // const togglePendingOrders = () => {
+  //   if (pendingOrders.length === 0) {
+  //     setPendingOrders(mockPendingOrders);
+  //     setPendingDialogOpen(true);
+  //   } else {
+  //     setPendingDialogOpen(false);
+  //     setPendingOrders([]);
+  //   }
+  // };
 
   const handleCloseDialog = () => {
     setApiResponse('CLAIM_SUCCESS');
@@ -73,6 +73,13 @@ const Snacks = () => {
   useEffect(() => {
     dispatch(fetchSnacks());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (balance !== null) {
+      setPendingOrders(mockPendingOrders);
+      setPendingDialogOpen(true);
+    }
+  }, []);
 
   return (
     <div className={styles.base}>
@@ -109,7 +116,7 @@ const Snacks = () => {
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleCloseToastNotification}
       />
-      <button onClick={togglePendingOrders}>Toggle Pending Orders</button>
+      {/* <button onClick={togglePendingOrders}>Toggle Pending Orders</button> */}
     </div>
   );
 };
