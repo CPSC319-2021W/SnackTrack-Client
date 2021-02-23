@@ -2,7 +2,7 @@ import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
-import styles from '../../styles/SnackCard.module.css';
+import styles from '../../../styles/SnackCard.module.css';
 
 const SnackCard = (props) => {
   const { snack_id, image_uri, snack_name, price } = props.snack;

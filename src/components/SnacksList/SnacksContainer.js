@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
@@ -11,8 +11,10 @@ const SnacksContainer = (props) => {
   const dispatch = useDispatch();
   const { snacks, filters } = props;
   const { userId } = useSelector((state) => state.usersReducer.profile);
+  const [isLoaded, setLoaded] = useState(snacks.length > 0);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
+  
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
 
@@ -50,17 +52,22 @@ const SnacksContainer = (props) => {
     }
   };
 
+  useEffect(() => {
+    setLoaded(snacks.length > 0);
+  }, [snacks]);
+
   return (
     <div>
       <CategoryFilter />
       <div>
         {filters.length === 0 ? (
-          <SnackGrid snacks={snacks} onClick={openSnackOrder} />
+          <SnackGrid snacks={snacks} loaded={isLoaded} onClick={openSnackOrder} />
         ) : (
           <SnackGrid
             snacks={snacks.filter((item) => {
               return filters.includes(item.snack_type_id);
             })}
+            loaded={isLoaded}
             onClick={openSnackOrder}
           />
         )}
