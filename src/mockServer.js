@@ -1,21 +1,12 @@
-import mockOrderData from './mockOrderData';
-import mockPaymentData from './mockPaymentData';
-import { mockSnackData } from './mockSnackData';
 import mockUserData from './mockUserData';
 
 const mockData = {
-  payments: mockPaymentData,
-  transactions: mockOrderData,
-  users: mockUserData,
-  snacks: mockSnackData
+  users: mockUserData
 };
 
 const recordName = {
   // TODO: enter the record name the DB returns for the record type
-  payments: 'payments',
-  transactions: 'transactions',
-  users: 'users',
-  snacks: 'snacks'
+  users: 'users'
 };
 
 // ASSUMES: page >=0, rowsPerPage > 0
