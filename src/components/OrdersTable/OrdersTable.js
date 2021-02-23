@@ -57,11 +57,11 @@ const Orders = (props) => {
     setSelectedOrders(newSelected);
 
     const allItemsChecked = () => {
-      return newSelected.length === rowsPerPage;
+      return newSelected.length === uncheckedOrders.length + selectedOrders.length;
     };
 
     const someItemsUnchecked = () => {
-      return newSelected.length < rowsPerPage;
+      return newSelected.length < uncheckedOrders.length + selectedOrders.length;
     };
 
     if (allItemsChecked()) {
