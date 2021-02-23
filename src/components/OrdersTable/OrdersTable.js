@@ -1,15 +1,19 @@
 import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
+import { useDispatch, useSelector } from 'react-redux';
 
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
 import { makePayment } from '../../services/OrdersService';
-import { useSelector } from 'react-redux';
+import { setBalance } from '../../redux/features/users/usersSlice';
 
 const Orders = (props) => {
+  const dispatch = useDispatch();
   const { data, rowsPerPage, onChangePage, onHandleApiResponse, onMakePayment } = props;
   const { current_page, transactions } = data;
-  const { userId, username } = useSelector((state) => state.usersReducer.profile);
+  const { userId, username, balance } = useSelector(
+    (state) => state.usersReducer.profile
+  );
 
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
@@ -17,6 +21,10 @@ const Orders = (props) => {
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
+
+  const updateBalance = (balance) => {
+    dispatch(setBalance(balance));
+  };
 
   const isCheckboxDisabled = () => {
     return uncheckedOrders.length === 0 && selectedOrders.length === 0;
@@ -35,9 +43,10 @@ const Orders = (props) => {
     if (selectedOrders.length > 0)
       try {
         await makePayment(userId, selectedOrders, subtotalAmount, username);
+        updateBalance(balance - subtotalAmount);
         await onMakePayment();
-        clearLocalStates();
         onHandleApiResponse('PAYMENT_SUCCESS');
+        clearLocalStates();
       } catch (err) {
         onHandleApiResponse('ERROR');
       }
