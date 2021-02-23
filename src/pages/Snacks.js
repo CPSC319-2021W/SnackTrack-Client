@@ -85,7 +85,12 @@ const Snacks = () => {
           </p>
         </div>
       </div>
-      <SnacksContainer snacks={snacks} filters={selectedFilters} />
+      <SnacksContainer
+        snacks={snacks}
+        filters={selectedFilters}
+        openToastNotification={setToastNotificationOpen}
+        onApiResponse={setApiResponse}
+      />
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
         open={pendingDialogOpen}

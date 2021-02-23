@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
 
-import { claimPendingOrders } from '../services/OrdersService';
+import { claimPendingOrders } from '../services/TransactionsService';
 import { deselectOne } from '../helpers/CheckboxHelpers';
 import dialogStyles from '../styles/PendingOrdersDialog.module.css';
 import { DateTime as dt } from 'luxon';

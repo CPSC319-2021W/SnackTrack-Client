@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
-import { makePayment } from '../../services/OrdersService';
+import { makePayment } from '../../services/TransactionsService';
 import { setBalance } from '../../redux/features/users/usersSlice';
 
 const Orders = (props) => {
