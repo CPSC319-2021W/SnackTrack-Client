@@ -53,13 +53,15 @@ const SnacksContainer = (props) => {
         await makeOrder(
           userId,
           transactionTypeId,
-          selectedSnack.snack_name,
+          selectedSnack.snack_id,
           transactionAmount,
           parseInt(snackQuantity)
         );
         onApiResponse('ORDER_SUCCESS');
         openToastNotification(true);
-        updateBalance(balance + transactionAmount);
+        if (transactionTypeId != PENDING) {
+          updateBalance(balance + transactionAmount);
+        }
       } catch (err) {
         console.log(err);
         onApiResponse('ERROR');

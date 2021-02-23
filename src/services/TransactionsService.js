@@ -34,14 +34,14 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
 const makeOrder = async (
   userId,
   transactionTypeId,
-  snackName,
+  snackId,
   transactionAmount,
   quantity
 ) => {
   const { data } = await httpClient.post('/transactions', {
     user_id: userId,
     transaction_type_id: transactionTypeId,
-    snack_name: snackName,
+    snack_id: snackId,
     transaction_amount: transactionAmount,
     quantity: quantity
   });
