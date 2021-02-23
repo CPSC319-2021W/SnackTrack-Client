@@ -37,7 +37,10 @@ const SnacksContainer = (props) => {
   };
 
   const handleChangeQuantity = (event) => {
-    setSnackQuantity(event.target.value);
+    const { value } = event.target;
+    if (value > 0) {
+      setSnackQuantity(value);
+    }
   };
 
   const handleSubmit = async (event) => {

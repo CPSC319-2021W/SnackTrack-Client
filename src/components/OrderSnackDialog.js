@@ -6,7 +6,7 @@ import styles from '../styles/OrderSnackDialog.module.css';
 import { useSelector } from 'react-redux';
 
 const OrderSnackDialog = (props) => {
-  const { open, onSubmit, handleClose, onChangeQuantity } = props;
+  const { open, value, onSubmit, handleClose, onChangeQuantity } = props;
   const { selectedSnack } = useSelector(state => state.snacksReducer);
   const { snack_name, description, image_uri, price } = selectedSnack;
   
@@ -46,7 +46,7 @@ const OrderSnackDialog = (props) => {
               <Input
                 className={styles.input}
                 disableUnderline={true}
-                defaultValue={1}
+                value={value}
                 type='number'
                 onChange={onChangeQuantity}
                 onKeyPress={onSubmit}

@@ -29,7 +29,6 @@ const snacksSlice = createSlice({
       state.selectedSnack = action.payload;
     },
     deselectAllFilters: (state) => {
-      console.log('deselecting');
       state.selectedFilters = [];
     }
   },
