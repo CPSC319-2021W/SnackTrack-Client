@@ -39,7 +39,7 @@ const OrderSnackDialog = (props) => {
               src={image_uri}
             />
           </div>
-          <div className={styles.body__info}>
+          <div>
             <p className={styles.description}>{description}</p>
             <div className={styles.quant__container}>
               <p className={styles.quantity}>Quantity</p>
