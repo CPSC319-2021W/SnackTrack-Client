@@ -48,7 +48,7 @@ const AuthLogin = () => {
       <div className={styles.container}>
         <Card className={styles.card}>
           <div className={styles.logo__container}>
-            <Logo width={'100px'}/>
+            <Logo className={styles.logo}/>
           </div>
           <h2 className={styles.title}>SnackTrack</h2>
           <Button className={styles.button__login} variant='outlined' onClick={handleLogIn}>

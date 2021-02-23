@@ -59,6 +59,10 @@
   margin: auto;
 }
 
+.logo {
+  width: 100px;
+}
+
 .list__container {
   width: 40%;
   min-width: 300px;
