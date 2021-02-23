@@ -32,14 +32,16 @@ const SnacksContainer = (props) => {
   };
 
   const openSnackOrder = (snackId) => {
+    setSnackQuantity(1);
     setIsSnackOrderOpen(true);
     selectSnack(snackId);
   };
 
   const handleChangeQuantity = (event) => {
     const { value } = event.target;
-    // TODO: Check value is >= 0 but allow ''
-    setSnackQuantity(value);
+    if (value >= 0 || value === '') {
+      setSnackQuantity(value);
+    }
   };
 
   const handleSubmit = async (event) => {
