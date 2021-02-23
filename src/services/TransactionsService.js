@@ -1,5 +1,14 @@
 import httpClient from './axios.config.js';
 
+const getPayments = async (page, rowsPerPage) => {
+  try {
+    const { data } = await httpClient.get(`/payments/?page=${page}&size=${rowsPerPage}`);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
   const { data } = await httpClient.post('/payments', {
     user_id: userId,
@@ -22,10 +31,21 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
   throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
 };
 
-const makeOrder = (userId, transactionTypeId, snackId, transactionAmount, quantity) => {
-  //TODO: API call for add neq transactions
-  console.log('Snack purchased!');
-  console.log(userId, transactionTypeId, snackId, transactionAmount, quantity);
+const makeOrder = async (
+  userId,
+  transactionTypeId,
+  snackName,
+  transactionAmount,
+  quantity
+) => {
+  const { data } = await httpClient.post('/transactions', {
+    user_id: userId,
+    transaction_type_id: transactionTypeId,
+    snack_name: snackName,
+    transaction_amount: transactionAmount,
+    quantity: quantity
+  });
+  return data;
 };
 
-export { makePayment, claimPendingOrders, makeOrder };
+export { getPayments, makePayment, claimPendingOrders, makeOrder };

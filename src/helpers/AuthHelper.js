@@ -11,4 +11,8 @@ const refreshTokenSetup = (res) => {
   setTimeout(refreshToken, refreshTiming);
 };
 
-export { refreshTokenSetup };
+const isAuthenticated = (token) => {
+  return token !== null;
+};
+
+export { refreshTokenSetup, isAuthenticated };

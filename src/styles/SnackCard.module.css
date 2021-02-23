@@ -37,8 +37,22 @@
   max-height: 200px;
 }
 
+.resize_image_skeleton {
+  display: flex;
+  height: 80%;
+  width: inherit;
+}
+
 .label {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label_skeleton {
+  width: 100%;
+  height: calc(100% - 200px);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,6 +63,14 @@
   font-weight: bold;
   color: DARK_GREY;
   margin-right: 1rem;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.price_skeleton {
+  width: 40px;
+  margin-left: 2px;
 }
 
 .snack_name {
@@ -59,6 +81,11 @@
   margin-left: 1rem;
   word-break: break-word;
   text-overflow: ellipsis;
+}
+
+.snack_name_skeleton {
+  width: 50%;
+  margin-left: 1rem;
 }
 
 @media (max-width: 600px) {
