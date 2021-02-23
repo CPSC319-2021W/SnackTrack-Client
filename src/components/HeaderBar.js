@@ -1,4 +1,4 @@
-import { AppBar, Button, Menu, MenuItem } from '@material-ui/core';
+import { AppBar, Button, Container, Menu, MenuItem } from '@material-ui/core';
 import React, { useState } from 'react';
 import { ROUTES } from '../constants';
 import { useHistory } from 'react-router-dom';
@@ -49,7 +49,7 @@ const HeaderBar = (props) => {
   return (
     <AppBar className={styles.header}>
       {balance !== null ? (
-        <div className={styles.bar}>
+        <Container className={styles.bar}>
           <div>
             <img
               className={classNames({
@@ -122,9 +122,9 @@ const HeaderBar = (props) => {
               Log out
             </MenuItem>
           </Menu>
-        </div>
+        </Container>
       ) : (
-        <div className={styles.bar}>
+        <Container className={styles.bar}>
           <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
           <Button
             className={styles.button_logout}
@@ -134,7 +134,7 @@ const HeaderBar = (props) => {
           >
             LOG OUT
           </Button>
-        </div>
+        </Container>
       )}
     </AppBar>
   );

@@ -2,19 +2,19 @@
 @value DARK_GREY from colors;
 
 @value effects: './Effects.module.css';
-@value DEFAULT_SHADOW from effects;
+@value DEFAULT_SHADOW, DEFAULT_LIFT from effects;
 
 .base {
-  width: 240px;
+  width: 230px;
   height: 260px;
-  border: 0;
-  box-shadow: DEFAULT_SHADOW;
   color: white;
-  transition: .15s transform;
+  transition: .1s transform;
+  margin: 0 0.5rem 1rem 0.5rem;
 }
 
 .base:hover {
-  transform: translateY(-0.125rem);
+  box-shadow: DEFAULT_SHADOW;
+  transform: DEFAULT_LIFT;
   color: white;
 }
 
@@ -58,6 +58,7 @@
   color: DARK_GREY;
   margin-left: 1rem;
   word-break: break-word;
+  text-overflow: ellipsis;
 }
 
 @media (max-width: 600px) {
@@ -73,12 +74,10 @@
   .snack_name {
     font-size: 14px;
     margin: 0.5rem 0rem 0.5rem 0.5rem;
-    /* margin-left: 0.25rem */
   }
 
   .price {
     font-size: 16px;
     margin: 0.5rem;
-    /* margin-right: 0.25rem */
   }
 }

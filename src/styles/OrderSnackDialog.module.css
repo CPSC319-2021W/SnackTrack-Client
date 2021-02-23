@@ -3,54 +3,60 @@
 
 .card {
   width: 400px;
-  min-height: 350px;
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  margin: 0.8rem;
+  margin: 1rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .headerTitle {
-  font-size: 18px;
+  font-size: 20px;
   width: 300px;
   align-self: flex-start;
+  margin: 0;
+  line-height: 22px;
 }
 
 .headerPrice {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  margin: 0;
+  color: DARK_PURPLE;
 }
 
 .body {
   margin: 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.bodyImg {
-  width: 200px;
+.image {
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 }
 
-.bodyImg > * {
-  width: 150px;
-  height: 150px;
+.resize_image {
+  max-height: 200px;
 }
 
-.bodyDescription {
+.body__info {
   align-self: flex-start;
 }
 
 .description {
-  font-size: 15px;
-  margin: 1rem;
+  font-size: 16px;
+  margin: 2rem 1rem 1rem 1rem;
 }
 
 .quantity {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   margin: 1rem;
 }
@@ -63,8 +69,7 @@
   border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
-  margin: 1rem;
-  margin-top: 0;
+  margin: 0 1rem 0 1rem;
 }
 
 .input > * {
@@ -76,7 +81,7 @@
   height: 40px;
   font-weight: 700;
   color: #ffffff;
-  background-color: #765ea8;
+  background-color: PURPLE;
   text-transform: none;
   margin: 0.75rem;
   margin-right: 1rem;

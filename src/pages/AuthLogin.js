@@ -2,7 +2,6 @@ import { Button, Card, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react';
 
 import GalvanizeLogo from '../images/logo/galvanize.svg';
-import appStyles from '../styles/SnackTrack.module.css';
 import { authenticate } from '../services/UsersService';
 import { refreshTokenSetup } from '../helpers/AuthLoginHelper';
 import { setUser } from '../redux/features/users/usersSlice';
@@ -48,7 +47,7 @@ const AuthLogin = () => {
     <div className={styles.container}>
       <Card className={styles.card}>
         <img className={styles.none} src={GalvanizeLogo} alt='Galvanize Logo' />
-        <h2 className={appStyles.SnackTrack}>SnackTrack</h2>
+        <h2 className={styles.title}>SnackTrack</h2>
         <Button className={styles.button__login} variant='outlined' onClick={handleLogIn}>
           {isLoading ? (
             <CircularProgress size={30} thickness={5} />

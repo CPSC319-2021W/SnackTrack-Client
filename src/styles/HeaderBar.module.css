@@ -2,13 +2,13 @@
 @value DARK_GREY, VIOLET from colors;
 
 @value effects: './Effects.module.css';
-@value DEFAULT_SHADOW from effects;
+@value DARKER_SHADOW from effects;
 
 .header {
   height: 100px;
   flex-direction: row;
   background-color: VIOLET;
-  box-shadow: DEFAULT_SHADOW;
+  box-shadow: DARKER_SHADOW;
 }
 
 .bar {
@@ -43,13 +43,8 @@
   width: 3rem;
   height: 3rem;
   padding: 0 0.45rem;
-  margin-left: 3rem;
   opacity: 50%;
   transition: 0.1s;
-}
-
-.icon__margin-right {
-  margin-right: 3rem;
 }
 
 .icon__base:hover {

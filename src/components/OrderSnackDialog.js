@@ -1,4 +1,4 @@
-import { Button, Card, Dialog, Divider, Input } from '@material-ui/core';
+import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
@@ -32,10 +32,15 @@ const OrderSnackDialog = (props) => {
         </div>
         <Divider />
         <div className={styles.body}>
-          <div className={styles.bodyImg}>
-            <img src={image_uri} alt={snack_name} />
+          <div className={styles.image}>
+            <CardMedia
+              className={styles.resize_image}
+              title={snack_name}
+              component='img'
+              src={image_uri}
+            />
           </div>
-          <div className={styles.bodyDecription}>
+          <div className={styles.body__info}>
             <p className={styles.description}>{description}</p>
             <p className={styles.quantity}>Quantity</p>
             <Input

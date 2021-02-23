@@ -6,6 +6,7 @@ import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
 import { makeOrder } from '../../services/OrdersService';
 import { selectOneSnack } from '../../redux/features/snacks/snacksSlice';
+import styles from '../../styles/SnackGrid.module.css';
 
 const SnacksContainer = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ const SnacksContainer = (props) => {
   return (
     <div>
       <CategoryFilter />
-      <div>
+      <div className={styles.base}>
         {filters.length === 0 ? (
           <SnackGrid snacks={snacks} onClick={openSnackOrder} />
         ) : (

@@ -9,9 +9,9 @@ const SnackGrid = (props) => {
     <Grid container spacing={2} className={styles.container}>
       {snacks.map((snack, index) => {
         return (
-          <Grid key={index} item className={styles.item} lg={3} md={4} sm={6}>
+          <div key={index} className={styles.item}>
             <SnackCard snack={snack} onClick={onClick} />
-          </Grid>
+          </div>
         );
       })}
     </Grid>
