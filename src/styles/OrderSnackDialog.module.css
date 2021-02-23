@@ -2,57 +2,65 @@
 @value LIGHT_GREY, MID_GREY, DARK_GREY, PURPLE, DARK_PURPLE from colors;
 
 .card {
-  width: 400px;
-  min-height: 350px;
+  max-width: 360px;
   display: flex;
   flex-direction: column;
 }
 
 .header {
-  margin: 0.8rem;
+  margin: 1rem;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .headerTitle {
-  font-size: 18px;
+  font-size: 20px;
   width: 300px;
   align-self: flex-start;
+  margin: 0;
+  line-height: 22px;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
 }
 
 .headerPrice {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  margin: 0;
+  color: DARK_PURPLE;
 }
 
 .body {
   margin: 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.bodyImg {
-  width: 200px;
-}
-
-.bodyImg > * {
-  width: 150px;
-  height: 150px;
-}
-
-.bodyDescription {
-  align-self: flex-start;
+.image {
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
 }
 
 .description {
-  font-size: 15px;
-  margin: 1rem;
+  font-size: 16px;
+  margin-top: 1.2rem;
+  margin-bottom: 0;
+  text-overflow: ellipsis;
+}
+
+.quant__container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
 
 .quantity {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
-  margin: 1rem;
+  margin-bottom: 1rem;
 }
 
 .input {
@@ -63,8 +71,7 @@
   border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
-  margin: 1rem;
-  margin-top: 0;
+  margin: 0;
 }
 
 .input > * {
@@ -76,7 +83,7 @@
   height: 40px;
   font-weight: 700;
   color: #ffffff;
-  background-color: #765ea8;
+  background-color: PURPLE;
   text-transform: none;
   margin: 0.75rem;
   margin-right: 1rem;
@@ -90,4 +97,10 @@
 .button:disabled {
   color: MID_GREY;
   background-color: LIGHT_GREY;
+}
+
+@media (max-width: 500px) {
+  .card {
+    overflow-y: auto;
+  }
 }

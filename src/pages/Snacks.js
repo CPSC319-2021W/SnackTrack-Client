@@ -6,6 +6,7 @@ import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
+import { deselectAllFilters } from '../redux/features/snacks/snacksSlice';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
 import { makeSuggestion } from '../services/UsersService';
 import { mockPendingOrders } from '../mockPendingOrders';
@@ -72,6 +73,9 @@ const Snacks = () => {
 
   useEffect(() => {
     dispatch(fetchSnacks());
+    return () => {
+      dispatch(deselectAllFilters());
+    };
   }, [dispatch]);
 
   return (

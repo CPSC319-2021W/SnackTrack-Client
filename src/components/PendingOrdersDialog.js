@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   Dialog,
+  Divider,
   Table,
   TableBody,
   TableCell,
@@ -179,14 +180,15 @@ const PendingOrdersDialog = (props) => {
 
   return (
     <Dialog maxWidth={'md'} open={open} onClose={handleCloseNotAllowed}>
+      <div className={styles.header}>
+        <div className={styles.primaryHeader}>
+          <h4 className={styles.primaryHeader__text}>Pending Orders</h4>
+        </div>
+      </div>
+      <Divider />
       <TableContainer>
         <Table aria-label='Pending Orders'>
           <TableHead>
-            <TableRow className={styles.header}>
-              <TableCell className={styles.primaryHeader} colSpan={columns.length}>
-                <h3 className={styles.primaryHeader__text}>Pending Orders</h3>
-              </TableCell>
-            </TableRow>
             <TableRow>
               {columns.map((column) => (
                 <TableCell

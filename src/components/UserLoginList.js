@@ -1,16 +1,17 @@
 import React from 'react';
 import UserCard from './UserCard/UserCard';
-import styles from '../styles/UserLoginList.module.css';
+import styles from '../styles/Login.module.css';
 
 const UserLoginList = (props) => {
 
   const {users} = props;
 
-  const usersToDisplay = users.map((user) => <UserCard key={user.user_id} user={user}/>);
+  const userCards = users.map((user) => <UserCard key={user.user_id} user={user}/>);
+  const visibleUserCards = userCards.slice(0, 8);
 
   return (
     <div className={styles.list}>
-      { usersToDisplay }
+      { visibleUserCards }
     </div>
   );
 };

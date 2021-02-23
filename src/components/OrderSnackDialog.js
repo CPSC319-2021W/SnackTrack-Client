@@ -1,4 +1,4 @@
-import { Button, Card, Dialog, Divider, Input } from '@material-ui/core';
+import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/core';
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
@@ -6,7 +6,7 @@ import styles from '../styles/OrderSnackDialog.module.css';
 import { useSelector } from 'react-redux';
 
 const OrderSnackDialog = (props) => {
-  const { open, onSubmit, handleClose, onChangeQuantity } = props;
+  const { open, value, onSubmit, handleClose, onChangeQuantity } = props;
   const { selectedSnack } = useSelector(state => state.snacksReducer);
   const { snack_name, description, image_uri, price } = selectedSnack;
   
@@ -32,20 +32,26 @@ const OrderSnackDialog = (props) => {
         </div>
         <Divider />
         <div className={styles.body}>
-          <div className={styles.bodyImg}>
-            <img src={image_uri} alt={snack_name} />
-          </div>
-          <div className={styles.bodyDecription}>
-            <p className={styles.description}>{description}</p>
-            <p className={styles.quantity}>Quantity</p>
-            <Input
-              className={styles.input}
-              disableUnderline={true}
-              defaultValue={1}
-              type='number'
-              onChange={onChangeQuantity}
-              onKeyPress={onSubmit}
+          <div className={styles.image}>
+            <CardMedia
+              title={snack_name}
+              component='img'
+              src={image_uri}
             />
+          </div>
+          <div>
+            <p className={styles.description}>{description}</p>
+            <div className={styles.quant__container}>
+              <p className={styles.quantity}>Quantity</p>
+              <Input
+                className={styles.input}
+                disableUnderline={true}
+                value={value}
+                type='number'
+                onChange={onChangeQuantity}
+                onKeyPress={onSubmit}
+              />
+            </div>
           </div>
         </div>
         <Divider />

@@ -13,18 +13,18 @@ const SnackGrid = (props) => {
   if (loaded) {
     grid = snacks.map((snack, index) => {
       return (
-        <Grid key={index} item className={styles.item} lg={3} md={4} sm={6}>
+        <div key={index} className={styles.item}>
           <SnackCard snack={snack} onClick={onClick} />
-        </Grid>
+        </div>
       );
     });
   } else {
     let arr = new Array(DEFAULT_SNACK_COUNT);
     for (let i = 0; i < DEFAULT_SNACK_COUNT; i++) {
       arr.push(
-        <Grid key={i} item className={styles.item} lg={3} md={4} sm={6}>
+        <div key={i} className={styles.item}>
           <SnackCardSkeleton />
-        </Grid>
+        </div>
       );
     }
     grid = arr;

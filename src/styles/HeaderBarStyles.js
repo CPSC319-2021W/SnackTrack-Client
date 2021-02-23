@@ -7,16 +7,17 @@ const useStyles = makeStyles({
       top: '70px !important',
       left: '80% !important',
       right: '4rem !important',
-      boxShadow: '0 .05rem .25rem 0 #e0d8e2'
+      boxShadow: '0px 1px 6px -2px rgba(20,17,43,1)',
+      minWidth: '200px'
     },
     '& .MuiButtonBase-root:hover': {
-      color: '#523789',
-      backgroundColor: 'rgb(118, 94, 168, .25)'
+      color: '#5143AA',
+      backgroundColor: '#EAE6FF'
     },
     '& .MuiList-padding': { padding: '0' }
   },
   menuItem: {
-    color: '#765EA8',
+    color: '#6554C0',
     fontWeight: '600',
     padding: '0.5rem 1rem',
     borderBottom: '1px solid #E4E4E4'

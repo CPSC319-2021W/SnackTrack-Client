@@ -5,8 +5,7 @@ import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
 import { getUsers } from '../services/UsersService';
-import pageStyle from '../styles/SelectLogin.module.css';
-import styles from '../styles/SnackTrack.module.css';
+import styles from '../styles/Login.module.css';
 import { useSelector } from 'react-redux';
 
 const SelectLogin = () => {
@@ -57,15 +56,25 @@ const SelectLogin = () => {
       loginList = <p>{"we couldn't find you. try again"}</p>;
     }
   } else {
-    loginList = <UserCardSkeleton />;
+    loginList = (
+      <div className={styles.list}>
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+        <UserCardSkeleton />
+      </div>
+    );
   }
 
-  // TODO: change pageStyle.container width and height
   return (
-    <div>
-      <h3 className={styles.SnackTrack}>SnackTrack</h3>
+    <div className={styles.container}>
+      <h2 className={styles.title}>SnackTrack</h2>
       <UserSearchBar />
-      <div className={pageStyle.container}>
+      <div className={styles.list__container}>
         {loginList}
       </div>
     </div>

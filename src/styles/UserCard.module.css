@@ -3,7 +3,7 @@
 @value LIGHT_GREY from colors;
 
 @value effects: './Effects.module.css';
-@value DEFAULT_SHADOW from effects;
+@value DARK_SHADOW, DEFAULT_LIFT from effects;
 
 .base {
     width: calc(100% - 20px);
@@ -13,11 +13,13 @@
     align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
+    transition: 0.1s all;
+    border: 0;
 }
 
 .base:hover {
-    transform: translateY(-0.125rem);
-    box-shadow: DEFAULT_SHADOW;
+    transform: DEFAULT_LIFT;
+    box-shadow: DARK_SHADOW;
 }
 
 .action_area {
@@ -26,12 +28,13 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: flex-start;
 }
 
 .image {
     width: 60px;
     height: 60px;
+    margin-left: 1.2rem;
     border-radius: 50%;
 }
 
@@ -45,14 +48,15 @@
     font-size: 1rem;
     color: DARK_GREY;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-left: 1.2rem;
 }
 
 .text > p {
     margin: 0px;
+    text-overflow: ellipsis;
 }
 
 .fullname {
     font-weight: bold;
+    text-overflow: ellipsis;
 }

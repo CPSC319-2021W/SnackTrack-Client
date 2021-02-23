@@ -27,6 +27,9 @@ const snacksSlice = createSlice({
     },
     selectOneSnack: (state, action) => {
       state.selectedSnack = action.payload;
+    },
+    deselectAllFilters: (state) => {
+      state.selectedFilters = [];
     }
   },
   extraReducers: {
@@ -47,6 +50,6 @@ const snacksSlice = createSlice({
 
 export { fetchSnacks };
 
-export const { addCategory, removeCategory, selectOneSnack } = snacksSlice.actions;
+export const { addCategory, removeCategory, selectOneSnack, deselectAllFilters } = snacksSlice.actions;
 
 export default snacksSlice.reducer;
