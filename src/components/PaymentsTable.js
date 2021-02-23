@@ -98,14 +98,14 @@ const PaymentsTable = (props) => {
 
   return (
     <Card className={styles.paper}>
+      <div className={styles.header}>
+        <div className={styles.primaryHeader}>
+          <h4 className={styles.primaryHeader__text}>Payments</h4>
+        </div>
+      </div>
       <TableContainer className={styles.container__payments}>
         <Table aria-label='Payments Table'>
           <TableHead>
-            <TableRow className={styles.header}>
-              <TableCell className={styles.primaryHeader} colSpan={columns.length}>
-                <h4 className={styles.primaryHeader__text}>Payments</h4>
-              </TableCell>
-            </TableRow>
             <TableRow className={styles.header__row}>
               {columns.map((column) => (
                 <TableCell

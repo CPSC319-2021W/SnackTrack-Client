@@ -75,7 +75,7 @@ const SnacksContainer = (props) => {
 
   return (
     <div>
-      <CategoryFilter />
+      <CategoryFilter selectedFilters={filters} />
       <div>
         {filters.length === 0 ? (
           <SnackGrid snacks={snacks} loaded={isLoaded} onClick={openSnackOrder} />

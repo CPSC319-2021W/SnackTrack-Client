@@ -125,26 +125,26 @@ const RenderOrdersTable = (props) => {
 
   return (
     <Card className={styles.paper}>
+      <div className={styles.header}>
+        <div className={styles.primaryHeader}>
+          <h4 className={styles.primaryHeader__text}>Orders</h4>
+        </div>
+        <div className={styles.cell__pay}>
+          <Button
+            className={styles.button__pay}
+            disabled={payForOrdersDisabled}
+            onClick={() => onPayForOrders()}
+          >
+            Pay for
+            {selectedOrders.length > 1
+              ? ` ${selectedOrders.length} Orders`
+              : ' Order'}
+          </Button>
+        </div>
+      </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Orders Table'>
           <TableHead>
-            <TableRow className={styles.header}>
-              <TableCell className={styles.primaryHeader} colSpan={columns.length - 1}>
-                <h4 className={styles.primaryHeader__text}>Orders</h4>
-              </TableCell>
-              <TableCell className={styles.cell__pay}>
-                <Button
-                  className={styles.button__pay}
-                  disabled={payForOrdersDisabled}
-                  onClick={() => onPayForOrders()}
-                >
-                  Pay for
-                  {selectedOrders.length > 1
-                    ? ` ${selectedOrders.length} Orders`
-                    : ' Order'}
-                </Button>
-              </TableCell>
-            </TableRow>
             <TableRow className={styles.header__row}>
               {columns.map((column) => (
                 <TableCell

@@ -43,4 +43,15 @@
 .suggestLabel:hover {
   color: DARK_PURPLE;
 }
+
+@media (max-width: 540px) {
+    .header {
+      flex-direction: column;
+    }
+    
+    .suggestBox {
+        margin: 1rem 0 0 0;
+        text-align: left;
+    }
+  }
   

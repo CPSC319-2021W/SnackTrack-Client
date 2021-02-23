@@ -80,6 +80,9 @@
   color: DARK_GREY;
   margin-left: 1rem;
   word-break: break-word;
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -101,6 +104,10 @@
   .snack_name {
     font-size: 14px;
     margin: 0.5rem 0rem 0.5rem 0.5rem;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .price {

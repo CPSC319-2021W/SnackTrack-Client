@@ -92,3 +92,35 @@
 	-ms-user-select: none;
 	user-select: none;
 }
+
+@media (max-width: 420px) {
+  .label__text {
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  .label__balance {
+    font-size: 1.8rem;
+  }
+
+  .icon__base {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .label__text {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+  
+  .label__balance {
+    font-size: 1.4rem;
+  }
+
+  .icon__base {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}

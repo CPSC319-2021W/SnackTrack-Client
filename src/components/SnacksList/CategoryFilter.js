@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { addCategory, removeCategory } from '../../redux/features/snacks/snacksSlice';
@@ -7,7 +7,7 @@ import FilterIcon from './FilterIcon';
 import { CATEGORIES_LIST } from '../../constants';
 import styles from '../../styles/Category.module.css';
 
-const CategoryFilter = () => {
+const CategoryFilter = ({ selectedFilters }) => {
   const [categories, setCategories] = useState(CATEGORIES_LIST);  
   const dispatch = useDispatch();
 
@@ -23,6 +23,14 @@ const CategoryFilter = () => {
       removeFilter(categories[i].id);  
     }
   };
+
+  useEffect(() => {
+    categories.forEach((category) => {
+      selectedFilters.includes(category.id)
+        ? category.selected = true
+        : category.selected = false;
+    });
+  });
   
   return (
     <div className={styles.container}>
