@@ -85,8 +85,6 @@ const Snacks = () => {
     }
   }, []);
 
-  console.log('from snacks: ', userId, balance);
-
   return (
     <div className={styles.base}>
       <div className={styles.header}>
