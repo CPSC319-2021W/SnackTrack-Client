@@ -21,7 +21,7 @@ const AuthLogin = () => {
     setIsLoading(true);
     const token = googleUser.getAuthResponse().id_token;
     const fakeToken = 1; // TODO: Delete when AUTH is implemented
-    Cookies.set('auth', token); // add { secure: true } only for pushing
+    Cookies.set('auth', token, { expires: 30, secure: true }); // add { secure: true } only for production
     const userResponse = await authenticate(fakeToken); // TODO: Replace fakeToken with token
     setProfile(userResponse);
     refreshTokenSetup(googleUser);
