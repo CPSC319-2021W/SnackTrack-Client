@@ -13,6 +13,8 @@
     "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
     "fuse.js": "^6.4.6",
+    "js-cookie": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
     "luxon": "^1.26.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

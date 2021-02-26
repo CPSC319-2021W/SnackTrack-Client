@@ -1,36 +1,40 @@
-
-import React from 'react';
-
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { isAuthenticated, isCommonLogin } from '../helpers/AuthHelper';
 
 import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
-import styles from '../styles/Layout.module.css';
-
 import { ROUTES } from '../constants';
+import React from 'react';
+import styles from '../styles/Layout.module.css';
+import { useSelector } from 'react-redux';
 
-const CommonRoute = ({ component: Component, signOut, switchUser, ...rest}) => {
-  const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
+const CommonRoute = ({ component: Component, signOut, switchUser, ...rest }) => {
+  const { profile } = useSelector((state) => state.usersReducer);
+  const { firstName, balance } = profile;
+  const token = isAuthenticated();
+  const common = isCommonLogin(profile);
 
   return (
-    <Route {...rest} render={(props) => (
-      firstName !== null
-        ? (
+    <Route
+      {...rest}
+      render={(props) =>
+        common || token ? (
           <div className={styles.base}>
             <HeaderBar
               firstName={firstName}
               balance={balance}
               clientid={process.env.REACT_APP_CLIENT_ID}
-              handleLogOut={balance !== null ? signOut : switchUser}
+              handleLogOut={token ? signOut : switchUser}
             />
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
           </div>
+        ) : (
+          <Redirect to={ROUTES.LOGIN} />
         )
-        : <Redirect to={ROUTES.LOGIN} />
-    )} />
+      }
+    />
   );
 };
 
