@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
+import { editOrder, makePayment } from '../../services/TransactionsService';
 import { useDispatch, useSelector } from 'react-redux';
 
+import EditOrderDialog from '../../components/EditOrderDialog';
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
-import { makePayment } from '../../services/TransactionsService';
 import { setBalance } from '../../redux/features/users/usersSlice';
 
 const Orders = (props) => {
@@ -13,6 +14,9 @@ const Orders = (props) => {
   const { current_page, transactions } = data;
   const { userId, username, balance } = useSelector(
     (state) => state.usersReducer.profile
+  );
+  const { isEditOrderOpen, orderToEdit } = useSelector(
+    (state) => state.transactionsReducer
   );
 
   const [selectedOrders, setSelectedOrders] = useState([]);
@@ -177,19 +181,23 @@ const Orders = (props) => {
   }, [selectedOrders]);
 
   return (
-    <RenderOrdersTable
-      data={data}
-      rowsPerPage={rowsPerPage}
-      selectedOrders={selectedOrders}
-      payForOrdersDisabled={payForOrdersDisabled}
-      checkIsSelected={isOrderSelected}
-      checkIsAllSelected={isAllOrdersSelected}
-      isCheckboxDisabled={isCheckboxDisabled()}
-      onChangePage={onChangePage}
-      onSelectAllOrders={handleSelectAllOrders}
-      onSelectOrder={handleSelectOneOrder}
-      onPayForOrders={handlePayForOrders}
-    />
+    <div>
+      <RenderOrdersTable
+        data={data}
+        rowsPerPage={rowsPerPage}
+        selectedOrders={selectedOrders}
+        payForOrdersDisabled={payForOrdersDisabled}
+        checkIsSelected={isOrderSelected}
+        checkIsAllSelected={isAllOrdersSelected}
+        isCheckboxDisabled={isCheckboxDisabled()}
+        onChangePage={onChangePage}
+        onEditOrder={editOrder}
+        onSelectAllOrders={handleSelectAllOrders}
+        onSelectOrder={handleSelectOneOrder}
+        onPayForOrders={handlePayForOrders}
+      />
+      <EditOrderDialog open={isEditOrderOpen} transaction={orderToEdit} />
+    </div>
   );
 };
 

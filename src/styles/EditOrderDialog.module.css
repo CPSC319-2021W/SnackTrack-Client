@@ -1,0 +1,38 @@
+@value colors: './Colors.module.css';
+@value PURPLE, DARK_PURPLE, RED, DARK_RED from colors;
+
+.newTotal {
+  min-width: 100px;
+  font-weight: 700;
+  color: ORANGE;
+  background-color: #ffe7ca;
+  padding: 5px 14px;
+  border-radius: 3px;
+  box-shadow: none;
+  text-align: center;
+  cursor: text;
+}
+
+.button {
+  width: 120px;
+  height: 40px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: PURPLE;
+  text-transform: none;
+  margin: 0.75rem;
+  margin-right: 1rem;
+  align-self: flex-end;
+}
+
+.button:hover {
+  background-color: DARK_PURPLE;
+}
+
+.button__red {
+  background-color: RED;
+}
+
+.button__red:hover {
+  background-color: DARK_RED;
+}

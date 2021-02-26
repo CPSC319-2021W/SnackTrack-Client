@@ -1,4 +1,8 @@
 import { React, useEffect, useState } from 'react';
+import {
+  setApiResponse,
+  setToastNotificationOpen
+} from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NOTIFICATIONS } from '../constants';
@@ -15,13 +19,18 @@ import styles from '../styles/Page.module.css';
 const Snacks = () => {
   const dispatch = useDispatch();
   const [pendingDialogOpen, setPendingDialogOpen] = useState(false);
-  const [toastNotificationOpen, setToastNotificationOpen] = useState(false);
-  const [apiResponse, setApiResponse] = useState('CLAIM_ERROR');
   const [pendingOrders, setPendingOrders] = useState([]);
   const { snacks, selectedFilters } = useSelector((state) => state.snacksReducer);
+  const { isToastNotificationOpen, apiResponse } = useSelector(
+    (state) => state.notificationsReducer
+  );
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
+
+  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
+
+  const onApiResponse = (response) => dispatch(setApiResponse(response));
 
   const handleCloseSuggestion = () => {
     setIsSuggestionOpen(false);
@@ -47,28 +56,19 @@ const Snacks = () => {
     }
   };
 
-  // const togglePendingOrders = () => {
-  //   if (pendingOrders.length === 0) {
-  //     setPendingOrders(mockPendingOrders);
-  //     setPendingDialogOpen(true);
-  //   } else {
-  //     setPendingDialogOpen(false);
-  //     setPendingOrders([]);
-  //   }
-  // };
-
   const handleCloseDialog = () => {
-    setApiResponse('CLAIM_SUCCESS');
+    onApiResponse('CLAIM_SUCCESS');
     setPendingDialogOpen(false);
-    setToastNotificationOpen(true);
+    openToastNotification(true);
   };
 
   const handleCloseToastNotification = () => {
-    setToastNotificationOpen(false);
+    openToastNotification(false);
   };
 
   const handleCloseNotAllowed = () => {
-    setToastNotificationOpen(true);
+    onApiResponse('CLAIM_ERROR');
+    openToastNotification(true);
   };
 
   useEffect(() => {
@@ -99,8 +99,8 @@ const Snacks = () => {
       <SnacksContainer
         snacks={snacks}
         filters={selectedFilters}
-        openToastNotification={setToastNotificationOpen}
-        onApiResponse={setApiResponse}
+        openToastNotification={openToastNotification}
+        onApiResponse={onApiResponse}
       />
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
@@ -116,7 +116,7 @@ const Snacks = () => {
         onChangeText={handleChangeText}
       />
       <ToastNotification
-        open={toastNotificationOpen}
+        open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleCloseToastNotification}
       />
