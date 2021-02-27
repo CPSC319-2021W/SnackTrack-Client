@@ -52,6 +52,7 @@ const Transactions = () => {
     const transactionResponse = await getUserOrders(userId, page, rowsPerPage);
     setOrdersResponse(transactionResponse);
   };
+
   const handleClose = () => {
     openToastNotification(false);
   };
