@@ -51,17 +51,24 @@ const HeaderBar = (props) => {
   };
 
   useEffect(async () => {
-    try {
-      const token = isAuthenticated();
-      if (token) {
-        const decoded = jwt.decode(token);
-        decoded.userId = 1; // TODO: Remove once backend implements AUTH
-        const { userId } = decoded;
-        const user = await getUserById(userId);
-        setProfile(user);
+    const maxTries = 3;
+    let tries = 0;
+    // eslint-disable-next-line
+    while (true) {
+      try {
+        const token = isAuthenticated();
+        if (token) {
+          const decoded = jwt.decode(token);
+          decoded.userId = 1; // TODO: Remove once backend implements AUTH
+          const { userId } = decoded;
+          const user = await getUserById(userId);
+          setProfile(user);
+        }
+      } catch (err) {
+        if (++tries === maxTries) {
+          history.push(ROUTES.LOGIN);
+        }
       }
-    } catch (err) {
-      console.log(err);
     }
   }, []);
 
