@@ -10,7 +10,16 @@ const TextInputField = (props) => {
 
   return (
     <div className={styles.input__container}>
-      <h6 className={styles.label}>{label}</h6>
+      <label
+        className={classNames({
+          [styles.label__base]: true,
+          [styles.label__focused]: isFocused,
+          [styles.label__error]: error
+        })}
+        htmlFor={id}
+      >
+        {label}
+      </label>
       <Input
         className={classNames({
           [styles.input__base]: true,

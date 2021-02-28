@@ -28,7 +28,16 @@
   border: 2px solid RED;
 }
 
-.label {
+.label__base {
+  font-size: 1rem;
+  font-weight: 600;
   text-align: left;
-  margin: 0;
+}
+
+.label__focused {
+  color: PURPLE;
+}
+
+.label__error {
+  color: RED;
 }
