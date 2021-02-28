@@ -47,6 +47,7 @@
         "allowSeparatedGroups": true
       }
     ],
+    "no-constant-condition": 0,
     "brace-style": [1, "1tbs"],
     "prefer-template": [1],
     "prefer-destructuring": [1, { "object": true, "array": false }],

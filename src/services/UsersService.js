@@ -1,7 +1,7 @@
 import httpClient from './axios.config.js';
 import { mockDBCall } from '../mockServer';
 
-const authenticate = async () => {
+const authenticate = async (token) => {
   // TODO: Will be uncommented in SNAK-191 when endpoint is completed
   // try {
   //   const response = await httpClient.post('/authenticate', { token });
@@ -10,7 +10,7 @@ const authenticate = async () => {
   //   // handle error
   //   console.log(err);
   // }
-  const response = await getUserById(1);
+  const response = await getUserById(token);
   return response;
 };
 

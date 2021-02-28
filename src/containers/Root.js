@@ -3,6 +3,7 @@ import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 
 import AuthLogin from '../pages/AuthLogin';
 import CommonRoute from '../routes/CommonRoute';
+import Cookies from 'js-cookie';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Fallback from '../pages/Fallback';
 import PrivateRoute from '../routes/PrivateRoute';
@@ -12,6 +13,7 @@ import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
 import UserProfile from '../pages/UserProfile';
+import { isAuthenticated } from '../helpers/AuthHelper';
 import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
 import { useDispatch } from 'react-redux';
@@ -24,6 +26,7 @@ const Root = () => {
   const authLogoutSuccess = () => dispatch(setLogout());
 
   const onSuccess = () => {
+    Cookies.remove('auth');
     authLogoutSuccess();
     history.push(ROUTES.LOGIN);
   };
@@ -48,7 +51,10 @@ const Root = () => {
         <CssBaseline />
         <Switch>
           <Route exact path={ROUTES.LOGIN} component={AuthLogin} />
-          <Route path={ROUTES.SELECT} component={SelectLogin} />
+          <Route
+            path={ROUTES.SELECT}
+            component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
+          />
           <CommonRoute
             path={ROUTES.SNACKS}
             signOut={signOut}
