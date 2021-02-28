@@ -1,23 +1,29 @@
 import { AppBar, Button, Container, Menu, MenuItem } from '@material-ui/core';
-import React, { useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFormat from 'react-number-format';
 import { ROUTES } from '../constants';
 import classNames from 'classnames';
+import { getUserById } from '../services/UsersService';
+import { isAuthenticated } from '../helpers/AuthHelper';
+import jwt from 'jsonwebtoken';
 import profileIcon from '../assets/icons/user.svg';
+import { setUser } from '../redux/features/users/usersSlice';
 import snacksIcon from '../assets/icons/utensils.svg';
 import styles from '../styles/HeaderBar.module.css';
 import transactionsIcon from '../assets/icons/dollar.svg';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import useStyles from '../styles/HeaderBarStyles';
 
 const HeaderBar = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const history = useHistory();
   const { balance, firstName, handleLogOut, clientid } = props;
   const { isAdmin } = useSelector((state) => state.usersReducer.profile);
   const [anchorEl, setAnchorEl] = useState(null);
+  const setProfile = (profile) => dispatch(setUser(profile));
 
   const { pathname } = history.location;
 
@@ -44,9 +50,30 @@ const HeaderBar = (props) => {
     handleLogOut();
   };
 
+  useEffect(async () => {
+    const maxTries = 3;
+    let tries = 0;
+    while (true) {
+      try {
+        const token = isAuthenticated();
+        if (token) {
+          const decoded = jwt.decode(token);
+          decoded.userId = 1; // TODO: Remove once backend implements AUTH
+          const { userId } = decoded;
+          const user = await getUserById(userId);
+          setProfile(user);
+        }
+      } catch (err) {
+        if (++tries === maxTries) {
+          history.push(ROUTES.LOGIN);
+        }
+      }
+    }
+  }, []);
+
   return (
     <AppBar className={styles.header}>
-      {balance !== null ? (
+      {isAuthenticated() ? (
         <Container className={styles.bar}>
           <div>
             <img

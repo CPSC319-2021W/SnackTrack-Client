@@ -1,6 +1,7 @@
 import { Button, Card, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react';
 
+import Cookies from 'js-cookie';
 import { ReactComponent as Logo } from '../assets/galvanize.svg';
 import { authenticate } from '../services/UsersService';
 import { refreshTokenSetup } from '../helpers/AuthHelper';
@@ -19,7 +20,12 @@ const AuthLogin = () => {
   const onSuccess = async (googleUser) => {
     setIsLoading(true);
     const token = googleUser.getAuthResponse().id_token;
-    const userResponse = await authenticate(token);
+    const fakeToken = 1; // TODO: Delete when AUTH is implemented
+    Cookies.set('auth', token, {
+      expires: 30,
+      secure: process.env.REACT_APP_ENV !== 'DEV'
+    });
+    const userResponse = await authenticate(fakeToken); // TODO: Replace fakeToken with token
     setProfile(userResponse);
     refreshTokenSetup(googleUser);
     history.push('/snacks');
@@ -48,10 +54,14 @@ const AuthLogin = () => {
       <div className={styles.container}>
         <Card className={styles.card}>
           <div className={styles.logo__container}>
-            <Logo className={styles.logo}/>
+            <Logo className={styles.logo} />
           </div>
           <h2 className={styles.title}>SnackTrack</h2>
-          <Button className={styles.button__login} variant='outlined' onClick={handleLogIn}>
+          <Button
+            className={styles.button__login}
+            variant='outlined'
+            onClick={handleLogIn}
+          >
             {isLoading ? (
               <CircularProgress size={30} thickness={5} />
             ) : (

@@ -68,21 +68,23 @@ const Transactions = () => {
   };
 
   useEffect(async () => {
-    try {
-      const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
-      setOrdersResponse(orderResponse);
-    } catch (err) {
-      openToastNotification(true);
-      setPaymentsError(true);
+    if (userId) {
+      try {
+        const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
+        setOrdersResponse(orderResponse);
+      } catch (err) {
+        openToastNotification(true);
+        setPaymentsError(true);
+      }
+      try {
+        const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
+        setPaymentsResponse(paymentResponse);
+      } catch (err) {
+        openToastNotification(true);
+        setPaymentsError(true);
+      }
     }
-    try {
-      const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
-      setPaymentsResponse(paymentResponse);
-    } catch (err) {
-      openToastNotification(true);
-      setPaymentsError(true);
-    }
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.base}>

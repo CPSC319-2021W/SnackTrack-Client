@@ -1,20 +1,20 @@
-import React from 'react';
-
 import { Redirect, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
-import styles from '../styles/Layout.module.css';
-
 import { ROUTES } from '../constants';
+import React from 'react';
+import { isAuthenticated } from '../helpers/AuthHelper';
+import styles from '../styles/Layout.module.css';
+import { useSelector } from 'react-redux';
 
-const PrivateRoute = ({ component: Component, signOut, ...rest}) => {
+const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
   const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
   return (
-    <Route {...rest} render={(props) => (
-      balance !== null
-        ? (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthenticated() ? (
           <div className={styles.base}>
             <HeaderBar
               firstName={firstName}
@@ -26,9 +26,11 @@ const PrivateRoute = ({ component: Component, signOut, ...rest}) => {
               <Component {...props} />
             </Container>
           </div>
+        ) : (
+          <Redirect to={ROUTES.LOGIN} />
         )
-        : <Redirect to={ROUTES.LOGIN} />
-    )} />
+      }
+    />
   );
 };
 
