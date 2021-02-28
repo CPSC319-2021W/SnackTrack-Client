@@ -52,6 +52,11 @@ export const CATEGORIES_LIST = [
 export const NOTIFICATIONS = {
   ORDER_SUCCESS: { type: 'success', message: 'Snack tracked! Enjoy!' },
   PAYMENT_SUCCESS: { type: 'success', message: 'Payment submitted. Thank you!' },
+  CHANGES_SUCCESS: { type: 'success', message: 'Your changes have been saved.' },
+  CANCEL_SUCCESS: {
+    type: 'success',
+    message: 'Cancelled! Please remember to put the snacks back.'
+  },
   SUGGESTION: {
     type: 'success',
     message: 'Suggestion sent by carrier pigeon. Keep your eyes out for new snacks!'

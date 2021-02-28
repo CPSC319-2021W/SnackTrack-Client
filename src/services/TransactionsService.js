@@ -1,5 +1,13 @@
 import httpClient from './axios.config.js';
 
+const cancelOrder = async (transaction_id) => {
+  throw new Error('Not Implemented!', transaction_id);
+};
+
+const editOrder = async (transaction_id, quantity, transaction_amount) => {
+  throw new Error('Not Implemented!', transaction_id, quantity, transaction_amount);
+};
+
 const getPayments = async (page, rowsPerPage) => {
   try {
     const { data } = await httpClient.get(`/payments/?page=${page}&size=${rowsPerPage}`);
@@ -48,4 +56,11 @@ const makeOrder = async (
   return data;
 };
 
-export { getPayments, makePayment, claimPendingOrders, makeOrder };
+export {
+  cancelOrder,
+  editOrder,
+  getPayments,
+  makePayment,
+  claimPendingOrders,
+  makeOrder
+};

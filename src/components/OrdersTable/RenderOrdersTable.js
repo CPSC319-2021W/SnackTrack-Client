@@ -12,13 +12,19 @@ import {
   TableRow
 } from '@material-ui/core';
 import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpers';
+import {
+  setIsEditOrderOpen,
+  setOrderToEdit
+} from '../../redux/features/transactions/transactionsSlice';
 
 import React from 'react';
 import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
 import styles from '../../styles/Table.module.css';
+import { useDispatch } from 'react-redux';
 
 const RenderOrdersTable = (props) => {
+  const dispatch = useDispatch();
   const {
     data,
     rowsPerPage,
@@ -33,6 +39,14 @@ const RenderOrdersTable = (props) => {
     isCheckboxDisabled
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
+
+  const setEditOrderOpen = () => dispatch(setIsEditOrderOpen(true));
+  const setOrderEdit = (order) => dispatch(setOrderToEdit(order));
+
+  const openEditOrderDialog = (order) => {
+    setOrderEdit(order);
+    setEditOrderOpen(true);
+  };
 
   const emptyRows = () => {
     let numRows = 0;
@@ -136,9 +150,7 @@ const RenderOrdersTable = (props) => {
             onClick={() => onPayForOrders()}
           >
             Pay for
-            {selectedOrders.length > 1
-              ? ` ${selectedOrders.length} Orders`
-              : ' Order'}
+            {selectedOrders.length > 1 ? ` ${selectedOrders.length} Orders` : ' Order'}
           </Button>
         </div>
       </div>
@@ -205,7 +217,12 @@ const RenderOrdersTable = (props) => {
                           transactions[i].payment_id,
                           transactions[i].transaction_type_id
                         ) ? (
-                            <Button className={styles.button__edit}>Edit Order</Button>
+                            <Button
+                              className={styles.button__edit}
+                              onClick={() => openEditOrderDialog(transactions[i])}
+                            >
+                              Edit Order
+                            </Button>
                           ) : null}
                       </TableCell>
                     );

@@ -2,21 +2,21 @@ import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/co
 
 import NumberFormat from 'react-number-format';
 import React from 'react';
-import styles from '../styles/OrderSnackDialog.module.css';
+import styles from '../styles/Dialog.module.css';
 import { useSelector } from 'react-redux';
 
 const OrderSnackDialog = (props) => {
   const { open, value, onSubmit, handleClose, onChangeQuantity } = props;
-  const { selectedSnack } = useSelector(state => state.snacksReducer);
+  const { selectedSnack } = useSelector((state) => state.snacksReducer);
   const { snack_name, description, image_uri, price } = selectedSnack;
-  
+
   return (
     <Dialog
       aria-labelledby='snack-order-dialog'
       open={open}
       onClose={handleClose}
       onSubmit={onSubmit}
-    >    
+    >
       <Card variant='outlined' className={styles.card}>
         <div className={styles.header}>
           <h3 className={styles.headerTitle}>{snack_name}</h3>
@@ -33,11 +33,7 @@ const OrderSnackDialog = (props) => {
         <Divider />
         <div className={styles.body}>
           <div className={styles.image}>
-            <CardMedia
-              title={snack_name}
-              component='img'
-              src={image_uri}
-            />
+            <CardMedia title={snack_name} component='img' src={image_uri} />
           </div>
           <div>
             <p className={styles.description}>{description}</p>
