@@ -46,23 +46,17 @@ const HeaderBar = (props) => {
   };
 
   useEffect(async () => {
-    const maxTries = 3;
-    let tries = 0;
-    while (true) {
-      try {
-        const token = isAuthenticated();
-        if (token) {
-          const decoded = jwt.decode(token);
-          decoded.userId = 1; // TODO: Remove once backend implements AUTH
-          const { userId } = decoded;
-          const user = await getUserById(userId);
-          setProfile(user);
-        }
-      } catch (err) {
-        if (++tries === maxTries) {
-          history.push(ROUTES.LOGIN);
-        }
+    try {
+      const token = isAuthenticated();
+      if (token) {
+        const decoded = jwt.decode(token);
+        decoded.userId = 1; // TODO: Remove once backend implements AUTH
+        const { userId } = decoded;
+        const user = await getUserById(userId);
+        setProfile(user);
       }
+    } catch (err) {
+      history.push(ROUTES.LOGIN);
     }
   }, []);
 
