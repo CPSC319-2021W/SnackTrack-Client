@@ -10,4 +10,9 @@ const getSnacks = async () => {
   }
 };
 
-export { getSnacks };
+const makeSuggestion = async (username, suggestion) => {
+  const data = { suggested_by: username, suggestion_text: suggestion };
+  await httpClient.post('/suggestions', data);
+};
+
+export { getSnacks, makeSuggestion };
