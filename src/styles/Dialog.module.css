@@ -57,7 +57,12 @@
   align-items: flex-end;
 }
 
-.quantity {
+.labelContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 1rem;
@@ -76,6 +81,10 @@
 
 .input > * {
   text-align: center;
+}
+
+.input__small {
+  width: 30%;
 }
 
 .button {
