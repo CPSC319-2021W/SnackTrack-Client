@@ -40,11 +40,6 @@ const HeaderBar = (props) => {
     history.push(ROUTES.ADMIN);
   };
 
-  const routeToProfile = () => {
-    handleClose();
-    history.push(ROUTES.PROFILE);
-  };
-
   const routeToLogOut = () => {
     handleClose();
     handleLogOut();
@@ -140,9 +135,6 @@ const HeaderBar = (props) => {
                 ADMIN
               </MenuItem>
             ) : null}
-            <MenuItem className={classes.menuItem} onClick={routeToProfile}>
-              Profile
-            </MenuItem>
             <MenuItem className={classes.menuItem} onClick={routeToLogOut}>
               Log out
             </MenuItem>

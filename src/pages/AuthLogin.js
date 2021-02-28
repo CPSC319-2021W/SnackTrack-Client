@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import Cookies from 'js-cookie';
 import { ReactComponent as Logo } from '../assets/galvanize.svg';
+import { ROUTES } from '../constants';
 import { authenticate } from '../services/UsersService';
 import { refreshTokenSetup } from '../helpers/AuthHelper';
 import { setUser } from '../redux/features/users/usersSlice';
@@ -28,7 +29,7 @@ const AuthLogin = () => {
     const userResponse = await authenticate(fakeToken); // TODO: Replace fakeToken with token
     setProfile(userResponse);
     refreshTokenSetup(googleUser);
-    history.push('/snacks');
+    history.push(ROUTES.SNACKS);
   };
 
   const loginFailure = (res) => {

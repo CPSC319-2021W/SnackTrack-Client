@@ -12,7 +12,6 @@ import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
-import UserProfile from '../pages/UserProfile';
 import { isAuthenticated } from '../helpers/AuthHelper';
 import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
@@ -50,12 +49,13 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-          <Route exact path={ROUTES.LOGIN} component={AuthLogin} />
+          <Route path={ROUTES.LOGIN} component={AuthLogin} />
           <Route
             path={ROUTES.SELECT}
             component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
           />
           <CommonRoute
+            exact
             path={ROUTES.SNACKS}
             signOut={signOut}
             switchUser={switchUser}
@@ -66,7 +66,6 @@ const Root = () => {
             signOut={signOut}
             component={Transactions}
           />
-          <PrivateRoute path={ROUTES.PROFILE} signOut={signOut} component={UserProfile} />
           <Route component={Fallback} />
         </Switch>
       </ThemeProvider>
