@@ -6,23 +6,26 @@ import styles from '../styles/Input.module.css';
 
 const TextInputField = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { id, value, placeholder, onChange, error } = props;
+  const { id, label, value, placeholder, onChange, error } = props;
 
   return (
-    <Input
-      className={classNames({
-        [styles.input__base]: true,
-        [styles.input__focused]: isFocused,
-        [styles.input__error]: error
-      })}
-      id={id}
-      disableUnderline={true}
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      onBlur={() => setIsFocused(false)}
-      onFocus={() => setIsFocused(true)}
-    />
+    <div className={styles.input__container}>
+      <h6 className={styles.label}>{label}</h6>
+      <Input
+        className={classNames({
+          [styles.input__base]: true,
+          [styles.input__focused]: isFocused,
+          [styles.input__error]: error
+        })}
+        id={id}
+        disableUnderline={true}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onBlur={() => setIsFocused(false)}
+        onFocus={() => setIsFocused(true)}
+      />
+    </div>
   );
 };
 
