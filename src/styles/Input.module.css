@@ -1,0 +1,43 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY, LIGHT_GREY, RED, PURPLE from colors;
+
+.input__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+}
+
+.input__base {
+  min-width: 260px;
+  color: DARK_GREY;
+  font-size: 1rem;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0rem;
+  margin: 0.75rem 0;
+}
+
+.input__focused {
+  border: 2px solid PURPLE;
+  background-color: #ffffff;
+}
+
+.input__error {
+  border: 2px solid RED;
+}
+
+.label__base {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.label__focused {
+  color: PURPLE;
+}
+
+.label__error {
+  color: RED;
+}
