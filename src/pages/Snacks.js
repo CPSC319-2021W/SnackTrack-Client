@@ -24,7 +24,7 @@ const Snacks = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  const { username, balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
 
@@ -51,7 +51,7 @@ const Snacks = () => {
     }
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        await makeSuggestion(username, suggestion);
+        await makeSuggestion(userId, suggestion);
         setIsSuggestionOpen(false);
         setSuggestionText('');
         onApiResponse('SUGGESTION');
