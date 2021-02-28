@@ -1,9 +1,8 @@
 export const ROUTES = {
-  LOGIN: '/',
+  LOGIN: '/login',
   SELECT: '/select-login',
-  SNACKS: '/snacks',
+  SNACKS: '/',
   TRANSACTIONS: '/transactions',
-  PROFILE: '/profile',
   ADMIN: '/admin'
 };
 
@@ -60,10 +59,6 @@ export const NOTIFICATIONS = {
   SUGGESTION: {
     type: 'success',
     message: 'Suggestion sent by carrier pigeon. Keep your eyes out for new snacks!'
-  },
-  SAVE_PROFILE_SUCCESS: {
-    type: 'success',
-    message: 'Changes to your user profile is saved.'
   },
   CLAIM_SUCCESS: {
     type: 'success',

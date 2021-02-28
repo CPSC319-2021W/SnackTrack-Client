@@ -140,9 +140,6 @@ const HeaderBar = (props) => {
                 ADMIN
               </MenuItem>
             ) : null}
-            <MenuItem className={classes.menuItem} onClick={routeToProfile}>
-              Profile
-            </MenuItem>
             <MenuItem className={classes.menuItem} onClick={routeToLogOut}>
               Log out
             </MenuItem>
