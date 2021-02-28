@@ -53,7 +53,6 @@ const HeaderBar = (props) => {
   useEffect(async () => {
     const maxTries = 3;
     let tries = 0;
-    // eslint-disable-next-line
     while (true) {
       try {
         const token = isAuthenticated();
