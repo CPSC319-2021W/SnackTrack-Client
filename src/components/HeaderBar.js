@@ -40,11 +40,6 @@ const HeaderBar = (props) => {
     history.push(ROUTES.ADMIN);
   };
 
-  const routeToProfile = () => {
-    handleClose();
-    history.push(ROUTES.PROFILE);
-  };
-
   const routeToLogOut = () => {
     handleClose();
     handleLogOut();
