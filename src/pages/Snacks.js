@@ -12,7 +12,7 @@ import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
 import { deselectAllFilters } from '../redux/features/snacks/snacksSlice';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
-import { makeSuggestion } from '../services/UsersService';
+import { makeSuggestion } from '../services/SnacksService';
 import { mockPendingOrders } from '../mockPendingOrders';
 import styles from '../styles/Page.module.css';
 
@@ -44,15 +44,22 @@ const Snacks = () => {
     setSuggestionText(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    const submission = suggestionText.trim();
-    if (submission === '') {
+  const handleSubmit = async (event) => {
+    const suggestion = suggestionText.trim();
+    if (suggestion === '') {
       return;
     }
     if (event.key === 'Enter' || event.type === 'click') {
-      makeSuggestion(userId, submission);
-      setIsSuggestionOpen(false);
-      setSuggestionText('');
+      try {
+        await makeSuggestion(userId, suggestion);
+        setIsSuggestionOpen(false);
+        setSuggestionText('');
+        onApiResponse('SUGGESTION');
+        openToastNotification(true);
+      } catch (err) {
+        onApiResponse('ERROR');
+        openToastNotification(true);
+      }
     }
   };
 
