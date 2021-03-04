@@ -1,5 +1,5 @@
+import { BASE_BLUE, DARK_GREY, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
-import colors from '../styles/Colors.module.css';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -11,42 +11,42 @@ const theme = createMuiTheme({
       '@global': {
         '@font-face': [...TTNormsFontFamily],
         body: {
-          color: colors.DARK_GREY,
-          backgroundColor: '#F4F5FD',
+          color: DARK_GREY,
+          backgroundColor: '#F8F9FF',
           fontVariantLigatures: 'no-common-ligatures'
         },
         p: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontFamily: 'TT Norms',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h1: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '6rem',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h2: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '3.75rem',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h3: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '3rem',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h4: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '2.125rem',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h5: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '1.5rem',
           fontVariantLigatures: 'no-common-ligatures'
         },
         h6: {
-          color: colors.DARK_GREY,
+          color: DARK_GREY,
           fontSize: '1.25rem',
           fontVariantLigatures: 'no-common-ligatures'
         }
@@ -59,14 +59,14 @@ const theme = createMuiTheme({
     },
     MuiCheckbox: {
       root: {
-        color: colors.PURPLE,
+        color: BASE_BLUE,
         '&&:hover': {
           backgroundColor: 'transparent'
         }
       },
       colorSecondary: {
         '&$checked': {
-          color: colors.PURPLE,
+          color: BASE_BLUE,
           '&:hover': {
             backgroundColor: 'transparent'
           }
@@ -75,7 +75,7 @@ const theme = createMuiTheme({
     },
     MuiCircularProgress: {
       colorPrimary: {
-        color: colors.LIGHT_GREY
+        color: WHITE
       }
     },
     MuiInput: {

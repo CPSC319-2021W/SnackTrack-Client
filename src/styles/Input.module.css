@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, RED, PURPLE from colors;
+@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE from colors;
 
 .input__container {
   display: flex;
@@ -20,7 +20,7 @@
 }
 
 .input__focused {
-  border: 2px solid PURPLE;
+  border: 2px solid BASE_BLUE;
   background-color: #ffffff;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .label__focused {
-  color: PURPLE;
+  color: BASE_BLUE;
 }
 
 .label__error {

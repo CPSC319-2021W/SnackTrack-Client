@@ -1,6 +1,7 @@
 import { Button, Card, CircularProgress } from '@material-ui/core';
 import React, { useState } from 'react';
 
+import classNames from 'classnames';
 import Cookies from 'js-cookie';
 import { ReactComponent as Logo } from '../assets/galvanize.svg';
 import { ROUTES } from '../constants';
@@ -59,8 +60,10 @@ const AuthLogin = () => {
           </div>
           <h2 className={styles.title}>SnackTrack</h2>
           <Button
-            className={styles.button__login}
-            variant='outlined'
+            className={classNames({
+              [styles.button__login]: true,
+              [styles.button__loading]: isLoading
+            })}
             onClick={handleLogIn}
           >
             {isLoading ? (

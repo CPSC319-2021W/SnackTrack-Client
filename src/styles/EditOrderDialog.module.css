@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value PURPLE, DARK_PURPLE, RED, DARK_RED from colors;
+@value BASE_BLUE, DARK_BLUE, RED, DARK_RED from colors;
 
 .newTotal {
   min-width: 100px;
@@ -18,7 +18,7 @@
   height: 40px;
   font-weight: 700;
   color: #ffffff;
-  background-color: PURPLE;
+  background-color: BASE_BLUE;
   text-transform: none;
   margin: 0.75rem;
   margin-right: 1rem;
@@ -26,7 +26,7 @@
 }
 
 .button:hover {
-  background-color: DARK_PURPLE;
+  background-color: DARK_BLUE;
 }
 
 .button__red {
