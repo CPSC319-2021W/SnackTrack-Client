@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -72,11 +72,12 @@
 }
 
 .list__container {
-  width: 40%;
-  min-width: 300px;
+  width: 60%;
+  max-width: 700px;
+  min-width: 400px;
   min-height: 912px;
   padding: 1rem;
-  background-color: rgba(234,230,255,0.66);
+  background-color: #EDEFFF;
   border-radius: 10px;
 }
 
