@@ -1,5 +1,5 @@
 import { AppBar, Container } from '@material-ui/core';
-import { Fragment, React, useEffect } from 'react';
+import { Fragment, React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import NumberFormat from 'react-number-format';
@@ -24,7 +24,7 @@ import { ReactComponent as UserGroupIcon } from '../assets/icons/usergroup.svg';
 const HeaderBar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAdminRoute, balance, firstName, handleLogOut } = props;
+  const { isAdminRoute, balance, firstName, lastName, handleLogOut } = props;
   const { isAdmin } = useSelector((state) => state.usersReducer.profile);
   const setProfile = (profile) => dispatch(setUser(profile));
 
@@ -43,6 +43,8 @@ const HeaderBar = (props) => {
       history.push(ROUTES.LOGIN);
     }
   }, []);
+
+  const [hover, setHover] = useState(false);
 
   const renderEmployeeMenu = () => {
     return (
@@ -147,32 +149,46 @@ const HeaderBar = (props) => {
           <div className={styles.menu__container__right}>
             {
               isAdmin ? (
-                isAdminRoute ? (
-                  <button
-                    className={styles.icon__container}
-                    onClick={() => history.push(ROUTES.SNACKS)}
-                  >
-                    <EmployeeIcon
-                      className={classNames({
-                        [styles.unselectable]: true,
-                        [styles.icon__base]: true
-                      })}
-                    />
-                  </button>
-                ) : (
-                  <button
-                    className={styles.icon__container}
-                    onClick={() => history.push(ROUTES.ADMIN)}
-                  >
-                    <AdminIcon
-                      className={classNames({
-                        [styles.unselectable]: true,
-                        [styles.icon__base]: true
-                      })}
-                    />
-                  </button>
-                )
-              ) : null
+                <button
+                  className={styles.pill__container}
+                  onClick={() => history.push(isAdminRoute ? ROUTES.SNACKS : ROUTES.ADMIN)}
+                  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+                >
+                  <p className={classNames({
+                    [styles.pill__text]: true,
+                    [styles.pill__text__hover]: hover
+                  })}>
+                    { firstName } { lastName.slice(0, 1) }.
+                  </p>
+                  <div className={styles.pill__icon} >
+                    {
+                      isAdminRoute ? (
+                        <EmployeeIcon className={classNames({
+                          [styles.unselectable]: true,
+                          [styles.admin__switch__icon]: hover
+                        })} />
+                      ) : (
+                        <AdminIcon className={classNames({
+                          [styles.unselectable]: true,
+                          [styles.admin__switch__icon]: hover
+                        })} />
+                      )
+                    }
+                  </div>
+                </button>
+              ) : (
+                <button className={classNames({
+                  [styles.pill__container]: true,
+                  [styles.pill__disabled]: true
+                })}>
+                  <p className={classNames({
+                    [styles.pill__text]: true,
+                    [styles.pill__text__emp]: true
+                  })}>
+                    { firstName } { lastName.slice(0, 1) }.
+                  </p>
+                </button>
+              )
             }
             <button
               className={styles.icon__container}

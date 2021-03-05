@@ -10,7 +10,7 @@ import { isAuthenticated } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
 
 const AdminRoute = ({ component: Component, signOut, ...rest }) => {
-  const { isAdmin } = useSelector((state) => state.usersReducer.profile);
+  const { isAdmin, firstName, lastName } = useSelector((state) => state.usersReducer.profile);
   
   return (
     <Route
@@ -20,6 +20,8 @@ const AdminRoute = ({ component: Component, signOut, ...rest }) => {
           <div className={styles.base}>
             <HeaderBar
               isAdminRoute
+              firstName={firstName}
+              lastName={lastName}
               clientid={process.env.REACT_APP_CLIENT_ID}
               handleLogOut={signOut}
             />
