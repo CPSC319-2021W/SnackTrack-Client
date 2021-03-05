@@ -1,13 +1,14 @@
-import { Redirect, Route } from 'react-router-dom';
+import React from 'react';
 
+import { Redirect, Route } from 'react-router-dom';
 import { Container } from '@material-ui/core';
+
 import HeaderBar from '../components/HeaderBar';
 import { ROUTES } from '../constants';
-import React from 'react';
 import { isAuthenticated } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
 
-const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
+const AdminRoute = ({ component: Component, signOut, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -31,4 +32,4 @@ const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

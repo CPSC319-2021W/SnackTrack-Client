@@ -1,9 +1,9 @@
-import { Container } from '@material-ui/core';
 import React from 'react';
+
+import { Container } from '@material-ui/core';
 import styles from '../styles/Layout.module.css';
 
-const Fallback = () => {
-
+const Inventory = () => {
   return (
     <div className={styles.base}>
       <Container fixed className={styles.content}>
@@ -13,4 +13,4 @@ const Fallback = () => {
   );
 };
 
-export default Fallback;
+export default Inventory;

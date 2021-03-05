@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Container } from '@material-ui/core';
 import styles from '../styles/Layout.module.css';
 
-const Fallback = () => {
+const UserAccount = () => {
   const { id } = useParams();
 
   return (
@@ -16,4 +16,4 @@ const Fallback = () => {
   );
 };
 
-export default Fallback;
+export default UserAccount;
