@@ -42,14 +42,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 200px;
+  width: 140px;
 }
 
 .menu__container__right {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 200px;
+  width: 140px;
 }
 
 .icon__container {
