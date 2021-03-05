@@ -50,7 +50,7 @@ const SnacksContainer = (props) => {
       const { PENDING, PURCHASE } = TRANSACTION_TYPES;
       let transactionTypeId = PENDING;
       // TODO: Pass in token once we have auth set up
-      if (isAuthenticated(balance)) {
+      if (isAuthenticated()) {
         transactionTypeId = PURCHASE;
       }
       // TODO: if value is '' or 0, throw more specific error
