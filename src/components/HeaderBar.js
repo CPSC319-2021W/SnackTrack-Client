@@ -158,7 +158,7 @@ const HeaderBar = (props) => {
                     [styles.pill__text]: true,
                     [styles.pill__text__hover]: hover
                   })}>
-                    { firstName } { lastName.slice(0, 1) }.
+                    { firstName } { lastName?.slice(0, 1) }.
                   </p>
                   <div className={styles.pill__icon} >
                     {
@@ -185,7 +185,7 @@ const HeaderBar = (props) => {
                     [styles.pill__text]: true,
                     [styles.pill__text__emp]: true
                   })}>
-                    { firstName } { lastName.slice(0, 1) }.
+                    { firstName } { lastName?.slice(0, 1) }.
                   </p>
                 </button>
               )
