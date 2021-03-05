@@ -1,10 +1,12 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 
+import AdminRoute from '../routes/AdminRoute';
 import AuthLogin from '../pages/AuthLogin';
 import CommonRoute from '../routes/CommonRoute';
 import Cookies from 'js-cookie';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Dashboard from '../pages/Dashboard';
 import Fallback from '../pages/Fallback';
 import PrivateRoute from '../routes/PrivateRoute';
 import { ROUTES } from '../constants';
@@ -66,6 +68,7 @@ const Root = () => {
             signOut={signOut}
             component={Transactions}
           />
+          <AdminRoute path={ROUTES.ADMIN} signOut={signOut} component={Dashboard} />
           <Route component={Fallback} />
         </Switch>
       </ThemeProvider>
