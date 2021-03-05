@@ -1,17 +1,16 @@
+import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 import { mockDBCall } from '../mockServer';
 
 const authenticate = async (token) => {
-  // TODO: Will be uncommented in SNAK-191 when endpoint is completed
-  // try {
-  //   const response = await httpClient.post('/authenticate', { token });
-  //   return response;
-  // } catch (err) {
-  //   // handle error
-  //   console.log(err);
-  // }
-  const response = await getUserById(token);
-  return response;
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+    const { data } = await httpClient.post('/authenticate', null, authHeader);
+    return data;
+  } catch (err) {
+    // handle error
+    console.log(err);
+  }
 };
 
 const getUsers = () => {
@@ -20,7 +19,8 @@ const getUsers = () => {
 
 const getUserById = async (userId) => {
   try {
-    const { data } = await httpClient.get(`/users/${userId}`);
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get(`/users/${userId}`, authHeader);
     return data;
   } catch (err) {
     // TODO: Handle 404
