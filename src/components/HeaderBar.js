@@ -31,9 +31,8 @@ const HeaderBar = (props) => {
       const token = isAuthenticated();
       if (token) {
         const decoded = jwt.decode(token);
-        decoded.userId = 1; // TODO: Remove once backend implements AUTH
-        const { userId } = decoded;
-        const user = await getUserById(userId);
+        const { user_id } = decoded;
+        const user = await getUserById(user_id);
         setProfile(user);
       }
     } catch (err) {

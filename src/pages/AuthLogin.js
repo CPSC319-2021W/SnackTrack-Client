@@ -23,13 +23,12 @@ const AuthLogin = () => {
   const onSuccess = async (googleUser) => {
     setIsLoading(true);
     const token = googleUser.getAuthResponse().id_token;
-    const fakeToken = 1; // TODO: Delete when AUTH is implemented
-    Cookies.set('auth', token, {
+    const { accessToken, user } = await authenticate(token);
+    Cookies.set('auth', accessToken, {
       expires: 30,
       secure: process.env.REACT_APP_ENV !== 'DEV'
     });
-    const userResponse = await authenticate(fakeToken); // TODO: Replace fakeToken with token
-    setProfile(userResponse);
+    setProfile(user);
     refreshTokenSetup(googleUser);
     history.push(ROUTES.SNACKS);
   };
