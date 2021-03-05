@@ -3,7 +3,9 @@ export const ROUTES = {
   SELECT: '/select-login',
   SNACKS: '/',
   TRANSACTIONS: '/transactions',
-  ADMIN: '/admin'
+  ADMIN: '/admin',
+  INVENTORY: '/admin/inventory',
+  USERS:'/admin/users'
 };
 
 export const DEFAULT_CATEGORIES = {
