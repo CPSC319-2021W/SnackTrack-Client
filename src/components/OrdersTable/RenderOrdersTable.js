@@ -194,36 +194,36 @@ const RenderOrdersTable = (props) => {
                           ? column.format(value, order.payment_id)
                           : column.id === 'transaction_amount' ||
                             column.id === 'transaction_dtm'
-                          ? column.format(value)
-                          : value}
+                            ? column.format(value)
+                            : value}
                         {column.id === 'checkbox' &&
                         isPaymentPending(
                           transactions[i].payment_id,
                           transactions[i].transaction_type_id
                         ) ? (
-                          <Checkbox
-                            size='small'
-                            checked={checkIsSelected(transactions[i].transaction_id)}
-                            onClick={() =>
-                              onSelectOrder(
-                                transactions[i].transaction_id,
-                                transactions[i].transaction_amount
-                              )
-                            }
-                          />
-                        ) : null}
+                            <Checkbox
+                              size='small'
+                              checked={checkIsSelected(transactions[i].transaction_id)}
+                              onClick={() =>
+                                onSelectOrder(
+                                  transactions[i].transaction_id,
+                                  transactions[i].transaction_amount
+                                )
+                              }
+                            />
+                          ) : null}
                         {column.id === 'actions' &&
                         isPaymentPending(
                           transactions[i].payment_id,
                           transactions[i].transaction_type_id
                         ) ? (
-                          <Button
-                            className={styles.button__edit}
-                            onClick={() => openEditOrderDialog(transactions[i])}
-                          >
+                            <Button
+                              className={styles.button__edit}
+                              onClick={() => openEditOrderDialog(transactions[i])}
+                            >
                             Edit Order
-                          </Button>
-                        ) : null}
+                            </Button>
+                          ) : null}
                       </TableCell>
                     );
                   })}
