@@ -1,8 +1,10 @@
+import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const getSnacks = async () => {
   try {
-    const { data } = await httpClient.get('/snacks');
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get('/snacks', authHeader);
     return data;
   } catch (err) {
     // TODO: Handle error
@@ -12,7 +14,8 @@ const getSnacks = async () => {
 
 const makeSuggestion = async (userId, suggestion) => {
   const data = { suggested_by: userId, suggestion_text: suggestion };
-  await httpClient.post('/suggestions', data);
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.post('/suggestions', data, authHeader);
 };
 
 export { getSnacks, makeSuggestion };

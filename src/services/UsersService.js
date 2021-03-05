@@ -30,8 +30,10 @@ const getUserById = async (userId) => {
 
 const getUserOrders = async (userId, page, rowsPerPage) => {
   try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
     const { data } = await httpClient.get(
-      `/users/${userId}/transactions/?page=${page}&size=${rowsPerPage}`
+      `/users/${userId}/transactions/?page=${page}&size=${rowsPerPage}`,
+      authHeader
     );
     return data;
   } catch (err) {
@@ -42,8 +44,10 @@ const getUserOrders = async (userId, page, rowsPerPage) => {
 
 const getUserPayments = async (userId, page, rowsPerPage) => {
   try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
     const { data } = await httpClient.get(
-      `/users/${userId}/payments/?page=${page}&size=${rowsPerPage}`
+      `/users/${userId}/payments/?page=${page}&size=${rowsPerPage}`,
+      authHeader
     );
     return data;
   } catch (err) {
