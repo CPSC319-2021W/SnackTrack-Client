@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_PURPLE, DARK_GREY, GREY, PURPLE from colors;
+@value DARK_BLUE, DARK_GREY, GREY, BASE_BLUE from colors;
 
 .base {
     padding-top: 20px;
@@ -13,7 +13,7 @@
 }
 
 .title {
-    color: DARK_PURPLE;
+    color: HEADER_GREY;
     text-align: left;
     margin: 0;
 }
@@ -33,7 +33,7 @@
   
 .suggestLabel {
     font-weight: bold;
-    color: PURPLE;
+    color: BASE_BLUE;
     margin: 0;
     cursor: pointer;
     text-decoration: none;
@@ -41,7 +41,7 @@
 }
 
 .suggestLabel:hover {
-  color: DARK_PURPLE;
+  color: DARK_BLUE;
 }
 
 @media (max-width: 540px) {
