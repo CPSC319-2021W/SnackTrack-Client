@@ -3,32 +3,33 @@ import React, { useState } from 'react';
 import { Button, Card, CircularProgress } from '@material-ui/core';
 import Cookies from 'js-cookie';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useGoogleLogin } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../assets/galvanize.svg';
 import { ROUTES } from '../constants';
-import { authenticate } from '../services/UsersService';
+// import { authenticate } from '../services/UsersService';
 import { refreshTokenSetup } from '../helpers/AuthHelper';
-import { setUser } from '../redux/features/users/usersSlice';
+// import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
 
 const AuthLogin = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const setProfile = (profile) => dispatch(setUser(profile));
+  // const setProfile = (profile) => dispatch(setUser(profile));
 
   const onSuccess = async (googleUser) => {
     setIsLoading(true);
     const token = googleUser.getAuthResponse().id_token;
-    const { accessToken, user } = await authenticate(token);
-    Cookies.set('auth', accessToken, {
+    // const fakeToken = 1; // TODO: Delete when AUTH is implemented
+    Cookies.set('auth', token, {
       expires: 30,
       secure: process.env.REACT_APP_ENV !== 'DEV'
     });
-    setProfile(user);
+    // const userResponse = await authenticate(fakeToken); // TODO: Replace fakeToken with token
+    // setProfile(userResponse);
     refreshTokenSetup(googleUser);
     history.push(ROUTES.SNACKS);
   };

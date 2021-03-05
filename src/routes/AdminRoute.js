@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 import { Redirect, Route } from 'react-router-dom';
 import { Container } from '@material-ui/core';
@@ -9,11 +10,13 @@ import { isAuthenticated } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
 
 const AdminRoute = ({ component: Component, signOut, ...rest }) => {
+  const { isAdmin } = useSelector((state) => state.usersReducer.profile);
+  
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated() ? (
+        isAuthenticated() && isAdmin ? (
           <div className={styles.base}>
             <HeaderBar
               isAdminRoute
