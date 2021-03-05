@@ -29,14 +29,14 @@ const Inventory = () => {
   useEffect(() => {
     setActiveSnacks(
       toPaginatedSnacks(
-        snacks.filter((snack) => snack.is_active === true),
+        snacks.filter((snack) => snack.is_active),
         0,
         rowsPerPage
       )
     );
     setInactiveSnacks(
       toPaginatedSnacks(
-        snacks.filter((snack) => snack.is_active === false),
+        snacks.filter((snack) => !snack.is_active),
         0,
         rowsPerPage
       )

@@ -21,6 +21,7 @@ import styles from '../styles/Table.module.css';
 const SnackInventoryTable = (props) => {
   const { title, data, rowsPerPage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
+  const DEFAULT_ORDER_THRESHOLD = 10;
 
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - snacks.length;
@@ -58,49 +59,27 @@ const SnackInventoryTable = (props) => {
     {
       id: 'status',
       label: 'Status',
-      format: (quantity, inactive) => {
-        if (inactive === false) {
-          return (
-            <span
-              className={classNames({
-                [styles.status__bar]: true,
-                [styles.status__grey]: true
-              })}
-            >
-              INACTIVE
-            </span>
-          );
+      format: (quantity, isActive, orderThreshold) => {
+        orderThreshold = orderThreshold || DEFAULT_ORDER_THRESHOLD;
+        let statusLabel = 'IN STOCK';
+        if (isActive === false) {
+          statusLabel = 'INACTIVE';
         } else if (quantity === 0) {
-          return (
-            <span
-              className={classNames({
-                [styles.status__bar]: true,
-                [styles.status__red]: true
-              })}
-            >
-              OUT OF STOCK
-            </span>
-          );
-        } else if (quantity < 10) {
-          return (
-            <span
-              className={classNames({
-                [styles.status__bar]: true,
-                [styles.status__orange]: true
-              })}
-            >
-              LOW STOCK
-            </span>
-          );
+          statusLabel = 'OUT OF STOCK';
+        } else if (quantity < orderThreshold) {
+          statusLabel = 'LOW ON STOCK';
         }
         return (
           <span
             className={classNames({
               [styles.status__bar]: true,
-              [styles.status__green]: true
+              [styles.status__grey]: !isActive,
+              [styles.status__red]: quantity === 0,
+              [styles.status__orange]: quantity < orderThreshold,
+              [styles.status__green]: isActive && quantity >= orderThreshold
             })}
           >
-            IN STOCK
+            {statusLabel}
           </span>
         );
       }
@@ -177,7 +156,11 @@ const SnackInventoryTable = (props) => {
                           }`}
                         >
                           {column.format
-                            ? column.format(value, snacks[i].is_active)
+                            ? column.format(
+                                value,
+                                snacks[i].is_active,
+                                snacks[i].order_threshold
+                              )
                             : value}
                         </TableCell>
                       );
