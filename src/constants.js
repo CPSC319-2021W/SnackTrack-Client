@@ -5,7 +5,7 @@ export const ROUTES = {
   TRANSACTIONS: '/transactions',
   ADMIN: '/admin',
   INVENTORY: '/admin/inventory',
-  USERS:'/admin/users'
+  USERS: '/admin/users'
 };
 
 export const DEFAULT_CATEGORIES = {
