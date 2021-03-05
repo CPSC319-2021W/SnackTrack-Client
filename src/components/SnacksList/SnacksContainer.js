@@ -49,7 +49,6 @@ const SnacksContainer = (props) => {
       const transactionAmount = snackQuantity * selectedSnack.price;
       const { PENDING, PURCHASE } = TRANSACTION_TYPES;
       let transactionTypeId = PENDING;
-      // TODO: Pass in token once we have auth set up
       if (isAuthenticated()) {
         transactionTypeId = PURCHASE;
       }
