@@ -15,7 +15,6 @@ import {
 import { CATEGORIES_LIST } from '../constants';
 import React from 'react';
 import classNames from 'classnames';
-import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
@@ -83,17 +82,6 @@ const SnackInventoryTable = (props) => {
           </span>
         );
       }
-    },
-    {
-      id: 'last_updated_dtm',
-      label: 'Last Updated On',
-      format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
-      }
-    },
-    {
-      id: 'last_updated_by',
-      label: 'Last Updated By'
     },
     {
       id: 'actions',
