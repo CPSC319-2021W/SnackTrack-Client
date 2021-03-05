@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 import { mockDBCall } from '../mockServer';
 
@@ -18,7 +19,8 @@ const getUsers = () => {
 
 const getUserById = async (userId) => {
   try {
-    const { data } = await httpClient.get(`/users/${userId}`);
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get(`/users/${userId}`, authHeader);
     return data;
   } catch (err) {
     // TODO: Handle 404
