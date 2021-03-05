@@ -13,7 +13,8 @@ const theme = createMuiTheme({
         body: {
           color: DARK_GREY,
           backgroundColor: '#F8F9FF',
-          fontVariantLigatures: 'no-common-ligatures'
+          fontVariantLigatures: 'no-common-ligatures',
+          overflowY: 'scroll'
         },
         p: {
           color: DARK_GREY,
