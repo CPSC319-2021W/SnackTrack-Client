@@ -9,7 +9,7 @@ import styles from '../styles/Layout.module.css';
 import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
-  const { firstName, balance } = useSelector((state) => state.usersReducer.profile);
+  const { firstName, lastName, balance } = useSelector((state) => state.usersReducer.profile);
   return (
     <Route
       {...rest}
@@ -18,6 +18,7 @@ const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
           <div className={styles.base}>
             <HeaderBar
               firstName={firstName}
+              lastName={lastName}
               balance={balance}
               clientid={process.env.REACT_APP_CLIENT_ID}
               handleLogOut={signOut}
