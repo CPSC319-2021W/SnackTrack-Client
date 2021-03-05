@@ -93,7 +93,7 @@ const RenderOrdersTable = (props) => {
             <span
               className={classNames({
                 [styles.status__bar]: true,
-                [styles.status__cancelled]: true
+                [styles.status__red]: true
               })}
             >
               CANCELLED
@@ -104,7 +104,7 @@ const RenderOrdersTable = (props) => {
             <span
               className={classNames({
                 [styles.status__bar]: true,
-                [styles.status__paid]: true
+                [styles.status__green]: true
               })}
             >
               PAID
@@ -115,7 +115,7 @@ const RenderOrdersTable = (props) => {
           <span
             className={classNames({
               [styles.status__bar]: true,
-              [styles.status__pending]: true
+              [styles.status__orange]: true
             })}
           >
             PENDING
@@ -145,7 +145,7 @@ const RenderOrdersTable = (props) => {
         </div>
         <div className={styles.cell__pay}>
           <Button
-            className={styles.button__pay}
+            className={styles.button__base}
             disabled={payForOrdersDisabled}
             onClick={() => onPayForOrders()}
           >
@@ -221,7 +221,7 @@ const RenderOrdersTable = (props) => {
                               className={styles.button__edit}
                               onClick={() => openEditOrderDialog(transactions[i])}
                             >
-                              Edit Order
+                            Edit Order
                             </Button>
                           ) : null}
                       </TableCell>

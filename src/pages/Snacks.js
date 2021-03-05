@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react';
+import { deselectAllFilters, fetchSnacks } from '../redux/features/snacks/snacksSlice';
 import {
   setApiResponse,
   setToastNotificationOpen
@@ -10,8 +11,6 @@ import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
-import { deselectAllFilters } from '../redux/features/snacks/snacksSlice';
-import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
 import { makeSuggestion } from '../services/SnacksService';
 import { mockPendingOrders } from '../mockPendingOrders';
 import styles from '../styles/Page.module.css';
@@ -79,7 +78,7 @@ const Snacks = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchSnacks());
+    dispatch(fetchSnacks(true));
     return () => {
       dispatch(deselectAllFilters());
     };

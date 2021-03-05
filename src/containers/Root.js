@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
@@ -11,6 +9,7 @@ import AdminRoute from '../routes/AdminRoute';
 import CommonRoute from '../routes/CommonRoute';
 import PrivateRoute from '../routes/PrivateRoute';
 import { ROUTES } from '../constants';
+import React from 'react';
 import { isAuthenticated } from '../helpers/AuthHelper';
 import { setLogout } from '../redux/features/auth/authSlice';
 import theme from '../styles/theme';
@@ -76,7 +75,11 @@ const Root = () => {
           <AdminRoute exact path={ROUTES.ADMIN} signOut={signOut} component={Dashboard} />
           <AdminRoute path={ROUTES.INVENTORY} signOut={signOut} component={Inventory} />
           <AdminRoute exact path={ROUTES.USERS} signOut={signOut} component={Users} />
-          <AdminRoute path={`${ROUTES.USERS}/:id`} signOut={signOut} component={UserAccount} />
+          <AdminRoute
+            path={`${ROUTES.USERS}/:id`}
+            signOut={signOut}
+            component={UserAccount}
+          />
           <Route component={Fallback} />
         </Switch>
       </ThemeProvider>

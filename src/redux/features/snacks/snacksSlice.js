@@ -4,14 +4,20 @@ import { getSnacks } from '../../../services/SnacksService';
 
 const INITIAL_STATE = {
   snacks: [],
-  selectedSnack: { snack_id: null, snack_name: null, description: null, image_uri: null,  price: null },
+  selectedSnack: {
+    snack_id: null,
+    snack_name: null,
+    description: null,
+    image_uri: null,
+    price: null
+  },
   selectedFilters: [],
   loading: false,
   error: null
 };
 
-const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async () => {
-  const snacks = await getSnacks();
+const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async (activeOnly) => {
+  const snacks = await getSnacks(activeOnly);
   return snacks;
 });
 
@@ -23,7 +29,9 @@ const snacksSlice = createSlice({
       state.selectedFilters.push(action.payload);
     },
     removeCategory: (state, action) => {
-      state.selectedFilters = state.selectedFilters.filter(category => category !== action.payload);
+      state.selectedFilters = state.selectedFilters.filter(
+        (category) => category !== action.payload
+      );
     },
     selectOneSnack: (state, action) => {
       state.selectedSnack = action.payload;
@@ -50,6 +58,11 @@ const snacksSlice = createSlice({
 
 export { fetchSnacks };
 
-export const { addCategory, removeCategory, selectOneSnack, deselectAllFilters } = snacksSlice.actions;
+export const {
+  addCategory,
+  removeCategory,
+  selectOneSnack,
+  deselectAllFilters
+} = snacksSlice.actions;
 
 export default snacksSlice.reducer;
