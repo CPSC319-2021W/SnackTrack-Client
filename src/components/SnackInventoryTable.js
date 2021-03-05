@@ -19,7 +19,7 @@ import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
-  const { title, data, rowsPerPage } = props;
+  const { activeSnacks, data, rowsPerPage, onChangePage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
   const DEFAULT_ORDER_THRESHOLD = 10;
 
@@ -37,7 +37,7 @@ const SnackInventoryTable = (props) => {
       id: 'snack_type_id',
       label: 'Category',
       format: (snackTypeId) => {
-        return CATEGORIES_LIST[snackTypeId].name;
+        return CATEGORIES_LIST[snackTypeId]?.name;
       }
     },
     {
@@ -110,7 +110,9 @@ const SnackInventoryTable = (props) => {
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
-          <h4 className={styles.primaryHeader__text}>{title}</h4>
+          <h4 className={styles.primaryHeader__text}>
+            {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
+          </h4>
         </div>
         <div className={styles.cell__pay}>
           <Button className={styles.button__base} onClick={() => {}}>
@@ -188,7 +190,7 @@ const SnackInventoryTable = (props) => {
                 rowsPerPage={rowsPerPage}
                 labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
                 rowsPerPageOptions={[rowsPerPage]}
-                // onChangePage={(event, page) => onChangePage(page)}
+                onChangePage={(event, page) => onChangePage(page, activeSnacks)}
               />
             </TableRow>
           </TableFooter>
