@@ -148,7 +148,7 @@ const HeaderBar = (props) => {
           </Fragment>
           <div className={styles.menu__container__right}>
             {
-              isAdmin ? (
+              firstName && (isAdmin ? (
                 <button
                   className={styles.pill__container}
                   onClick={() => history.push(isAdminRoute ? ROUTES.SNACKS : ROUTES.ADMIN)}
@@ -188,7 +188,7 @@ const HeaderBar = (props) => {
                     { firstName } { lastName?.slice(0, 1) }.
                   </p>
                 </button>
-              )
+              ))
             }
             <button
               className={styles.icon__container}
