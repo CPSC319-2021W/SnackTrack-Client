@@ -5,7 +5,6 @@ import { NOTIFICATIONS } from '../constants';
 import SnackInventoryTable from '../components/SnackInventoryTable';
 import ToastNotification from '../components/ToastNotification';
 import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
-import layoutStyles from '../styles/Layout.module.css';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
 import { toPaginatedSnacks } from '../helpers/AdminHelpers';
@@ -49,7 +48,7 @@ const Inventory = () => {
   }, []);
 
   return (
-    <div className={layoutStyles.content}>
+    <div className={styles.base}>
       <div className={styles.header}>
         <h5 className={styles.title}>Inventory</h5>
       </div>

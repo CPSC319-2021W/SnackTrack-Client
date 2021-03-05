@@ -6,17 +6,17 @@ import { Container } from '@material-ui/core';
 
 import HeaderBar from '../components/HeaderBar';
 import { ROUTES } from '../constants';
-import { isAuthenticated } from '../helpers/AuthHelper';
+import { isAdmin } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
 
 const AdminRoute = ({ component: Component, signOut, ...rest }) => {
-  const { isAdmin, firstName, lastName } = useSelector((state) => state.usersReducer.profile);
+  const { firstName, lastName } = useSelector((state) => state.usersReducer.profile);
   
   return (
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated() && isAdmin ? (
+        isAdmin() ? (
           <div className={styles.base}>
             <HeaderBar
               isAdminRoute
