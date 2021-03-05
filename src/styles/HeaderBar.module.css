@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .label {
@@ -84,9 +85,7 @@
 }
 
 .greeting {
-  position: fixed;
-  left: 3rem;
-  color: #ffffff;
+  color: BASE_RED;
   font-weight: 600;
 }
 
@@ -94,7 +93,7 @@
   height: inherit;
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: BASE_RED;
   position: fixed;
   right: 0;
   padding: 0;

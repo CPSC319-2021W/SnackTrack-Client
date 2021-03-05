@@ -1,4 +1,4 @@
-import { AppBar, Button, Container } from '@material-ui/core';
+import { AppBar, Container } from '@material-ui/core';
 import { Fragment, React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -24,7 +24,7 @@ import { ReactComponent as UserGroupIcon } from '../assets/icons/usergroup.svg';
 const HeaderBar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { isAdminRoute, balance, firstName, handleLogOut, clientid } = props;
+  const { isAdminRoute, balance, firstName, handleLogOut } = props;
   const { isAdmin } = useSelector((state) => state.usersReducer.profile);
   const setProfile = (profile) => dispatch(setUser(profile));
 
@@ -190,14 +190,17 @@ const HeaderBar = (props) => {
       ) : (
         <Container className={styles.bar}>
           <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
-          <Button
-            className={styles.button_logout}
-            variant='outlined'
-            clientid={clientid}
-            onClick={handleLogOut}
+          <button
+            className={styles.icon__container}
+            onClick={() => handleLogOut()}
           >
-            EXIT SESSION
-          </Button>
+            <LogoutIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true
+              })}
+            />
+          </button>
         </Container>
       )}
     </AppBar>
