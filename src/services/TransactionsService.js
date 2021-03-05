@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const cancelOrder = async (transaction_id) => {
@@ -10,7 +11,11 @@ const editOrder = async (transaction_id, quantity, transaction_amount) => {
 
 const getPayments = async (page, rowsPerPage) => {
   try {
-    const { data } = await httpClient.get(`/payments/?page=${page}&size=${rowsPerPage}`);
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get(
+      `/payments/?page=${page}&size=${rowsPerPage}`,
+      authHeader
+    );
     return data;
   } catch (err) {
     console.log(err);
@@ -18,23 +23,29 @@ const getPayments = async (page, rowsPerPage) => {
 };
 
 const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
-  const { data } = await httpClient.post('/payments', {
-    user_id: userId,
-    payment_amount: paymentAmount,
-    transaction_ids: transactionIds,
-    created_by: processor
-  });
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.post(
+    '/payments',
+    {
+      user_id: userId,
+      payment_amount: paymentAmount,
+      transaction_ids: transactionIds,
+      created_by: processor
+    },
+    authHeader
+  );
   return data;
 };
 
 const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
+  // const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
   // try {
   //   await httpClient.post('/payments', {
   //   user_id: userId,
   //   payment_amount: paymentAmount,
   //   transactions_ids: transactionIds,
   //   created_by: processor
-  // }); } catch (err) {
+  // }, authHeader); } catch (err) {
   // }
   throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
 };
