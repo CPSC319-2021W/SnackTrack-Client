@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value PURPLE, DARK_PURPLE, MID_PURPLE, LIGHT_PURPLE, MID_GREY, LIGHT_GREY from colors;
+@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, DARK_BLUE, LIGHT_BLUE, MID_GREY, LIGHT_GREY from colors;
 
 .actionArea {
   display: flex;
@@ -16,12 +16,12 @@
 
 .button__approve {
   color: #ffffff;
-  background-color: PURPLE;
+  background-color: BASE_BLUE;
   float: right;
 }
 
 .button__approve:hover {
-  background-color: DARK_PURPLE;
+  background-color: DARK_BLUE;
 }
 
 .button__approve:disabled {
@@ -30,13 +30,13 @@
 }
 
 .button__decline {
-  color: PURPLE;
-  background-color: LIGHT_PURPLE;
+  color: BASE_BLUE;
+  background-color: LIGHT_BLUE;
 }
 
 .button__decline:hover {
-  color: DARK_PURPLE;
-  background-color: MID_PURPLE;
+  color: DARK_BLUE;
+  background-color: BASE_BLUE_HOVER;
 }
 
 .button__decline:disabled {

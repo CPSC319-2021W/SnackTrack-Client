@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, MID_GREY, DARK_GREY, PURPLE, DARK_PURPLE from colors;
+@value LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
 
 .card {
   max-width: 360px;
@@ -28,7 +28,7 @@
   font-size: 20px;
   font-weight: bold;
   margin: 0;
-  color: DARK_PURPLE;
+  color: DARK_BLUE;
 }
 
 .body {
@@ -55,6 +55,10 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+}
+
+.quantity {
+  font-weight: 600;
 }
 
 .labelContainer {
@@ -92,7 +96,7 @@
   height: 40px;
   font-weight: 700;
   color: #ffffff;
-  background-color: PURPLE;
+  background-color: BASE_BLUE;
   text-transform: none;
   margin: 0.75rem;
   margin-right: 1rem;
@@ -100,7 +104,7 @@
 }
 
 .button:hover {
-  background-color: DARK_PURPLE;
+  background-color: DARK_BLUE;
 }
 
 .button:disabled {

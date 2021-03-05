@@ -1,14 +1,18 @@
 @value DARKER_GREY: #262626;
 @value DARK_GREY: #505050;
-@value MID_GREY: #B6B6B6;
+@value MID_GREY: #ABABAB;
 @value LIGHT_GREY: #E4E4E4;
 @value INNER_LIGHT_GREY: #F9F9F9;
 @value VIOLET: #292255;
-@value PURPLE: #6554C0;
-@value DARK_PURPLE: #5143AA;
-@value MID_PURPLE: #C5BFE7;
-@value LIGHT_PURPLE: #EAE6FF;
 @value RED: #F44336;
 @value DARK_RED: #e03a38;
 @value GREEN: #4CAF50;
 @value ORANGE: #FF9800;
+
+@value WHITE: #FFFFFF;
+@value BASE_BLUE: #1AA1FB;
+@value BASE_BLUE_HOVER: #A5D9FB;
+@value DARK_BLUE: #178DDC;
+@value LIGHT_BLUE: #C6E8FE;
+@value BASE_RED: #FE4558;
+@value HEADER_GREY: #313131;

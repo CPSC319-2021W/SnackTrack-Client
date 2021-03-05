@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, PURPLE from colors;
+@value DARK_GREY, BASE_BLUE, BASE_RED from colors;
 
 .container {
 	display: flex;
@@ -23,7 +23,7 @@
 }
 
 .selectedText {
-	color: PURPLE;
+	color: BASE_RED;
 }
 
 .img {

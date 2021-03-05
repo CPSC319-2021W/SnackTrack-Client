@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value PURPLE, DARK_PURPLE, VIOLET, LIGHT_PURPLE from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -21,7 +21,7 @@
   width: 210px;
   color: #ffffff;
   font-weight: 700;
-  background-color: PURPLE;
+  background-color: BASE_BLUE;
   border-radius: 50px;
   border: 0;
   text-transform: none;
@@ -30,7 +30,11 @@
 }
 
 .button__login:hover {
-  background-color: DARK_PURPLE;
+  background-color: DARK_BLUE;
+}
+
+.button__loading {
+  background-color: LIGHT_GREY;
 }
 
 .page {
@@ -68,11 +72,12 @@
 }
 
 .list__container {
-  width: 40%;
-  min-width: 300px;
+  width: 60%;
+  max-width: 700px;
+  min-width: 400px;
   min-height: 912px;
   padding: 1rem;
-  background-color: rgba(234,230,255,0.66);
+  background-color: #EDEFFF;
   border-radius: 10px;
 }
 

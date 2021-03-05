@@ -1,14 +1,14 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, VIOLET from colors;
+@value DARK_GREY, HEADER_GREY, BASE_RED, WHITE from colors;
 
 @value effects: './Effects.module.css';
-@value DARKER_SHADOW from effects;
+@value DARK_SHADOW from effects;
 
 .header {
   height: 100px;
   flex-direction: row;
-  background-color: VIOLET;
-  box-shadow: DARKER_SHADOW;
+  background-color: WHITE;
+  box-shadow: DARK_SHADOW;
 }
 
 .bar {
@@ -16,47 +16,71 @@
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
 }
 
 .label {
-  display: inline-block;
-  margin-right: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .label__text {
-  color: #ffffff;
+  color: HEADER_GREY;
   font-weight: 600;
   font-size: 1.125rem;
   margin: 0;
 }
 
 .label__balance {
-  color: #ffffff;
+  color: BASE_RED;
   font-weight: 700;
   margin: 0;
 }
 
-.icon__base {
-  display: inline-block;
+.menu__container__left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 140px;
+}
+
+.menu__container__right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 140px;
+}
+
+.icon__container {
   width: 3rem;
   height: 3rem;
-  padding: 0 0.45rem;
-  opacity: 50%;
-  transition: 0.1s;
+  background-color: transparent;
+  border: none;
+  margin: 0 0.5rem 0 0.5rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+.icon__container:focus {
+  outline: 0;
+}
+
+.icon__base {
+  opacity: 30%;
+  transition: 0.2s;
 }
 
 .icon__base:hover {
   font-weight: bold;
   opacity: 100%;
-  cursor: pointer;
+  fill: BASE_RED;
 }
 
 .icon__active {
   font-weight: bold;
   opacity: 100%;
-  cursor: pointer;
+  fill: BASE_RED;
 }
 
 .greeting {

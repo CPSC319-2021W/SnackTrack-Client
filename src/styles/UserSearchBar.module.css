@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, VIOLET from colors;
+@value DARK_GREY, LIGHT_GREY from colors;
 
 .searchBar {
   color: DARK_GREY;
