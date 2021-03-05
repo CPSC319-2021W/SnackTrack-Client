@@ -1,10 +1,21 @@
 import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
-const getSnacks = async () => {
+const getSnacks = async (activeOnly) => {
   try {
+    const endpoint = `/snacks${activeOnly ? '/?active=true' : ''}`;
     const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get('/snacks', authHeader);
+    const { data } = await httpClient.get(endpoint, authHeader);
+    return data;
+  } catch (err) {
+    // TODO: Handle error
+    console.log(err.toString());
+  }
+};
+
+const getSnackBatches = async () => {
+  try {
+    const { data } = await httpClient.get('/batches');
     return data;
   } catch (err) {
     // TODO: Handle error
@@ -18,4 +29,4 @@ const makeSuggestion = async (userId, suggestion) => {
   await httpClient.post('/suggestions', data, authHeader);
 };
 
-export { getSnacks, makeSuggestion };
+export { getSnackBatches, getSnacks, makeSuggestion };
