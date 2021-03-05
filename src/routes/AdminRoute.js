@@ -16,7 +16,7 @@ const AdminRoute = ({ component: Component, signOut, ...rest }) => {
         isAuthenticated() ? (
           <div className={styles.base}>
             <HeaderBar
-              adminRoute
+              isAdminRoute
               clientid={process.env.REACT_APP_CLIENT_ID}
               handleLogOut={signOut}
             />

@@ -1,6 +1,6 @@
 import { AppBar, Button, Container } from '@material-ui/core';
 import { React, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import NumberFormat from 'react-number-format';
 import { ROUTES } from '../constants';
@@ -12,6 +12,7 @@ import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/HeaderBar.module.css';
 import { useHistory } from 'react-router-dom';
 
+import { ReactComponent as AdminIcon } from '../assets/icons/user_admin.svg';
 import { ReactComponent as EmployeeIcon } from '../assets/icons/user_employee.svg';
 import { ReactComponent as HomeIcon } from '../assets/icons/home.svg';
 import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
@@ -20,8 +21,8 @@ import { ReactComponent as TransactionsIcon } from '../assets/icons/receipt.svg'
 const HeaderBar = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { balance, firstName, handleLogOut, clientid } = props;
-  const { isAdmin } = useSelector((state) => state.usersReducer.profile);
+  const { isAdminRoute, balance, firstName, handleLogOut, clientid } = props;
+  // const { isAdmin } = useSelector((state) => state.usersReducer.profile);
   const setProfile = (profile) => dispatch(setUser(profile));
 
   const { pathname } = history.location;
@@ -85,18 +86,32 @@ const HeaderBar = (props) => {
           </div>
           <div className={styles.menu__container__right}>
             {
-              isAdmin ? (
-                <button
-                  className={styles.icon__container}
-                  onClick={() => history.push(ROUTES.ADMIN)}
-                >
-                  <EmployeeIcon
-                    className={classNames({
-                      [styles.unselectable]: true,
-                      [styles.icon__base]: true
-                    })}
-                  />
-                </button>
+              true ? (
+                isAdminRoute ? (
+                  <button
+                    className={styles.icon__container}
+                    onClick={() => history.push(ROUTES.SNACKS)}
+                  >
+                    <EmployeeIcon
+                      className={classNames({
+                        [styles.unselectable]: true,
+                        [styles.icon__base]: true
+                      })}
+                    />
+                  </button>
+                ) : (
+                  <button
+                    className={styles.icon__container}
+                    onClick={() => history.push(ROUTES.ADMIN)}
+                  >
+                    <AdminIcon
+                      className={classNames({
+                        [styles.unselectable]: true,
+                        [styles.icon__base]: true
+                      })}
+                    />
+                  </button>
+                )
               ) : null
             }
             <button
