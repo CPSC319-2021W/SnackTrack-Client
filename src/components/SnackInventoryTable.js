@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -174,7 +174,7 @@ const SnackInventoryTable = (props) => {
           <TableBody>
             {snacks.map((snack, i) => {
               return (
-                <>
+                <Fragment key={i}>
                   <TableRow
                     key={i}
                     tabIndex={-1}
@@ -218,7 +218,7 @@ const SnackInventoryTable = (props) => {
                     open={selectedSnackForBatch}
                     colSpan={columns.length}
                   />
-                </>
+                </Fragment>
               );
             })}
             {emptyRows().map((row) => {
