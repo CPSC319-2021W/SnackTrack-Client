@@ -2,7 +2,7 @@ import { BASE_BLUE, DARK_GREY, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   typography: {
     fontFamily: ['TT Norms', 'sans-serif'].join(',')
   },
@@ -101,4 +101,10 @@ const theme = createMuiTheme({
   }
 });
 
-export default theme;
+export const colors = {
+  BASE_BLUE: '#1AA1FB',
+  DARK_BLUE: '#178DDC',
+  LIGHT_BLUE: '#C6E8FE',
+  DARKER_GREY: '#262626',
+  WHITE: '#FFFFFF'
+};
