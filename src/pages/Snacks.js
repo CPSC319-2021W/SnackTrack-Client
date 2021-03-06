@@ -11,8 +11,9 @@ import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
+import { getPendingOrders } from '../services/TransactionsService';
+import { isAuthenticated } from '../helpers/AuthHelper';
 import { makeSuggestion } from '../services/SnacksService';
-import { mockPendingOrders } from '../mockPendingOrders';
 import styles from '../styles/Page.module.css';
 
 const Snacks = () => {
@@ -23,7 +24,7 @@ const Snacks = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
 
@@ -84,12 +85,16 @@ const Snacks = () => {
     };
   }, [dispatch]);
 
-  useEffect(() => {
-    if (balance !== null) {
-      setPendingOrders(mockPendingOrders);
-      setPendingDialogOpen(true);
+  useEffect(async () => {
+    const token = isAuthenticated();
+    if (token && userId) {
+      const { transactions } = await getPendingOrders(userId);
+      if (transactions.length > 0) {
+        setPendingOrders(transactions);
+        setPendingDialogOpen(true);
+      }
     }
-  }, []);
+  }, [userId]);
 
   return (
     <div className={styles.base}>
@@ -126,7 +131,6 @@ const Snacks = () => {
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleCloseToastNotification}
       />
-      {/* <button onClick={togglePendingOrders}>Toggle Pending Orders</button> */}
     </div>
   );
 };

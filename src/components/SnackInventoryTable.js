@@ -11,21 +11,50 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import {
+  setSelectedSnackForBatch,
+  setSnackBatches
+} from '../redux/features/snacks/snacksSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CATEGORIES_LIST } from '../constants';
-import React from 'react';
+import { React } from 'react';
+import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
-import { DateTime as dt } from 'luxon';
+import { getSnackBatch } from '../services/SnacksService';
 import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
-  const { title, data, rowsPerPage } = props;
-  const { snacks, current_page, total_rows, total_pages } = data;
+  const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
+  const { activeSnacks, data, rowsPerPage, onChangePage } = props;
+  const { snacks, current_page, total_rows, total_pages } = data;
+  const { selectedSnackForBatch } = useSelector((state) => state.snacksReducer);
+
+  const setSelectedSnack = (snackId) => {
+    dispatch(setSelectedSnackForBatch(snackId));
+  };
+
+  const setBatches = (batches) => {
+    dispatch(setSnackBatches(batches));
+  };
 
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - snacks.length;
     return [...Array(rowsToFill).keys()];
+  };
+
+  const handleGetSnackBatch = async (snackId) => {
+    if (selectedSnackForBatch === snackId) {
+      setSelectedSnack(null);
+      setTimeout(() => {
+        setBatches([]);
+      }, 300);
+    } else {
+      const { snack_batches } = await getSnackBatch(snackId);
+      setBatches(snack_batches);
+      setSelectedSnack(snackId);
+    }
   };
 
   const columns = [
@@ -37,7 +66,7 @@ const SnackInventoryTable = (props) => {
       id: 'snack_type_id',
       label: 'Category',
       format: (snackTypeId) => {
-        return CATEGORIES_LIST[snackTypeId].name;
+        return CATEGORIES_LIST[snackTypeId - 1].name;
       }
     },
     {
@@ -85,17 +114,6 @@ const SnackInventoryTable = (props) => {
       }
     },
     {
-      id: 'last_updated_dtm',
-      label: 'Last Updated On',
-      format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
-      }
-    },
-    {
-      id: 'last_updated_by',
-      label: 'Last Updated By'
-    },
-    {
       id: 'actions',
       label: 'Actions',
       format: () => (
@@ -110,13 +128,17 @@ const SnackInventoryTable = (props) => {
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
-          <h4 className={styles.primaryHeader__text}>{title}</h4>
+          <h4 className={styles.primaryHeader__text}>
+            {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
+          </h4>
         </div>
-        <div className={styles.cell__pay}>
-          <Button className={styles.button__base} onClick={() => {}}>
-            Add New Snack
-          </Button>
-        </div>
+        {activeSnacks ? (
+          <div className={styles.cell__pay}>
+            <Button className={styles.button__base} onClick={() => {}}>
+              Add New Snack
+            </Button>
+          </div>
+        ) : null}
       </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Snack Inventory Table'>
@@ -136,7 +158,15 @@ const SnackInventoryTable = (props) => {
             {snacks.map((snack, i) => {
               return (
                 <>
-                  <TableRow key={i} tabIndex={-1} className={styles.row}>
+                  <TableRow
+                    key={i}
+                    tabIndex={-1}
+                    className={classNames({
+                      [styles.row]: true,
+                      [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch
+                    })}
+                    onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
+                  >
                     {columns.map((column) => {
                       let value;
                       if (column.id === 'status') {
@@ -166,6 +196,11 @@ const SnackInventoryTable = (props) => {
                       );
                     })}
                   </TableRow>
+                  <SnackBatchesSubTable
+                    id={snacks[i]?.snack_id}
+                    open={selectedSnackForBatch}
+                    colSpan={columns.length}
+                  />
                 </>
               );
             })}
@@ -188,7 +223,7 @@ const SnackInventoryTable = (props) => {
                 rowsPerPage={rowsPerPage}
                 labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
                 rowsPerPageOptions={[rowsPerPage]}
-                // onChangePage={(event, page) => onChangePage(page)}
+                onChangePage={(event, page) => onChangePage(page, activeSnacks)}
               />
             </TableRow>
           </TableFooter>

@@ -12,6 +12,8 @@ const INITIAL_STATE = {
     price: null
   },
   selectedFilters: [],
+  snackBatches: [],
+  selectedSnackForBatch: null,
   loading: false,
   error: null
 };
@@ -38,6 +40,12 @@ const snacksSlice = createSlice({
     },
     deselectAllFilters: (state) => {
       state.selectedFilters = [];
+    },
+    setSnackBatches: (state, action) => {
+      state.snackBatches = action.payload;
+    },
+    setSelectedSnackForBatch: (state, action) => {
+      state.selectedSnackForBatch = action.payload;
     }
   },
   extraReducers: {
@@ -62,7 +70,9 @@ export const {
   addCategory,
   removeCategory,
   selectOneSnack,
-  deselectAllFilters
+  deselectAllFilters,
+  setSnackBatches,
+  setSelectedSnackForBatch
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;

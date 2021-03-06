@@ -13,9 +13,13 @@ const getSnacks = async (activeOnly) => {
   }
 };
 
-const getSnackBatches = async () => {
+const getSnackBatch = async (snackId) => {
   try {
-    const { data } = await httpClient.get('/batches');
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get(
+      `/snack_batches/?snack_id=${snackId}`,
+      authHeader
+    );
     return data;
   } catch (err) {
     // TODO: Handle error
@@ -29,4 +33,4 @@ const makeSuggestion = async (userId, suggestion) => {
   await httpClient.post('/suggestions', data, authHeader);
 };
 
-export { getSnackBatches, getSnacks, makeSuggestion };
+export { getSnackBatch, getSnacks, makeSuggestion };
