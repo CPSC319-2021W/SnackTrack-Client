@@ -192,6 +192,12 @@
   color: GREY;
 }
 
+.header__actionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .subtable {
   background-color: INNER_LIGHT_GREY;
   padding: 0;
