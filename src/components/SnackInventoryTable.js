@@ -12,8 +12,9 @@ import {
   TableRow
 } from '@material-ui/core';
 
+import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
@@ -22,6 +23,8 @@ const SnackInventoryTable = (props) => {
   const { title, data, rowsPerPage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
   const DEFAULT_ORDER_THRESHOLD = 10;
+
+  const [selectedBatch, setSelectedBatch] = useState(null);
 
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - snacks.length;
@@ -106,16 +109,32 @@ const SnackInventoryTable = (props) => {
     }
   ];
 
+  const handleBatchSelect = (option) => {
+    setSelectedBatch({ option });
+  };
+
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
           <h4 className={styles.primaryHeader__text}>{title}</h4>
         </div>
-        <div className={styles.cell__pay}>
-          <Button className={styles.button__base} onClick={() => {}}>
-            Add New Snack
-          </Button>
+        <div className={styles.header__actionContainer}>
+          {
+            title === 'Active Snacks'
+              ? (
+                <AddBatchSelect
+                  data={snacks}
+                  selectedBatch={selectedBatch}
+                  handleBatchSelect={handleBatchSelect}
+                />)
+              : null
+          }
+          <div className={styles.cell__pay}>
+            <Button className={styles.button__base} onClick={() => {}}>
+              Add New Snack
+            </Button>
+          </div>
         </div>
       </div>
       <TableContainer>

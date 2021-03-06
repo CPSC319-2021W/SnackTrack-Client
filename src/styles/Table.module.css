@@ -178,3 +178,9 @@
   text-align: center;
   color: GREY;
 }
+
+.header__actionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
