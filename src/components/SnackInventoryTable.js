@@ -139,30 +139,23 @@ const SnackInventoryTable = (props) => {
             {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
           </h4>
         </div>
-        <div className={styles.header__actionContainer}>
-          {
-            activeSnacks
-              ? (
+        {
+          activeSnacks
+            ? (
+              <div className={styles.header__actionContainer}>
                 <AddBatchSelect
                   data={snacks}
                   selectedBatch={selectedBatch}
                   handleBatchSelect={handleBatchSelect}
-                />)
-              : null
-          }
-          <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
-              Add New Snack
-            </Button>
-          </div>
-        </div>
-        {activeSnacks ? (
-          <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
-              Add New Snack
-            </Button>
-          </div>
-        ) : null}
+                />
+                <div className={styles.cell__pay}>
+                  <Button className={styles.button__base} onClick={() => {}}>
+                    Add New Snack
+                  </Button>
+                </div>
+              </div>
+            ) : null
+        }
       </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Snack Inventory Table'>
