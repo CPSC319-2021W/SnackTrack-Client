@@ -4,7 +4,7 @@ import Select from 'react-select';
 import { colors } from '../styles/theme';
 
 const AddBatchSelect = (props) => {
-  const { data, handleBatchSelect } = props;
+  const { data, selectedBatch, handleSelectBatch } = props;
 
   const options = data.map((item) => ({
     value: item.snack_id,
@@ -72,7 +72,10 @@ const AddBatchSelect = (props) => {
         noOptionsMessage={() => 'No snacks found.'}
         options={options}
         styles={customStyles}
-        onChange={handleBatchSelect}
+        value={selectedBatch.snack_id
+          ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
+          : null}
+        onChange={handleSelectBatch}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { BASE_BLUE, DARK_GREY, WHITE } from '../styles/Colors.module.css';
+import { BASE_BLUE, DARK_BLUE, DARK_GREY, ERROR_RED, INNER_LIGHT_GREY, LIGHT_GREY, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -86,10 +86,55 @@ export const theme = createMuiTheme({
         paddingRight: '7px'
       }
     },
+    MuiOutlinedInput: {
+      root: {
+        margin: 0,
+        backgroundColor: INNER_LIGHT_GREY,
+        border: `1.5px solid ${LIGHT_GREY}`,
+        borderRadius: '4px',
+        '&:focus': {
+          backgroundColor: WHITE,
+          border: `2px solid ${BASE_BLUE}`
+        }
+      },
+      adornedStart: {
+        paddingLeft: 0
+      },
+      input: {
+        border: 'none',
+        padding: '7px'
+      },
+      notchedOutline: {
+        border: 'none'
+      }
+    },
+    MuiPickersCalendarHeader: {
+      transitionContainer: {
+        fontWeight: 600
+      }
+    },
+    MuiPickersDay: {
+      daySelected: {
+        backgroundColor: BASE_BLUE,
+        fontWeight: 600,
+        '&:hover': {
+          backgroundColor: DARK_BLUE
+        }
+      },
+      current: {
+        color: BASE_BLUE
+      }
+    },
+    MuiFormHelperText: {
+      root: {
+        color: ERROR_RED,
+        marginRight: 0
+      }
+    },
     MuiTableCell: {
       root: {
         '&:last-child': {
-          paddingRight: 25
+          paddingRight: '25px'
         }
       }
     }

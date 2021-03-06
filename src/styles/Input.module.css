@@ -1,14 +1,22 @@
 @value colors: './Colors.module.css';
 @value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE from colors;
 
+.input__group {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin-top: 0.2rem;
+}
+
 .input__container {
   display: flex;
   flex-direction: column;
-  max-width: 30%;
+  align-items: flex-end;
 }
 
 .input__base {
-  min-width: 260px;
+  width: 80px;
+  height: 32px;
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
@@ -16,7 +24,10 @@
   border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
-  margin: 0.75rem 0;
+}
+
+.input__number input {
+  text-align: right;
 }
 
 .input__focused {
@@ -40,4 +51,12 @@
 
 .label__error {
   color: RED;
+}
+
+.error__message {
+  color: RED;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0.2rem 0 0.8rem 0;
+  text-align: right;
 }
