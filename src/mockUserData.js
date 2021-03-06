@@ -1,6 +1,6 @@
 const mockUserData = [
   {
-    user_id: 1,
+    user_id: 12,
     username: 'JessicaHuh',
     first_name: 'Jessica',
     last_name: 'Huh',
@@ -11,7 +11,7 @@ const mockUserData = [
     is_admin: true
   },
   {
-    user_id: 2,
+    user_id: 1,
     username: 'JustinWong',
     first_name: 'Justin',
     last_name: 'Wong',
@@ -22,7 +22,7 @@ const mockUserData = [
     is_admin: false
   },
   {
-    user_id: 253,
+    user_id: 17,
     username: 'hyunuk',
     first_name: 'Hyunuk',
     last_name: 'Lim',
@@ -44,7 +44,7 @@ const mockUserData = [
     is_admin: true
   },
   {
-    user_id: 10,
+    user_id: 18,
     username: 'AngelliDimatulac',
     first_name: 'Angelli',
     last_name: 'Dimatulac',
@@ -55,7 +55,7 @@ const mockUserData = [
     is_admin: false
   },
   {
-    user_id: 256,
+    user_id: 3,
     username: 'KenUtsunomiya',
     first_name: 'Ken',
     last_name: 'Utsuynomiya',
@@ -66,7 +66,7 @@ const mockUserData = [
     is_admin: false
   },
   {
-    user_id: 8,
+    user_id: 20,
     username: 'LorenzoBisceglia',
     first_name: 'Lorenzo',
     last_name: 'Bisceglia',
@@ -77,7 +77,7 @@ const mockUserData = [
     is_admin: false
   },
   {
-    user_id: 9,
+    user_id: 16,
     username: 'HyeSunAn',
     first_name: 'HyeSun',
     last_name: 'An',

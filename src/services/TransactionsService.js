@@ -50,6 +50,16 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
   throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
 };
 
+const getPendingOrders = async (userId) => {
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get(`/users/${userId}/pendingOrders`, authHeader);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const makeOrder = async (
   userId,
   transactionTypeId,
@@ -73,5 +83,6 @@ export {
   getPayments,
   makePayment,
   claimPendingOrders,
+  getPendingOrders,
   makeOrder
 };
