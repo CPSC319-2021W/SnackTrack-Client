@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -139,30 +139,23 @@ const SnackInventoryTable = (props) => {
             {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
           </h4>
         </div>
-        <div className={styles.header__actionContainer}>
-          {
-            activeSnacks
-              ? (
+        {
+          activeSnacks
+            ? (
+              <div className={styles.header__actionContainer}>
                 <AddBatchSelect
                   data={snacks}
                   selectedBatch={selectedBatch}
                   handleBatchSelect={handleBatchSelect}
-                />)
-              : null
-          }
-          <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
-              Add New Snack
-            </Button>
-          </div>
-        </div>
-        {activeSnacks ? (
-          <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
-              Add New Snack
-            </Button>
-          </div>
-        ) : null}
+                />
+                <div className={styles.cell__pay}>
+                  <Button className={styles.button__base} onClick={() => {}}>
+                    Add New Snack
+                  </Button>
+                </div>
+              </div>
+            ) : null
+        }
       </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Snack Inventory Table'>
@@ -181,7 +174,7 @@ const SnackInventoryTable = (props) => {
           <TableBody>
             {snacks.map((snack, i) => {
               return (
-                <>
+                <Fragment key={i}>
                   <TableRow
                     key={i}
                     tabIndex={-1}
@@ -225,7 +218,7 @@ const SnackInventoryTable = (props) => {
                     open={selectedSnackForBatch}
                     colSpan={columns.length}
                   />
-                </>
+                </Fragment>
               );
             })}
             {emptyRows().map((row) => {
