@@ -135,12 +135,25 @@
   background-color: BASE_BLUE_HOVER;
 }
 
+.button__batch_edit {
+  font-weight: 700;
+  color: BASE_BLUE;
+  background-color: inherit;
+  line-height: 1;
+  text-transform: none;
+}
+
+.button__batch_edit:hover {
+  color: DARK_BLUE;
+  background-color: inherit;
+}
+
 .row:hover {
-  background-color: #f7f7f7;
+  background-color: INNER_LIGHT_GREY;
 }
 
 .row__selected {
-  background-color: #f7f7f7;
+  background-color: INNER_LIGHT_GREY;
 }
 
 .paper {
@@ -177,4 +190,9 @@
   margin: 1rem 0;
   text-align: center;
   color: GREY;
+}
+
+.subtable {
+  background-color: INNER_LIGHT_GREY;
+  padding: 0;
 }
