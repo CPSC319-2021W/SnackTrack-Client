@@ -161,7 +161,10 @@ const SnackInventoryTable = (props) => {
                   <TableRow
                     key={i}
                     tabIndex={-1}
-                    className={styles.row}
+                    className={classNames({
+                      [styles.row]: true,
+                      [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch
+                    })}
                     onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
                   >
                     {columns.map((column) => {
