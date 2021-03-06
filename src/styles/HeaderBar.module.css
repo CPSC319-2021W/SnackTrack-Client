@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, HEADER_GREY, BASE_RED, WHITE from colors;
+@value DARK_GREY, HEADER_GREY, BASE_RED, BASE_RED_HOVER, WHITE, BLACK from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 
 .label {
@@ -42,14 +43,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 140px;
+  width: 200px;
 }
 
 .menu__container__right {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 140px;
+  width: 200px;
 }
 
 .icon__container {
@@ -83,10 +84,65 @@
   fill: BASE_RED;
 }
 
+.pill__container {
+  height: 2.15rem;
+  background-color: transparent;
+  border: 2.5px solid BASE_RED;
+  border-radius: 24px;
+  margin: 0 0.5rem 0 0.5rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.2s;
+}
+
+.pill__container:focus {
+  outline: 0;
+}
+
+.pill__container:hover {
+  border: 2.5px solid BASE_RED_HOVER;
+}
+
+.pill__text {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  color: BASE_RED
+}
+
+.pill__text__hover {
+  color: BASE_RED_HOVER;
+}
+
+.pill__icon {
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0.15rem;
+  margin-right: -0.5rem;
+  fill: BASE_RED;
+}
+
+.admin__switch__icon {
+  fill: BASE_RED_HOVER;
+}
+
+.pill__disabled {
+  cursor: default;
+}
+
+.pill__disabled:hover {
+  border: 2.5px solid BASE_RED;
+}
+
+.pill__text__emp {
+  margin: 0 0.8rem;
+}
+
 .greeting {
-  position: fixed;
-  left: 3rem;
-  color: #ffffff;
+  color: BASE_RED;
   font-weight: 600;
 }
 
@@ -94,7 +150,7 @@
   height: inherit;
   font-size: 1rem;
   font-weight: 600;
-  color: #ffffff;
+  color: BASE_RED;
   position: fixed;
   right: 0;
   padding: 0;
