@@ -66,7 +66,7 @@ const SnackInventoryTable = (props) => {
       id: 'snack_type_id',
       label: 'Category',
       format: (snackTypeId) => {
-        return CATEGORIES_LIST[snackTypeId]?.name;
+        return CATEGORIES_LIST[snackTypeId - 1].name;
       }
     },
     {
