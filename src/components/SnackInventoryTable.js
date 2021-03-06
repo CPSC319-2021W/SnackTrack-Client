@@ -64,8 +64,6 @@ const SnackInventoryTable = (props) => {
   const setManageBatchOpen = () => dispatch(setIsManageBatchOpen(true));
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
-  // if adding batch, get snack_id + snack_name from dropdown and quantity + expiry from dialog
-  
   const handleAddBatch = (option) => {
     setBatchSelect({
       snack_id: option.value,
@@ -163,7 +161,7 @@ const SnackInventoryTable = (props) => {
                 </Button>
               </div>
             </div>
-            ) : null}
+            ) : null }
       </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Snack Inventory Table'>

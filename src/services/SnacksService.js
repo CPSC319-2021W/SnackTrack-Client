@@ -34,7 +34,6 @@ const makeSuggestion = async (userId, suggestion) => {
 };
 
 const addBatch = async (batch) => {
-  console.log(batch);
   throw new Error('Not Implemented!', batch);
 };
 

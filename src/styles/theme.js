@@ -1,4 +1,4 @@
-import { BASE_BLUE, DARK_BLUE, DARK_GREY, ERROR_RED, INNER_LIGHT_GREY, LIGHT_GREY, WHITE } from '../styles/Colors.module.css';
+import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_GREY, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -126,12 +126,6 @@ export const theme = createMuiTheme({
         color: BASE_BLUE
       }
     },
-    MuiFormHelperText: {
-      root: {
-        color: ERROR_RED,
-        marginRight: 0
-      }
-    },
     MuiTableCell: {
       root: {
         '&:last-child': {
@@ -146,11 +140,3 @@ export const theme = createMuiTheme({
     }
   }
 });
-
-export const colors = {
-  BASE_BLUE: '#1AA1FB',
-  DARK_BLUE: '#178DDC',
-  LIGHT_BLUE: '#C6E8FE',
-  DARKER_GREY: '#262626',
-  WHITE: '#FFFFFF'
-};

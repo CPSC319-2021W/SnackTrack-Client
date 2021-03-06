@@ -15,9 +15,7 @@ const INITIAL_STATE = {
   snackBatches: [],
   selectedSnackForBatch: null,
   selectedBatch: {
-    snack_batch_id: null,
     snack_id: null,
-    snack_name: null,
     quantity: 0,
     expiration_dtm: null
   },
