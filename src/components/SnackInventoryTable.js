@@ -17,8 +17,9 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
-import { React } from 'react';
+import React, { useState } from 'react';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -39,6 +40,8 @@ const SnackInventoryTable = (props) => {
     dispatch(setSnackBatches(batches));
   };
 
+  const [selectedBatch, setSelectedBatch] = useState(null);
+
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - snacks.length;
     return [...Array(rowsToFill).keys()];
@@ -55,6 +58,10 @@ const SnackInventoryTable = (props) => {
       setBatches(snack_batches);
       setSelectedSnack(snackId);
     }
+  };
+  
+  const handleBatchSelect = (option) => {
+    setSelectedBatch({ option });
   };
 
   const columns = [
@@ -131,6 +138,23 @@ const SnackInventoryTable = (props) => {
           <h4 className={styles.primaryHeader__text}>
             {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
           </h4>
+        </div>
+        <div className={styles.header__actionContainer}>
+          {
+            activeSnacks
+              ? (
+                <AddBatchSelect
+                  data={snacks}
+                  selectedBatch={selectedBatch}
+                  handleBatchSelect={handleBatchSelect}
+                />)
+              : null
+          }
+          <div className={styles.cell__pay}>
+            <Button className={styles.button__base} onClick={() => {}}>
+              Add New Snack
+            </Button>
+          </div>
         </div>
         {activeSnacks ? (
           <div className={styles.cell__pay}>

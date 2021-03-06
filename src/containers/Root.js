@@ -12,7 +12,7 @@ import { ROUTES } from '../constants';
 import React from 'react';
 import { isAuthenticated } from '../helpers/AuthHelper';
 import { setLogout } from '../redux/features/auth/authSlice';
-import theme from '../styles/theme';
+import { theme } from '../styles/theme';
 
 import AuthLogin from '../pages/AuthLogin';
 import Dashboard from '../pages/Dashboard';
