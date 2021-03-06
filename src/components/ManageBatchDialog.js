@@ -9,7 +9,7 @@ import { setIsManageBatchOpen, setSelectedBatch } from '../redux/features/snacks
 import { addBatch } from '../services/SnacksService';
 
 import { Button, Card, Dialog, Divider } from '@material-ui/core';
-import { KeyboardDatePicker } from '@material-ui/pickers';
+import DatePickerInput from './DatePickerInput';
 import InputField from './InputField';
 
 import styles from '../styles/Dialog.module.css';
@@ -21,7 +21,6 @@ const ManageBatchDialog = (props) => {
 
   const [quantity, setQuantity] = useState(0);
   const [date, setDate] = useState(new Date());
-  //   const [error, setError] = useState(null);
   const [errors, setErrors] = useState({
     quantity: null,
     date: null
@@ -44,32 +43,30 @@ const ManageBatchDialog = (props) => {
   const handleChangeQuantity = (event) => {
     let input = Number(event.target.value);
     if (!quantity && isNaN(input)) {
-    //   setError('Oops - gotta be a number!');
       setErrors((prevState) => ({...prevState, quantity: 'Oops - gotta be a number!'}));
     } else if (quantity && isNaN(input)) {
       setErrors((prevState) => ({...prevState, quantity: null}));
-    //   setError(null);
     } else {
       setQuantity(Number(input));
       setErrors((prevState) => ({...prevState, quantity: null}));
-    //   setError(null);
     }
   };
 
   const handleChangeDate = (date) => {
-    console.log(date);
-    setDate(date);
+    if (date.invalid) {
+      setErrors((prevState) => ({...prevState, date: 'Invalid date format.'}));
+    } else {
+      setErrors((prevState) => ({...prevState, date: null}));
+      setDate(date);
+    }
   };
 
-  const handleDateError = (error) => {
-    console.log(error);
-    setErrors((prevState) => ({...prevState, date: date}));
-  };
+  const checkForErrors = (errors.quantity || errors.date || !quantity);
 
   const onSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        await addBatch({ snack_id, quantity, expiry_dtm: date });
+        await addBatch({ snack_id, quantity, expiration_dtm: date });
         onApiResponse('BATCH_SUCCESS');
         openToastNotification(true);
       } catch (err) {
@@ -109,25 +106,21 @@ const ManageBatchDialog = (props) => {
           <div className={styles.labelContainer}>
             <p className={styles.label}>Expiry Date</p>
             <div>
-              <KeyboardDatePicker
-                autoOk
-                disablePast
-                disableToolbar
-                variant='inline'
-                inputVariant='outlined'
-                format='MM/dd/yyyy'
-                InputAdornmentProps={{ position: 'start' }}
-                helperText={errors.date ? 'Invalid date format' : null}
-                value={date}
-                onChange={handleChangeDate}
-                onError={handleDateError}
+              <DatePickerInput
+                date={date}
+                error={errors.date ? errors.date : null}
+                onChangeDate={handleChangeDate}
               />
             </div>
           </div>
         </div>
         <Divider />
         <div className={styles.oneButton__footer}>
-          <Button className={styles.button} onClick={onSubmit}>
+          <Button
+            disabled={checkForErrors}
+            className={styles.button}
+            onClick={onSubmit}
+          >
             Submit
           </Button>
         </div>

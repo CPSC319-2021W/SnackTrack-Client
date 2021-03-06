@@ -88,11 +88,12 @@ export const theme = createMuiTheme({
     },
     MuiOutlinedInput: {
       root: {
+        height: '34px',
         margin: 0,
         backgroundColor: INNER_LIGHT_GREY,
         border: `1.5px solid ${LIGHT_GREY}`,
         borderRadius: '4px',
-        '&:focus': {
+        '&$focused': {
           backgroundColor: WHITE,
           border: `2px solid ${BASE_BLUE}`
         }
