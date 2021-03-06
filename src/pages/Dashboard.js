@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from '../styles/Layout.module.css';
+import styles from '../styles/Page.module.css';
 
 const Dashboard = () => {
   return (
-    <div className={styles.content}>
+    <div className={styles.base}>
       <h4>Dashboard</h4>
     </div>
   );
