@@ -204,3 +204,17 @@
     height: 2.5rem;
   }
 }
+
+@media (max-width: 414px) {
+  .menu__container__left {
+    display: none;
+  }
+
+  .menu__container__right {
+    display: none;
+  }
+
+  .bar {
+    justify-content: center;
+  }
+}
