@@ -210,11 +210,20 @@
     display: none;
   }
 
-  .menu__container__right {
+  .icon__container__logout {
     display: none;
   }
 
-  .bar {
-    justify-content: center;
+  .bar__mobile__admin {
+    justify-content: flex-end;
+  }
+
+  .header {
+    height: 80px;
+  }
+
+  .label {
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 }
