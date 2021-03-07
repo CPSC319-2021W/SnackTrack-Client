@@ -1,6 +1,7 @@
 import { Redirect, Route } from 'react-router-dom';
 import { isAuthenticated, isCommonLogin } from '../helpers/AuthHelper';
 
+import BottomNavigation from '../components/BottomNavigation';
 import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
 import { ROUTES } from '../constants';
@@ -30,6 +31,7 @@ const CommonRoute = ({ component: Component, signOut, switchUser, ...rest }) => 
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
+            <BottomNavigation handleLogOut={signOut} />
           </div>
         ) : (
           <Redirect to={ROUTES.LOGIN} />
