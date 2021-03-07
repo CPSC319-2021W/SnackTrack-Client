@@ -128,13 +128,6 @@ export const theme = createMuiTheme({
       current: {
         color: BASE_BLUE
       }
-    },
-    MuiTableCell: {
-      root: {
-        '&:last-child': {
-          paddingRight: '25px'
-        }
-      }
     }
   },
   props: {
