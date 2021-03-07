@@ -95,9 +95,8 @@ const ManageBatchDialog = (props) => {
         <Divider />
         <div className={styles.body}>
           <div className={styles.labelContainer}>
-            {/* <p className={styles.label}>Quantity</p> */}
             <InputField
-              isNumber
+              small
               label='Quantity'
               value={quantity}
               error={errors.quantity ? errors.quantity : null}
@@ -105,7 +104,6 @@ const ManageBatchDialog = (props) => {
             />
           </div>
           <div className={styles.labelContainer}>
-            {/* <p className={styles.label}>Expiry Date</p> */}
             <div>
               <DatePickerInput
                 label='Expiry Date'

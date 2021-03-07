@@ -15,7 +15,7 @@
 }
 
 .input__base {
-  width: 80px;
+  width: 200px;
   height: 32px;
   color: DARK_GREY;
   font-size: 1rem;
@@ -24,6 +24,10 @@
   border-radius: 4px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
+}
+
+.input__small {
+  width: 80px;
 }
 
 .input__focused {
