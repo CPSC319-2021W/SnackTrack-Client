@@ -11,6 +11,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import React, { useState } from 'react';
 import {
   setSelectedSnackForBatch,
   setSnackBatches
@@ -19,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
-import React, { useState } from 'react';
+import ManageSnackDialog from './ManageSnackDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -31,6 +32,8 @@ const SnackInventoryTable = (props) => {
   const { activeSnacks, data, rowsPerPage, onChangePage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
   const { selectedSnackForBatch } = useSelector((state) => state.snacksReducer);
+  const [isManageSnackOpen, setIsManageSnackOpen] = useState(false);
+  const [snackObj, setSnackObj] = useState({});
 
   const setSelectedSnack = (snackId) => {
     dispatch(setSelectedSnackForBatch(snackId));
@@ -131,6 +134,32 @@ const SnackInventoryTable = (props) => {
     }
   ];
 
+  const handleCloseManageSnack = () => {
+    setIsManageSnackOpen(false);
+  };
+
+  const openManageSanck = () => {
+    setIsManageSnackOpen(true);
+  };
+
+  const handleChangeSnackObj = (event) => {
+    setSnackObj(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    if (snackObj === '') {
+      return;
+    }
+    if (event.key === 'Enter' || event.type === 'click') {
+      try {
+        setIsManageSnackOpen(false);
+        setSnackObj({});
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
@@ -151,14 +180,14 @@ const SnackInventoryTable = (props) => {
               : null
           }
           <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
+            <Button className={styles.button__base} onClick={openManageSanck}>
               Add New Snack
             </Button>
           </div>
         </div>
         {activeSnacks ? (
           <div className={styles.cell__pay}>
-            <Button className={styles.button__base} onClick={() => {}}>
+            <Button className={styles.button__base} onClick={openManageSanck}>
               Add New Snack
             </Button>
           </div>
@@ -253,6 +282,13 @@ const SnackInventoryTable = (props) => {
           </TableFooter>
         </Table>
       </TableContainer>
+      <ManageSnackDialog 
+        open={isManageSnackOpen}
+        value={snackObj}
+        handleClose={handleCloseManageSnack}
+        onSubmit={handleSubmit}   
+        onChange={handleChangeSnackObj}
+      />
     </Card>
   );
 };

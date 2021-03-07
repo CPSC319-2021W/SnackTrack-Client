@@ -1,0 +1,151 @@
+@value colors: './Colors.module.css';
+@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, BASE_BLUE_HOVER, LIGHT_BLUE from colors;
+
+.form {
+  width: 600px;
+  height: 477px;
+}
+
+.title {
+  color: DARK_GREY;
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  align-self: flex-start;
+  margin: 0;
+  line-height: 22px;
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  padding: 0.75rem;  
+}
+
+/* .container lable {
+  color: DARK_GREY;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+} */
+
+.frame__row {
+  display: flex;
+  flex-direction: row;
+}
+
+.frame__column {
+  display: flex;
+  flex-direction: column;
+}
+
+.frame__center {
+  justify-content: center;
+}
+
+.box {
+  width: 150px;
+  height: 156px;
+  background: MID_GREY;
+}
+
+.form__flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.valid input[type="text"],
+.valid input[type="number"] {
+  border: 2px solid BASE_BLUE;
+}
+
+.valid .feedback {
+  color: BASE_BLUE;
+}
+
+.invalid input[type="text"],
+.invalid input[type="number"] {
+  border: 2px solid RED;
+}
+
+.invalid .feedback {
+  color: red;
+}
+
+.button {
+  width: 125px;
+  height: 30.25px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: BASE_BLUE;
+  text-transform: none;
+  margin: 0.75rem;
+  margin-right: 1rem;
+  align-self: flex-end;
+}
+
+.button:hover {
+  background-color: DARK_BLUE;
+}
+
+.button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+}
+
+.button__photo {
+  width: 94px;
+  height: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  color: BASE_BLUE;
+  background-color: LIGHT_BLUE;
+  border: none;
+  line-height: 1;
+  text-transform: none;
+  border-radius: 3px;
+  justify-content: center;
+}
+
+.button__photo:hover {
+  color: DARK_BLUE;
+  background-color: BASE_BLUE_HOVER;
+}
+
+.input[type="text"],
+.input[type="number"],
+.select {
+  width: 30%;
+  min-width: 180px;
+  color: DARK_GREY;
+  font-size: 1rem;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  padding: 0.25rem;
+  margin: 0.75rem 0;
+}
+
+.textarea {
+  width: 100%;
+  min-width: 260px;
+  height: 68px;
+  color: DARK_GREY;
+  font-size: 1rem;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: #f9f9f9;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  /* padding: 0.25rem 0rem;
+  margin: 0.75rem 0; */
+}
+
+@media (max-width: 500px) {
+  .form {
+    overflow-y: auto;
+  }
+}
