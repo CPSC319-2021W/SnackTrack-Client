@@ -1,6 +1,7 @@
 import {
   Button,
   Collapse,
+  Divider,
   Table,
   TableBody,
   TableCell,
@@ -46,9 +47,10 @@ const SnackBatchesSubTable = (props) => {
 
   return (
     <TableRow>
-      <TableCell className={styles.subtable} colSpan={colSpan}>
+      <TableCell className={styles.subtable__container} colSpan={7}>
         <Collapse in={open === id} timeout='auto'>
-          <Table aria-label='batches'>
+          <Divider />
+          <Table className={styles.subtable} aria-label='batches'>
             <TableHead>
               <TableRow>
                 {columns.map((column) => (

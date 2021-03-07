@@ -1,27 +1,38 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE from colors;
+@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, WHITE from colors;
+
+.input__group {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  margin-top: 0.2rem;
+}
 
 .input__container {
   display: flex;
   flex-direction: column;
-  max-width: 30%;
+  align-items: flex-start;
 }
 
 .input__base {
-  min-width: 260px;
+  width: 200px;
+  height: 32px;
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
   background-color: #f9f9f9;
-  border-radius: 3px;
+  border-radius: 4px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
-  margin: 0.75rem 0;
+}
+
+.input__small {
+  width: 80px;
 }
 
 .input__focused {
   border: 2px solid BASE_BLUE;
-  background-color: #ffffff;
+  background-color: WHITE;
 }
 
 .input__error {
@@ -29,9 +40,11 @@
 }
 
 .label__base {
-  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
   font-weight: 600;
   text-align: left;
+  color: DARK_GREY;
 }
 
 .label__focused {
@@ -40,4 +53,12 @@
 
 .label__error {
   color: RED;
+}
+
+.error__message {
+  color: RED;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0.2rem 0 0.8rem 0;
+  text-align: right;
 }

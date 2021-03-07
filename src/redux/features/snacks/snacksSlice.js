@@ -14,6 +14,12 @@ const INITIAL_STATE = {
   selectedFilters: [],
   snackBatches: [],
   selectedSnackForBatch: null,
+  selectedBatch: {
+    snack_id: null,
+    quantity: 0,
+    expiration_dtm: null
+  },
+  isManageBatchOpen: false,
   loading: false,
   error: null
 };
@@ -46,6 +52,12 @@ const snacksSlice = createSlice({
     },
     setSelectedSnackForBatch: (state, action) => {
       state.selectedSnackForBatch = action.payload;
+    },
+    setIsManageBatchOpen: (state, action) => {
+      state.isManageBatchOpen = action.payload;
+    },
+    setSelectedBatch: (state, action) => {
+      state.selectedBatch = action.payload;
     }
   },
   extraReducers: {
@@ -72,7 +84,9 @@ export const {
   selectOneSnack,
   deselectAllFilters,
   setSnackBatches,
-  setSelectedSnackForBatch
+  setSelectedSnackForBatch,
+  setSelectedBatch,
+  setIsManageBatchOpen
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;

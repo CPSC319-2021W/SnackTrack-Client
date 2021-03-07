@@ -13,12 +13,15 @@ import {
 } from '@material-ui/core';
 import {
   setSelectedSnackForBatch,
-  setSnackBatches
+  setSnackBatches,
+  setSelectedBatch,
+  setIsManageBatchOpen
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
+import ManageBatchDialog from '../components/ManageBatchDialog';
 import React, { Fragment, useState } from 'react';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
@@ -30,7 +33,7 @@ const SnackInventoryTable = (props) => {
   const DEFAULT_ORDER_THRESHOLD = 10;
   const { activeSnacks, data, rowsPerPage, onChangePage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
-  const { selectedSnackForBatch } = useSelector((state) => state.snacksReducer);
+  const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector((state) => state.snacksReducer);
 
   const setSelectedSnack = (snackId) => {
     dispatch(setSelectedSnackForBatch(snackId));
@@ -39,8 +42,6 @@ const SnackInventoryTable = (props) => {
   const setBatches = (batches) => {
     dispatch(setSnackBatches(batches));
   };
-
-  const [selectedBatch, setSelectedBatch] = useState(null);
 
   const emptyRows = () => {
     const rowsToFill = rowsPerPage - snacks.length;
@@ -59,9 +60,16 @@ const SnackInventoryTable = (props) => {
       setSelectedSnack(snackId);
     }
   };
-  
-  const handleBatchSelect = (option) => {
-    setSelectedBatch({ option });
+
+  const setManageBatchOpen = () => dispatch(setIsManageBatchOpen(true));
+  const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
+
+  const handleAddBatch = (option) => {
+    setBatchSelect({
+      snack_id: option.value,
+      snack_name: option.label
+    });
+    setManageBatchOpen(true);
   };
 
   const columns = [
@@ -139,23 +147,21 @@ const SnackInventoryTable = (props) => {
             {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
           </h4>
         </div>
-        {
-          activeSnacks
-            ? (
-              <div className={styles.header__actionContainer}>
-                <AddBatchSelect
-                  data={snacks}
-                  selectedBatch={selectedBatch}
-                  handleBatchSelect={handleBatchSelect}
-                />
-                <div className={styles.cell__pay}>
-                  <Button className={styles.button__base} onClick={() => {}}>
-                    Add New Snack
-                  </Button>
-                </div>
+        { activeSnacks
+          ? (
+            <div className={styles.header__actionContainer}>
+              <AddBatchSelect
+                data={snacks}
+                selectedBatch={selectedBatch}
+                handleSelectBatch={handleAddBatch}
+              />
+              <div className={styles.cell__pay}>
+                <Button className={styles.button__base} onClick={() => {}}>
+                  Add New Snack
+                </Button>
               </div>
-            ) : null
-        }
+            </div>
+            ) : null }
       </div>
       <TableContainer>
         <Table className={styles.table} aria-label='Snack Inventory Table'>
@@ -246,6 +252,7 @@ const SnackInventoryTable = (props) => {
           </TableFooter>
         </Table>
       </TableContainer>
+      <ManageBatchDialog open={isManageBatchOpen} batch={selectedBatch} />
     </Card>
   );
 };

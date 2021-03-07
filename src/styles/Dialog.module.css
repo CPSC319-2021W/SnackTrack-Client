@@ -14,14 +14,25 @@
   justify-content: space-between;
 }
 
+.header__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__sub {
+  font-size: 16px;
+  margin: 0;
+}
+
 .headerTitle {
-  font-size: 20px;
+  font-size: 18px;
   width: 300px;
   align-self: flex-start;
-  margin: 0;
+  margin: 0.2rem 0 0 0;
   line-height: 22px;
   margin-right: 1rem;
   text-overflow: ellipsis;
+  color: BASE_BLUE;
 }
 
 .headerPrice {
@@ -63,13 +74,21 @@
 
 .labelContainer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 .label {
+  font-size: 14px;
+  font-weight: bold;
+  color: DARK_GREY;
+}
+
+.snackTitle {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: DARK_BLUE;
 }
 
 .input {
@@ -88,7 +107,8 @@
 }
 
 .input__small {
-  width: 30%;
+  height: 30px;
+  width: 70px;
 }
 
 .button {
@@ -116,4 +136,9 @@
   .card {
     overflow-y: auto;
   }
+}
+
+.oneButton__footer {
+  display: flex;
+  justify-content: flex-end;
 }
