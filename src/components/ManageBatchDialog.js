@@ -53,7 +53,7 @@ const ManageBatchDialog = (props) => {
   };
 
   const handleChangeDate = (date) => {
-    if (date.invalid) {
+    if (!date || date.invalid) {
       setErrors((prevState) => ({...prevState, date: 'Invalid date format.'}));
     } else {
       setErrors((prevState) => ({...prevState, date: null}));
@@ -61,7 +61,7 @@ const ManageBatchDialog = (props) => {
     }
   };
 
-  const checkForErrors = (errors.quantity || errors.date || !quantity);
+  const checkForErrors = (!!errors.quantity || !!errors.date || !quantity);
 
   const onSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
@@ -87,26 +87,28 @@ const ManageBatchDialog = (props) => {
     >
       <Card variant='outlined' className={styles.card}>
         <div className={styles.header}>
-          <h3 className={styles.headerTitle}>Add Snack Batch</h3>
+          <div className={styles.header__text}>
+            <h3 className={styles.header__sub}>Add new batch of ...</h3>
+            <h4 className={styles.headerTitle}>{ snack_name }</h4>
+          </div>
         </div>
         <Divider />
         <div className={styles.body}>
           <div className={styles.labelContainer}>
-            <p className={styles.snackTitle}>{ snack_name }</p>
-          </div>
-          <div className={styles.labelContainer}>
-            <p className={styles.label}>Quantity</p>
+            {/* <p className={styles.label}>Quantity</p> */}
             <InputField
               isNumber
+              label='Quantity'
               value={quantity}
               error={errors.quantity ? errors.quantity : null}
               onChange={handleChangeQuantity}
             />
           </div>
           <div className={styles.labelContainer}>
-            <p className={styles.label}>Expiry Date</p>
+            {/* <p className={styles.label}>Expiry Date</p> */}
             <div>
               <DatePickerInput
+                label='Expiry Date'
                 date={date}
                 error={errors.date ? errors.date : null}
                 onChangeDate={handleChangeDate}

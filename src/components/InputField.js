@@ -6,7 +6,7 @@ import styles from '../styles/Input.module.css';
 
 const InputField = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { id, isNumber, label, value, placeholder, onChange, error } = props;
+  const { id, label, value, placeholder, onChange, error } = props;
 
   return (
     <div className={styles.input__group}>
@@ -24,7 +24,6 @@ const InputField = (props) => {
         <Input
           className={classNames({
             [styles.input__base]: true,
-            [styles.input__number]: isNumber,
             [styles.input__focused]: isFocused,
             [styles.input__error]: error
           })}

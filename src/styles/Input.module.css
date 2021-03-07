@@ -11,7 +11,7 @@
 .input__container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 }
 
 .input__base {
@@ -26,10 +26,6 @@
   padding: 0.25rem 0rem;
 }
 
-.input__number input {
-  text-align: right;
-}
-
 .input__focused {
   border: 2px solid BASE_BLUE;
   background-color: WHITE;
@@ -40,9 +36,11 @@
 }
 
 .label__base {
-  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 14px;
   font-weight: 600;
   text-align: left;
+  color: DARK_GREY;
 }
 
 .label__focused {

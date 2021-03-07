@@ -1,4 +1,4 @@
-import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_GREY, WHITE } from '../styles/Colors.module.css';
+import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_GREY, RED, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -96,6 +96,9 @@ export const theme = createMuiTheme({
         '&$focused': {
           backgroundColor: WHITE,
           border: `2px solid ${BASE_BLUE}`
+        },
+        '&$error': {
+          border: `2px solid ${RED}`
         }
       },
       adornedStart: {
