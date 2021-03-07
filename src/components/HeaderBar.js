@@ -194,7 +194,10 @@ const HeaderBar = (props) => {
               ))
             }
             <button
-              className={styles.icon__container__logout}
+              className={classNames({
+                [styles.icon__container]: true,
+                [styles.icon__container__logout]: true
+              })}
               onClick={() => handleLogOut()}
             >
               <LogoutIcon
