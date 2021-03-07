@@ -1,4 +1,4 @@
-import { Fragment, React, useState } from 'react';
+import { Fragment, React } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 
@@ -10,9 +10,7 @@ import { isAuthenticated } from '../helpers/AuthHelper';
 
 import { useHistory } from 'react-router-dom';
 
-import { ReactComponent as AdminIcon } from '../assets/icons/user_admin.svg';
 import { ReactComponent as DashboardIcon } from '../assets/icons/dashboard.svg';
-import { ReactComponent as EmployeeIcon } from '../assets/icons/user_employee.svg';
 import { ReactComponent as HomeIcon } from '../assets/icons/home.svg';
 import { ReactComponent as InventoryIcon } from '../assets/icons/box.svg';
 import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
@@ -25,8 +23,6 @@ const BottomNavigation = (props) => {
   const { pathname } = history.location;
 
   const { isAdmin } = useSelector((state) => state.usersReducer.profile);
-
-  const [hover, setHover] = useState(false);
 
   return (
     <div className={styles.bottomNav__base}>
@@ -101,29 +97,6 @@ const BottomNavigation = (props) => {
                   </button>
                 </Fragment>
               )
-            }
-            {
-              isAdmin ? (
-                <button
-                  className={iconStyles.icon__container}
-                  onClick={() => history.push(isAdminRoute ? ROUTES.SNACKS : ROUTES.ADMIN)}
-                  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-                >
-                  {isAdminRoute ? (
-                    <EmployeeIcon className={classNames({
-                      [iconStyles.unselectable]: true,
-                      [styles.icon__base]: true,
-                      [iconStyles.admin__switch__icon]: hover
-                    })} />
-                  ) : (
-                    <AdminIcon className={classNames({
-                      [iconStyles.unselectable]: true,
-                      [styles.icon__base]: true,
-                      [iconStyles.admin__switch__icon]: hover
-                    })} />
-                  )}
-                </button>
-              ) : null
             }
             <button
               className={iconStyles.icon__container}

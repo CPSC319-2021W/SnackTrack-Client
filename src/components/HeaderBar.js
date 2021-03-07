@@ -123,7 +123,10 @@ const HeaderBar = (props) => {
   return (
     <AppBar className={styles.header}>
       {isAuthenticated() ? (
-        <Container className={styles.bar}>
+        <Container className={classNames({
+          [styles.bar]: true,
+          [styles.bar__mobile__admin]: isAdmin && isAdminRoute
+        })}>
           <Fragment>
             { isAdmin && isAdminRoute
               ? renderAdminMenu()
@@ -191,7 +194,7 @@ const HeaderBar = (props) => {
               ))
             }
             <button
-              className={styles.icon__container}
+              className={styles.icon__container__logout}
               onClick={() => handleLogOut()}
             >
               <LogoutIcon

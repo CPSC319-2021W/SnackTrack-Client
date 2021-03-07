@@ -5,7 +5,7 @@
 @value DARK_SHADOW from effects;
 
 .bottomNav__base {
-    height: 70px;
+    height: 60px;
     width: 100%;
     top: auto;
     bottom: 0;
