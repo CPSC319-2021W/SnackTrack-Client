@@ -1,12 +1,14 @@
 import React from 'react';
 import Select from 'react-select';
+import { useSelector } from 'react-redux';
 
 import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../styles/Colors.module.css';
 
 const AddBatchSelect = (props) => {
-  const { data, selectedBatch, handleSelectBatch } = props;
+  const { selectedBatch, handleSelectBatch } = props;
+  const { snacks } = useSelector((state) => state.snacksReducer);
 
-  const options = data.map((item) => ({
+  const options = snacks.map((item) => ({
     value: item.snack_id,
     label: item.snack_name
   }));

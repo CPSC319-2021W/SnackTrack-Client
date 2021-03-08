@@ -28,11 +28,10 @@ const InputField = (props) => {
           variant='inline'
           inputVariant='outlined'
           format='MM/dd/yyyy'
-          InputAdornmentProps={{ position: 'start' }}
           maxDateMessage=''
           minDateMessage=''
           value={date}
-          error={error}
+          error={!!error}
           onChange={onChangeDate}
           onBlur={() => setIsFocused(false)}
           onFocus={() => setIsFocused(true)}
