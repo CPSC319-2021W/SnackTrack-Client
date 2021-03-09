@@ -28,7 +28,7 @@ const SnackBatchesSubTable = (props) => {
       label: 'Quantity'
     },
     {
-      id: 'expiry_dtm',
+      id: 'expiration_dtm',
       label: 'Expiration Date',
       format: (timestamp) => {
         return timestamp ? dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT) : 'N/A';
@@ -47,7 +47,7 @@ const SnackBatchesSubTable = (props) => {
 
   return (
     <TableRow>
-      <TableCell className={styles.subtable__container} colSpan={7}>
+      <TableCell className={styles.subtable__container} colSpan={colSpan}>
         <Collapse in={open === id} timeout='auto'>
           <Divider />
           <Table className={styles.subtable} aria-label='batches'>
