@@ -1,16 +1,15 @@
 import React from 'react';
+import styles from '../styles/Page.module.css';
 import { useParams } from 'react-router-dom';
 
-import styles from '../styles/Page.module.css';
-
-const UserAccount = () => {
+const UserProfile = () => {
   const { id } = useParams();
 
   return (
     <div className={styles.base}>
-      <h4>Account: { id }</h4>
+      <h4>Account: {id}</h4>
     </div>
   );
 };
 
-export default UserAccount;
+export default UserProfile;

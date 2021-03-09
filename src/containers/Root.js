@@ -23,7 +23,7 @@ import Inventory from '../pages/Inventory';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
 import Transactions from '../pages/Transactions';
-import UserAccount from '../pages/UserAccount';
+import UserProfile from '../pages/UserProfile';
 import Users from '../pages/Users';
 
 const Root = () => {
@@ -81,7 +81,7 @@ const Root = () => {
             <AdminRoute
               path={`${ROUTES.USERS}/:id`}
               signOut={signOut}
-              component={UserAccount}
+              component={UserProfile}
             />
             <Route component={Fallback} />
           </Switch>
