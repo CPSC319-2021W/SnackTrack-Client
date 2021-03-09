@@ -51,7 +51,11 @@ const OrderSnackDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <Button className={styles.button} onClick={onSubmit}>
+        <Button
+          className={styles.button}
+          disabled={parseInt(value) === 0}
+          onClick={onSubmit}
+        >
           Confirm
         </Button>
       </Card>
