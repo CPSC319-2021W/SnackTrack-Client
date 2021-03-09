@@ -125,6 +125,19 @@ const ManageSnackDialog = (props) => {
         backgroundColor: '#F1F9FF'
       },
       cursor: 'pointer'
+    }),
+    control: (base, state) => ({
+      ...base,
+      height: '28px',
+      minHeight: '20px',
+      border: `2px solid ${colors.BASE_BLUE}`,
+      '&:hover': {
+        border: `2px solid ${colors.DARK_BLUE}`
+      },
+      fontWeight: '600',
+      backgroundColor: state.hasValue ? colors.LIGHT_BLUE : colors.WHITE,
+      boxShadow: 'none',
+      cursor: 'pointer'
     })
   };
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-
 import { colors } from '../styles/theme';
 
 const AddBatchSelect = (props) => {
