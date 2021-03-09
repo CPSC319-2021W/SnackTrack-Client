@@ -47,7 +47,7 @@ const SnackBatchesSubTable = (props) => {
 
   return (
     <TableRow>
-      <TableCell className={styles.subtable__container} colSpan={7}>
+      <TableCell className={styles.subtable__container} colSpan={colSpan}>
         <Collapse in={open === id} timeout='auto'>
           <Divider />
           <Table className={styles.subtable} aria-label='batches'>
