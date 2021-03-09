@@ -101,8 +101,8 @@ export const theme = createMuiTheme({
           border: `2px solid ${RED}`
         }
       },
-      adornedStart: {
-        paddingLeft: 0
+      adornedEnd: {
+        paddingRight: 0
       },
       input: {
         border: 'none',
