@@ -1,7 +1,7 @@
 import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/core';
+import { React, useEffect, useState } from 'react';
 
 import NumberFormat from 'react-number-format';
-import React from 'react';
 import styles from '../styles/Dialog.module.css';
 import { useSelector } from 'react-redux';
 
@@ -9,6 +9,16 @@ const OrderSnackDialog = (props) => {
   const { open, value, onSubmit, handleClose, onChangeQuantity } = props;
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
   const { snack_name, description, image_uri, price } = selectedSnack;
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    const qty = parseInt(value);
+    if (qty === 0 || qty > selectedSnack?.quantity) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [value]);
 
   return (
     <Dialog
@@ -51,11 +61,7 @@ const OrderSnackDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <Button
-          className={styles.button}
-          disabled={parseInt(value) === 0}
-          onClick={onSubmit}
-        >
+        <Button className={styles.button} disabled={isDisabled} onClick={onSubmit}>
           Confirm
         </Button>
       </Card>
