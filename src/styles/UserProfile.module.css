@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, BASE_BLUE, DARK_GREY from colors;
+@value LIGHT_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW, DEFAULT_LIFT from effects;
