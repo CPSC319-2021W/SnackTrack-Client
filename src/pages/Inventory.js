@@ -20,6 +20,7 @@ const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
   const [snacks, setSnacks] = useState([]);
+  const [allActiveSnacks, setAllActiveSnacks] = useState([]);
   const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
   const [inactiveSnacks, setInactiveSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
@@ -53,6 +54,7 @@ const Inventory = () => {
   }, []);
 
   useEffect(() => {
+    setAllActiveSnacks(snacks.filter((snack) => snack.is_active));
     setActiveSnacks(
       toPaginatedSnacks(
         snacks.filter((snack) => snack.is_active),
@@ -76,6 +78,7 @@ const Inventory = () => {
       </div>
       <SnackInventoryTable
         activeSnacks
+        snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}

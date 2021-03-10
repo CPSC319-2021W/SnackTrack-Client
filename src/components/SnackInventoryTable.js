@@ -31,7 +31,7 @@ import styles from '../styles/Table.module.css';
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
-  const { activeSnacks, data, rowsPerPage, onChangePage } = props;
+  const { snacksForAddBatch, activeSnacks, data, rowsPerPage, onChangePage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
   const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector((state) => state.snacksReducer);
 
@@ -152,6 +152,7 @@ const SnackInventoryTable = (props) => {
           ? (
             <div className={styles.header__actionContainer}>
               <AddBatchSelect
+                data={snacksForAddBatch}
                 selectedBatch={selectedBatch}
                 handleSelectBatch={handleAddBatch}
               />
