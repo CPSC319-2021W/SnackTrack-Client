@@ -8,17 +8,12 @@ const httpClient = axios.create({
 });
 
 const saveImage = async (imageDataUrl) => {
-  try {
-    let formData = new FormData();
-    const blob = await (await fetch(imageDataUrl)).blob();
-    formData.append('image', blob);
-    formData.append('key', process.env.REACT_APP_IMGBB_API_KEY);
-    const { data } = await httpClient.post('/upload', formData);
-    return data.data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  let formData = new FormData();
+  const blob = await (await fetch(imageDataUrl)).blob();
+  formData.append('image', blob);
+  formData.append('key', process.env.REACT_APP_IMGBB_API_KEY);
+  const { data } = await httpClient.post('/upload', formData);
+  return data.data;
 };
 
 export { saveImage };
