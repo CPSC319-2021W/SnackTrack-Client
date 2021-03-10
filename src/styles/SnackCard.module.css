@@ -156,6 +156,11 @@
     height: 230px;
   }
 
+  .button {
+    width: 212px;
+    height: 40px;
+  }
+
   .resize_image {
     max-height: 178px;
   }
@@ -177,6 +182,11 @@
     height: 228px;
   }
 
+  .button {
+    width: 210px;
+    height: 38px;
+  }
+
   .resize_image {
     max-height: 178px;
   }
@@ -186,12 +196,21 @@
   .base {
     width: 208px;
   }
+
+  .button {
+    width: 208px;
+  }
 }
 
 @media (max-width: 960px) {
   .base {
     width: 168px;
     height: 200px;
+  }
+
+  .button {
+    width: 168px;
+    height: 30px;
   }
 
   .resize_image {
@@ -219,6 +238,11 @@
     height: 190px;
   }
 
+  .button {
+    width: 164px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 154px;
   }
@@ -228,6 +252,11 @@
   .base {
     width: 162px;
     height: 186px;
+  }
+
+  .button {
+    width: 162px;
+    height: 30px;
   }
 
   .resize_image {
@@ -241,6 +270,11 @@
     height: 186px;
   }
 
+  .button {
+    width: 160px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 150px;
   }
@@ -252,6 +286,11 @@
     height: 180px;
   }
 
+  .button {
+    width: 158px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 146px;
   }
@@ -261,10 +300,18 @@
   .base {
     width: 156px;
   }
+
+  .button {
+    width: 156px;
+  }
 }
 
 @media (max-width: 562px) {
   .base {
+    width: 154px;
+  }
+
+  .button {
     width: 154px;
   }
 }
@@ -273,10 +320,18 @@
   .base {
     width: 152px;
   }
+
+  .button {
+    width: 152px;
+  }
 }
 
 @media (max-width: 550px) {
   .base {
+    width: 150px;
+  }
+
+  .button {
     width: 150px;
   }
 }
@@ -285,12 +340,21 @@
   .base {
     width: 148px;
   }
+
+  .button {
+    width: 148px;
+  }
 }
 
 @media (max-width: 538px) {
   .base {
     width: 146px;
     height: 160px;
+  }
+
+  .button {
+    width: 146px;
+    height: 30px;
   }
 
   .resize_image {
@@ -304,6 +368,11 @@
     height: 158px;
   }
 
+  .button {
+    width: 144px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 124px;
   }
@@ -313,10 +382,18 @@
   .base {
     width: 142px;
   }
+
+  .button {
+    width: 142px;
+  }
 }
 
 @media (max-width: 520px) {
   .base {
+    width: 140px;
+  }
+
+  .button {
     width: 140px;
   }
 }
@@ -325,10 +402,18 @@
   .base {
     width: 138px;
   }
+
+  .button {
+    width: 138px;
+  }
 }
 
 @media (max-width: 508px) {
   .base {
+    width: 136px;
+  }
+
+  .button {
     width: 136px;
   }
 }
@@ -337,12 +422,21 @@
   .base {
     width: 134px;
   }
+
+  .button {
+    width: 134px;
+  }
 }
 
 @media (max-width: 414px) {
   .base {
     width: 174px;
     height: 190px;
+  }
+
+  .button {
+    width: 174px;
+    height: 30px;
   }
 
   .resize_image {
@@ -354,12 +448,22 @@
   .base {
     width: 172px;
   }
+
+  .button {
+    width: 172px;
+    height: 30px;
+  }
 }
 
 @media (max-width: 375px) {
   .base {
     width: 154px;
     height: 170px;
+  }
+
+  .button {
+    width: 154px;
+    height: 30px;
   }
 
   .resize_image {
@@ -372,12 +476,22 @@
     width: 148px;
     height: 170px;
   }
+
+  .button {
+    width: 148px;
+    height: 30px;
+  }
 }
 
 @media (max-width: 320px) {
   .base {
     width: 128px;
     height: 150px;
+  }
+
+  .button {
+    width: 128px;
+    height: 30px;
   }
 
   .resize_image {
