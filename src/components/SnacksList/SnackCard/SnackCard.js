@@ -8,7 +8,7 @@ const SnackCard = (props) => {
   const { snack_id, image_uri, snack_name, price } = props.snack;
 
   const { onClick } = props;
-  
+
   return (
     <Card variant={'outlined'} className={styles.base}>
       <CardActionArea className={styles.action_area} onClick={() => onClick(snack_id)}>
@@ -21,7 +21,9 @@ const SnackCard = (props) => {
           />
         </div>
         <div className={styles.label}>
-          <p className={styles.snack_name}>{snack_name}</p>
+          <p className={styles.snack_name} title={snack_name}>
+            {snack_name}
+          </p>
           <p className={styles.price}>
             <NumberFormat
               value={price / 100}
