@@ -7,6 +7,10 @@
   flex-direction: column;
 }
 
+.card__small {
+  max-width: 234px;
+}
+
 .header {
   margin: 1rem;
   display: flex;
@@ -26,7 +30,6 @@
 
 .headerTitle {
   font-size: 18px;
-  width: 300px;
   align-self: flex-start;
   margin: 0.2rem 0 0 0;
   line-height: 22px;

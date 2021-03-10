@@ -11,6 +11,7 @@ import { addBatch } from '../services/SnacksService';
 import { Button, Card, Dialog, Divider } from '@material-ui/core';
 import DatePickerInput from './DatePickerInput';
 import InputField from './InputField';
+import classNames from 'classnames';
 
 import styles from '../styles/Dialog.module.css';
 
@@ -55,6 +56,8 @@ const ManageBatchDialog = (props) => {
   const handleChangeDate = (date) => {
     if (!date || date.invalid) {
       setErrors((prevState) => ({...prevState, date: 'Invalid date format.'}));
+    } else if (date < Date.now()) {
+      setErrors((prevState) => ({...prevState, date: 'Expiry must be after today.'}));
     } else {
       setErrors((prevState) => ({...prevState, date: null}));
       setDate(date);
@@ -85,7 +88,10 @@ const ManageBatchDialog = (props) => {
       onSubmit={onSubmit}
       onCancel={onCancel}
     >
-      <Card variant='outlined' className={styles.card}>
+      <Card variant='outlined' className={classNames({
+        [styles.card]: true,
+        [styles.card__small]: true
+      })}>
         <div className={styles.header}>
           <div className={styles.header__text}>
             <h3 className={styles.header__sub}>Add new batch of ...</h3>
@@ -96,7 +102,6 @@ const ManageBatchDialog = (props) => {
         <div className={styles.body}>
           <div className={styles.labelContainer}>
             <InputField
-              small
               label='Quantity'
               value={quantity}
               error={errors.quantity ? errors.quantity : null}
@@ -108,7 +113,7 @@ const ManageBatchDialog = (props) => {
               <DatePickerInput
                 label='Expiry Date'
                 date={date}
-                error={errors.date ? errors.date : null}
+                error={errors.date}
                 onChangeDate={handleChangeDate}
               />
             </div>

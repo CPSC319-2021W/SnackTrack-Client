@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NOTIFICATIONS } from '../constants';
 import SnackInventoryTable from '../components/SnackInventoryTable';
 import ToastNotification from '../components/ToastNotification';
-import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import { getSnacks } from '../services/SnacksService';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
 import { toPaginatedSnacks } from '../helpers/AdminHelpers';
@@ -19,7 +19,7 @@ const INITIAL_SNACKS = {
 const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
-  const { snacks } = useSelector((state) => state.snacksReducer);
+  const [snacks, setSnacks] = useState([]);
   const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
   const [inactiveSnacks, setInactiveSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
@@ -46,9 +46,10 @@ const Inventory = () => {
     }
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     handleCloseToastNotification();
-    dispatch(fetchSnacks(false));
+    const snacksResponse = await getSnacks(false);
+    setSnacks(snacksResponse.snacks);
   }, []);
 
   useEffect(() => {

@@ -74,6 +74,7 @@ const SnackInventoryTable = (props) => {
   };
 
   const columns = [
+    { id: 'snack_id', label: 'Snack ID' },
     {
       id: 'snack_name',
       label: 'Name'
