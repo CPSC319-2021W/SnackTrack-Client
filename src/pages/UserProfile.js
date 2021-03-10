@@ -5,16 +5,18 @@ import {
   setToastNotificationOpen
 } from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
+import { ROUTES } from '../constants';
 import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import { getUserById } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
-import { useParams } from 'react-router-dom';
+import usersStyles from '../styles/UserProfile.module.css';
 
 const INITIAL_PAYMENTS = {
   total_rows: 0,
@@ -31,6 +33,7 @@ const INITIAL_ORDERS = {
 };
 
 const UserProfile = () => {
+  const history = useHistory();
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const dispatch = useDispatch();
@@ -45,6 +48,10 @@ const UserProfile = () => {
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
   const onApiResponse = (response) => dispatch(setApiResponse(response));
+
+  const handleGoBack = () => {
+    history.push(ROUTES.USERS);
+  };
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getUserPayments(id, page, rowsPerPage);
@@ -99,23 +106,31 @@ const UserProfile = () => {
   return (
     <div className={styles.base}>
       <div className={styles.header}>
-        <h5 className={styles.title}>Back To Users List</h5>
+        <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
+          Back To Users List
+        </h5>
       </div>
       {user ? <UserCard user={user} /> : <UserCardSkeleton />}
-      <OrdersTable
-        data={ordersResponse}
-        rowsPerPage={rowsPerPage}
-        onHandleApiResponse={handleApiResponse}
-        onChangePage={handleOrderChangePage}
-        onMakePayment={handleMakePayment}
-      />
-      <PaymentsTable
-        error={paymentsError}
-        data={paymentsResponse}
-        rowsPerPage={rowsPerPage}
-        setSnackBar={handleApiResponse}
-        onChangePage={handlePaymentChangePage}
-      />
+      <div className={usersStyles.tables__container}>
+        <div className={usersStyles.ordersTable}>
+          <OrdersTable
+            data={ordersResponse}
+            rowsPerPage={rowsPerPage}
+            onHandleApiResponse={handleApiResponse}
+            onChangePage={handleOrderChangePage}
+            onMakePayment={handleMakePayment}
+          />
+        </div>
+        <div className={usersStyles.paymentsTable}>
+          <PaymentsTable
+            error={paymentsError}
+            data={paymentsResponse}
+            rowsPerPage={rowsPerPage}
+            setSnackBar={handleApiResponse}
+            onChangePage={handlePaymentChangePage}
+          />
+        </div>
+      </div>
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}

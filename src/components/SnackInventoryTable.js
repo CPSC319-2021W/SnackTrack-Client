@@ -163,7 +163,7 @@ const SnackInventoryTable = (props) => {
             ) : null }
       </div>
       <TableContainer>
-        <Table className={styles.table} aria-label='Snack Inventory Table'>
+        <Table aria-label='Snack Inventory Table'>
           <TableHead>
             <TableRow className={styles.header__row}>
               {columns.map((column) => (

@@ -1,0 +1,30 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY, BASE_BLUE, DARK_GREY from colors;
+
+@value effects: './Effects.module.css';
+@value DARK_SHADOW, DEFAULT_LIFT from effects;
+
+.tables__container {
+  display: flex;
+}
+
+.ordersTable {
+  width: 69%;
+  max-width: 69%;
+}
+
+.paymentsTable {
+  width: 30%;
+  max-width: 30%;
+  margin-left: auto;
+}
+
+.goBack {
+  color: BASE_BLUE;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.goBack:hover {
+  color: DARK_BLUE;
+}
