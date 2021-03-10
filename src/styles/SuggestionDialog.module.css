@@ -37,6 +37,10 @@
   margin-top: 0;
 }
 
+.input__focused {
+  background-color: WHITE;
+}
+
 .button {
   width: 80px;
   height: 40px;
