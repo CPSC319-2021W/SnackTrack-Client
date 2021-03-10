@@ -15,7 +15,7 @@ const ImageUploader = () => {
         try {
           current.src = e.target.result;
           const img = await saveImage(reader.result);
-          console.log(img.url);
+          console.log(img);
         } catch (err) {
           console.log(err);
         }
