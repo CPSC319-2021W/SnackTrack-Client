@@ -98,6 +98,7 @@ const SnacksContainer = (props) => {
       <OrderSnackDialog
         open={isSnackOrderOpen}
         value={snackQuantity}
+        setSnackQuantity={setSnackQuantity}
         handleClose={handleCloseSnackOrder}
         onSubmit={handleSubmit}
         onChangeQuantity={handleChangeQuantity}

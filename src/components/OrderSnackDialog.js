@@ -2,14 +2,34 @@ import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/co
 import { React, useEffect, useState } from 'react';
 
 import NumberFormat from 'react-number-format';
+import classNames from 'classnames';
 import styles from '../styles/Dialog.module.css';
 import { useSelector } from 'react-redux';
 
 const OrderSnackDialog = (props) => {
-  const { open, value, onSubmit, handleClose, onChangeQuantity } = props;
+  const {
+    open,
+    value,
+    onSubmit,
+    setSnackQuantity,
+    handleClose,
+    onChangeQuantity
+  } = props;
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
-  const { snack_name, description, image_uri, price } = selectedSnack;
+  const { snack_name, description, image_uri, price, quantity } = selectedSnack;
   const [isDisabled, setIsDisabled] = useState(false);
+
+  const increaseQuantity = () => {
+    if (quantity > value) {
+      setSnackQuantity(value + 1);
+    }
+  };
+
+  const decreaseQuantity = () => {
+    if (value > 0) {
+      setSnackQuantity(value - 1);
+    }
+  };
 
   useEffect(() => {
     const qty = parseInt(value);
@@ -48,15 +68,40 @@ const OrderSnackDialog = (props) => {
           <div>
             <p className={styles.description}>{description}</p>
             <div className={styles.quant__container}>
-              <p className={styles.quantity}>Quantity</p>
-              <Input
-                className={styles.input}
-                disableUnderline={true}
-                value={value}
-                type='number'
-                onChange={onChangeQuantity}
-                onKeyPress={onSubmit}
-              />
+              <p className={styles.quantity}>How many would you like?</p>
+              <div className={styles.stepper}>
+                <Button
+                  className={classNames({
+                    [styles.stepper__button]: true,
+                    [styles.stepper__button__left]: true
+                  })}
+                  disabled={value === 0}
+                  onClick={decreaseQuantity}
+                >
+                  -
+                </Button>
+                <Input
+                  className={classNames({
+                    [styles.input]: true,
+                    [styles.input__small]: true
+                  })}
+                  disableUnderline={true}
+                  value={value}
+                  type='number'
+                  onChange={onChangeQuantity}
+                  onKeyPress={onSubmit}
+                />
+                <Button
+                  className={classNames({
+                    [styles.stepper__button]: true,
+                    [styles.stepper__button__right]: true
+                  })}
+                  disabled={value >= quantity}
+                  onClick={increaseQuantity}
+                >
+                  +
+                </Button>
+              </div>
             </div>
           </div>
         </div>
