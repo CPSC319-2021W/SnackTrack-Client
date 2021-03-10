@@ -16,18 +16,18 @@ const OrderSnackDialog = (props) => {
     onChangeQuantity
   } = props;
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
-  const { snack_name, description, image_uri, price, quantity } = selectedSnack;
+  const { snack_id, snack_name, description, image_uri, price, quantity } = selectedSnack;
   const [isDisabled, setIsDisabled] = useState(false);
 
   const increaseQuantity = () => {
     if (quantity > value) {
-      setSnackQuantity(value + 1);
+      setSnackQuantity(parseInt(value) + 1);
     }
   };
 
   const decreaseQuantity = () => {
     if (value > 0) {
-      setSnackQuantity(value - 1);
+      setSnackQuantity(parseInt(value) - 1);
     }
   };
 
@@ -38,7 +38,7 @@ const OrderSnackDialog = (props) => {
     } else {
       setIsDisabled(false);
     }
-  }, [value]);
+  }, [selectedSnack, value]);
 
   return (
     <Dialog
@@ -106,7 +106,11 @@ const OrderSnackDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <Button className={styles.button} disabled={isDisabled} onClick={onSubmit}>
+        <Button
+          className={styles.button}
+          disabled={isDisabled}
+          onClick={(event) => onSubmit(event, snack_id, value)}
+        >
           Confirm
         </Button>
       </Card>

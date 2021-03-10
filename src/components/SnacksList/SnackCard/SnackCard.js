@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
 import { setBalance } from '../../../redux/features/users/usersSlice';
+import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 import styles from '../../../styles/SnackCard.module.css';
 
 const SnackCard = (props) => {
@@ -27,6 +28,10 @@ const SnackCard = (props) => {
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const DEFAULT_ORDER_THRESHOLD = 10;
+
+  const updateSnackQuantity = (snackId, newQuantity) => {
+    dispatch(setQuantity({ snackId, newQuantity }));
+  };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -48,6 +53,7 @@ const SnackCard = (props) => {
         if (transactionTypeId != PENDING) {
           updateBalance(balance + price);
         }
+        updateSnackQuantity(snack_id, 1);
       } catch (err) {
         console.log(err);
         onApiResponse('ERROR');

@@ -9,7 +9,9 @@ const INITIAL_STATE = {
     snack_name: null,
     description: null,
     image_uri: null,
-    price: null
+    price: null,
+    quantity: null,
+    order_threshold: null
   },
   selectedFilters: [],
   snackBatches: [],
@@ -58,6 +60,12 @@ const snacksSlice = createSlice({
     },
     setSelectedBatch: (state, action) => {
       state.selectedBatch = action.payload;
+    },
+    setQuantity: (state, action) => {
+      const { snackId, newQuantity } = action.payload;
+      const { snacks } = state;
+      const index = snacks.findIndex((snack) => snack.snack_id === snackId);
+      state.snacks[index].quantity = snacks[index].quantity - newQuantity;
     }
   },
   extraReducers: {
@@ -86,7 +94,8 @@ export const {
   setSnackBatches,
   setSelectedSnackForBatch,
   setSelectedBatch,
-  setIsManageBatchOpen
+  setIsManageBatchOpen,
+  setQuantity
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;
