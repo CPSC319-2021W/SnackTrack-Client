@@ -152,7 +152,6 @@ const SnackInventoryTable = (props) => {
         {activeSnacks ? (
           <div className={styles.header__actionContainer}>
             <AddBatchSelect
-              data={snacks}
               selectedBatch={selectedBatch}
               handleSelectBatch={handleAddBatch}
             />

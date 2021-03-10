@@ -26,7 +26,7 @@ const UserCard = (props) => {
   };
 
   const expandUser = () => {
-    history.push(ROUTES.INVENTORY);
+    history.push(`${ROUTES.USERS}/${user.user_id}`);
   };
 
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
