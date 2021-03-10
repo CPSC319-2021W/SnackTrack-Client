@@ -11,6 +11,8 @@ import { addBatch } from '../services/SnacksService';
 import { Button, Card, Dialog, Divider } from '@material-ui/core';
 import DatePickerInput from './DatePickerInput';
 import InputField from './InputField';
+
+import { DateTime } from 'luxon';
 import classNames from 'classnames';
 
 import styles from '../styles/Dialog.module.css';
@@ -21,7 +23,7 @@ const ManageBatchDialog = (props) => {
   const { snack_id, snack_name } = batch;
 
   const [quantity, setQuantity] = useState(0);
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(DateTime.now());
   const [errors, setErrors] = useState({
     quantity: null,
     date: null
@@ -69,7 +71,8 @@ const ManageBatchDialog = (props) => {
   const onSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        await addBatch({ snack_id, quantity, expiration_dtm: date });
+        const dateString = date.toUTC().toISO();
+        await addBatch({ snack_id, quantity, expiration_dtm: dateString });
         onApiResponse('BATCH_SUCCESS');
         openToastNotification(true);
       } catch (err) {

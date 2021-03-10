@@ -34,7 +34,8 @@ const makeSuggestion = async (userId, suggestion) => {
 };
 
 const addBatch = async (batch) => {
-  throw new Error('Not Implemented!', batch);
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.post('/snack_batches', batch, authHeader);
 };
 
 export { getSnackBatch, getSnacks, makeSuggestion, addBatch };
