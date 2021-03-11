@@ -117,6 +117,8 @@ const ManageBatchDialog = (props) => {
     } else {
       if (batch.expiration_dtm) {
         setDate(DateTime.fromISO(batch.expiration_dtm));
+      } else {
+        setDate(null);
       }
       setQuantity(batch.quantity);
     }
