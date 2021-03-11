@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import classNames from 'classnames';
 
 import { DEFAULT_CATEGORIES } from '../../constants';
@@ -41,45 +41,45 @@ const FilterIcon = ({ type, isSelected }) => {
     switch(type) {
     case DEFAULT_CATEGORIES.CANDY:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Candy className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.CHIPS:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Chips className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.CHOCOLATE:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Chocolate className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.COOKIES:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Cookies className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.CRACKERS:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Crackers className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     case DEFAULT_CATEGORIES.FRUITS:
       return (
-        <div className={styles.icon__container}>
+        <Fragment>
           <Fruits className={getClasses()} />
           { renderLabel(type) }
-        </div>
+        </Fragment>
       );
     default:
       break;
