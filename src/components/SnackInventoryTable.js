@@ -186,9 +186,8 @@ const SnackInventoryTable = (props) => {
               handleSelectBatch={handleAddBatch}
             />
             <div className={styles.cell__pay}>
-              <Button className={styles.button__base} onClick={() => {
-                openManageSanck;
-              }}>
+              <Button className={styles.button__base} onClick={
+                openManageSanck}>
                 Add New Snack
               </Button>
             </div>

@@ -58,6 +58,7 @@ const TextInputLiveFeedback = ({ label, ...props }) => {
 };
 
 const ManageSnackDialog = (props) => {
+  //const dispatch = useDispatch();
   const { open, value, onSubmit, handleClose, onChangeObj } = props;
 
   const formik = useFormik({
