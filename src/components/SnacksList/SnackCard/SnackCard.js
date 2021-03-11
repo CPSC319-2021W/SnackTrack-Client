@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { Button, Card, CardActionArea, CardMedia } from '@material-ui/core';
 import {
   setApiResponse,
@@ -133,7 +132,7 @@ const SnackCard = (props) => {
             </p>
           </div>
         </CardActionArea>
-        <Button className={styles.button} disabled={quantity === 0} onClick={() => console.log('click')}>
+        <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
           Grab One
         </Button>
       </Card>
