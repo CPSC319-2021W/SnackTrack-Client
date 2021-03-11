@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from 'react';
+import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
@@ -7,7 +8,6 @@ import SnackGrid from './SnackGrid';
 import { TRANSACTION_TYPES } from '../../constants';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
-import { selectOneSnack } from '../../redux/features/snacks/snacksSlice';
 import { setBalance } from '../../redux/features/users/usersSlice';
 
 const SnacksContainer = (props) => {
@@ -18,6 +18,10 @@ const SnacksContainer = (props) => {
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snackQuantity, setSnackQuantity] = useState(1);
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
+
+  const updateSnackQuantity = (snackId, newQuantity) => {
+    dispatch(setQuantity({ snackId, newQuantity }));
+  };
 
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
 
@@ -44,7 +48,7 @@ const SnacksContainer = (props) => {
     }
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event, snackId, quantity) => {
     if (event.key === 'Enter' || event.type === 'click') {
       const transactionAmount = snackQuantity * selectedSnack.price;
       const { PENDING, PURCHASE } = TRANSACTION_TYPES;
@@ -66,6 +70,7 @@ const SnacksContainer = (props) => {
         if (transactionTypeId != PENDING) {
           updateBalance(balance + transactionAmount);
         }
+        updateSnackQuantity(snackId, quantity);
       } catch (err) {
         console.log(err);
         onApiResponse('ERROR');
@@ -98,6 +103,7 @@ const SnacksContainer = (props) => {
       <OrderSnackDialog
         open={isSnackOrderOpen}
         value={snackQuantity}
+        setSnackQuantity={setSnackQuantity}
         handleClose={handleCloseSnackOrder}
         onSubmit={handleSubmit}
         onChangeQuantity={handleChangeQuantity}
