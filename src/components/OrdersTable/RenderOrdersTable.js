@@ -118,7 +118,7 @@ const RenderOrdersTable = (props) => {
               [styles.status__orange]: true
             })}
           >
-            PENDING
+            UNPAID
           </span>
         );
       }

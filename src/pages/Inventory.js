@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { NOTIFICATIONS } from '../constants';
 import SnackInventoryTable from '../components/SnackInventoryTable';
 import ToastNotification from '../components/ToastNotification';
-import { fetchSnacks } from '../redux/features/snacks/snacksSlice';
+import { getSnacks } from '../services/SnacksService';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
 import { toPaginatedSnacks } from '../helpers/AdminHelpers';
@@ -19,13 +19,13 @@ const INITIAL_SNACKS = {
 const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
-  const { snacks } = useSelector((state) => state.snacksReducer);
+  const [snacks, setSnacks] = useState([]);
+  const [allActiveSnacks, setAllActiveSnacks] = useState([]);
   const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
   const [inactiveSnacks, setInactiveSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  // const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
   // const onApiResponse = (response) => dispatch(setApiResponse(response));
 
@@ -47,11 +47,14 @@ const Inventory = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(fetchSnacks(false));
+  useEffect(async () => {
+    handleCloseToastNotification();
+    const snacksResponse = await getSnacks(false);
+    setSnacks(snacksResponse.snacks);
   }, []);
 
   useEffect(() => {
+    setAllActiveSnacks(snacks.filter((snack) => snack.is_active));
     setActiveSnacks(
       toPaginatedSnacks(
         snacks.filter((snack) => snack.is_active),
@@ -75,6 +78,7 @@ const Inventory = () => {
       </div>
       <SnackInventoryTable
         activeSnacks
+        snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}

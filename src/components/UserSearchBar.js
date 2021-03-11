@@ -1,18 +1,21 @@
 import { Input, InputAdornment } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-
 import React, { useEffect, useState } from 'react';
+
+import { ROUTES } from '../constants';
+import classNames from 'classnames';
 import search from '../assets/icons/search.svg';
 import { setValue } from '../redux/features/searchbar/searchbarSlice';
 import styles from '../styles/UserSearchBar.module.css';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 const UserSearchBar = () => {
-  // Interval to wait after the user stops typing before updating the Redux store
-  // Improves performance, stops filtering on each keystroke
-  const WAIT_INTERVAL = 200;
-
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { pathname } = history.location;
   const [value, updateValue] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
+  const WAIT_INTERVAL = 200;
 
   const handleChange = (event) => {
     updateValue(event.target.value);
@@ -29,7 +32,11 @@ const UserSearchBar = () => {
 
   return (
     <Input
-      className={styles.searchBar}
+      className={classNames({
+        [styles.searchBar]: true,
+        [styles.searchBar__focused]: isFocused,
+        [styles.searchBar__left]: pathname === ROUTES.USERS
+      })}
       autoFocus={true}
       disableUnderline={true}
       startAdornment={(
@@ -37,9 +44,11 @@ const UserSearchBar = () => {
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
       )}
-      placeholder='Enter your name...'
+      placeholder={pathname === ROUTES.SELECT ? 'Enter your name...' : 'Enter a name...'}
       value={value}
       onChange={handleChange}
+      onBlur={() => setIsFocused(false)}
+      onFocus={() => setIsFocused(true)}
     />
   );
 };

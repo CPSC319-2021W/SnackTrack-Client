@@ -1,4 +1,3 @@
-/*eslint-disable */
 import {
   Button,
   Card,
@@ -11,18 +10,18 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import React, { Fragment } from 'react';
 import {
-  setSelectedSnackForBatch,
-  setSnackBatches,
+  setIsManageBatchOpen,
   setSelectedBatch,
-  setIsManageBatchOpen
+  setSelectedSnackForBatch,
+  setSnackBatches
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import { CATEGORIES_LIST } from '../constants';
 import ManageBatchDialog from '../components/ManageBatchDialog';
-import React, { Fragment, useState } from 'react';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -31,9 +30,11 @@ import styles from '../styles/Table.module.css';
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
-  const { activeSnacks, data, rowsPerPage, onChangePage } = props;
+  const { snacksForAddBatch, activeSnacks, data, rowsPerPage, onChangePage } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
-  const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector((state) => state.snacksReducer);
+  const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector(
+    (state) => state.snacksReducer
+  );
 
   const setSelectedSnack = (snackId) => {
     dispatch(setSelectedSnackForBatch(snackId));
@@ -73,6 +74,7 @@ const SnackInventoryTable = (props) => {
   };
 
   const columns = [
+    { id: 'snack_id', label: 'Snack ID' },
     {
       id: 'snack_name',
       label: 'Name'
@@ -147,20 +149,20 @@ const SnackInventoryTable = (props) => {
             {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
           </h4>
         </div>
-        { activeSnacks
-          ? (
-            <div className={styles.header__actionContainer}>
-              <AddBatchSelect
-                selectedBatch={selectedBatch}
-                handleSelectBatch={handleAddBatch}
-              />
-              <div className={styles.cell__pay}>
-                <Button className={styles.button__base} onClick={() => {}}>
-                  Add New Snack
-                </Button>
-              </div>
+        {activeSnacks ? (
+          <div className={styles.header__actionContainer}>
+            <AddBatchSelect
+              data={snacksForAddBatch}
+              selectedBatch={selectedBatch}
+              handleSelectBatch={handleAddBatch}
+            />
+            <div className={styles.cell__pay}>
+              <Button className={styles.button__base} onClick={() => {}}>
+                Add New Snack
+              </Button>
             </div>
-            ) : null }
+          </div>
+        ) : null}
       </div>
       <TableContainer>
         <Table aria-label='Snack Inventory Table'>
@@ -209,10 +211,10 @@ const SnackInventoryTable = (props) => {
                         >
                           {column.format
                             ? column.format(
-                                value,
-                                snacks[i].is_active,
-                                snacks[i].order_threshold
-                              )
+                              value,
+                              snacks[i].is_active,
+                              snacks[i].order_threshold
+                            )
                             : value}
                         </TableCell>
                       );
