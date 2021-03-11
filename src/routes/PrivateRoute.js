@@ -1,5 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 
+import BottomNavigation from '../components/BottomNavigation';
 import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
 import { ROUTES } from '../constants';
@@ -26,6 +27,7 @@ const PrivateRoute = ({ component: Component, signOut, ...rest }) => {
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
+            <BottomNavigation handleLogOut={signOut} />
           </div>
         ) : (
           <Redirect to={ROUTES.LOGIN} />

@@ -1,21 +1,51 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, DARK_GREY, MID_GREY, LIGHT_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DEFAULT_SHADOW, DEFAULT_LIFT from effects;
+
+.cardContainer {
+  transition: 0.1s transform;
+}
+
+.cardContainer:hover {
+  box-shadow: DEFAULT_SHADOW;
+  transform: DEFAULT_LIFT;
+  color: none;
+}
 
 .base {
   width: 230px;
   height: 260px;
   color: white;
-  transition: .1s transform;
-  margin: 0 0.5rem 1rem 0.5rem;
+  margin: 0 0.5rem 0rem 0.5rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .base:hover {
-  box-shadow: DEFAULT_SHADOW;
-  transform: DEFAULT_LIFT;
   color: white;
+}
+
+.button {
+  width: 230px;
+  height: 40px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: BASE_BLUE;
+  text-transform: none;
+  margin: 0 0 1rem 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.button:hover {
+  background-color: DARK_BLUE;
+}
+
+.button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
 }
 
 .action_area {
@@ -91,10 +121,44 @@
   margin-left: 1rem;
 }
 
+.stock {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 1rem;
+  padding: 5px 14px;
+  border-radius: 24px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: text;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.stock__orange {
+  color: ORANGE;
+  background-color: #ffe7ca;
+}
+
+.stock__red {
+  color: RED;
+  background-color: #fdd9d7;
+}
+
+.stock__grey {
+  color: DARK_GREY;
+  background-color: LIGHT_GREY;
+}
+
 @media (max-width: 1280px) {
   .base {
     width: 212px;
     height: 230px;
+  }
+
+  .button {
+    width: 212px;
+    height: 40px;
   }
 
   .resize_image {
@@ -118,6 +182,11 @@
     height: 228px;
   }
 
+  .button {
+    width: 210px;
+    height: 38px;
+  }
+
   .resize_image {
     max-height: 178px;
   }
@@ -127,12 +196,21 @@
   .base {
     width: 208px;
   }
+
+  .button {
+    width: 208px;
+  }
 }
 
 @media (max-width: 960px) {
   .base {
     width: 168px;
     height: 200px;
+  }
+
+  .button {
+    width: 168px;
+    height: 30px;
   }
 
   .resize_image {
@@ -160,6 +238,11 @@
     height: 190px;
   }
 
+  .button {
+    width: 164px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 154px;
   }
@@ -169,6 +252,11 @@
   .base {
     width: 162px;
     height: 186px;
+  }
+
+  .button {
+    width: 162px;
+    height: 30px;
   }
 
   .resize_image {
@@ -182,6 +270,11 @@
     height: 186px;
   }
 
+  .button {
+    width: 160px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 150px;
   }
@@ -193,6 +286,11 @@
     height: 180px;
   }
 
+  .button {
+    width: 158px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 146px;
   }
@@ -202,10 +300,18 @@
   .base {
     width: 156px;
   }
+
+  .button {
+    width: 156px;
+  }
 }
 
 @media (max-width: 562px) {
   .base {
+    width: 154px;
+  }
+
+  .button {
     width: 154px;
   }
 }
@@ -214,10 +320,18 @@
   .base {
     width: 152px;
   }
+
+  .button {
+    width: 152px;
+  }
 }
 
 @media (max-width: 550px) {
   .base {
+    width: 150px;
+  }
+
+  .button {
     width: 150px;
   }
 }
@@ -226,12 +340,21 @@
   .base {
     width: 148px;
   }
+
+  .button {
+    width: 148px;
+  }
 }
 
 @media (max-width: 538px) {
   .base {
     width: 146px;
     height: 160px;
+  }
+
+  .button {
+    width: 146px;
+    height: 30px;
   }
 
   .resize_image {
@@ -245,6 +368,11 @@
     height: 158px;
   }
 
+  .button {
+    width: 144px;
+    height: 30px;
+  }
+
   .resize_image {
     max-height: 124px;
   }
@@ -254,10 +382,18 @@
   .base {
     width: 142px;
   }
+
+  .button {
+    width: 142px;
+  }
 }
 
 @media (max-width: 520px) {
   .base {
+    width: 140px;
+  }
+
+  .button {
     width: 140px;
   }
 }
@@ -266,10 +402,18 @@
   .base {
     width: 138px;
   }
+
+  .button {
+    width: 138px;
+  }
 }
 
 @media (max-width: 508px) {
   .base {
+    width: 136px;
+  }
+
+  .button {
     width: 136px;
   }
 }
@@ -278,12 +422,21 @@
   .base {
     width: 134px;
   }
+
+  .button {
+    width: 134px;
+  }
 }
 
 @media (max-width: 414px) {
   .base {
     width: 174px;
     height: 190px;
+  }
+
+  .button {
+    width: 174px;
+    height: 30px;
   }
 
   .resize_image {
@@ -295,12 +448,22 @@
   .base {
     width: 172px;
   }
+
+  .button {
+    width: 172px;
+    height: 30px;
+  }
 }
 
 @media (max-width: 375px) {
   .base {
     width: 154px;
     height: 170px;
+  }
+
+  .button {
+    width: 154px;
+    height: 30px;
   }
 
   .resize_image {
@@ -313,12 +476,22 @@
     width: 148px;
     height: 170px;
   }
+
+  .button {
+    width: 148px;
+    height: 30px;
+  }
 }
 
 @media (max-width: 320px) {
   .base {
     width: 128px;
     height: 150px;
+  }
+
+  .button {
+    width: 128px;
+    height: 30px;
   }
 
   .resize_image {

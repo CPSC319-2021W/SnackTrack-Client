@@ -1,9 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
-import { colors } from '../styles/theme';
+
+import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../styles/Colors.module.css';
 
 const AddBatchSelect = (props) => {
-  const { data, handleBatchSelect } = props;
+  const { data, selectedBatch, handleSelectBatch } = props;
 
   const options = data.map((item) => ({
     value: item.snack_id,
@@ -18,9 +19,9 @@ const AddBatchSelect = (props) => {
     }),
     option: (base, state) => ({
       ...base,
-      color: state.isSelected ? colors.DARK_BLUE : colors.DARKER_GREY,
+      color: state.isSelected ? DARK_BLUE : DARKER_GREY,
       fontWeight: state.isSelected ? '600' : '400',
-      backgroundColor: state.isSelected ? colors.LIGHT_BLUE : colors.WHITE,
+      backgroundColor: state.isSelected ? LIGHT_BLUE : WHITE,
       '&:hover': {
         backgroundColor: '#F1F9FF'
       },
@@ -28,38 +29,38 @@ const AddBatchSelect = (props) => {
     }),
     placeholder: (base) => ({
       ...base,
-      color: colors.BASE_BLUE,
+      color: BASE_BLUE,
       '&:hover': {
-        color: colors.DARK_BLUE
+        color: DARK_BLUE
       }
     }),
     control: (base, state) => ({
       ...base,
       height: '38px',
-      border: `2px solid ${colors.BASE_BLUE}`,
+      border: `2px solid ${BASE_BLUE}`,
       '&:hover': {
-        border: `2px solid ${colors.DARK_BLUE}`
+        border: `2px solid ${DARK_BLUE}`
       },
       fontWeight: '600',
-      backgroundColor: state.hasValue ? colors.LIGHT_BLUE : colors.WHITE,
+      backgroundColor: state.hasValue ? LIGHT_BLUE : WHITE,
       boxShadow: 'none',
       cursor: 'pointer'
     }),
     singleValue: (base) => ({
       ...base,
       fontWeight: '600',
-      color: colors.BASE_BLUE
+      color: BASE_BLUE
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: colors.BASE_BLUE,
+      color: BASE_BLUE,
       '&:hover': {
-        color: colors.DARK_BLUE
+        color: DARK_BLUE
       }
     }),
     indicatorSeparator: (base) => ({
       ...base,
-      backgroundColor: colors.BASE_BLUE
+      backgroundColor: BASE_BLUE
     })
   };
 
@@ -71,7 +72,10 @@ const AddBatchSelect = (props) => {
         noOptionsMessage={() => 'No snacks found.'}
         options={options}
         styles={customStyles}
-        onChange={handleBatchSelect}
+        value={selectedBatch.snack_id
+          ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
+          : null}
+        onChange={handleSelectBatch}
       />
     </div>
   );

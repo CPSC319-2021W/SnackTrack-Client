@@ -2,6 +2,8 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Cookies from 'js-cookie';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import LuxonUtils from '@date-io/luxon';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useDispatch } from 'react-redux';
 import { useGoogleLogout } from 'react-google-login';
 
@@ -53,35 +55,37 @@ const Root = () => {
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Switch>
-          <Route path={ROUTES.LOGIN} component={AuthLogin} />
-          <Route
-            path={ROUTES.SELECT}
-            component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
-          />
-          <CommonRoute
-            exact
-            path={ROUTES.SNACKS}
-            signOut={signOut}
-            switchUser={switchUser}
-            component={Snacks}
-          />
-          <PrivateRoute
-            path={ROUTES.TRANSACTIONS}
-            signOut={signOut}
-            component={Transactions}
-          />
-          <AdminRoute exact path={ROUTES.ADMIN} signOut={signOut} component={Dashboard} />
-          <AdminRoute path={ROUTES.INVENTORY} signOut={signOut} component={Inventory} />
-          <AdminRoute exact path={ROUTES.USERS} signOut={signOut} component={Users} />
-          <AdminRoute
-            path={`${ROUTES.USERS}/:id`}
-            signOut={signOut}
-            component={UserAccount}
-          />
-          <Route component={Fallback} />
-        </Switch>
+        <MuiPickersUtilsProvider utils={LuxonUtils}>
+          <CssBaseline />
+          <Switch>
+            <Route path={ROUTES.LOGIN} component={AuthLogin} />
+            <Route
+              path={ROUTES.SELECT}
+              component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
+            />
+            <CommonRoute
+              exact
+              path={ROUTES.SNACKS}
+              signOut={signOut}
+              switchUser={switchUser}
+              component={Snacks}
+            />
+            <PrivateRoute
+              path={ROUTES.TRANSACTIONS}
+              signOut={signOut}
+              component={Transactions}
+            />
+            <AdminRoute exact path={ROUTES.ADMIN} signOut={signOut} component={Dashboard} />
+            <AdminRoute path={ROUTES.INVENTORY} signOut={signOut} component={Inventory} />
+            <AdminRoute exact path={ROUTES.USERS} signOut={signOut} component={Users} />
+            <AdminRoute
+              path={`${ROUTES.USERS}/:id`}
+              signOut={signOut}
+              component={UserAccount}
+            />
+            <Route component={Fallback} />
+          </Switch>
+        </MuiPickersUtilsProvider>
       </ThemeProvider>
     </StylesProvider>
   );

@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 
+import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../styles/Colors.module.css';
 import { Button, Dialog, Divider } from '@material-ui/core';
 import { Field, Form, FormikProvider, useField, useFormik } from 'formik';
 import {React, useState} from 'react';
 
 import Select from 'react-select';
 import classNames from 'classnames';
-import { colors } from '../styles/theme';
 import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/ManageSnack.module.css';
 
@@ -118,9 +118,9 @@ const ManageSnackDialog = (props) => {
     }),
     option: (base, state) => ({
       ...base,
-      color: state.isSelected ? colors.DARK_BLUE : colors.DARKER_GREY,
+      color: state.isSelected ? DARK_BLUE : DARKER_GREY,
       fontWeight: state.isSelected ? '600' : '400',
-      backgroundColor: state.isSelected ? colors.LIGHT_BLUE : colors.WHITE,
+      backgroundColor: state.isSelected ? LIGHT_BLUE : WHITE,
       '&:hover': {
         backgroundColor: '#F1F9FF'
       },
@@ -130,12 +130,12 @@ const ManageSnackDialog = (props) => {
       ...base,
       height: '28px',
       minHeight: '20px',
-      border: `2px solid ${colors.BASE_BLUE}`,
+      border: `2px solid ${BASE_BLUE}`,
       '&:hover': {
-        border: `2px solid ${colors.DARK_BLUE}`
+        border: `2px solid ${DARK_BLUE}`
       },
       fontWeight: '600',
-      backgroundColor: state.hasValue ? colors.LIGHT_BLUE : colors.WHITE,
+      backgroundColor: state.hasValue ? LIGHT_BLUE : WHITE,
       boxShadow: 'none',
       cursor: 'pointer'
     })

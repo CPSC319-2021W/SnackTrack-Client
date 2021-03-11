@@ -33,4 +33,8 @@ const makeSuggestion = async (userId, suggestion) => {
   await httpClient.post('/suggestions', data, authHeader);
 };
 
-export { getSnackBatch, getSnacks, makeSuggestion };
+const addBatch = async (batch) => {
+  throw new Error('Not Implemented!', batch);
+};
+
+export { getSnackBatch, getSnacks, makeSuggestion, addBatch };

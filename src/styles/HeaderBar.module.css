@@ -204,3 +204,36 @@
     height: 2.5rem;
   }
 }
+
+@media (max-width: 414px) {
+  .menu__container__left {
+    display: none;
+  }
+
+  .menu__container__right {
+    width: 50%;
+  }
+
+  .icon__container__logout {
+    display: none;
+  }
+
+  .bar__mobile__admin {
+    justify-content: flex-end;
+  }
+
+  .header {
+    height: 80px;
+  }
+
+  .label {
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 50%;
+  }
+
+  .label__text {
+    text-align: left;
+    line-height: 1rem;
+  }
+}

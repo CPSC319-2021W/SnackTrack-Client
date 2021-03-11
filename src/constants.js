@@ -51,6 +51,7 @@ export const CATEGORIES_LIST = [
 ];
 
 export const NOTIFICATIONS = {
+  BATCH_SUCCESS: { type: 'success', message: 'New batch added' },
   ORDER_SUCCESS: { type: 'success', message: 'Snack tracked! Enjoy!' },
   PAYMENT_SUCCESS: { type: 'success', message: 'Payment submitted. Thank you!' },
   CHANGES_SUCCESS: { type: 'success', message: 'Your changes have been saved.' },

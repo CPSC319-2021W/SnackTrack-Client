@@ -198,7 +198,18 @@
   align-items: center;
 }
 
-.subtable {
+.subtable__container {
   background-color: INNER_LIGHT_GREY;
   padding: 0;
+}
+
+.subtable {
+  margin: auto;
+  width: 50%;
+}
+
+@media (max-width: 959px) {
+  .subtable {
+    width: 100%;
+  }
 }

@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import jwt from 'jsonwebtoken';
+
 const refreshTokenSetup = (res) => {
   let refreshTiming = (res.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
   const refreshToken = async () => {
@@ -10,9 +11,11 @@ const refreshTokenSetup = (res) => {
   };
   setTimeout(refreshToken, refreshTiming);
 };
+
 const isAuthenticated = () => {
   return Cookies.get('auth');
 };
+
 const isAdmin = () => {
   const token = Cookies.get('auth');
   if (token) {
@@ -22,6 +25,7 @@ const isAdmin = () => {
   }
   return false;
 };
+
 const isCommonLogin = (profile) => {
   const {
     userId,
@@ -44,4 +48,5 @@ const isCommonLogin = (profile) => {
     !isAdmin
   );
 };
+
 export { refreshTokenSetup, isAdmin, isAuthenticated, isCommonLogin };

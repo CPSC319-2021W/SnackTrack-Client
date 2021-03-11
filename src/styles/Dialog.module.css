@@ -1,10 +1,14 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
+@value LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
 
 .card {
   max-width: 360px;
   display: flex;
   flex-direction: column;
+}
+
+.card__small {
+  max-width: 234px;
 }
 
 .header {
@@ -14,14 +18,24 @@
   justify-content: space-between;
 }
 
-.headerTitle {
-  font-size: 20px;
-  width: 300px;
-  align-self: flex-start;
+.header__text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header__sub {
+  font-size: 16px;
   margin: 0;
+}
+
+.headerTitle {
+  font-size: 18px;
+  align-self: flex-start;
+  margin: 0.2rem 0 0 0;
   line-height: 22px;
   margin-right: 1rem;
   text-overflow: ellipsis;
+  color: BASE_BLUE;
 }
 
 .headerPrice {
@@ -54,30 +68,73 @@
 .quant__container {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .quantity {
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .labelContainer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 .label {
+  font-size: 14px;
+  font-weight: bold;
+  color: DARK_GREY;
+}
+
+.snackTitle {
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: DARK_BLUE;
+}
+
+.stepper {
+  display: flex;
+}
+
+.stepper__button {
+  width: 50px;
+  height: 40px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: BASE_BLUE;
+  background-color: LIGHT_BLUE;
+  text-transform: none;
+}
+
+.stepper__button:hover {
+  background-color: BASE_BLUE_HOVER;
+}
+
+.stepper__button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+}
+
+.stepper__button__left {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.stepper__button__right {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .input {
   color: DARK_GREY;
   font-size: 1rem;
-  border: 1.5px solid LIGHT_GREY;
+  border-top: 1.5px solid LIGHT_GREY;
+  border-bottom: 1.5px solid LIGHT_GREY;
   background-color: #f9f9f9;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
   margin: 0;
@@ -88,7 +145,18 @@
 }
 
 .input__small {
-  width: 30%;
+  height: 40px;
+  width: 70px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .button {
@@ -116,4 +184,9 @@
   .card {
     overflow-y: auto;
   }
+}
+
+.oneButton__footer {
+  display: flex;
+  justify-content: flex-end;
 }
