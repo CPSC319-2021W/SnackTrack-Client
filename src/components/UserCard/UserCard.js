@@ -71,7 +71,17 @@ const UserCard = (props) => {
         </div>
         {pathname === ROUTES.USERS || noHover ? (
           <div className={adminStyles.balance}>
-            <p className={adminStyles.balance__text}>{formatPrice(user.balance)}</p>
+            {noHover ? (
+              <p className={adminStyles.balance__text}>Current Balance</p>
+            ) : null}
+            <p
+              className={classNames({
+                [adminStyles.balance__value]: true,
+                [adminStyles.balance__value__large]: noHover
+              })}
+            >
+              {formatPrice(user.balance)}
+            </p>
           </div>
         ) : null}
       </CardActionArea>

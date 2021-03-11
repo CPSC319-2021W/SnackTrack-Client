@@ -6,7 +6,7 @@
 @value DARK_SHADOW, DEFAULT_LIFT from effects;
 
 .base {
-  width: 100%;
+  width: calc(100% - 20px);
   min-height: 100px;
   color: white;
   display: flex;
