@@ -1,9 +1,10 @@
-import React from 'react';
+import { React, useRef } from 'react';
+
 import { saveImage } from '../services/ImagesService';
 
 const ImageUploader = () => {
-  const uploadedImage = React.useRef(null);
-  const imageUploader = React.useRef(null);
+  const uploadedImage = useRef(null);
+  const imageUploader = useRef(null);
 
   const handleImageUpload = async (e) => {
     const [file] = e.target.files;
