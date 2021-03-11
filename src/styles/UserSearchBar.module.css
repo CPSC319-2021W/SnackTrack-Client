@@ -11,6 +11,16 @@
   margin-bottom: 1rem;
 }
 
+.searchBar__focused {
+  background-color: WHITE;
+}
+
+.searchBar__left {
+  margin-left: 0.5rem;
+  float: left;
+  clear: both;
+}
+
 .icon__base {
   height: 1rem;
   width: 1rem;

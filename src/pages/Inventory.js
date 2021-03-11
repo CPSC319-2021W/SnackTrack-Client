@@ -26,7 +26,6 @@ const Inventory = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  // const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
   // const onApiResponse = (response) => dispatch(setApiResponse(response));
 
@@ -49,6 +48,7 @@ const Inventory = () => {
   };
 
   useEffect(async () => {
+    handleCloseToastNotification();
     const snacksResponse = await getSnacks(false);
     setSnacks(snacksResponse.snacks);
   }, []);

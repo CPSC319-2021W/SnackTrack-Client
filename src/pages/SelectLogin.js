@@ -53,7 +53,7 @@ const SelectLogin = () => {
     if (usersToDisplay.length > 0) {
       loginList = <UserLoginList users={usersToDisplay} />;
     } else {
-      loginList = <p>{"we couldn't find you. try again"}</p>;
+      loginList = <p>{"We couldn't find you. Please try again."}</p>;
     }
   } else {
     loginList = (
