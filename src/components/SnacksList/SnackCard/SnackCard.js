@@ -96,47 +96,45 @@ const SnackCard = (props) => {
   };
 
   return (
-    <div className={styles.cardContainer}>
-      <Card variant={'outlined'} className={styles.base}>
-        <CardActionArea
-          className={classNames({
-            [styles.action_area]: true,
-            [styles.card__disabled]: quantity === 0
-          })}
-          onClick={handleCardClick}
-        >
-          <div className={styles.image}>
-            {stockStatusLabel(quantity, order_threshold)}
-            <CardMedia
-              className={classNames({
-                [styles.resize_image]: true,
-                [styles.image__disabled]: quantity === 0
-              })}
-              title={snack_name}
-              component='img'
-              src={image_uri}
+    <Card variant={'outlined'} className={styles.base}>
+      <CardActionArea
+        className={classNames({
+          [styles.action_area]: true,
+          [styles.card__disabled]: quantity === 0
+        })}
+        onClick={handleCardClick}
+      >
+        <div className={styles.image}>
+          {stockStatusLabel(quantity, order_threshold)}
+          <CardMedia
+            className={classNames({
+              [styles.resize_image]: true,
+              [styles.image__disabled]: quantity === 0
+            })}
+            title={snack_name}
+            component='img'
+            src={image_uri}
+          />
+        </div>
+        <div className={styles.label}>
+          <p className={styles.snack_name} title={snack_name}>
+            {snack_name}
+          </p>
+          <p className={styles.price}>
+            <NumberFormat
+              value={price / 100}
+              displayType={'text'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              prefix={'$'}
             />
-          </div>
-          <div className={styles.label}>
-            <p className={styles.snack_name} title={snack_name}>
-              {snack_name}
-            </p>
-            <p className={styles.price}>
-              <NumberFormat
-                value={price / 100}
-                displayType={'text'}
-                decimalScale={2}
-                fixedDecimalScale={true}
-                prefix={'$'}
-              />
-            </p>
-          </div>
-        </CardActionArea>
-        <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
-          Grab One
-        </Button>
-      </Card>
-    </div>
+          </p>
+        </div>
+      </CardActionArea>
+      <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
+        Grab One
+      </Button>
+    </Card>
   );
 };
 
