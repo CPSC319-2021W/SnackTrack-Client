@@ -98,11 +98,20 @@ const SnackCard = (props) => {
   return (
     <div className={styles.cardContainer}>
       <Card variant={'outlined'} className={styles.base}>
-        <CardActionArea className={styles.action_area} onClick={handleCardClick}>
+        <CardActionArea
+          className={classNames({
+            [styles.action_area]: true,
+            [styles.card__disabled]: quantity === 0
+          })}
+          onClick={handleCardClick}
+        >
           <div className={styles.image}>
             {stockStatusLabel(quantity, order_threshold)}
             <CardMedia
-              className={styles.resize_image}
+              className={classNames({
+                [styles.resize_image]: true,
+                [styles.image__disabled]: quantity === 0
+              })}
               title={snack_name}
               component='img'
               src={image_uri}
@@ -123,10 +132,10 @@ const SnackCard = (props) => {
             </p>
           </div>
         </CardActionArea>
+        <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
+          Grab One
+        </Button>
       </Card>
-      <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
-        Grab One
-      </Button>
     </div>
   );
 };
