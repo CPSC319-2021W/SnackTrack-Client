@@ -1,0 +1,59 @@
+@value colors: './Colors.module.css';
+@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, LIGHT_BLUE, MID_GREY, LIGHT_GREY, WHITE from colors;
+
+.base {
+    font-weight: 600;
+    text-transform: none;
+    border-radius: 6px;
+}
+
+.primary {
+    background-color: BASE_BLUE;
+    color: WHITE;
+}
+
+.primary:hover {
+    background-color: DARK_BLUE;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.small {
+    font-size: 0.8rem;
+    height: 28px;
+}
+
+.secondary {
+    background-color: LIGHT_BLUE;
+    color: BASE_BLUE;
+}
+
+.secondary:hover {
+    background-color: BASE_BLUE_HOVER;
+    color: DARK_BLUE;
+}
+
+.outline {
+    background-color: transparent;
+    color: BASE_BLUE;
+    border: 2px solid BASE_BLUE;
+}
+
+.outline:hover {
+    background-color: transparent;
+    color: DARK_BLUE;
+    border: 2px solid DARK_BLUE;
+}
+
+.primary:disabled, .secondary:disabled {
+    background-color: LIGHT_GREY;
+    color: MID_GREY;
+}
+
+.progress__container {
+    height: 24px;
+    display: flex;
+    align-items: center;
+}
