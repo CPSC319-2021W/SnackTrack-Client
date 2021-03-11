@@ -49,13 +49,13 @@ const ManageBatchDialog = (props) => {
 
   const handleChangeQuantity = (event) => {
     let input = Number(event.target.value);
-    if (!quantity && isNaN(input)) {
+    if (!isNaN(input)) {
+      if (input >= 0) {
+        setQuantity(input);
+        setErrors((prevState) => ({...prevState, quantity: null}));
+      }
+    } else if (!quantity && isNaN(input)) {
       setErrors((prevState) => ({...prevState, quantity: 'Oops - gotta be a number!'}));
-    } else if (quantity && isNaN(input)) {
-      setErrors((prevState) => ({...prevState, quantity: null}));
-    } else {
-      setQuantity(Number(input));
-      setErrors((prevState) => ({...prevState, quantity: null}));
     }
   };
 
