@@ -30,7 +30,14 @@ import styles from '../styles/Table.module.css';
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
-  const { snacksForAddBatch, activeSnacks, data, rowsPerPage, onChangePage } = props;
+  const {
+    snacksForAddBatch,
+    activeSnacks,
+    data,
+    rowsPerPage,
+    onAddBatch,
+    onChangePage
+  } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
   const {
     selectedSnackForBatch,
@@ -257,7 +264,12 @@ const SnackInventoryTable = (props) => {
           </TableFooter>
         </Table>
       </TableContainer>
-      <ManageBatchDialog newSnackBatch open={isAddBatchOpen} batch={selectedBatch} />
+      <ManageBatchDialog
+        newSnackBatch
+        open={isAddBatchOpen}
+        batch={selectedBatch}
+        onAddBatch={onAddBatch}
+      />
       <ManageBatchDialog open={isEditBatchOpen} batch={selectedBatch} />
     </Card>
   );

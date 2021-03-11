@@ -35,7 +35,8 @@ const makeSuggestion = async (userId, suggestion) => {
 
 const addBatch = async (batch) => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  await httpClient.post('/snack_batches', batch, authHeader);
+  const { data } = await httpClient.post('/snack_batches', batch, authHeader);
+  return data;
 };
 
 const editBatch = async (batch) => {

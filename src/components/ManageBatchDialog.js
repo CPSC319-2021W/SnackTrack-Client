@@ -20,7 +20,7 @@ import { useDispatch } from 'react-redux';
 
 const ManageBatchDialog = (props) => {
   const dispatch = useDispatch();
-  const { newSnackBatch, batch, open, onCancel } = props;
+  const { newSnackBatch, batch, open, onAddBatch, onCancel } = props;
   const { snack_id, snack_batch_id, snack_name } = batch;
 
   const today = DateTime.now().set({ hour: 0, minute: 0 });
@@ -75,9 +75,10 @@ const ManageBatchDialog = (props) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
         const dateString = date ? date.toUTC().toISO() : null;
-        await addBatch({ snack_id, quantity, expiration_dtm: dateString });
+        const batch = await addBatch({ snack_id, quantity, expiration_dtm: dateString });
         onApiResponse('BATCH_SUCCESS');
         openToastNotification(true);
+        onAddBatch(batch);
       } catch (err) {
         onApiResponse('ERROR');
         openToastNotification(true);
@@ -135,7 +136,8 @@ const ManageBatchDialog = (props) => {
       <Card
         variant='outlined'
         className={classNames({
-          [styles.card]: true
+          [styles.card]: true,
+          [styles.card__small]: true
         })}
       >
         <div className={styles.header}>
