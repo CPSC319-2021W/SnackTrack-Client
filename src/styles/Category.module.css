@@ -4,19 +4,23 @@
 .container {
 	display: flex;
 	flex-direction: row;
-	flex-wrap: wrap;
+	/* overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	margin: 0 -1rem;
+	padding: 0 1rem 1rem 1rem; */
 }
 
 .categoryBox {
 	width: 80px;
 	text-align: center;
-	margin-right: 20px;
+	margin-right: 0.8rem;
 	display: flex;
 	align-items: flex-end;
 }
 
 .categoryText {
-	font-size: 1rem;
+	font-size: 0.875rem;
 	font-weight: 500;
 	color: DARK_GREY;
 	margin: 0.75rem 0 0.25rem 0;
@@ -77,10 +81,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding-right: 0.25rem;
 }
 
 .icon_button {
-	width: 100%;
+	width: 60px;
 }
 
 .filter_hover {
@@ -93,4 +98,14 @@
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+@media (max-width: 414px) {
+	.container {
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+		margin: 0 -1rem;
+		padding: 0 1rem 1rem 1rem;
+	}
 }
