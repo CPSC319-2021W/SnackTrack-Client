@@ -47,12 +47,25 @@
   padding: 0 0 0 1rem;
 }
 
-.cell__payments {
-  width: 115px;
+.cell__payments__base {
+  width: 90px;
   max-width: 115px;
   height: 52px;
   max-height: 52px;
   border-bottom: 0;
+}
+
+.cell__payments__date {
+  width: 100px;
+  max-width: 100px;
+}
+
+.cell__payments__processed {
+  width: 115px;
+  max-width: 115px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cell__small {
