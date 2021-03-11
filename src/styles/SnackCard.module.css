@@ -4,16 +4,6 @@
 @value effects: './Effects.module.css';
 @value DEFAULT_SHADOW, DEFAULT_LIFT from effects;
 
-/* .cardContainer {
-  transition: 0.1s transform;
-}
-
-.cardContainer:hover {
-  box-shadow: DEFAULT_SHADOW;
-  transform: DEFAULT_LIFT;
-  color: none;
-} */
-
 .base {
   width: 230px;
   height: 260px;
