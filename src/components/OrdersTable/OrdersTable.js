@@ -10,7 +10,7 @@ import { setBalance } from '../../redux/features/users/usersSlice';
 
 const Orders = (props) => {
   const dispatch = useDispatch();
-  const { data, rowsPerPage, onChangePage, onHandleApiResponse, onMakePayment } = props;
+  const { data, rowsPerPage, updateProfileBalance, onChangePage, onHandleApiResponse, onMakePayment } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
   const { username, balance } = useSelector((state) => state.usersReducer.profile);
@@ -24,6 +24,7 @@ const Orders = (props) => {
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
 
+  // TODO: Delete this function after Transactions Redesign
   const updateBalance = (balance) => {
     dispatch(setBalance(balance));
   };
@@ -45,6 +46,7 @@ const Orders = (props) => {
     if (selectedOrders.length > 0)
       try {
         await makePayment(userId, selectedOrders, subtotalAmount, username);
+        updateProfileBalance(subtotalAmount);
         updateBalance(balance - subtotalAmount);
         await onMakePayment();
         onHandleApiResponse('PAYMENT_SUCCESS');
