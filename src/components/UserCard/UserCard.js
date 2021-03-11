@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 import { ROUTES } from '../../constants';
 import React from 'react';
 import adminStyles from '../../styles/AdminUsersList.module.css';
+import classNames from 'classnames';
 import defaultAvatar from '../../images/illustrations/defaultAvatar.svg';
 import { simpleLogin } from '../../redux/features/users/usersSlice';
 import styles from '../../styles/UserCard.module.css';
@@ -14,6 +15,9 @@ const UserCard = (props) => {
   const history = useHistory();
   const { pathname } = history.location;
   const { user } = props;
+  const routeToMatch = ROUTES.USERS.split('/').join('\\/');
+  const regex = new RegExp(`(${routeToMatch}/[0-9]+){1,1}`);
+  const noHover = Boolean(pathname.match(regex));
 
   const formatPrice = (amount) => {
     amount = amount / 100;
@@ -29,13 +33,29 @@ const UserCard = (props) => {
     history.push(`${ROUTES.USERS}/${user.user_id}`);
   };
 
+  const onClick = () => {
+    if (noHover) {
+      return;
+    }
+    if (pathname === ROUTES.SELECT) {
+      return login;
+    }
+    return expandUser;
+  };
+
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
 
   return (
-    <Card variant={'outlined'} className={styles.base}>
+    <Card
+      variant={'outlined'}
+      className={classNames({ [styles.base]: !noHover, [styles.base__noHover]: noHover })}
+    >
       <CardActionArea
-        className={styles.action_area}
-        onClick={pathname === ROUTES.SELECT ? login : expandUser}
+        className={classNames({
+          [styles.action_area]: true,
+          [styles.action_area__unclickable]: noHover
+        })}
+        onClick={onClick()}
       >
         <CardMedia
           className={styles.image}
@@ -49,9 +69,19 @@ const UserCard = (props) => {
           </p>
           <p>{user.username}</p>
         </div>
-        {pathname === ROUTES.USERS ? (
+        {pathname === ROUTES.USERS || noHover ? (
           <div className={adminStyles.balance}>
-            <p className={adminStyles.balance__text}>{formatPrice(user.balance)}</p>
+            {noHover ? (
+              <p className={adminStyles.balance__text}>Current Balance</p>
+            ) : null}
+            <p
+              className={classNames({
+                [adminStyles.balance__value]: true,
+                [adminStyles.balance__value__large]: noHover
+              })}
+            >
+              {formatPrice(user.balance)}
+            </p>
           </div>
         ) : null}
       </CardActionArea>
