@@ -22,12 +22,16 @@ const ManageBatchDialog = (props) => {
   const { batch, open, onCancel } = props;
   const { snack_id, snack_name } = batch;
 
+  const today = DateTime.now().set({ hour: 0, minute: 0 });
+
   const [quantity, setQuantity] = useState(0);
-  const [date, setDate] = useState(DateTime.now());
+  const [date, setDate] = useState(today);
   const [errors, setErrors] = useState({
     quantity: null,
     date: null
   });
+
+  const checkForErrors = (!!errors.quantity || !!errors.date || !quantity);
 
   const closeDialog = () => {
     setQuantity('');
@@ -56,9 +60,9 @@ const ManageBatchDialog = (props) => {
   };
 
   const handleChangeDate = (date) => {
-    if (!date || date.invalid) {
+    if (date && date.invalid) {
       setErrors((prevState) => ({...prevState, date: 'Invalid date format.'}));
-    } else if (date < Date.now()) {
+    } else if (date && date < today) {
       setErrors((prevState) => ({...prevState, date: 'Expiry must be after today.'}));
     } else {
       setErrors((prevState) => ({...prevState, date: null}));
@@ -66,12 +70,10 @@ const ManageBatchDialog = (props) => {
     }
   };
 
-  const checkForErrors = (!!errors.quantity || !!errors.date || !quantity);
-
   const onSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
-        const dateString = date.toUTC().toISO();
+        const dateString = date ? date.toUTC().toISO() : null;
         await addBatch({ snack_id, quantity, expiration_dtm: dateString });
         onApiResponse('BATCH_SUCCESS');
         openToastNotification(true);
