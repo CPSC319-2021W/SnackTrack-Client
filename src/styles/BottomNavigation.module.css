@@ -39,7 +39,7 @@
     fill: BASE_RED;
 }
 
-@media (min-width: 415px) {
+@media (min-width: 426px) {
     .bottomNav__base {
         display: none;
     }

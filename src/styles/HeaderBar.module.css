@@ -205,7 +205,7 @@
   }
 }
 
-@media (max-width: 414px) {
+@media (max-width: 425px) {
   .menu__container__left {
     display: none;
   }
