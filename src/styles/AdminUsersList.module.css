@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY, HEADER_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -29,10 +29,27 @@
 
 .balance {
   margin-left: auto;
+  margin-right: 20px;
 }
 
 .balance__text {
-  font-size: 20px;
+  color: HEADER_GREY;
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.balance__value {
+  font-size: 1.5rem;
   font-weight: bold;
   color: DARK_BLUE;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.balance__value__large {
+  font-size: 2rem;
 }
