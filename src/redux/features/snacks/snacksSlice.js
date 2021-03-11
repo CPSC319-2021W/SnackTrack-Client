@@ -17,11 +17,13 @@ const INITIAL_STATE = {
   snackBatches: [],
   selectedSnackForBatch: null,
   selectedBatch: {
+    snack_batch_id: null,
     snack_id: null,
     quantity: 0,
     expiration_dtm: null
   },
-  isManageBatchOpen: false,
+  isAddBatchOpen: false,
+  isEditBatchOpen: false,
   loading: false,
   error: null
 };
@@ -55,8 +57,11 @@ const snacksSlice = createSlice({
     setSelectedSnackForBatch: (state, action) => {
       state.selectedSnackForBatch = action.payload;
     },
-    setIsManageBatchOpen: (state, action) => {
-      state.isManageBatchOpen = action.payload;
+    setIsAddBatchOpen: (state, action) => {
+      state.isAddBatchOpen = action.payload;
+    },
+    setIsEditBatchOpen: (state, action) => {
+      state.isEditBatchOpen = action.payload;
     },
     setSelectedBatch: (state, action) => {
       state.selectedBatch = action.payload;
@@ -94,7 +99,8 @@ export const {
   setSnackBatches,
   setSelectedSnackForBatch,
   setSelectedBatch,
-  setIsManageBatchOpen,
+  setIsAddBatchOpen,
+  setIsEditBatchOpen,
   setQuantity
 } = snacksSlice.actions;
 

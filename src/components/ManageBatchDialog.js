@@ -1,26 +1,27 @@
 import { Button, Card, Dialog, Divider } from '@material-ui/core';
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import { addBatch, deleteBatch, editBatch } from '../services/SnacksService';
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../redux/features/notifications/notificationsSlice';
 import {
-  setIsManageBatchOpen,
+  setIsAddBatchOpen,
+  setIsEditBatchOpen,
   setSelectedBatch
 } from '../redux/features/snacks/snacksSlice';
 
 import DatePickerInput from './DatePickerInput';
 import { DateTime } from 'luxon';
 import InputField from './InputField';
-import { addBatch } from '../services/SnacksService';
 import classNames from 'classnames';
 import styles from '../styles/Dialog.module.css';
 import { useDispatch } from 'react-redux';
 
 const ManageBatchDialog = (props) => {
   const dispatch = useDispatch();
-  const { batch, open, onAddBatch, onCancel } = props;
-  const { snack_id, snack_name } = batch;
+  const { newSnackBatch, batch, open, onAddBatch, onCancel } = props;
+  const { snack_id, snack_batch_id, snack_name } = batch;
 
   const today = DateTime.now().set({ hour: 0, minute: 0 });
 
@@ -34,13 +35,13 @@ const ManageBatchDialog = (props) => {
   const checkForErrors = !!errors.quantity || !!errors.date || !quantity;
 
   const closeDialog = () => {
-    setQuantity(0);
     setErrors({
       quantity: null,
       date: null
     });
     dispatch(setSelectedBatch({ snack_id: null, snack_name: null }));
-    dispatch(setIsManageBatchOpen(false));
+    dispatch(setIsAddBatchOpen(false));
+    dispatch(setIsEditBatchOpen(false));
   };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
@@ -86,12 +87,50 @@ const ManageBatchDialog = (props) => {
     }
   };
 
+  const editSnackBatch = async (event) => {
+    if (event.key === 'Enter' || event.type === 'click') {
+      try {
+        const dateString = date ? date.toUTC().toISO() : null;
+        await editBatch({ snack_batch_id, quantity, expiration_dtm: dateString });
+        onApiResponse('BATCH_SUCCESS');
+        openToastNotification(true);
+      } catch (err) {
+        onApiResponse('ERROR');
+        openToastNotification(true);
+      }
+    }
+  };
+
+  const deleteSnackBatch = async () => {
+    try {
+      await deleteBatch(snack_batch_id);
+      onApiResponse('BATCH_SUCCESS');
+      openToastNotification(true);
+    } catch (err) {
+      onApiResponse('ERROR');
+      openToastNotification(true);
+    }
+  };
+
+  useEffect(() => {
+    if (newSnackBatch) {
+      setQuantity(0);
+    } else {
+      if (batch.expiration_dtm) {
+        setDate(DateTime.fromISO(batch.expiration_dtm));
+      } else {
+        setDate(null);
+      }
+      setQuantity(batch.quantity);
+    }
+  }, [batch]);
+
   return (
     <Dialog
       aria-labelledby='edit-order-dialog'
       open={open}
       onClose={closeDialog}
-      onSubmit={onSubmit}
+      onSubmit={newSnackBatch ? onSubmit : editSnackBatch}
       onCancel={onCancel}
     >
       <Card
@@ -103,7 +142,9 @@ const ManageBatchDialog = (props) => {
       >
         <div className={styles.header}>
           <div className={styles.header__text}>
-            <h3 className={styles.header__sub}>Add new batch of ...</h3>
+            <h3 className={styles.header__sub}>
+              {newSnackBatch ? 'Add new batch of ...' : 'Editing a batch of ...'}
+            </h3>
             <h4 className={styles.headerTitle}>{snack_name}</h4>
           </div>
         </div>
@@ -129,9 +170,32 @@ const ManageBatchDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <div className={styles.oneButton__footer}>
-          <Button disabled={checkForErrors} className={styles.button} onClick={onSubmit}>
-            Submit
+        <div
+          className={classNames({
+            [styles.oneButton__footer]: newSnackBatch,
+            [styles.twoButton__footer]: !newSnackBatch
+          })}
+        >
+          {newSnackBatch ? null : (
+            <Button
+              className={classNames({
+                [styles.button__light]: true,
+                [styles.button__wide]: true
+              })}
+              onClick={deleteSnackBatch}
+            >
+              Delete Batch
+            </Button>
+          )}
+          <Button
+            disabled={checkForErrors}
+            className={classNames({
+              [styles.button]: true,
+              [styles.button__wide]: !newSnackBatch
+            })}
+            onClick={newSnackBatch ? onSubmit : editSnackBatch}
+          >
+            {newSnackBatch ? 'Submit' : 'Save Changes'}
           </Button>
         </div>
       </Card>

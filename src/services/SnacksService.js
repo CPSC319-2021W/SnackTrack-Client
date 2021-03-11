@@ -39,4 +39,20 @@ const addBatch = async (batch) => {
   return data;
 };
 
-export { getSnackBatch, getSnacks, makeSuggestion, addBatch };
+const editBatch = async (batch) => {
+  const { snack_batch_id } = batch;
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.put(
+    `/snack_batches/${snack_batch_id}`,
+    batch,
+    authHeader
+  );
+  return data;
+};
+
+const deleteBatch = async (batchId) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.delete(`/snack_batches/${batchId}`, authHeader);
+};
+
+export { getSnackBatch, getSnacks, makeSuggestion, addBatch, editBatch, deleteBatch };
