@@ -1,0 +1,114 @@
+@value colors: './Colors.module.css';
+@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, ORANGE, RED from colors;
+
+.card__base {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+}
+
+.column__field {
+    margin: 0rem 0.65rem;
+}
+
+.status__bar {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 24px;
+    line-height: 1;
+    box-shadow: none;
+    cursor: text;
+}
+  
+.status__orange {
+    color: ORANGE;
+    background-color: #ffe7ca;
+}
+  
+.status__red {
+    color: RED;
+    background-color: #fdd9d7;
+}
+  
+.status__green {
+    color: GREEN;
+    background-color: #dbefdc;
+}
+
+.edit__button {
+    background-color: LIGHT_BLUE;
+    color: BASE_BLUE;
+    border-radius: 6px;
+    font-weight: 600;
+    text-transform: none;
+    height: 28px;
+}
+
+.edit__button:hover {
+    background-color: BASE_BLUE_HOVER;
+    color: DARK_BLUE;
+}
+
+.mobile__base {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 0.825rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+}
+
+.column__container__left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.column__container__right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.column__text {
+    margin: 0;
+    text-align: left;
+}
+
+.column__text__title {
+    font-weight: 600;
+}
+
+.mobile__status__bar {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 24px;
+    line-height: 1;
+    box-shadow: none;
+    cursor: text;
+}
+
+.mobile__edit__button {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    height: 26px;
+}
+
+@media (max-width: 414px) {
+    .card__base {
+        display: none;
+    }
+}
+
+@media (min-width: 415px) {
+    .mobile__base {
+        display: none;
+    }
+}

@@ -40,6 +40,8 @@ const RenderOrdersTable = (props) => {
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
 
+  console.log(transactions);
+
   const setEditOrderOpen = () => dispatch(setIsEditOrderOpen(true));
   const setOrderEdit = (order) => dispatch(setOrderToEdit(order));
 

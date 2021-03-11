@@ -11,6 +11,7 @@ import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import ToastNotification from '../components/ToastNotification';
 import styles from '../styles/Page.module.css';
+import TransactionCard from '../components/TransactionCard';
 
 const INITIAL_PAYMENTS = {
   total_rows: 0,
@@ -91,6 +92,7 @@ const Transactions = () => {
       <div className={styles.header}>
         <h5 className={styles.title}>Transactions</h5>
       </div>
+      <TransactionCard />
       <OrdersTable
         data={ordersResponse}
         rowsPerPage={rowsPerPage}
