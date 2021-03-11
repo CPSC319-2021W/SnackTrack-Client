@@ -5,6 +5,7 @@ import { NOTIFICATIONS } from '../constants';
 import SnackInventoryTable from '../components/SnackInventoryTable';
 import ToastNotification from '../components/ToastNotification';
 import { getSnacks } from '../services/SnacksService';
+import { setSnackBatches } from '../redux/features/snacks/snacksSlice';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
 import { toPaginatedSnacks } from '../helpers/AdminHelpers';
@@ -26,8 +27,13 @@ const Inventory = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
+  const { snackBatches } = useSelector((state) => state.snacksReducer);
+
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
-  // const onApiResponse = (response) => dispatch(setApiResponse(response));
+
+  const setBatches = (batches) => {
+    dispatch(setSnackBatches(batches));
+  };
 
   const handleCloseToastNotification = () => {
     openToastNotification(false);
@@ -45,6 +51,13 @@ const Inventory = () => {
     } else {
       setInactiveSnacks(newSnackPage);
     }
+  };
+
+  const handleBatchAdd = (batch) => {
+    const { snack_id, quantity } = batch;
+    const index = snacks.findIndex((snack) => snack.snack_id === snack_id);
+    snacks[index].quantity = snacks[index].quantity + quantity;
+    setBatches(snackBatches.concat([batch]));
   };
 
   useEffect(async () => {
@@ -81,11 +94,13 @@ const Inventory = () => {
         snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
         rowsPerPage={rowsPerPage}
+        onAddBatch={handleBatchAdd}
         onChangePage={handleChangePage}
       />
       <SnackInventoryTable
         data={inactiveSnacks}
         rowsPerPage={rowsPerPage}
+        onAddBatch={handleBatchAdd}
         onChangePage={handleChangePage}
       />
       <ToastNotification
