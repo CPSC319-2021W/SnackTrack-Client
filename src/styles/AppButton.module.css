@@ -5,6 +5,7 @@
     font-weight: 600;
     text-transform: none;
     border-radius: 6px;
+    min-width: 80px;
 }
 
 .primary {
@@ -23,6 +24,8 @@
 .small {
     font-size: 0.8rem;
     height: 28px;
+    width: 60px;
+    min-width: 0;
 }
 
 .secondary {
@@ -56,4 +59,8 @@
     height: 24px;
     display: flex;
     align-items: center;
+}
+
+.progress__text {
+    margin-right: 0.5rem;
 }

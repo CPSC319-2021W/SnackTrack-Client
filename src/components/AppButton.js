@@ -14,7 +14,7 @@ const AppButton = (props) => {
     fullWidth,
     disabled,
     loading,
-    handleClick,
+    onClick,
     children
   } = props;
 
@@ -27,11 +27,14 @@ const AppButton = (props) => {
       [styles.small]: small,
       [styles.fullWidth]: fullWidth
     })}
-    disabled={((primary || secondary) && disabled) || loading}
-    onClick={handleClick}>
+    disabled={(primary || secondary) && disabled}
+    onClick={loading ? null : onClick}>
       {
         loading ? (
           <div className={styles.progress__container}>
+            <div className={styles.progress__text}>
+              { children }
+            </div>
             <CircularProgress size={18} thickness={6} />
           </div>
         ) : children
