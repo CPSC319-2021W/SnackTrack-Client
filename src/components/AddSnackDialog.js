@@ -12,7 +12,7 @@ import styles from '../styles/ManageSnack.module.css';
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const AddSnackDialog = (props) => {
-  const { open, handleClose, onChangeObj } = props;
+  const { open, handleClose, onChangeObj, onSubmit } = props;
   const [category, setCategory] = useState(null);
 
   const handleSelectCategory = (event) => {
@@ -96,7 +96,7 @@ const AddSnackDialog = (props) => {
       aria-labelledby='snack-manage-dialog'
       open={open}
       onClose={closeDialog} 
-      // onSubmit={onSubmit}
+      onSubmit={onSubmit}
     > 
       <div className={styles.form}>
         <FormikProvider variant='outlined' value={formik}>
@@ -158,6 +158,7 @@ const AddSnackDialog = (props) => {
             </div>
             <Divider />
             <Button
+              type='submit'
               disabled={category} // make it disabled when input is not entered 
               className={styles.button}
             >

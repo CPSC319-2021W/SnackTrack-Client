@@ -156,24 +156,25 @@ const SnackInventoryTable = (props) => {
   };
 
   const handleChangeSnackObj = (event) => {
-    console.log(event.value);
+    console.log(event);
     // setSnackObj(event.target.value);
   };
 
-  // const handleSubmit = async (event) => {
-  //   console.log(snackObj);
-  //   // if (snackObj === '') {
-  //   //   return;
-  //   // }
-  //   if (event.key === 'Enter' || event.type === 'click') {
-  //     try {
-  //       setAddSnackOpen(false);
-  //       setSnackObj({});
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   }
-  // };
+  const handleSubmit = async (event) => {
+    console.log(event);
+    // console.log(snackObj);
+    // // if (snackObj === '') {
+    // //   return;
+    // // }
+    // if (event.key === 'Enter' || event.type === 'click') {
+    //   try {
+    //     setAddSnackOpen(false);
+    //     setSnackObj({});
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
+  };
 
   return (
     <Card className={styles.paper}>
@@ -290,7 +291,7 @@ const SnackInventoryTable = (props) => {
       </TableContainer>
       <AddSnackDialog 
         open={isAddSnackOpen}
-        // handleSubmit={handleSubmit}   
+        handleSubmit={handleSubmit}   
         handleClose={handleCloseAddSnack}
         onChangeObj={handleChangeSnackObj}
       />
