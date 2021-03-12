@@ -80,7 +80,7 @@ const UserProfile = () => {
   };
 
   const updateProfileBalance = (amount) => {
-    let userCopy = user;
+    let userCopy = JSON.parse(JSON.stringify(user));
     userCopy.balance = userCopy.balance - amount;
     setUser(userCopy);
   };
