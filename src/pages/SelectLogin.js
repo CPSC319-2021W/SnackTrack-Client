@@ -4,7 +4,7 @@ import Fuse from 'fuse.js';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
-import { getUsers } from '../services/UsersService';
+import { getUsersCommon } from '../services/UsersService';
 import styles from '../styles/Login.module.css';
 import { useSelector } from 'react-redux';
 
@@ -41,7 +41,7 @@ const SelectLogin = () => {
 
   useEffect(() => {
     const getAllUsers = () => {
-      const data = getUsers();
+      const data = getUsersCommon();
       setUsers(data.users);
     };
     getAllUsers();
