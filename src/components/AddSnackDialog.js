@@ -1,65 +1,44 @@
 import * as Yup from 'yup';
 
-import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../styles/Colors.module.css';
 import { Button, Dialog, Divider } from '@material-ui/core';
-import { Field, Form, FormikProvider, useField, useFormik } from 'formik';
+import { Field, Form, FormikProvider, useFormik } from 'formik';
 import {React, useState} from 'react';
 
-import Select from 'react-select';
-import classNames from 'classnames';
+import CategorySelect from './ManageSnack/CategorySelect';
+import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/ManageSnack.module.css';
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'candy', label: 'Candy' },
-  { value: 'chips', label: 'Chips' },
-  { value: 'cookies', label: 'Cookies' },
-  { value: 'crackers', label: 'Crackers' },
-  { value: 'fruits', label: 'Fruits' }
-];
-
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const TextInputLiveFeedback = ({ label, ...props }) => {
-  const [field, meta] = useField(props);
-  const [didFocus, setDidFocus] = useState(false);
-  const handleFocus = () => setDidFocus(true);
-  const showFeedback =
-    (!!didFocus && field.value.trim().length > 2) || meta.touched;
+const AddSnackDialog = (props) => {
+  const { open, handleClose, onChangeObj } = props;
+  const [category, setCategory] = useState(null);
 
-  return (
-    <div
-      className={classNames(styles.form__control,
-        ` ${
-          showFeedback ? (meta.error ? styles.invalid : styles.valid) : ''
-        }` ) }
-    >
-      <div className={styles.form__flex}>
-        <div className={dialogStyles.lable}>{label}</div>{' '}
-        {showFeedback ? (
-          <div
-            id={`${props.id}-feedback`}
-            aria-live='polite'
-            className={classNames(styles.feedback, styles.text__sm)}
-          >
-            {meta.error ? meta.error : '✓'}
-          </div>
-        ) : null}
-      </div>
-      <input className={styles.input}
-        {...props}
-        {...field}
-        aria-describedby={`${props.id}-feedback ${props.id}-help`}
-        onFocus={handleFocus}
-      />
-    </div>
-  );
-};
+  const handleSelectCategory = (event) => {
+    setCategory(event.target.value);
+    // console.log(handleSubmit);
+  };
 
-const ManageSnackDialog = (props) => {
-  //const dispatch = useDispatch();
-  const { open, value, onSubmit, handleClose, onChangeObj } = props;
+  const closeDialog = () => {
+    setCategory(null);
+    handleClose();
+  };
+  // const checkForErrors = !category;
+  // const onSubmit = async (event) => {
+  //   await sleep(500);
+  //   if (event.key == 'enter' || event.key == 'click') {
+  //       try {
+  //         console.log(onChangeObj);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //   }
+  //   closeDialog();
+  // }
+  // const handleSubmit = (values) => { 
+  //   console.log(values);
+  // };
 
   const formik = useFormik({
     initialValues: {
@@ -72,8 +51,10 @@ const ManageSnackDialog = (props) => {
     },
     onSubmit: async (values) => {
       await sleep(500);
-      console.log(onChangeObj);
+      console.log(values);
       alert(JSON.stringify(values, null, 2));
+      console.log(onChangeObj);
+      closeDialog();
     },
     validationSchema: Yup.object({
       snackname: Yup.string()
@@ -110,48 +91,16 @@ const ManageSnackDialog = (props) => {
     })
   });
 
-  const customStyles = {
-    container: (base) => ({
-      ...base,
-      width: '180px',
-      height: '24',
-      marginRight: '1rem'
-    }),
-    option: (base, state) => ({
-      ...base,
-      color: state.isSelected ? DARK_BLUE : DARKER_GREY,
-      fontWeight: state.isSelected ? '600' : '400',
-      backgroundColor: state.isSelected ? LIGHT_BLUE : WHITE,
-      '&:hover': {
-        backgroundColor: '#F1F9FF'
-      },
-      cursor: 'pointer'
-    }),
-    control: (base, state) => ({
-      ...base,
-      height: '28px',
-      minHeight: '20px',
-      border: `2px solid ${BASE_BLUE}`,
-      '&:hover': {
-        border: `2px solid ${DARK_BLUE}`
-      },
-      fontWeight: '600',
-      backgroundColor: state.hasValue ? LIGHT_BLUE : WHITE,
-      boxShadow: 'none',
-      cursor: 'pointer'
-    })
-  };
-
   return (
     <Dialog
       aria-labelledby='snack-manage-dialog'
       open={open}
-      onClose={handleClose} 
-      onSubmit={onSubmit}
+      onClose={closeDialog} 
+      // onSubmit={onSubmit}
     > 
-      {/* TODO: handleClose needs to reset form */}
       <div className={styles.form}>
         <FormikProvider variant='outlined' value={formik}>
+          {console.log(formik)}
           <Form>
             <div className={dialogStyles.header}>
               <div className={styles.title}>Add New Snack</div>
@@ -164,7 +113,7 @@ const ManageSnackDialog = (props) => {
               </div>
               <div className={styles.frame__column}>
                 <div className={styles.frame__row}>
-                  <TextInputLiveFeedback
+                  <InputLiveFeedback
                     label='Snack name'
                     id='snackname'
                     name='snackname'
@@ -172,22 +121,19 @@ const ManageSnackDialog = (props) => {
                   />
                   <div className={styles.frame__column}>
                     <p>Catetogy</p>
-                    {/* TODO: selectCategory component */}
-                    <Select options={options} 
-                      styles={customStyles}
-                      onChange={() => (alert(options.value))}/>
+                    <CategorySelect onChange={handleSelectCategory}/>
                   </div>
                 </div>
                 <p>Description</p>
                 <Field name='description' as='textarea' className={styles.textarea} />
                 <div className={styles.frame__row}>
-                  <TextInputLiveFeedback
+                  <InputLiveFeedback
                     label='Price ($)'
                     id='price'
                     name='price'
                     type='text'
                   />
-                  <TextInputLiveFeedback
+                  <InputLiveFeedback
                     label='Quantity'
                     id='quantity'
                     name='quantity'
@@ -195,13 +141,13 @@ const ManageSnackDialog = (props) => {
                   />
                 </div>
                 <div className={styles.frame__row}>
-                  <TextInputLiveFeedback
+                  <InputLiveFeedback
                     label='Re-order point'
                     id='reorder'
                     name='reorder'
                     type='text'
                   />
-                  <TextInputLiveFeedback
+                  <InputLiveFeedback
                     label='Date of Expiration'
                     id='expiration'
                     name='expiration'
@@ -212,16 +158,17 @@ const ManageSnackDialog = (props) => {
             </div>
             <Divider />
             <Button
-              disabled={!value} // make it disabled when input is not entered 
+              disabled={category} // make it disabled when input is not entered 
               className={styles.button}
-              onClick={onSubmit}>
+            >
               Submit
             </Button>
           </Form>
+          
         </FormikProvider>
       </div>
     </Dialog>
   );
 };
 
-export default ManageSnackDialog;
+export default AddSnackDialog;

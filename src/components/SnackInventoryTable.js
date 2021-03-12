@@ -10,8 +10,9 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import {
+  setIsAddSnackOpen,
   setIsManageBatchOpen,
   setSelectedBatch,
   setSelectedSnackForBatch,
@@ -20,9 +21,9 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
+import AddSnackDialog from './AddSnackDialog';
 import { CATEGORIES_LIST } from '../constants';
 import ManageBatchDialog from '../components/ManageBatchDialog';
-import ManageSnackDialog from './ManageSnackDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
 import { getSnackBatch } from '../services/SnacksService';
@@ -36,8 +37,8 @@ const SnackInventoryTable = (props) => {
   const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector(
     (state) => state.snacksReducer
   );
-  const [isManageSnackOpen, setIsManageSnackOpen] = useState(false);
-  const [snackObj, setSnackObj] = useState({});
+  const { isAddSnackOpen } = useSelector((state) => state.snacksReducer); 
+  // const [snackObj, setSnackObj] = useState({});
 
   const setSelectedSnack = (snackId) => {
     dispatch(setSelectedSnackForBatch(snackId));
@@ -144,31 +145,35 @@ const SnackInventoryTable = (props) => {
     }
   ];
 
-  const handleCloseManageSnack = () => {
-    setIsManageSnackOpen(false);
+  const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
+
+  const handleCloseAddSnack = () => {
+    setAddSnackOpen(false);
   };
 
-  const openManageSanck = () => {
-    setIsManageSnackOpen(true);
+  const openAddSanck = () => {
+    setAddSnackOpen(true);
   };
 
   const handleChangeSnackObj = (event) => {
-    setSnackObj(event.target.value);
+    console.log(event.value);
+    // setSnackObj(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
-    if (snackObj === '') {
-      return;
-    }
-    if (event.key === 'Enter' || event.type === 'click') {
-      try {
-        setIsManageSnackOpen(false);
-        setSnackObj({});
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+  // const handleSubmit = async (event) => {
+  //   console.log(snackObj);
+  //   // if (snackObj === '') {
+  //   //   return;
+  //   // }
+  //   if (event.key === 'Enter' || event.type === 'click') {
+  //     try {
+  //       setAddSnackOpen(false);
+  //       setSnackObj({});
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   }
+  // };
 
   return (
     <Card className={styles.paper}>
@@ -187,7 +192,7 @@ const SnackInventoryTable = (props) => {
             />
             <div className={styles.cell__pay}>
               <Button className={styles.button__base} onClick={
-                openManageSanck}>
+                openAddSanck}>
                 Add New Snack
               </Button>
             </div>
@@ -283,12 +288,11 @@ const SnackInventoryTable = (props) => {
           </TableFooter>
         </Table>
       </TableContainer>
-      <ManageSnackDialog 
-        open={isManageSnackOpen}
-        value={snackObj}
-        handleClose={handleCloseManageSnack}
-        onSubmit={handleSubmit}   
-        onChange={handleChangeSnackObj}
+      <AddSnackDialog 
+        open={isAddSnackOpen}
+        // handleSubmit={handleSubmit}   
+        handleClose={handleCloseAddSnack}
+        onChangeObj={handleChangeSnackObj}
       />
       <ManageBatchDialog open={isManageBatchOpen} batch={selectedBatch} />
     </Card>

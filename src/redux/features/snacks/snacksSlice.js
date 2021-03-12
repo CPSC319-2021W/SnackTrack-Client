@@ -23,7 +23,8 @@ const INITIAL_STATE = {
   },
   isManageBatchOpen: false,
   loading: false,
-  error: null
+  error: null,
+  isAddSnackOpen: false
 };
 
 const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async (activeOnly) => {
@@ -66,6 +67,10 @@ const snacksSlice = createSlice({
       const { snacks } = state;
       const index = snacks.findIndex((snack) => snack.snack_id === snackId);
       state.snacks[index].quantity = snacks[index].quantity - newQuantity;
+    },
+    //AddSnackDialog
+    setIsAddSnackOpen: (state, action) => {
+      state.isAddSnackOpen = action.payload;
     }
   },
   extraReducers: {
@@ -95,7 +100,8 @@ export const {
   setSelectedSnackForBatch,
   setSelectedBatch,
   setIsManageBatchOpen,
-  setQuantity
+  setQuantity,
+  setIsAddSnackOpen
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;
