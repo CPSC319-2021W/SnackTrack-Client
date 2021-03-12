@@ -1,59 +1,34 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, DARK_GREY, MID_GREY, LIGHT_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, DARK_GREY, MID_GREY, LIGHT_GREY, WHITE from colors;
 
 @value effects: './Effects.module.css';
 @value DEFAULT_SHADOW, DEFAULT_LIFT from effects;
 
-.cardContainer {
-  transition: 0.1s transform;
-}
-
-.cardContainer:hover {
-  box-shadow: DEFAULT_SHADOW;
-  transform: DEFAULT_LIFT;
-  color: none;
-}
-
 .base {
   width: 230px;
   height: 260px;
-  color: white;
-  margin: 0 0.5rem 0rem 0.5rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  color: WHITE;
+  margin: 0 0.5rem 1rem 0.5rem;
+  border-radius: 12px;
+  transition: 0.1s transform;
 }
 
 .base:hover {
-  color: white;
-}
-
-.button {
-  width: 230px;
-  height: 40px;
-  font-weight: 700;
-  color: #ffffff;
-  background-color: BASE_BLUE;
-  text-transform: none;
-  margin: 0 0 1rem 0;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.button:hover {
-  background-color: DARK_BLUE;
-}
-
-.button:disabled {
-  color: MID_GREY;
-  background-color: LIGHT_GREY;
+  box-shadow: DEFAULT_SHADOW;
+  transform: DEFAULT_LIFT;
+  color: WHITE;
 }
 
 .action_area {
   width: inherit;
-  height: inherit;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.card__disabled {
+  cursor: default;
 }
 
 .image {
@@ -64,7 +39,15 @@
 }
 
 .resize_image {
-  max-height: 200px;
+  max-height: 150px;
+}
+
+.image__disabled {
+  filter: none;
+  -webkit-filter: grayscale(75%);
+  -moz-filter:    grayscale(75%);
+  -ms-filter:     grayscale(75%);
+  -o-filter:      grayscale(75%);
 }
 
 .resize_image_skeleton {
@@ -122,10 +105,10 @@
 }
 
 .stock {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  margin: 0.5rem 0.7rem;
-  padding: 5px 12px;
+  margin: 1rem;
+  padding: 5px 14px;
   border-radius: 24px;
   line-height: 1;
   box-shadow: none;
@@ -133,6 +116,7 @@
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 1;
 }
 
 .stock__orange {
@@ -153,19 +137,38 @@
   border: 2px solid DARK_GREY;
 }
 
+.button {
+  width: 90%;
+  height: 40px;
+  font-weight: 700;
+  color: WHITE;
+  background-color: BASE_BLUE;
+  text-transform: none;
+  margin: auto;
+  border-radius: 6px;
+}
+
+.button:hover {
+  background-color: DARK_BLUE;
+}
+
+.button:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+}
+
 @media (max-width: 1280px) {
   .base {
     width: 212px;
     height: 230px;
   }
 
-  .button {
-    width: 212px;
-    height: 40px;
+  .action_area {
+    height: 78%;
   }
 
   .resize_image {
-    max-height: 178px;
+    max-height: 130px;
   }
 
   .snack_name {
@@ -185,23 +188,8 @@
     height: 228px;
   }
 
-  .button {
-    width: 210px;
-    height: 38px;
-  }
-
   .resize_image {
-    max-height: 178px;
-  }
-}
-
-@media (max-width: 974px) {
-  .base {
-    width: 208px;
-  }
-
-  .button {
-    width: 208px;
+    max-height: 124px;
   }
 }
 
@@ -211,13 +199,12 @@
     height: 200px;
   }
 
-  .button {
-    width: 168px;
-    height: 30px;
+  .action_area {
+    height: 76%;
   }
 
   .resize_image {
-    max-height: 164px;
+    max-height: 114px;
   }
 
   .snack_name {
@@ -241,13 +228,12 @@
     height: 190px;
   }
 
-  .button {
-    width: 164px;
-    height: 30px;
+  .action_area {
+    height: 74%;
   }
 
   .resize_image {
-    max-height: 154px;
+    max-height: 108px;
   }
 }
 
@@ -257,29 +243,18 @@
     height: 186px;
   }
 
-  .button {
-    width: 162px;
-    height: 30px;
+  .action_area {
+    height: 74%;
   }
 
   .resize_image {
-    max-height: 150px;
+    max-height: 102px;
   }
 }
 
 @media (max-width: 580px) {
   .base {
     width: 160px;
-    height: 186px;
-  }
-
-  .button {
-    width: 160px;
-    height: 30px;
-  }
-
-  .resize_image {
-    max-height: 150px;
   }
 }
 
@@ -288,23 +263,10 @@
     width: 158px;
     height: 180px;
   }
-
-  .button {
-    width: 158px;
-    height: 30px;
-  }
-
-  .resize_image {
-    max-height: 146px;
-  }
 }
 
 @media (max-width: 568px) {
   .base {
-    width: 156px;
-  }
-
-  .button {
     width: 156px;
   }
 }
@@ -313,18 +275,10 @@
   .base {
     width: 154px;
   }
-
-  .button {
-    width: 154px;
-  }
 }
 
 @media (max-width: 556px) {
   .base {
-    width: 152px;
-  }
-
-  .button {
     width: 152px;
   }
 }
@@ -333,18 +287,10 @@
   .base {
     width: 150px;
   }
-
-  .button {
-    width: 150px;
-  }
 }
 
 @media (max-width: 544px) {
   .base {
-    width: 148px;
-  }
-
-  .button {
     width: 148px;
   }
 }
@@ -355,13 +301,12 @@
     height: 160px;
   }
 
-  .button {
-    width: 146px;
-    height: 30px;
+  .action_area {
+    height: 70%;
   }
 
   .resize_image {
-    max-height: 124px;
+    max-height: 78px;
   }
 }
 
@@ -370,23 +315,10 @@
     width: 144px;
     height: 158px;
   }
-
-  .button {
-    width: 144px;
-    height: 30px;
-  }
-
-  .resize_image {
-    max-height: 124px;
-  }
 }
 
 @media (max-width: 526px) {
   .base {
-    width: 142px;
-  }
-
-  .button {
     width: 142px;
   }
 }
@@ -395,18 +327,10 @@
   .base {
     width: 140px;
   }
-
-  .button {
-    width: 140px;
-  }
 }
 
 @media (max-width: 514px) {
   .base {
-    width: 138px;
-  }
-
-  .button {
     width: 138px;
   }
 }
@@ -415,39 +339,11 @@
   .base {
     width: 136px;
   }
-
-  .button {
-    width: 136px;
-  }
 }
 
 @media (max-width: 502px) {
   .base {
     width: 134px;
-  }
-
-  .button {
-    width: 134px;
-  }
-}
-
-@media (max-width: 425px) {
-  .base {
-    width: 180px;
-    height: 200px;
-  }
-
-  .action_area {
-    height: 75%;
-  }
-
-  .resize_image {
-    max-height: 112px;
-  }
-
-  .stock {
-    font-size: 0.6rem;
-    padding: 5px 10px;
   }
 }
 
@@ -457,24 +353,18 @@
     height: 190px;
   }
 
-  .button {
-    width: 174px;
-    height: 30px;
+  .action_area {
+    height: 74%;
   }
 
   .resize_image {
-    max-height: 154px;
+    max-height: 104px;
   }
 }
 
 @media (max-width: 411px) {
   .base {
     width: 172px;
-  }
-
-  .button {
-    width: 172px;
-    height: 30px;
   }
 }
 
@@ -484,18 +374,12 @@
     height: 170px;
   }
 
-  .button {
-    width: 154px;
-    height: 30px;
+  .action_area {
+    height: 72%;
   }
 
   .resize_image {
-    max-height: 134px;
-  }
-
-  .stock {
-    font-size: 0.6rem;
-    padding: 5px 10px;
+    max-height: 86px;
   }
 }
 
@@ -503,11 +387,6 @@
   .base {
     width: 148px;
     height: 170px;
-  }
-
-  .button {
-    width: 148px;
-    height: 30px;
   }
 }
 
@@ -517,17 +396,11 @@
     height: 150px;
   }
 
-  .button {
-    width: 128px;
-    height: 30px;
+  .action_area {
+    height: 68%;
   }
 
   .resize_image {
-    max-height: 114px;
-  }
-
-  .stock {
-    font-size: 0.5rem;
-    padding: 4px 8px;
+    max-height: 66px;
   }
 }
