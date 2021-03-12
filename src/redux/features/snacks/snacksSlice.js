@@ -73,7 +73,6 @@ const snacksSlice = createSlice({
       const index = snacks.findIndex((snack) => snack.snack_id === snackId);
       state.snacks[index].quantity = snacks[index].quantity - newQuantity;
     },
-    //AddSnackDialog
     setIsAddSnackOpen: (state, action) => {
       state.isAddSnackOpen = action.payload;
     }
