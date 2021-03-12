@@ -79,6 +79,10 @@ const UserProfile = () => {
     await handlePaymentChangePage(0);
   };
 
+  const updateProfileBalance = (amount) => {
+    setUser({ ...user, balance: user.balance - amount });
+  };
+
   useEffect(async () => {
     const userResponse = await getUserById(id);
     setUser(userResponse);
@@ -116,6 +120,7 @@ const UserProfile = () => {
           <OrdersTable
             data={ordersResponse}
             rowsPerPage={rowsPerPage}
+            updateProfileBalance={updateProfileBalance}
             onHandleApiResponse={handleApiResponse}
             onChangePage={handleOrderChangePage}
             onMakePayment={handleMakePayment}

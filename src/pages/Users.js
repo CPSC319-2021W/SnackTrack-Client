@@ -5,7 +5,7 @@ import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
 import adminStyles from '../styles/AdminUsersList.module.css';
-import { getUsers } from '../services/UsersService';
+import { getUsersAdmin } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
 import { useSelector } from 'react-redux';
 
@@ -40,12 +40,12 @@ const Users = () => {
     isLoaded(users.length > 0);
   }, [users]);
 
-  useEffect(() => {
-    const getAllUsers = () => {
-      const data = getUsers();
+  useEffect(async () => {
+    const getAllUsers = async () => {
+      const data = await getUsersAdmin();
       setUsers(data.users);
     };
-    getAllUsers();
+    await getAllUsers();
   }, []);
 
   let loginList;
