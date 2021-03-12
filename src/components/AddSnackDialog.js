@@ -164,8 +164,7 @@ const AddSnackDialog = (props) => {
             >
               Submit
             </Button>
-          </Form>
-          
+          </Form> 
         </FormikProvider>
       </div>
     </Dialog>

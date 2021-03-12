@@ -157,11 +157,13 @@ const SnackInventoryTable = (props) => {
 
   const handleChangeSnackObj = (event) => {
     console.log(event);
+    setAddSnackOpen(false);
     // setSnackObj(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     console.log(event);
+    setAddSnackOpen(false);
     // console.log(snackObj);
     // // if (snackObj === '') {
     // //   return;
