@@ -148,4 +148,11 @@
   .form {
     overflow-y: auto;
   }
+  .frame__row {
+    flex-direction: column;
+  }
+  
+  .frame__column {
+    flex-direction: column;
+  }
 }
