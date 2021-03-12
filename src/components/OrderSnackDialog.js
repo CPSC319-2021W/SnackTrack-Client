@@ -83,7 +83,8 @@ const OrderSnackDialog = (props) => {
                 <Input
                   className={classNames({
                     [styles.input]: true,
-                    [styles.input__small]: true
+                    [styles.input__small]: true,
+                    [styles.input__stepper]: true
                   })}
                   disableUnderline={true}
                   value={value}

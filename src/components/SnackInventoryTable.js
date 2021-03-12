@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import React, { Fragment } from 'react';
 import {
-  setIsManageBatchOpen,
+  setIsAddBatchOpen,
   setSelectedBatch,
   setSelectedSnackForBatch,
   setSnackBatches
@@ -30,11 +30,21 @@ import styles from '../styles/Table.module.css';
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
-  const { snacksForAddBatch, activeSnacks, data, rowsPerPage, onChangePage } = props;
+  const {
+    snacksForAddBatch,
+    activeSnacks,
+    data,
+    rowsPerPage,
+    onAddBatch,
+    onChangePage
+  } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
-  const { selectedSnackForBatch, selectedBatch, isManageBatchOpen } = useSelector(
-    (state) => state.snacksReducer
-  );
+  const {
+    selectedSnackForBatch,
+    selectedBatch,
+    isAddBatchOpen,
+    isEditBatchOpen
+  } = useSelector((state) => state.snacksReducer);
 
   const setSelectedSnack = (snackId) => {
     dispatch(setSelectedSnackForBatch(snackId));
@@ -62,7 +72,7 @@ const SnackInventoryTable = (props) => {
     }
   };
 
-  const setManageBatchOpen = () => dispatch(setIsManageBatchOpen(true));
+  const setAddBatchOpen = () => dispatch(setIsAddBatchOpen(true));
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
   const handleAddBatch = (option) => {
@@ -70,7 +80,7 @@ const SnackInventoryTable = (props) => {
       snack_id: option.value,
       snack_name: option.label
     });
-    setManageBatchOpen(true);
+    setAddBatchOpen(true);
   };
 
   const columns = [
@@ -165,7 +175,7 @@ const SnackInventoryTable = (props) => {
         ) : null}
       </div>
       <TableContainer>
-        <Table className={styles.table} aria-label='Snack Inventory Table'>
+        <Table aria-label='Snack Inventory Table'>
           <TableHead>
             <TableRow className={styles.header__row}>
               {columns.map((column) => (
@@ -222,6 +232,7 @@ const SnackInventoryTable = (props) => {
                   </TableRow>
                   <SnackBatchesSubTable
                     id={snacks[i]?.snack_id}
+                    snackName={snacks[i]?.snack_name}
                     open={selectedSnackForBatch}
                     colSpan={columns.length}
                   />
@@ -253,7 +264,13 @@ const SnackInventoryTable = (props) => {
           </TableFooter>
         </Table>
       </TableContainer>
-      <ManageBatchDialog open={isManageBatchOpen} batch={selectedBatch} />
+      <ManageBatchDialog
+        newSnackBatch
+        open={isAddBatchOpen}
+        batch={selectedBatch}
+        onAddBatch={onAddBatch}
+      />
+      <ManageBatchDialog open={isEditBatchOpen} batch={selectedBatch} />
     </Card>
   );
 };

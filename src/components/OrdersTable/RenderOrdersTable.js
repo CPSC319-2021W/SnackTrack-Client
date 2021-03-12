@@ -188,9 +188,12 @@ const RenderOrdersTable = (props) => {
                     return (
                       <TableCell
                         key={column.id}
-                        className={`${styles.cell} ${styles.cell__small} ${
-                          column.id === 'transaction_type_id' ? styles.cell__large : null
-                        } ${column.id !== 'checkbox' ? styles.cell__medium : null}`}
+                        className={classNames({
+                          [styles.cell]: true,
+                          [styles.cell__small]: true,
+                          [styles.cell__medium]: column.id !== 'checkbox'
+                        })}
+                        title={column.id === 'snack_name' ? value : null}
                       >
                         {column.id === 'transaction_type_id'
                           ? column.format(value, order.payment_id)

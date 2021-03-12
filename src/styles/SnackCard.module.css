@@ -105,10 +105,10 @@
 }
 
 .stock {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin: 1rem;
-  padding: 5px 14px;
+  margin: 0.5rem 0.7rem;
+  padding: 5px 12px;
   border-radius: 24px;
   line-height: 1;
   box-shadow: none;
@@ -122,16 +122,19 @@
 .stock__orange {
   color: ORANGE;
   background-color: #ffe7ca;
+  border: 2px solid ORANGE;
 }
 
 .stock__red {
   color: RED;
   background-color: #fdd9d7;
+  border: 2px solid RED;
 }
 
 .stock__grey {
   color: DARK_GREY;
   background-color: LIGHT_GREY;
+  border: 2px solid DARK_GREY;
 }
 
 .button {
@@ -344,6 +347,26 @@
   }
 }
 
+@media (max-width: 425px) {
+  .base {
+    width: 180px;
+    height: 200px;
+  }
+
+  .action_area {
+    height: 75%;
+  }
+
+  .resize_image {
+    max-height: 112px;
+  }
+
+  .stock {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
+}
+
 @media (max-width: 414px) {
   .base {
     width: 174px;
@@ -378,6 +401,11 @@
   .resize_image {
     max-height: 86px;
   }
+
+  .stock {
+    font-size: 0.6rem;
+    padding: 5px 10px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -399,5 +427,10 @@
 
   .resize_image {
     max-height: 66px;
+  }
+
+  .stock {
+    font-size: 0.5rem;
+    padding: 4px 8px;
   }
 }

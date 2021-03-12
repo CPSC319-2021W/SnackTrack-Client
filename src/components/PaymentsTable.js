@@ -9,8 +9,8 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-
 import React, { Fragment } from 'react';
+
 import { ReactComponent as SadFace } from '../assets/placeholders/sad.svg';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
@@ -52,12 +52,10 @@ const PaymentsTable = (props) => {
   const renderPlaceholder = () => {
     return (
       <TableRow>
-        <TableCell colSpan={3} className={styles.placeholder__container}>
+        <TableCell colSpan={columns.length} className={styles.placeholder__container}>
           <div className={styles.placeholder__image__container}>
             <SadFace className={styles.placeholder__image} />
-            <h6 className={styles.placeholder__text}>
-              {'rip'}
-            </h6>
+            <h6 className={styles.placeholder__text}>{'rip'}</h6>
           </div>
         </TableCell>
       </TableRow>
@@ -117,9 +115,7 @@ const PaymentsTable = (props) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            { error ? renderPlaceholder() : renderRows() }
-          </TableBody>
+          <TableBody>{error ? renderPlaceholder() : renderRows()}</TableBody>
           <TableFooter>
             <TableRow>
               <TablePagination
