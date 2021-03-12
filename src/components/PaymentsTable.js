@@ -12,6 +12,7 @@ import {
 import React, { Fragment } from 'react';
 
 import { ReactComponent as SadFace } from '../assets/placeholders/sad.svg';
+import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
@@ -71,7 +72,15 @@ const PaymentsTable = (props) => {
               {columns.map((column) => {
                 const value = payment[column.id];
                 return (
-                  <TableCell key={column.id} className={styles.cell__payments}>
+                  <TableCell
+                    key={column.id}
+                    className={classNames({
+                      [styles.cell__payments__base]: true,
+                      [styles.cell__payments__date]: column.id === 'payment_dtm',
+                      [styles.cell__payments__processed]: column.id === 'created_by'
+                    })}
+                    title={column.id === 'created_by' ? value : null}
+                  >
                     {column.id === 'payment_amount' || column.id === 'payment_dtm'
                       ? column.format(value)
                       : value}
@@ -85,7 +94,16 @@ const PaymentsTable = (props) => {
           return (
             <TableRow key={row} tabIndex={-1}>
               {columns.map((column) => {
-                return <TableCell key={column.id} className={styles.cell__payments} />;
+                return (
+                  <TableCell
+                    key={column.id}
+                    className={classNames({
+                      [styles.cell__payments__base]: true,
+                      [styles.cell__payments__date]: column.id === 'payment_dtm',
+                      [styles.cell__payments__processed]: column.id === 'created_by'
+                    })}
+                  />
+                );
               })}
             </TableRow>
           );
@@ -108,7 +126,12 @@ const PaymentsTable = (props) => {
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  className={`${styles.secondaryHeader} ${styles.cell__payments}`}
+                  className={classNames({
+                    [styles.secondaryHeader]: true,
+                    [styles.cell__payments__base]: true,
+                    [styles.cell__payments__date]: column.id === 'payment_dtm',
+                    [styles.cell__payments__processed]: column.id === 'created_by'
+                  })}
                 >
                   <h6 className={styles.secondaryHeader__text}>{column.label}</h6>
                 </TableCell>
