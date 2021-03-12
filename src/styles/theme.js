@@ -128,6 +128,11 @@ export const theme = createMuiTheme({
       current: {
         color: BASE_BLUE
       }
+    },
+    MuiDialog: {
+      paper: {
+        borderRadius: '12px'
+      }
     }
   },
   props: {

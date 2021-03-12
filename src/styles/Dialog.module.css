@@ -2,7 +2,7 @@
 @value LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
 
 .card {
-  max-width: 360px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -52,7 +52,8 @@
 }
 
 .image {
-  height: 100%;
+  max-width: 250px;
+  max-height: 250px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
