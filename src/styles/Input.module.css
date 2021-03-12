@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, WHITE from colors;
+@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, INNER_LIGHT_GREY, WHITE from colors;
 
 .input__group {
   display: flex;
@@ -20,7 +20,7 @@
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
-  background-color: #f9f9f9;
+  background-color: INNER_LIGHT_GREY;
   border-radius: 4px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;

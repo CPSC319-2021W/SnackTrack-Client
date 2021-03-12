@@ -1,14 +1,14 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
+@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
 
 .card {
-  max-width: 300px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
 }
 
 .card__small {
-  max-width: 234px;
+  max-width: 300px;
 }
 
 .header {
@@ -133,7 +133,7 @@
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
-  background-color: #f9f9f9;
+  background-color: INNER_LIGHT_GREY;
   border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
