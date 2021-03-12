@@ -55,7 +55,7 @@ export const theme = createMuiTheme({
     },
     MuiButtonBase: {
       root: {
-        fontFamily: 'Source Sans Pro'
+        fontFamily: 'TT Norms'
       }
     },
     MuiCheckbox: {
@@ -127,6 +127,11 @@ export const theme = createMuiTheme({
       },
       current: {
         color: BASE_BLUE
+      }
+    },
+    MuiDialog: {
+      paper: {
+        borderRadius: '12px'
       }
     }
   },

@@ -8,15 +8,30 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core';
+import {
+  setIsEditBatchOpen,
+  setSelectedBatch
+} from '../redux/features/snacks/snacksSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
-import { useSelector } from 'react-redux';
 
 const SnackBatchesSubTable = (props) => {
-  const { id, open, colSpan } = props;
+  const dispatch = useDispatch();
+  const { id, snackName, open, colSpan } = props;
   const { snackBatches } = useSelector((state) => state.snacksReducer);
+
+  const setEditBatchOpen = () => dispatch(setIsEditBatchOpen(true));
+  const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
+
+  const handleEditBatch = (batch) => {
+    let snackBatch = JSON.parse(JSON.stringify(batch));
+    snackBatch.snack_name = snackName;
+    setBatchSelect(snackBatch);
+    setEditBatchOpen(true);
+  };
 
   const columns = [
     {
@@ -37,11 +52,16 @@ const SnackBatchesSubTable = (props) => {
     {
       id: 'actions',
       label: 'Actions',
-      format: () => (
-        <Button className={styles.button__batch_edit} onClick={() => {}}>
-          Edit
-        </Button>
-      )
+      format: (none, i) => {
+        return (
+          <Button
+            className={styles.button__batch_edit}
+            onClick={() => handleEditBatch(snackBatches[i])}
+          >
+            Edit
+          </Button>
+        );
+      }
     }
   ];
 
@@ -75,7 +95,7 @@ const SnackBatchesSubTable = (props) => {
                             key={column.id}
                             className={`${styles.cell} ${styles.cell__small}`}
                           >
-                            {column.format ? column.format(value) : value}
+                            {column.format ? column.format(value, i) : value}
                           </TableCell>
                         );
                       })}

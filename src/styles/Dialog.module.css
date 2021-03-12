@@ -2,7 +2,7 @@
 @value LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
 
 .card {
-  max-width: 360px;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
 }
@@ -52,7 +52,8 @@
 }
 
 .image {
-  height: 100%;
+  max-width: 250px;
+  max-height: 250px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -131,13 +132,18 @@
 .input {
   color: DARK_GREY;
   font-size: 1rem;
-  border-top: 1.5px solid LIGHT_GREY;
-  border-bottom: 1.5px solid LIGHT_GREY;
+  border: 1.5px solid LIGHT_GREY;
   background-color: #f9f9f9;
-  /* border-radius: 3px; */
+  border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
   margin: 0;
+}
+
+.input__stepper {
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
 }
 
 .input > * {
@@ -180,6 +186,31 @@ input[type='number'] {
   background-color: LIGHT_GREY;
 }
 
+.button__light {
+  width: 80px;
+  height: 40px;
+  font-weight: 700;
+  color: BASE_BLUE;
+  background-color: LIGHT_BLUE;
+  text-transform: none;
+  margin: 0.75rem;
+  margin-right: 1rem;
+  align-self: flex-end;
+}
+
+.button__wide {
+  width: 110px;
+}
+
+.button__light:hover {
+  background-color: BASE_BLUE_HOVER;
+}
+
+.button__light:disabled {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+}
+
 @media (max-width: 500px) {
   .card {
     overflow-y: auto;
@@ -189,4 +220,9 @@ input[type='number'] {
 .oneButton__footer {
   display: flex;
   justify-content: flex-end;
+}
+
+.twoButton__footer {
+  display: flex;
+  justify-content: space-between;
 }
