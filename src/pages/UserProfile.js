@@ -80,9 +80,7 @@ const UserProfile = () => {
   };
 
   const updateProfileBalance = (amount) => {
-    let userCopy = JSON.parse(JSON.stringify(user));
-    userCopy.balance = userCopy.balance - amount;
-    setUser(userCopy);
+    setUser({ ...user, balance: user.balance - amount });
   };
 
   useEffect(async () => {
