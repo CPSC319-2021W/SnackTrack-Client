@@ -1,4 +1,4 @@
-import { AppBar, Container } from '@material-ui/core';
+import { AppBar, Container, Tooltip } from '@material-ui/core';
 import { Fragment, React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -49,30 +49,34 @@ const HeaderBar = (props) => {
   const renderEmployeeMenu = () => {
     return (
       <div className={styles.menu__container__left}>
-        <button
-          className={styles.icon__container}
-          onClick={() => history.push(ROUTES.SNACKS)}
-        >
-          <HomeIcon
-            className={classNames({
-              [styles.unselectable]: true,
-              [styles.icon__base]: true,
-              [styles.icon__active]: pathname === ROUTES.SNACKS
-            })}
-          />
-        </button>
-        <button
-          className={styles.icon__container}
-          onClick={() => history.push(ROUTES.TRANSACTIONS)}
-        >
-          <TransactionsIcon
-            className={classNames({
-              [styles.unselectable]: true,
-              [styles.icon__base]: true,
-              [styles.icon__active]: pathname === ROUTES.TRANSACTIONS
-            })}
-          />
-        </button>
+        <Tooltip title='Home'>
+          <button
+            className={styles.icon__container}
+            onClick={() => history.push(ROUTES.SNACKS)}
+          >
+            <HomeIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true,
+                [styles.icon__active]: pathname === ROUTES.SNACKS
+              })}
+            />
+          </button>
+        </Tooltip>
+        <Tooltip title='Transactions'>
+          <button
+            className={styles.icon__container}
+            onClick={() => history.push(ROUTES.TRANSACTIONS)}
+          >
+            <TransactionsIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true,
+                [styles.icon__active]: pathname === ROUTES.TRANSACTIONS
+              })}
+            />
+          </button>
+        </Tooltip>
       </div>
     );
   };
@@ -80,42 +84,48 @@ const HeaderBar = (props) => {
   const renderAdminMenu = () => {
     return (
       <div className={styles.menu__container__left}>
-        <button
-          className={styles.icon__container}
-          onClick={() => history.push(ROUTES.ADMIN)}
-        >
-          <DashboardIcon
-            className={classNames({
-              [styles.unselectable]: true,
-              [styles.icon__base]: true,
-              [styles.icon__active]: pathname === ROUTES.ADMIN
-            })}
-          />
-        </button>
-        <button
-          className={styles.icon__container}
-          onClick={() => history.push(ROUTES.INVENTORY)}
-        >
-          <InventoryIcon
-            className={classNames({
-              [styles.unselectable]: true,
-              [styles.icon__base]: true,
-              [styles.icon__active]: pathname === ROUTES.INVENTORY
-            })}
-          />
-        </button>
-        <button
-          className={styles.icon__container}
-          onClick={() => history.push(ROUTES.USERS)}
-        >
-          <UserGroupIcon
-            className={classNames({
-              [styles.unselectable]: true,
-              [styles.icon__base]: true,
-              [styles.icon__active]: pathname === ROUTES.USERS
-            })}
-          />
-        </button>
+        <Tooltip title='Dashboard'>
+          <button
+            className={styles.icon__container}
+            onClick={() => history.push(ROUTES.ADMIN)}
+          >
+            <DashboardIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true,
+                [styles.icon__active]: pathname === ROUTES.ADMIN
+              })}
+            />
+          </button>
+        </Tooltip>
+        <Tooltip title='Inventory'>
+          <button
+            className={styles.icon__container}
+            onClick={() => history.push(ROUTES.INVENTORY)}
+          >
+            <InventoryIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true,
+                [styles.icon__active]: pathname === ROUTES.INVENTORY
+              })}
+            />
+          </button>
+        </Tooltip>
+        <Tooltip title='Users'>
+          <button
+            className={styles.icon__container}
+            onClick={() => history.push(ROUTES.USERS)}
+          >
+            <UserGroupIcon
+              className={classNames({
+                [styles.unselectable]: true,
+                [styles.icon__base]: true,
+                [styles.icon__active]: pathname === ROUTES.USERS
+              })}
+            />
+          </button>
+        </Tooltip>
       </div>
     );
   };
@@ -152,33 +162,35 @@ const HeaderBar = (props) => {
           <div className={styles.menu__container__right}>
             {
               firstName && (isAdmin ? (
-                <button
-                  className={styles.pill__container}
-                  onClick={() => history.push(isAdminRoute ? ROUTES.SNACKS : ROUTES.ADMIN)}
-                  onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-                >
-                  <p className={classNames({
-                    [styles.pill__text]: true,
-                    [styles.pill__text__hover]: hover
-                  })}>
-                    { firstName } { lastName?.slice(0, 1) }.
-                  </p>
-                  <div className={styles.pill__icon} >
-                    {
-                      isAdminRoute ? (
-                        <EmployeeIcon className={classNames({
-                          [styles.unselectable]: true,
-                          [styles.admin__switch__icon]: hover
-                        })} />
-                      ) : (
-                        <AdminIcon className={classNames({
-                          [styles.unselectable]: true,
-                          [styles.admin__switch__icon]: hover
-                        })} />
-                      )
-                    }
-                  </div>
-                </button>
+                <Tooltip title={isAdminRoute ? 'Employee Module' : 'Admin Module'}>
+                  <button
+                    className={styles.pill__container}
+                    onClick={() => history.push(isAdminRoute ? ROUTES.SNACKS : ROUTES.ADMIN)}
+                    onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+                  >
+                    <p className={classNames({
+                      [styles.pill__text]: true,
+                      [styles.pill__text__hover]: hover
+                    })}>
+                      { firstName } { lastName?.slice(0, 1) }.
+                    </p>
+                    <div className={styles.pill__icon} >
+                      {
+                        isAdminRoute ? (
+                          <EmployeeIcon className={classNames({
+                            [styles.unselectable]: true,
+                            [styles.admin__switch__icon]: hover
+                          })} />
+                        ) : (
+                          <AdminIcon className={classNames({
+                            [styles.unselectable]: true,
+                            [styles.admin__switch__icon]: hover
+                          })} />
+                        )
+                      }
+                    </div>
+                  </button>
+                </Tooltip>
               ) : (
                 <button className={classNames({
                   [styles.pill__container]: true,
@@ -193,11 +205,30 @@ const HeaderBar = (props) => {
                 </button>
               ))
             }
+            <Tooltip title='Log Out'>
+              <button
+                className={classNames({
+                  [styles.icon__container]: true,
+                  [styles.icon__container__logout]: true
+                })}
+                onClick={() => handleLogOut()}
+              >
+                <LogoutIcon
+                  className={classNames({
+                    [styles.unselectable]: true,
+                    [styles.icon__base]: true
+                  })}
+                />
+              </button>
+            </Tooltip>
+          </div>
+        </Container>
+      ) : (
+        <Container className={styles.bar}>
+          <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
+          <Tooltip title='Exit Session'>
             <button
-              className={classNames({
-                [styles.icon__container]: true,
-                [styles.icon__container__logout]: true
-              })}
+              className={styles.icon__container}
               onClick={() => handleLogOut()}
             >
               <LogoutIcon
@@ -207,22 +238,7 @@ const HeaderBar = (props) => {
                 })}
               />
             </button>
-          </div>
-        </Container>
-      ) : (
-        <Container className={styles.bar}>
-          <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
-          <button
-            className={styles.icon__container}
-            onClick={() => handleLogOut()}
-          >
-            <LogoutIcon
-              className={classNames({
-                [styles.unselectable]: true,
-                [styles.icon__base]: true
-              })}
-            />
-          </button>
+          </Tooltip>
         </Container>
       )}
     </AppBar>
