@@ -228,6 +228,16 @@
   width: 50%;
 }
 
+.date__expired {
+  color: RED;
+  font-weight: 600;
+}
+
+.date__expiring {
+  color: ORANGE;
+  font-weight: 600;
+}
+
 @media (max-width: 959px) {
   .subtable {
     width: 100%;

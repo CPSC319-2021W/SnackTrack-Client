@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
+import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
@@ -22,6 +23,20 @@ const SnackBatchesSubTable = (props) => {
   const dispatch = useDispatch();
   const { id, snackName, open, colSpan } = props;
   const { snackBatches } = useSelector((state) => state.snacksReducer);
+  const today = dt.now().set({ hour: 0, minute: 0 });
+  const expiringSoon = dt.now().set({ hour: 0, minute: 0 }).plus({ days: 3 });
+
+  const isBatchExpired = (column, timestamp) => {
+    return (
+      column === 'expiration_dtm' &&
+      expiringSoon > dt.fromISO(timestamp) &&
+      dt.fromISO(timestamp) > today
+    );
+  };
+
+  const isBatchExpiring = (column, timestamp) => {
+    return column === 'expiration_dtm' && today > dt.fromISO(timestamp);
+  };
 
   const setEditBatchOpen = () => dispatch(setIsEditBatchOpen(true));
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
@@ -91,7 +106,12 @@ const SnackBatchesSubTable = (props) => {
                         return (
                           <TableCell
                             key={column.id}
-                            className={`${styles.cell} ${styles.cell__small}`}
+                            className={classNames({
+                              [styles.cell]: true,
+                              [styles.cell__small]: true,
+                              [styles.date__expiring]: isBatchExpired(column.id, value),
+                              [styles.date__expired]: isBatchExpiring(column.id, value)
+                            })}
                           >
                             {column.format ? column.format(value, i) : value}
                           </TableCell>
