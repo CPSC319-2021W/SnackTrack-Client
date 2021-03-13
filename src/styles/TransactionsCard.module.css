@@ -12,12 +12,18 @@
 
 .column__field {
     margin: 0rem 0.65rem;
+    width: 20%;
+}
+
+.column__field__small {
+    margin: 0rem 0.65rem;
+    width: 10%;
 }
 
 .status__bar {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 5px 14px;
+    padding: 5px 12px;
     border-radius: 24px;
     line-height: 1;
     box-shadow: none;
@@ -37,20 +43,6 @@
 .status__green {
     color: GREEN;
     background-color: #dbefdc;
-}
-
-.edit__button {
-    background-color: LIGHT_BLUE;
-    color: BASE_BLUE;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: none;
-    height: 28px;
-}
-
-.edit__button:hover {
-    background-color: BASE_BLUE_HOVER;
-    color: DARK_BLUE;
 }
 
 .mobile__base {
@@ -88,26 +80,24 @@
 .mobile__status__bar {
     font-size: 0.6rem;
     font-weight: 700;
-    padding: 4px 14px;
+    padding: 4px 8px;
     border-radius: 24px;
     line-height: 1;
     box-shadow: none;
     cursor: text;
 }
 
-.mobile__edit__button {
-    margin-top: 0.6rem;
-    font-size: 0.8rem;
-    height: 26px;
+.status__container {
+    margin-bottom: 0.6rem;
 }
 
-@media (max-width: 414px) {
+@media (max-width: 425px) {
     .card__base {
         display: none;
     }
 }
 
-@media (min-width: 415px) {
+@media (min-width: 426px) {
     .mobile__base {
         display: none;
     }
