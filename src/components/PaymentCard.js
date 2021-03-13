@@ -35,9 +35,6 @@ const PaymentCard = (props) => {
         <div className={styles.column__field}>
           <p>{ created_by }</p>
         </div>
-        <div className={styles.column__field}>
-          <p>{ renderAmount() }</p>
-        </div>
       </Card>
       <Card variant='outlined' className={styles.mobile__base}>
         <div className={styles.column__container__left}>

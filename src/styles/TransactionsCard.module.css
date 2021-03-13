@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, ORANGE, RED from colors;
+@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, LIGHT_GREY, MID_GREY, ORANGE, RED from colors;
 
 .card__base {
     display: flex;
@@ -91,8 +91,27 @@
     margin-bottom: 0.6rem;
 }
 
+.table__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: LIGHT_GREY;
+    color: MID_GREY;
+    font-weight: 600;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.load__button__container {
+    margin-top: 1rem;
+}
+
 @media (max-width: 425px) {
     .card__base {
+        display: none;
+    }
+
+    .table__header {
         display: none;
     }
 }
