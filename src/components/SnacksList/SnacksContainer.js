@@ -3,6 +3,7 @@ import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksS
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
+import Fuse from 'fuse.js';
 import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
 import { TRANSACTION_TYPES } from '../../constants';
@@ -16,8 +17,14 @@ const SnacksContainer = (props) => {
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isLoaded, setLoaded] = useState(snacks.length > 0);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
+  const [snacksToDisplay, setSnacksToDisplay] = useState([]);
   const [snackQuantity, setSnackQuantity] = useState(1);
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
+  const { snackSearchValue } = useSelector((state) => state.searchbarReducer);
+
+  const searchOptions = {
+    keys: ['snack_name', 'description']
+  };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
     dispatch(setQuantity({ snackId, newQuantity }));
@@ -29,6 +36,19 @@ const SnacksContainer = (props) => {
 
   const selectSnack = (snackId) => {
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
+  };
+
+  const handleSearch = (snacksArray, searchValue) => {
+    if (searchValue === '') {
+      setSnacksToDisplay(snacksArray);
+    } else {
+      const fuse = new Fuse(snacksArray, searchOptions);
+      const results = fuse.search(searchValue);
+      const searchedSnacks = results.map((itemIndexPair) => {
+        return itemIndexPair.item;
+      });
+      setSnacksToDisplay(searchedSnacks);
+    }
   };
 
   const handleCloseSnackOrder = () => {
@@ -56,7 +76,6 @@ const SnacksContainer = (props) => {
       if (isAuthenticated()) {
         transactionTypeId = PURCHASE;
       }
-      // TODO: if value is '' or 0, throw more specific error
       try {
         await makeOrder(
           userId,
@@ -81,24 +100,28 @@ const SnacksContainer = (props) => {
   };
 
   useEffect(() => {
-    setLoaded(snacks.length > 0);
+    if (filters.length === 0) {
+      handleSearch(snacks, snackSearchValue.trim());
+    } else {
+      const filtered = snacks.filter((item) => {
+        return filters.includes(item.snack_type_id);
+      });
+      handleSearch(filtered, snackSearchValue.trim());
+    }
+  }, [filters, snackSearchValue]);
+
+  useEffect(() => {
+    if (snacks.length > 0) {
+      setLoaded(true);
+      setSnacksToDisplay(snacks);
+    }
   }, [snacks]);
 
   return (
     <div>
       <CategoryFilter selectedFilters={filters} />
       <div>
-        {filters.length === 0 ? (
-          <SnackGrid snacks={snacks} loaded={isLoaded} onClick={openSnackOrder} />
-        ) : (
-          <SnackGrid
-            snacks={snacks.filter((item) => {
-              return filters.includes(item.snack_type_id);
-            })}
-            loaded={isLoaded}
-            onClick={openSnackOrder}
-          />
-        )}
+        <SnackGrid snacks={snacksToDisplay} loaded={isLoaded} onClick={openSnackOrder} />
       </div>
       <OrderSnackDialog
         open={isSnackOrderOpen}

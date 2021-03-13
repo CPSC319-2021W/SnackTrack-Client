@@ -1,18 +1,14 @@
 import { Input, InputAdornment } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 
-import { ROUTES } from '../constants';
 import classNames from 'classnames';
 import search from '../assets/icons/search.svg';
-import { setUserSearchValue } from '../redux/features/searchbar/searchbarSlice';
+import { setSnackSearchValue } from '../redux/features/searchbar/searchbarSlice';
 import styles from '../styles/UserSearchBar.module.css';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
-const UserSearchBar = () => {
+const SnackSearchBar = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { pathname } = history.location;
   const [value, updateValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const WAIT_INTERVAL = 200;
@@ -23,7 +19,7 @@ const UserSearchBar = () => {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      dispatch(setUserSearchValue(value));
+      dispatch(setSnackSearchValue(value));
     }, WAIT_INTERVAL);
 
     // remove the previous timer if value changed
@@ -34,17 +30,15 @@ const UserSearchBar = () => {
     <Input
       className={classNames({
         [styles.searchBar]: true,
-        [styles.searchBar__focused]: isFocused,
-        [styles.searchBar__left]: pathname === ROUTES.USERS
+        [styles.searchBar__focused]: isFocused
       })}
-      autoFocus={true}
       disableUnderline={true}
       startAdornment={(
         <InputAdornment position='start' variant='filled'>
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
       )}
-      placeholder={pathname === ROUTES.SELECT ? 'Enter your name...' : 'Enter a name...'}
+      placeholder={'Search for a snack...'}
       value={value}
       onChange={handleChange}
       onBlur={() => setIsFocused(false)}
@@ -53,4 +47,4 @@ const UserSearchBar = () => {
   );
 };
 
-export default UserSearchBar;
+export default SnackSearchBar;

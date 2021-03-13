@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { NOTIFICATIONS } from '../constants';
 import PendingOrdersDialog from '../components/PendingOrdersDialog';
+import SnackSearchBar from '../components/SnackSearchBar';
 import SnacksContainer from '../components/SnacksList/SnacksContainer';
 import SuggestionDialog from '../components/SuggestionDialog';
 import ToastNotification from '../components/ToastNotification';
@@ -101,6 +102,7 @@ const Snacks = () => {
       <div className={styles.header}>
         <h5 className={styles.title}>Choose a snack or a category to start!</h5>
         <div className={styles.suggestBox}>
+          <SnackSearchBar />
           <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
           <p className={styles.suggestLabel} onClick={openSuggestion}>
             Suggest a snack!
