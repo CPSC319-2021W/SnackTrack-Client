@@ -97,10 +97,10 @@ const Transactions = () => {
     setIsListLoading(false);
   };
 
-  const handleMakePayment = async () => {
+  const handleMakePayment = () => {
     setIsPayAllLoading(true);
     // TODO: add pay all action (POST request to transactions API)
-    await resetTransactions();
+    resetTransactions();
     setIsPayAllLoading(false);
   };
 
@@ -129,7 +129,7 @@ const Transactions = () => {
   };
 
   useEffect(async () => {
-    await resetTransactions();
+    resetTransactions();
   }, [userId]);
 
   return (
