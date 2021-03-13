@@ -23,7 +23,7 @@ const SnacksContainer = (props) => {
   const { snackSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const searchOptions = {
-    keys: ['snack_name', 'description']
+    keys: ['snack_name']
   };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
