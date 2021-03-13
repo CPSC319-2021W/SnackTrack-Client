@@ -2,10 +2,14 @@ import { Fragment, React, useEffect, useState } from 'react';
 import { Tab, Tabs } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUserOrders, getUserPayments, setBalance } from '../services/UsersService';
+import { getUserOrders, getUserPayments } from '../services/UsersService';
+import {
+  setApiResponse,
+  setToastNotificationOpen
+} from '../redux/features/notifications/notificationsSlice';
 import { NOTIFICATIONS } from '../constants';
-import { makePayment } from '../../services/TransactionsService';
-import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
+import { makePayment } from '../services/TransactionsService';
+import { setBalance } from '../redux/features/users/usersSlice';
 
 import AppButton from '../components/AppButton';
 import EditOrderDialog from '../components/EditOrderDialog';
@@ -66,10 +70,17 @@ const Transactions = () => {
     dispatch(setBalance(balance));
   };
 
+  const onApiResponse = (response) => dispatch(setApiResponse(response));
+
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
   const handleClose = () => {
     openToastNotification(false);
+  };
+
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
   };
 
   const handleOrdersLoadMore = async (page) => {
@@ -82,7 +93,7 @@ const Transactions = () => {
         transactions: prevState.transactions.concat(response.transactions)
       }));
     } catch (err) {
-      // TODO: add error handling for failure to load
+      handleApiResponse('ERROR');
     }
     setIsListLoading(false);
   };
@@ -97,7 +108,7 @@ const Transactions = () => {
         payments: prevState.payments.concat(response.payments)
       }));
     } catch (err) {
-      // TODO: add error handling for failure to load
+      handleApiResponse('ERROR');
     }
     setIsListLoading(false);
   };
@@ -107,8 +118,9 @@ const Transactions = () => {
     try {
       await makePayment(userId, [], null, username);
       updateBalance(0);
+      handleApiResponse('PAYMENT_SUCCESS');
     } catch (err) {
-      // TODO: add error handling
+      handleApiResponse('ERROR');
     }
     await resetTransactions();
     setIsPayAllLoading(false);
@@ -126,20 +138,20 @@ const Transactions = () => {
         setOrdersResponse(orderResponse);
       } catch (err) {
         openToastNotification(true);
-        // TODO: add error handling for failure to load
+        handleApiResponse('ERROR');
       }
       try {
         const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
         setPaymentsResponse(paymentResponse);
       } catch (err) {
         openToastNotification(true);
-        // TODO: add error handling for failure to load
+        handleApiResponse('ERROR');
       }
     }
   };
 
   useEffect(async () => {
-    resetTransactions();
+    await resetTransactions();
   }, [userId]);
 
   return (
