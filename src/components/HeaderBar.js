@@ -121,7 +121,7 @@ const HeaderBar = (props) => {
               className={classNames({
                 [styles.unselectable]: true,
                 [styles.icon__base]: true,
-                [styles.icon__active]: pathname === ROUTES.USERS
+                [styles.icon__active]: pathname.includes(ROUTES.USERS)
               })}
             />
           </button>

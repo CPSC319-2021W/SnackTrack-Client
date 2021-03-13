@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, HEADER_GREY, BASE_RED, BASE_RED_HOVER, WHITE, BLACK from colors;
+@value DARK_GREY, MID_GREY, HEADER_GREY, BASE_RED, BASE_RED_HOVER, WHITE, BLACK from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -61,21 +61,27 @@
   margin: 0 0.5rem 0 0.5rem;
   padding: 0 0.5rem;
   cursor: pointer;
+  fill: MID_GREY;
 }
 
 .icon__container:focus {
   outline: 0;
 }
 
+.icon__container:hover {
+  opacity: 100%;
+  fill: BASE_RED;
+}
+
 .icon__base {
-  opacity: 30%;
+  opacity: 80%;
   transition: 0.2s;
 }
 
 .icon__base:hover {
   font-weight: bold;
-  opacity: 100%;
-  fill: BASE_RED;
+  opacity: inherit;
+  fill: inherit;
 }
 
 .icon__active {

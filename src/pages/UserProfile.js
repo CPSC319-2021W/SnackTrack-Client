@@ -18,6 +18,8 @@ import { getUserById } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
 import usersStyles from '../styles/UserProfile.module.css';
 
+import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
+
 const INITIAL_PAYMENTS = {
   total_rows: 0,
   payments: [],
@@ -111,7 +113,10 @@ const UserProfile = () => {
     <div className={styles.base}>
       <div className={styles.header}>
         <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
-          Back To Users List
+          <div className={usersStyles.icon__container}>
+            <ArrowIcon />
+          </div>
+          Back to Users List
         </h5>
       </div>
       {user ? <UserCard user={user} /> : <UserCardSkeleton />}
