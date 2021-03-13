@@ -82,16 +82,16 @@ const OrderCard = (props) => {
     <Fragment>
       <Card variant='outlined' className={styles.card__base}>
         <div className={styles.column__field}>
-          <p>{ renderDate() }</p>
+          <p className={styles.column__text}>{ renderDate() }</p>
         </div>
         <div className={styles.column__field}>
-          <p>{ snack_name }</p>
+          <p className={styles.column__text}>{ snack_name }</p>
         </div>
         <div className={styles.column__field__small}>
-          <p>{ quantity }</p>
+          <p className={styles.column__text}>{ quantity }</p>
         </div>
         <div className={styles.column__field}>
-          <p>{ renderAmount() }</p>
+          <p className={styles.column__text}>{ renderAmount() }</p>
         </div>
         <div className={styles.column__field__small}>
           { renderStatus() }
@@ -104,17 +104,17 @@ const OrderCard = (props) => {
         <div className={styles.column__container__left}>
           <div>
             <p className={classNames({
-              [styles.column__text]: true,
+              [styles.column__text__mobile]: true,
               [styles.column__text__title]: true
             })}>
               { snack_name }
             </p>
           </div>
           <div>
-            <p className={styles.column__text}>{ renderDate() }</p>
+            <p className={styles.column__text__mobile}>{ renderDate() }</p>
           </div>
           <div>
-            <p className={styles.column__text}>
+            <p className={styles.column__text__mobile}>
               { quantity } { quantity > 1 ? 'items' : 'item' } • { renderAmount() }
             </p>
           </div>

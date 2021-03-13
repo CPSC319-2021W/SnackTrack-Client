@@ -2,8 +2,9 @@ import { Fragment, React, useEffect, useState } from 'react';
 import { Tab, Tabs } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getUserOrders, getUserPayments } from '../services/UsersService';
+import { getUserOrders, getUserPayments, setBalance } from '../services/UsersService';
 import { NOTIFICATIONS } from '../constants';
+import { makePayment } from '../../services/TransactionsService';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 
 import AppButton from '../components/AppButton';
@@ -48,18 +49,22 @@ const TabPanel = (props) => {
 const Transactions = () => {
   const dispatch = useDispatch();
   const [rowsPerPage] = useState(8);
-  const { userId } = useSelector((state) => state.usersReducer.profile);
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [isListLoading, setIsListLoading] = useState(false);
   const [isPayAllLoading, setIsPayAllLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const { userId, username } = useSelector((state) => state.usersReducer.profile);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
   const { isEditOrderOpen, orderToEdit } = useSelector(
     (state) => state.transactionsReducer
   );
+
+  const updateBalance = (balance) => {
+    dispatch(setBalance(balance));
+  };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -97,10 +102,15 @@ const Transactions = () => {
     setIsListLoading(false);
   };
 
-  const handleMakePayment = () => {
+  const handleMakePayment = async () => {
     setIsPayAllLoading(true);
-    // TODO: add pay all action (POST request to transactions API)
-    resetTransactions();
+    try {
+      await makePayment(userId, [], null, username);
+      updateBalance(0);
+    } catch (err) {
+      // TODO: add error handling
+    }
+    await resetTransactions();
     setIsPayAllLoading(false);
   };
 

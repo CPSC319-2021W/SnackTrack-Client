@@ -11,11 +11,17 @@
 }
 
 .column__field {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     margin: 0rem 0.65rem;
     width: 20%;
 }
 
 .column__field__small {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     margin: 0rem 0.65rem;
     width: 10%;
 }
@@ -68,9 +74,9 @@
     align-items: flex-end;
 }
 
-.column__text {
-    margin: 0;
+.column__text__mobile {
     text-align: left;
+    margin: 0;
 }
 
 .column__text__title {

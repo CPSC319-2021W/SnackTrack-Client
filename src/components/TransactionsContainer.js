@@ -29,22 +29,22 @@ const TransactionsContainer = (props) => {
     return (
       <Fragment>
         <div className={styles.column__field}>
-          <p>Order Date</p>
+          <p className={styles.column__text}>Order Date</p>
         </div>
         <div className={styles.column__field}>
-          <p>Snack Name</p>
+          <p className={styles.column__text}>Snack Name</p>
         </div>
         <div className={styles.column__field__small}>
-          <p>Quantity</p>
+          <p className={styles.column__text}>Quantity</p>
         </div>
         <div className={styles.column__field}>
-          <p>Amount</p>
+          <p className={styles.column__text}>Amount</p>
         </div>
         <div className={styles.column__field__small}>
-          <p>Status</p>
+          <p className={styles.column__text}>Status</p>
         </div>
         <div className={styles.column__field}>
-          <p>Actions</p>
+          <p className={styles.column__text}>Actions</p>
         </div>
       </Fragment>
     );

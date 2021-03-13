@@ -39,19 +39,19 @@ const PaymentCard = (props) => {
       <Card variant='outlined' className={styles.mobile__base}>
         <div className={styles.column__container__left}>
           <div>
-            <p className={styles.column__text}>{ renderDate() }</p>
+            <p className={styles.column__text__mobile}>{ renderDate() }</p>
           </div>
           <div>
-            <p className={styles.column__text}>{ renderAmount() }</p>
+            <p className={styles.column__text__mobile}>{ renderAmount() }</p>
           </div>
         </div>
         <div className={styles.column__container__right}>
           <div>
-            <p className={styles.column__text}>Payment made by</p>
+            <p className={styles.column__text__mobile}>Processed by</p>
           </div>
           <div>
             <p className={classNames({
-              [styles.column__text]: true,
+              [styles.column__text__mobile]: true,
               [styles.column__text__title]: true
             })}>
               { created_by }

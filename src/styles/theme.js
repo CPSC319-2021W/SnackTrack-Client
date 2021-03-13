@@ -140,9 +140,16 @@ export const theme = createMuiTheme({
       },
       indicator: {
         height: '4px',
-        borderRadius: '4px',
-        width: '100%',
-        backgroundColor: BASE_RED
+        backgroundColor: 'transparent',
+        display: 'flex',
+        justifyContent: 'center',
+        '& > span': {
+          height: '4px',
+          borderRadius: '4px',
+          width: '100%',
+          maxWidth: '60px',
+          backgroundColor: BASE_RED
+        }
       }
     },
     MuiTab: {
