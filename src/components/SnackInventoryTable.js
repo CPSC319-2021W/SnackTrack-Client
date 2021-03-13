@@ -10,7 +10,7 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import React, { Fragment } from 'react';
+import { Fragment, React, useEffect } from 'react';
 import {
   setIsAddBatchOpen,
   setSelectedBatch,
@@ -82,6 +82,10 @@ const SnackInventoryTable = (props) => {
     });
     setAddBatchOpen(true);
   };
+
+  useEffect(() => {
+    setSelectedSnack(false);
+  }, [snacks]);
 
   const columns = [
     { id: 'snack_id', label: 'Snack ID' },
@@ -208,16 +212,11 @@ const SnackInventoryTable = (props) => {
                         <TableCell
                           key={column.id}
                           className={`${styles.cell} ${styles.cell__small} ${
-                            column.label === 'Status' ||
-                            column.id === 'snack_name'
+                            column.label === 'Status' || column.id === 'snack_name'
                               ? styles.cell__medium
                               : null
                           }`}
-                          title={
-                            column.id === 'snack_name'
-                              ? value
-                              : null
-                          }
+                          title={column.id === 'snack_name' ? value : null}
                         >
                           {column.format
                             ? column.format(
