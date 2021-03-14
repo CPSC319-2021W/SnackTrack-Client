@@ -152,35 +152,23 @@ const SnackInventoryTable = (props) => {
 
   const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
 
-  const handleCloseAddSnack = () => {
-    setAddSnackOpen(false);
-  };
+  // const handleCloseAddSnack = () => {
+  //   setAddSnackOpen(false);
+  // };
 
   const openAddSanck = () => {
     setAddSnackOpen(true);
   };
 
-  const handleChangeSnackObj = (event) => {
-    console.log(event);
-    setAddSnackOpen(false);
-    // setSnackObj(event.target.value);
-  };
-
   const handleSubmit = async (event) => {
     console.log(event);
-    setAddSnackOpen(false);
-    // console.log(snackObj);
-    // // if (snackObj === '') {
-    // //   return;
-    // // }
-    // if (event.key === 'Enter' || event.type === 'click') {
-    //   try {
-    //     setAddSnackOpen(false);
-    //     setSnackObj({});
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
+    if (event.key === 'Enter' || event.type === 'click') {
+      try {
+        setAddSnackOpen(false);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   };
 
   return (
@@ -304,8 +292,7 @@ const SnackInventoryTable = (props) => {
       <AddSnackDialog 
         open={isAddSnackOpen}
         handleSubmit={handleSubmit}   
-        handleClose={handleCloseAddSnack}
-        onChangeObj={handleChangeSnackObj}
+        // handleClose={handleCloseAddSnack}
       />
       <ManageBatchDialog
         newSnackBatch
@@ -314,6 +301,7 @@ const SnackInventoryTable = (props) => {
         onAddBatch={onAddBatch}
       />
       <ManageBatchDialog open={isEditBatchOpen} batch={selectedBatch} />
+      {/* <AddSnackDialog open={isAddSnackOpen} /> */}
     </Card>
   );
 };

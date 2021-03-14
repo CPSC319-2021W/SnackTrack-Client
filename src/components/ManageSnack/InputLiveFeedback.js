@@ -1,7 +1,6 @@
 import {React, useState} from 'react';
 
 import classNames from 'classnames';
-import dialogStyles from '../../styles/Dialog.module.css';
 import styles from '../../styles/ManageSnack.module.css';
 import { useField } from 'formik';
 
@@ -20,7 +19,7 @@ const TextInputLiveFeedback = ({ label, ...props }) => {
         }` ) }
     >
       <div className={styles.form__flex}>
-        <div className={dialogStyles.lable}>{label}</div>{' '}
+        <div className={styles.lable}>{label}</div>{' '}
         {showFeedback ? (
           <div
             id={`${props.id}-feedback`}

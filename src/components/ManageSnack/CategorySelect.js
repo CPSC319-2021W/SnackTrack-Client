@@ -2,15 +2,7 @@ import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../../styl
 
 import React from 'react';
 import Select from 'react-select';
-
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'candy', label: 'Candy' },
-  { value: 'chips', label: 'Chips' },
-  { value: 'cookies', label: 'Cookies' },
-  { value: 'crackers', label: 'Crackers' },
-  { value: 'fruits', label: 'Fruits' }
-];
+import { options } from '../../constants';
 
 const CategorySelect = (props) => {
   const { handleSelectCategory } = props;
@@ -18,9 +10,10 @@ const CategorySelect = (props) => {
   const customStyles = {
     container: (base) => ({
       ...base,
-      width: '180px',
-      height: '24',
-      marginRight: '1rem'
+      width: '100%',
+      height: '24px',
+      minHeight: '20px',
+      minWidth: '180px'
     }),
     option: (base, state) => ({
       ...base,
@@ -34,8 +27,10 @@ const CategorySelect = (props) => {
     }),
     control: (base, state) => ({
       ...base,
-      height: '28px',
+      height: '24px',
+      width: '100%',
       minHeight: '20px',
+      minWidth: '180px',
       border: `2px solid ${BASE_BLUE}`,
       '&:hover': {
         border: `2px solid ${DARK_BLUE}`
@@ -44,12 +39,29 @@ const CategorySelect = (props) => {
       backgroundColor: state.hasValue ? LIGHT_BLUE : WHITE,
       boxShadow: 'none',
       cursor: 'pointer'
+    }),
+    singleValue: (base) => ({
+      ...base,
+      fontWeight: '600',
+      color: BASE_BLUE
+    }),
+    dropdownIndicator: (base) => ({
+      ...base,
+      color: BASE_BLUE,
+      '&:hover': {
+        color: DARK_BLUE
+      }
+    }),
+    indicatorSeparator: (base) => ({
+      ...base,
+      height: '0px'
     })
   };
 
   return (
     <div>
       <Select options={options} 
+        placeholder={'Select Category'}
         styles={customStyles}
         onChange={handleSelectCategory}/>
     </div>

@@ -5,55 +5,46 @@ import { Field, Form, FormikProvider, useFormik } from 'formik';
 import {React, useState} from 'react';
 
 import CategorySelect from './ManageSnack/CategorySelect';
+// import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import dialogStyles from '../styles/Dialog.module.css';
+import {
+  setIsAddSnackOpen
+} from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ManageSnack.module.css';
+import { useDispatch } from 'react-redux';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const AddSnackDialog = (props) => {
-  const { open, handleClose, onChangeObj, onSubmit } = props;
-  const [category, setCategory] = useState(null);
+const initialState = { snackname: '',
+  description: '',
+  price: '',
+  quantity: '',
+  reorder: '',
+  expiration: ''};
 
-  const handleSelectCategory = (event) => {
-    setCategory(event.target.value);
-    // console.log(handleSubmit);
+const AddSnackDialog = (props) => {
+  const dispatch = useDispatch();
+  const { open, handleSubmit } = props;
+  const [category, setCategory] = useState('');
+  const [snackObj, setSnackObj] = useState(initialState);
+
+  const handleCategorySet = (options) => {
+    setCategory(options.value);
   };
 
   const closeDialog = () => {
-    setCategory(null);
-    handleClose();
+    setCategory('');
+    setSnackObj(initialState);
+    dispatch(setIsAddSnackOpen(false));
   };
-  // const checkForErrors = !category;
-  // const onSubmit = async (event) => {
-  //   await sleep(500);
-  //   if (event.key == 'enter' || event.key == 'click') {
-  //       try {
-  //         console.log(onChangeObj);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //   }
-  //   closeDialog();
-  // }
-  // const handleSubmit = (values) => { 
-  //   console.log(values);
-  // };
 
   const formik = useFormik({
-    initialValues: {
-      snackname: '',
-      description: '',
-      price: '',
-      quantity: '',
-      reorder: '',
-      expiration: ''
-    },
+    initialValues: snackObj,
     onSubmit: async (values) => {
       await sleep(500);
-      console.log(values);
+      //setSnackObj(values);
       alert(JSON.stringify(values, null, 2));
-      console.log(onChangeObj);
       closeDialog();
     },
     validationSchema: Yup.object({
@@ -96,7 +87,7 @@ const AddSnackDialog = (props) => {
       aria-labelledby='snack-manage-dialog'
       open={open}
       onClose={closeDialog} 
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     > 
       <div className={styles.form}>
         <FormikProvider variant='outlined' value={formik}>
@@ -107,25 +98,30 @@ const AddSnackDialog = (props) => {
             </div>
             <Divider />
             <div className={styles.container}>
-              <div className={styles.frame__center}>
+              <div className={styles.frame__image}>
                 <div className={styles.box}></div>
-                <button className={styles.button__photo} onClick={() => {}}>Upload photo</button>
+                {/* <ImageUploader /> */}
+                <Button className={styles.button__photo} onClick={() => {}}>Upload photo</Button>
               </div>
               <div className={styles.frame__column}>
-                <div className={styles.frame__row}>
+                <div className={styles.frame__row_mobile}>
                   <InputLiveFeedback
                     label='Snack name'
                     id='snackname'
                     name='snackname'
                     type='text'
                   />
-                  <div className={styles.frame__column}>
-                    <p>Catetogy</p>
-                    <CategorySelect onChange={handleSelectCategory}/>
+                  <div className={styles.category__lable}>
+                    <p>Category</p>
+                    <CategorySelect 
+                      handleSelectCategory={handleCategorySet}
+                    />
                   </div>
                 </div>
-                <p>Description</p>
-                <Field name='description' as='textarea' className={styles.textarea} />
+                <div className={styles.textarea_lable}>
+                  <p>Description</p>
+                  <Field name='description' as='textarea' className={styles.textarea} />
+                </div>
                 <div className={styles.frame__row}>
                   <InputLiveFeedback
                     label='Price ($)'
@@ -148,7 +144,7 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
-                    label='Date of Expiration'
+                    label='Date of expiration'
                     id='expiration'
                     name='expiration'
                     type='text'
@@ -157,13 +153,16 @@ const AddSnackDialog = (props) => {
               </div>
             </div>
             <Divider />
-            <Button
-              type='submit'
-              disabled={category} // make it disabled when input is not entered 
-              className={styles.button}
-            >
-              Submit
-            </Button>
+            <div className={styles.bottom}>
+              <Button
+                type='submit'
+                disabled={category == ''} // make it disabled when input is not entered 
+                className={styles.button}
+              >
+                Submit
+              </Button>
+              {/* TODO: Needs to change AppButton */}
+            </div>
           </Form> 
         </FormikProvider>
       </div>

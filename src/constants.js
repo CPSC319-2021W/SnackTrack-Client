@@ -82,3 +82,12 @@ export const TRANSACTION_TYPES = {
   CANCEL: 2,
   PENDING: 3
 };
+
+export const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'candy', label: 'Candy' },
+  { value: 'chips', label: 'Chips' },
+  { value: 'cookies', label: 'Cookies' },
+  { value: 'crackers', label: 'Crackers' },
+  { value: 'fruits', label: 'Fruits' }
+];
