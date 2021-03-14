@@ -60,7 +60,7 @@ const TransactionsContainer = (props) => {
           <p>Amount</p>
         </div>
         <div className={styles.column__field}>
-          <p>Created By</p>
+          <p>Processed By</p>
         </div>
       </Fragment>
     );
