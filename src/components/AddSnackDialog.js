@@ -13,11 +13,10 @@ import CategorySelect from './ManageSnack/CategorySelect';
 import { DateTime } from 'luxon';
 import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
-import {addSnack} from '../services/SnacksService';
+import { addSnack } from '../services/SnacksService';
 import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/ManageSnack.module.css';
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const today = DateTime.now().set({ hour: 0, minute: 0 });
 
 const initialState = {
@@ -33,20 +32,17 @@ const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
   const { open, handleSubmit } = props;
   const [category, setCategory] = useState('');
-  const [snackObj, setSnackObj] = useState(initialState);
-  const [date, setDate] = useState(today);
   const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
     (state) => state.snacksReducer
   );
 
   const handleCategorySet = (options) => {
-    setCategory(options.value); // category id 
+    setCategory(options.value);
   };
 
   const closeDialog = () => {
     setCategory('');
-    setSnackObj(initialState);
     addForm.resetForm();
     dispatch(setIsAddSnackOpen(false));
   };
@@ -58,13 +54,20 @@ const AddSnackDialog = (props) => {
   const addForm = useFormik({
     initialValues: initialState,
     onSubmit: async (values, actions) => {
-      await sleep(500);
-      values.quantity = values.quantity === '' ? 0 : values.quantity;
-      values.image_uri = snackImageUpload;
-      setSnackObj(values);
-      setDate(today.plus(parseInt(values.expiration)));
-      addSnack(username, snackObj, category, date);
-      actions.resetForm({values: initialState});
+      const snackRequest = {
+        last_updated_by: username,
+        snack_name: values.snackname,
+        snack_type_id: parseInt(category),
+        description: values.description,
+        image_uri: snackImageUpload.url,
+        price: parseInt(values.price) * 100,
+        quantity: values.quantity === '' ? 0 : values.quantity,
+        order_threshold: values.reorder === '' ? null : values.reorder,
+        expiration_dtm: values.expiration ? today.plus(parseInt(values.expiration)) : null
+      };
+      const snack = await addSnack(snackRequest);
+      console.log(snack);
+      actions.resetForm({ values: initialState });
       closeDialog();
     },
     validationSchema: Yup.object({
@@ -102,13 +105,12 @@ const AddSnackDialog = (props) => {
     <Dialog
       aria-labelledby='snack-manage-dialog'
       open={open}
-      onClose={closeDialog} 
+      onClose={closeDialog}
       onSubmit={handleSubmit}
       onCancel={closeDialog}
-    > 
+    >
       <div className={styles.form}>
         <FormikProvider variant='outlined' value={addForm}>
-          {console.log(snackObj)}
           <Form>
             <div className={dialogStyles.header}>
               <div className={styles.title}>Add New Snack</div>
@@ -128,9 +130,7 @@ const AddSnackDialog = (props) => {
                   />
                   <div className={styles.category__lable}>
                     <p>Category</p>
-                    <CategorySelect 
-                      handleSelectCategory={handleCategorySet}
-                    />
+                    <CategorySelect handleSelectCategory={handleCategorySet} />
                   </div>
                 </div>
                 <div className={styles.textarea_lable}>
@@ -180,7 +180,7 @@ const AddSnackDialog = (props) => {
               </Button>
               {/* TODO: Needs to change AppButton */}
             </div>
-          </Form> 
+          </Form>
         </FormikProvider>
       </div>
     </Dialog>
