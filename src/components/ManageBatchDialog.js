@@ -72,37 +72,17 @@ const ManageBatchDialog = (props) => {
     }
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = async (event, func, apiResponse) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
         const dateString = date ? date.toUTC().toISO() : null;
-        const newBatch = await addBatch({
+        const newBatch = await func({
           snack_id,
-          quantity,
-          expiration_dtm: dateString
-        });
-        onApiResponse('BATCH_SUCCESS');
-        openToastNotification(true);
-        onAddBatchOrEdit(newBatch, oldQuantity);
-      } catch (err) {
-        onApiResponse('ERROR');
-        openToastNotification(true);
-      }
-      closeDialog();
-    }
-  };
-
-  const editSnackBatch = async (event) => {
-    if (event.key === 'Enter' || event.type === 'click') {
-      try {
-        const dateString = date ? date.toUTC().toISO() : null;
-        const newBatch = await editBatch({
           snack_batch_id,
           quantity,
           expiration_dtm: dateString
         });
-        newBatch.snack_id = snack_id;
-        onApiResponse('CHANGES_SUCCESS');
+        onApiResponse(apiResponse);
         openToastNotification(true);
         onAddBatchOrEdit(newBatch, oldQuantity);
       } catch (err) {
@@ -145,7 +125,15 @@ const ManageBatchDialog = (props) => {
       aria-labelledby='edit-order-dialog'
       open={open}
       onClose={closeDialog}
-      onSubmit={newSnackBatch ? onSubmit : editSnackBatch}
+      onSubmit={
+        newSnackBatch
+          ? (event) => {
+            onSubmit(event, addBatch, 'BATCH_SUCCESS');
+          }
+          : (event) => {
+            onSubmit(event, editBatch, 'CHANGES_SUCCESS');
+          }
+      }
       onCancel={onCancel}
     >
       <Card
@@ -208,7 +196,15 @@ const ManageBatchDialog = (props) => {
               [styles.button]: true,
               [styles.button__wide]: !newSnackBatch
             })}
-            onClick={newSnackBatch ? onSubmit : editSnackBatch}
+            onClick={
+              newSnackBatch
+                ? (event) => {
+                  onSubmit(event, addBatch, 'BATCH_SUCCESS');
+                }
+                : (event) => {
+                  onSubmit(event, editBatch, 'CHANGES_SUCCESS');
+                }
+            }
           >
             {newSnackBatch ? 'Submit' : 'Save Changes'}
           </Button>
