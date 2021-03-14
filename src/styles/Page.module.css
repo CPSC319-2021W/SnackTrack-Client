@@ -51,12 +51,25 @@
 }
 
 @media (max-width: 540px) {
-  .header {
-    flex-direction: column;
-  }
+    .header {
+      flex-direction: column;
+    }
+    
+    .suggestBox {
+        margin: 1rem 0 0 0;
+        text-align: left;
+    }
+}
 
-  .suggestBox {
-    margin: 1rem 0 0 0;
-    text-align: left;
-  }
+.header__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.action__button__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 1rem;
 }

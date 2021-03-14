@@ -1,4 +1,4 @@
-import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_GREY, RED, WHITE } from '../styles/Colors.module.css';
+import { BASE_BLUE, BASE_RED, DARK_BLUE, DARK_GREY, HEADER_GREY, INNER_LIGHT_GREY, LIGHT_GREY, RED, WHITE } from '../styles/Colors.module.css';
 import TTNormsFontFamily from './fonts';
 import { createMuiTheme } from '@material-ui/core/styles';
 
@@ -132,6 +132,38 @@ export const theme = createMuiTheme({
     MuiDialog: {
       paper: {
         borderRadius: '12px'
+      }
+    },
+    MuiTabs: {
+      root: {
+        marginBottom: '1rem'
+      },
+      indicator: {
+        height: '4px',
+        backgroundColor: 'transparent',
+        display: 'flex',
+        justifyContent: 'center',
+        '& > span': {
+          height: '4px',
+          borderRadius: '4px',
+          width: '100%',
+          maxWidth: '60px',
+          backgroundColor: BASE_RED
+        }
+      }
+    },
+    MuiTab: {
+      root: {
+        color: HEADER_GREY,
+        fontWeight: 600,
+        fontSize: '1.05rem',
+        textTransform: 'none'
+      }
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: HEADER_GREY,
+        fontWeight: 600
       }
     }
   },

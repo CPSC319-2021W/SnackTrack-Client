@@ -1,0 +1,141 @@
+@value colors: './Colors.module.css';
+@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, LIGHT_GREY, MID_GREY, ORANGE, RED from colors;
+
+.card__base {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+}
+
+.column__field {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0rem 0.65rem;
+    width: 20%;
+}
+
+.column__field__pay {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0rem 0.65rem;
+    width: 33%;
+}
+
+.column__field__small {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0rem 0.65rem;
+    width: 15%;
+}
+
+.status__bar {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 24px;
+    line-height: 1;
+    box-shadow: none;
+    cursor: text;
+}
+  
+.status__orange {
+    color: ORANGE;
+    background-color: #ffe7ca;
+}
+  
+.status__red {
+    color: RED;
+    background-color: #fdd9d7;
+}
+  
+.status__green {
+    color: GREEN;
+    background-color: #dbefdc;
+}
+
+.mobile__base {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem;
+    font-size: 0.825rem;
+    margin-bottom: 0.5rem;
+    border-radius: 12px;
+}
+
+.column__container__left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.column__container__right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.column__text {
+    text-align: left;
+}
+
+.column__text__mobile {
+    text-align: left;
+    margin: 0;
+}
+
+.column__text__title {
+    font-weight: 600;
+}
+
+.mobile__status__bar {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 24px;
+    line-height: 1;
+    box-shadow: none;
+    cursor: text;
+}
+
+.status__container {
+    margin-bottom: 0.6rem;
+}
+
+.table__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: LIGHT_GREY;
+    color: MID_GREY;
+    font-weight: 600;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+}
+
+.load__button__container {
+    margin-top: 1rem;
+}
+
+@media (max-width: 425px) {
+    .card__base {
+        display: none;
+    }
+
+    .table__header {
+        display: none;
+    }
+}
+
+@media (min-width: 426px) {
+    .mobile__base {
+        display: none;
+    }
+}

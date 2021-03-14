@@ -1,15 +1,21 @@
-import { React, useEffect, useState } from 'react';
+import { Fragment, React, useEffect, useState } from 'react';
+import { Tab, Tabs } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { getUserOrders, getUserPayments } from '../services/UsersService';
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../redux/features/notifications/notificationsSlice';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { NOTIFICATIONS } from '../constants';
-import OrdersTable from '../components/OrdersTable/OrdersTable';
-import PaymentsTable from '../components/PaymentsTable';
+import { makePayment } from '../services/TransactionsService';
+import { setBalance } from '../redux/features/users/usersSlice';
+
+import AppButton from '../components/AppButton';
+import EditOrderDialog from '../components/EditOrderDialog';
 import ToastNotification from '../components/ToastNotification';
+import TransactionsContainer from '../components/TransactionsContainer';
+
 import styles from '../styles/Page.module.css';
 
 const INITIAL_PAYMENTS = {
@@ -26,32 +32,47 @@ const INITIAL_ORDERS = {
   current_page: 0
 };
 
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`tabpanel-${ index }`}
+      { ...other }
+    >
+      {value === index && (
+        <Fragment>
+          { children }
+        </Fragment>
+      )}
+    </div>
+  );
+};
+
 const Transactions = () => {
   const dispatch = useDispatch();
   const [rowsPerPage] = useState(8);
-  const { userId } = useSelector((state) => state.usersReducer.profile);
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
-  const [paymentsError, setPaymentsError] = useState(false);
+  const [isListLoading, setIsListLoading] = useState(false);
+  const [isPayAllLoading, setIsPayAllLoading] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
+  const { userId, username } = useSelector((state) => state.usersReducer.profile);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
+  const { isEditOrderOpen, orderToEdit } = useSelector(
+    (state) => state.transactionsReducer
+  );
 
-  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
+  const updateBalance = (balance) => {
+    dispatch(setBalance(balance));
+  };
 
   const onApiResponse = (response) => dispatch(setApiResponse(response));
 
-  const handlePaymentChangePage = async (page) => {
-    const paymentResponse = await getUserPayments(userId, page, rowsPerPage);
-    paymentResponse instanceof Error
-      ? openToastNotification(true)
-      : setPaymentsResponse(paymentResponse);
-  };
-
-  const handleOrderChangePage = async (page) => {
-    const transactionResponse = await getUserOrders(userId, page, rowsPerPage);
-    setOrdersResponse(transactionResponse);
-  };
+  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
   const handleClose = () => {
     openToastNotification(false);
@@ -62,49 +83,121 @@ const Transactions = () => {
     openToastNotification(true);
   };
 
-  const handleMakePayment = async () => {
-    await handleOrderChangePage(0);
-    await handlePaymentChangePage(0);
+  const handleOrdersLoadMore = async (page) => {
+    setIsListLoading(true);
+    try {
+      const response = await getUserOrders(userId, page, rowsPerPage);
+      setOrdersResponse((prevState) => ({
+        ...prevState,
+        current_page: response.current_page,
+        transactions: prevState.transactions.concat(response.transactions)
+      }));
+    } catch (err) {
+      handleApiResponse('ERROR');
+    }
+    setIsListLoading(false);
   };
 
-  useEffect(async () => {
+  const handlePaymentsLoadMore = async (page) => {
+    setIsListLoading(true);
+    try {
+      const response = await getUserPayments(userId, page, rowsPerPage);
+      setPaymentsResponse((prevState) => ({
+        ...prevState,
+        current_page: response.current_page,
+        payments: prevState.payments.concat(response.payments)
+      }));
+    } catch (err) {
+      handleApiResponse('ERROR');
+    }
+    setIsListLoading(false);
+  };
+
+  const handleMakePayment = async () => {
+    setIsPayAllLoading(true);
+    try {
+      await makePayment(userId, [], null, username);
+      updateBalance(0);
+      handleApiResponse('PAYMENT_SUCCESS');
+    } catch (err) {
+      handleApiResponse('ERROR');
+    }
+    await resetTransactions();
+    setIsPayAllLoading(false);
+  };
+
+  const handleChangeTab = (event, value) => {
+    setTabValue(value);
+    resetTransactions();
+  };
+
+  const resetTransactions = async () => {
     if (userId) {
       try {
         const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
         setOrdersResponse(orderResponse);
       } catch (err) {
         openToastNotification(true);
-        setPaymentsError(true);
+        handleApiResponse('ERROR');
       }
       try {
         const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
         setPaymentsResponse(paymentResponse);
       } catch (err) {
         openToastNotification(true);
-        setPaymentsError(true);
+        handleApiResponse('ERROR');
       }
     }
+  };
+
+  useEffect(async () => {
+    await resetTransactions();
   }, [userId]);
 
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
-        <h5 className={styles.title}>Transactions</h5>
+      <div className={styles.header__container}>
+        <Tabs
+          value={tabValue}
+          TabIndicatorProps={{ children: <span /> }}
+          onChange={handleChangeTab}
+        >
+          <Tab disableRipple label='Orders' />
+          <Tab disableRipple label='Payments' />
+        </Tabs>
+        {
+          tabValue === 0
+            ? (
+              <div className={styles.action__button__container}>
+                <AppButton
+                  primary
+                  loading={isPayAllLoading}
+                  onClick={handleMakePayment}
+                >
+                  Pay All
+                </AppButton>
+              </div>
+            )
+            : null
+        }
       </div>
-      <OrdersTable
-        data={ordersResponse}
-        rowsPerPage={rowsPerPage}
-        onHandleApiResponse={handleApiResponse}
-        onChangePage={handleOrderChangePage}
-        onMakePayment={handleMakePayment}
-      />
-      <PaymentsTable
-        error={paymentsError}
-        data={paymentsResponse}
-        rowsPerPage={rowsPerPage}
-        setSnackBar={handleApiResponse}
-        onChangePage={handlePaymentChangePage}
-      />
+      <TabPanel value={tabValue} index={0}>
+        <TransactionsContainer
+          data={ordersResponse}
+          rowsPerPage={rowsPerPage}
+          isLoading={isListLoading}
+          onLoadMore={handleOrdersLoadMore}
+        />
+      </TabPanel>
+      <TabPanel value={tabValue} index={1}>
+        <TransactionsContainer
+          data={paymentsResponse}
+          rowsPerPage={rowsPerPage}
+          isLoading={isListLoading}
+          onLoadMore={handlePaymentsLoadMore}
+        />
+      </TabPanel>
+      <EditOrderDialog open={isEditOrderOpen} transaction={orderToEdit} />
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}

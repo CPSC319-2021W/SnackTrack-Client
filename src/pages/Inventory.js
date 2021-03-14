@@ -53,11 +53,36 @@ const Inventory = () => {
     }
   };
 
-  const handleBatchAdd = (batch) => {
-    const { snack_id, quantity } = batch;
-    const index = snacks.findIndex((snack) => snack.snack_id === snack_id);
-    snacks[index].quantity = snacks[index].quantity + quantity;
-    setBatches(snackBatches.concat([batch]));
+  const handleBatchAddOrEdit = (batch, oldQuantity) => {
+    const { snack_id, snack_batch_id, quantity } = batch;
+    const newSnacks = [].concat(snacks);
+    const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
+    newSnacks[index].quantity = newSnacks[index].quantity + quantity - oldQuantity;
+    setSnacks(newSnacks);
+    if (oldQuantity === 0) {
+      setBatches(snackBatches.concat([batch]));
+    } else {
+      const newBatches = [].concat(snackBatches);
+      const ind = newBatches.findIndex(
+        (batch) => batch.snack_batch_id === snack_batch_id
+      );
+      const newBatch = { ...snackBatches[ind] };
+      newBatch.quantity = newBatches[ind].quantity + quantity - oldQuantity;
+      newBatches[ind] = newBatch;
+      setBatches(newBatches);
+    }
+  };
+
+  const handleBatchDelete = (batch) => {
+    const { snack_id, snack_batch_id, quantity } = batch;
+    const newSnacks = [].concat(snacks);
+    const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
+    newSnacks[index].quantity = newSnacks[index].quantity - quantity;
+    setSnacks(newSnacks);
+    const newBatches = [].concat(snackBatches);
+    const ind = newBatches.findIndex((batch) => batch.snack_batch_id === snack_batch_id);
+    newBatches.splice(ind, 1);
+    setBatches(newBatches);
   };
 
   useEffect(async () => {
@@ -94,13 +119,15 @@ const Inventory = () => {
         snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
         rowsPerPage={rowsPerPage}
-        onAddBatch={handleBatchAdd}
+        onAddBatchOrEdit={handleBatchAddOrEdit}
+        onDeleteBatch={handleBatchDelete}
         onChangePage={handleChangePage}
       />
       <SnackInventoryTable
         data={inactiveSnacks}
         rowsPerPage={rowsPerPage}
-        onAddBatch={handleBatchAdd}
+        onAddBatchOrEdit={handleBatchAddOrEdit}
+        onDeleteBatch={handleBatchDelete}
         onChangePage={handleChangePage}
       />
       <ToastNotification

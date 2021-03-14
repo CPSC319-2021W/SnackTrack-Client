@@ -172,6 +172,10 @@
   background-color: INNER_LIGHT_GREY;
 }
 
+.row__selectable {
+  cursor: pointer;
+}
+
 .row__selected {
   background-color: INNER_LIGHT_GREY;
 }
@@ -183,10 +187,13 @@
 
 .footer {
   padding: 1rem;
-  border-top: 1px solid rgba(224, 224, 224, 1);
 }
 
 .pagination {
+  border-bottom: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   border-top: 1px solid rgba(224, 224, 224, 1);
 }
 
