@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react';
-import { useDispatch } from 'react-redux';
-
 import {
   setIsEditOrderOpen,
   setOrderToEdit
@@ -10,19 +8,30 @@ import AppButton from './AppButton';
 import OrderCard from './OrderCard';
 import PaymentCard from './PaymentCard';
 import styles from '../styles/TransactionsCard.module.css';
+import { useDispatch } from 'react-redux';
 
 const TransactionsContainer = (props) => {
-  const { data, isLoading, onLoadMore } = props;
-  const { transactions, payments, total_pages, current_page } = data;
+  const { data, isInitialLoaded, isLoading, onLoadMore } = props;
+  const { transactions, payments, total_pages, current_page, total_rows } = data;
 
   const dispatch = useDispatch();
 
   const setEditOrderOpen = () => dispatch(setIsEditOrderOpen(true));
   const setOrderEdit = (order) => dispatch(setOrderToEdit(order));
-  
+
   const openEditOrderDialog = (order) => {
     setOrderEdit(order);
     setEditOrderOpen(true);
+  };
+
+  const displayEmptyMessage = () => {
+    if (isInitialLoaded) {
+      if (total_rows === 0) {
+        return <p>There is nothing to display.</p>;
+      } else {
+        return <p>There are no more transactions to display.</p>;
+      }
+    }
   };
 
   const renderOrdersHeader = () => {
@@ -69,31 +78,31 @@ const TransactionsContainer = (props) => {
   return (
     <div className={styles.base}>
       <div className={styles.table__header}>
-        { transactions ? renderOrdersHeader() : null }
-        { payments ? renderPaymentsHeader() : null }
+        {transactions ? renderOrdersHeader() : null}
+        {payments ? renderPaymentsHeader() : null}
       </div>
-      {transactions?.map((order, i) => (
-        <OrderCard key={i} order={order} onEdit={openEditOrderDialog} />
-      ))}
-      {payments?.map((payment, i) => (
-        <PaymentCard key={i} payment={payment} />
-      ))}
-      {
-        (current_page < total_pages)
-          ? (
-            <div className={styles.load__button__container}>
-              <AppButton
-                primary
-                fullWidth
-                loading={isLoading}
-                onClick={() => onLoadMore(current_page + 1)}
-              >
-                Load More
-              </AppButton>
-            </div>
-          )
-          : null
-      }
+      {isInitialLoaded
+        ? transactions?.map((order, i) => (
+            <OrderCard key={i} order={order} onEdit={openEditOrderDialog} />
+          ))
+        : null}
+      {isInitialLoaded
+        ? payments?.map((payment, i) => <PaymentCard key={i} payment={payment} />)
+        : null}
+      {isInitialLoaded && current_page + 1 < total_pages ? (
+        <div className={styles.load__button__container}>
+          <AppButton
+            primary
+            fullWidth
+            loading={isLoading}
+            onClick={() => onLoadMore(current_page + 1)}
+          >
+            Load More
+          </AppButton>
+        </div>
+      ) : (
+        displayEmptyMessage()
+      )}
     </div>
   );
 };
