@@ -152,7 +152,7 @@ const SnackInventoryTable = (props) => {
 
   const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
 
-  const openAddSanck = () => {
+  const openAddSnack = () => {
     setAddSnackOpen(true);
   };
 
@@ -173,7 +173,7 @@ const SnackInventoryTable = (props) => {
             />
             <div className={styles.cell__pay}>
               <Button className={styles.button__base} onClick={
-                openAddSanck}>
+                openAddSnack}>
                 Add New Snack
               </Button>
             </div>
