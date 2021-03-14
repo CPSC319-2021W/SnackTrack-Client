@@ -52,7 +52,7 @@
 
 .resize_image_skeleton {
   display: flex;
-  height: 80%;
+  height: 70%;
   width: inherit;
 }
 
@@ -65,8 +65,8 @@
 
 .label_skeleton {
   width: 100%;
-  height: calc(100% - 200px);
   display: flex;
+  margin-top: 0.8rem;
   justify-content: space-between;
   align-items: center;
 }
@@ -364,6 +364,10 @@
   .stock {
     font-size: 0.6rem;
     padding: 5px 10px;
+  }
+
+  .resize_image_skeleton {
+    height: 60%;
   }
 }
 

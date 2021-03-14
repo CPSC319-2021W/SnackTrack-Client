@@ -159,6 +159,12 @@ export const theme = createMuiTheme({
         fontSize: '1.05rem',
         textTransform: 'none'
       }
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: HEADER_GREY,
+        fontWeight: 600
+      }
     }
   },
   props: {

@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY, HEADER_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY, DARK_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
@@ -33,7 +33,7 @@
 }
 
 .balance__text {
-  color: HEADER_GREY;
+  color: DARK_GREY;
   font-weight: 600;
   font-size: 1rem;
   text-align: right;

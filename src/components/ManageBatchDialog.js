@@ -114,6 +114,7 @@ const ManageBatchDialog = (props) => {
 
   useEffect(() => {
     if (newSnackBatch) {
+      setDate(today);
       setQuantity(0);
     } else {
       if (batch.expiration_dtm) {
