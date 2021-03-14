@@ -66,13 +66,6 @@
   align-items: center;
 }
 
-.box {
-  width: 150px;
-  height: 156px;
-  background: MID_GREY;
-  margin-bottom: 10px;
-}
-
 .form__control {
   margin-right: 15px;
 }

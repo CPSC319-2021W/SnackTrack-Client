@@ -2,30 +2,32 @@ import * as Yup from 'yup';
 
 import { Button, Dialog, Divider } from '@material-ui/core';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
-import {React, useState} from 'react';
+import { React, useEffect, useState } from 'react';
+import {
+  setIsAddSnackOpen,
+  setSnackImageUpload
+} from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategorySelect from './ManageSnack/CategorySelect';
 import { DateTime } from 'luxon';
-// import ImageUploader from './ImageUploader';
+import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import {addSnack} from '../services/SnacksService';
 import dialogStyles from '../styles/Dialog.module.css';
-import {
-  setIsAddSnackOpen
-} from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ManageSnack.module.css';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const today = DateTime.now().set({ hour: 0, minute: 0 });
 
-const initialState = { 
+const initialState = {
   snackname: '',
   description: '',
   price: '',
   quantity: '',
   reorder: '',
-  expiration: ''};
+  expiration: ''
+};
 
 const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
@@ -34,6 +36,9 @@ const AddSnackDialog = (props) => {
   const [snackObj, setSnackObj] = useState(initialState);
   const [date, setDate] = useState(today);
   const { userId } = useSelector((state) => state.usersReducer.profile);
+  const { isAddSnackOpen, snackImageUpload } = useSelector(
+    (state) => state.snacksReducer
+  );
 
   const handleCategorySet = (options) => {
     setCategory(options.value); // category id 
@@ -46,11 +51,16 @@ const AddSnackDialog = (props) => {
     dispatch(setIsAddSnackOpen(false));
   };
 
+  useEffect(() => {
+    dispatch(setSnackImageUpload(null));
+  }, [isAddSnackOpen]);
+
   const addForm = useFormik({
     initialValues: initialState,
     onSubmit: async (values, actions) => {
       await sleep(500);
       values.quantity = values.quantity === '' ? 0 : values.quantity;
+      values.image_uri = snackImageUpload;
       setSnackObj(values);
       setDate(today.plus(parseInt(values.expiration)));
       addSnack(userId, snackObj, category, date);
@@ -109,6 +119,7 @@ const AddSnackDialog = (props) => {
                 <div className={styles.box}></div>
                 {/* <ImageUploader /> */}
                 <Button className={styles.button__photo} onClick={() => {}}>Upload photo</Button>
+                <ImageUploader />
               </div>
               <div className={styles.frame__column}>
                 <div className={styles.frame__row_mobile}>
@@ -163,7 +174,9 @@ const AddSnackDialog = (props) => {
             <div className={styles.bottom}>
               <Button
                 type='submit'
-                disabled={!addForm.dirty || !addForm.isValid || !category} // make it disabled when input is not entered 
+                disabled={
+                  !addForm.dirty || !addForm.isValid || !category || !snackImageUpload
+                } // make it disabled when input is not entered
                 className={styles.button}
               >
                 Submit
