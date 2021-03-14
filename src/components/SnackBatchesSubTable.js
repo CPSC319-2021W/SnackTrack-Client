@@ -27,9 +27,7 @@ const SnackBatchesSubTable = (props) => {
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
   const handleEditBatch = (batch) => {
-    let snackBatch = JSON.parse(JSON.stringify(batch));
-    snackBatch.snack_name = snackName;
-    setBatchSelect(snackBatch);
+    setBatchSelect({ ...batch, snack_name: snackName });
     setEditBatchOpen(true);
   };
 

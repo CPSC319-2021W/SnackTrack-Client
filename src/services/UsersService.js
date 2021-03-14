@@ -13,8 +13,13 @@ const authenticate = async (token) => {
   }
 };
 
-const getUsers = () => {
+const getUsersCommon = () => {
   return mockDBCall('users', 0, 1000);
+};
+const getUsersAdmin = async () => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get('/users/', authHeader);
+  return data;
 };
 
 const getUserById = async (userId) => {
@@ -57,4 +62,11 @@ const getUserPayments = async (userId, page, rowsPerPage) => {
   }
 };
 
-export { authenticate, getUsers, getUserById, getUserOrders, getUserPayments };
+export {
+  authenticate,
+  getUsersCommon,
+  getUsersAdmin,
+  getUserById,
+  getUserOrders,
+  getUserPayments
+};

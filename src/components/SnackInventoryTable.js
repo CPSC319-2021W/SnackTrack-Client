@@ -100,10 +100,6 @@ const SnackInventoryTable = (props) => {
       }
     },
     {
-      id: 'description',
-      label: 'Description'
-    },
-    {
       id: 'price',
       label: 'Price',
       format: (amount) => {
@@ -250,11 +246,15 @@ const SnackInventoryTable = (props) => {
                           key={column.id}
                           className={`${styles.cell} ${styles.cell__small} ${
                             column.label === 'Status' ||
-                            column.id === 'snack_name' ||
-                            column.id === 'description'
+                            column.id === 'snack_name'
                               ? styles.cell__medium
                               : null
                           }`}
+                          title={
+                            column.id === 'snack_name'
+                              ? value
+                              : null
+                          }
                         >
                           {column.format
                             ? column.format(
