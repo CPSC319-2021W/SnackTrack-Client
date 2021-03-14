@@ -35,7 +35,7 @@ const AddSnackDialog = (props) => {
   const [category, setCategory] = useState('');
   const [snackObj, setSnackObj] = useState(initialState);
   const [date, setDate] = useState(today);
-  const { userId } = useSelector((state) => state.usersReducer.profile);
+  const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
     (state) => state.snacksReducer
   );
@@ -63,7 +63,7 @@ const AddSnackDialog = (props) => {
       values.image_uri = snackImageUpload;
       setSnackObj(values);
       setDate(today.plus(parseInt(values.expiration)));
-      addSnack(userId, snackObj, category, date);
+      addSnack(username, snackObj, category, date);
       actions.resetForm({values: initialState});
       closeDialog();
     },
@@ -116,9 +116,6 @@ const AddSnackDialog = (props) => {
             <Divider />
             <div className={styles.container}>
               <div className={styles.frame__image}>
-                <div className={styles.box}></div>
-                {/* <ImageUploader /> */}
-                <Button className={styles.button__photo} onClick={() => {}}>Upload photo</Button>
                 <ImageUploader />
               </div>
               <div className={styles.frame__column}>
