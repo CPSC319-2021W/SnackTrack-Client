@@ -194,6 +194,7 @@ const SnackInventoryTable = (props) => {
                     tabIndex={-1}
                     className={classNames({
                       [styles.row]: true,
+                      [styles.row__selectable]: true,
                       [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch
                     })}
                     onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
