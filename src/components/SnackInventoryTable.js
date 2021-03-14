@@ -35,7 +35,8 @@ const SnackInventoryTable = (props) => {
     activeSnacks,
     data,
     rowsPerPage,
-    onAddBatch,
+    onAddBatchOrEdit,
+    onDeleteBatch,
     onChangePage
   } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
@@ -208,23 +209,18 @@ const SnackInventoryTable = (props) => {
                         <TableCell
                           key={column.id}
                           className={`${styles.cell} ${styles.cell__small} ${
-                            column.label === 'Status' ||
-                            column.id === 'snack_name'
+                            column.label === 'Status' || column.id === 'snack_name'
                               ? styles.cell__medium
                               : null
                           }`}
-                          title={
-                            column.id === 'snack_name'
-                              ? value
-                              : null
-                          }
+                          title={column.id === 'snack_name' ? value : null}
                         >
                           {column.format
                             ? column.format(
-                              value,
-                              snacks[i].is_active,
-                              snacks[i].order_threshold
-                            )
+                                value,
+                                snacks[i].is_active,
+                                snacks[i].order_threshold
+                              )
                             : value}
                         </TableCell>
                       );
@@ -268,9 +264,15 @@ const SnackInventoryTable = (props) => {
         newSnackBatch
         open={isAddBatchOpen}
         batch={selectedBatch}
-        onAddBatch={onAddBatch}
+        onDeleteBatch={onDeleteBatch}
+        onAddBatchOrEdit={onAddBatchOrEdit}
       />
-      <ManageBatchDialog open={isEditBatchOpen} batch={selectedBatch} />
+      <ManageBatchDialog
+        open={isEditBatchOpen}
+        batch={selectedBatch}
+        onDeleteBatch={onDeleteBatch}
+        onAddBatchOrEdit={onAddBatchOrEdit}
+      />
     </Card>
   );
 };

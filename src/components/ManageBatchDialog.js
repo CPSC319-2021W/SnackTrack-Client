@@ -20,11 +20,12 @@ import { useDispatch } from 'react-redux';
 
 const ManageBatchDialog = (props) => {
   const dispatch = useDispatch();
-  const { newSnackBatch, batch, open, onAddBatch, onCancel } = props;
+  const { newSnackBatch, batch, open, onDeleteBatch, onAddBatchOrEdit, onCancel } = props;
   const { snack_id, snack_batch_id, snack_name } = batch;
 
   const today = DateTime.now().set({ hour: 0, minute: 0 });
 
+  const [oldQuantity, setOldQuantity] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [date, setDate] = useState(today);
   const [errors, setErrors] = useState({
@@ -75,10 +76,14 @@ const ManageBatchDialog = (props) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
         const dateString = date ? date.toUTC().toISO() : null;
-        const batch = await addBatch({ snack_id, quantity, expiration_dtm: dateString });
+        const newBatch = await addBatch({
+          snack_id,
+          quantity,
+          expiration_dtm: dateString
+        });
         onApiResponse('BATCH_SUCCESS');
         openToastNotification(true);
-        onAddBatch(batch);
+        onAddBatchOrEdit(newBatch, oldQuantity);
       } catch (err) {
         onApiResponse('ERROR');
         openToastNotification(true);
@@ -91,25 +96,34 @@ const ManageBatchDialog = (props) => {
     if (event.key === 'Enter' || event.type === 'click') {
       try {
         const dateString = date ? date.toUTC().toISO() : null;
-        await editBatch({ snack_batch_id, quantity, expiration_dtm: dateString });
-        onApiResponse('BATCH_SUCCESS');
+        const newBatch = await editBatch({
+          snack_batch_id,
+          quantity,
+          expiration_dtm: dateString
+        });
+        newBatch.snack_id = snack_id;
+        onApiResponse('CHANGES_SUCCESS');
         openToastNotification(true);
+        onAddBatchOrEdit(newBatch, oldQuantity);
       } catch (err) {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      closeDialog();
     }
   };
 
   const deleteSnackBatch = async () => {
     try {
       await deleteBatch(snack_batch_id);
-      onApiResponse('BATCH_SUCCESS');
+      onApiResponse('BATCH_DELETE_SUCCESS');
       openToastNotification(true);
+      onDeleteBatch({ snack_id, snack_batch_id, quantity });
     } catch (err) {
       onApiResponse('ERROR');
       openToastNotification(true);
     }
+    closeDialog();
   };
 
   useEffect(() => {
@@ -122,6 +136,7 @@ const ManageBatchDialog = (props) => {
         setDate(null);
       }
       setQuantity(batch.quantity);
+      setOldQuantity(batch.quantity);
     }
   }, [batch]);
 

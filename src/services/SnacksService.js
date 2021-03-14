@@ -41,6 +41,7 @@ const addBatch = async (batch) => {
 
 const editBatch = async (batch) => {
   const { snack_batch_id } = batch;
+  delete batch.snack_batch_id;
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
   const { data } = await httpClient.put(
     `/snack_batches/${snack_batch_id}`,
