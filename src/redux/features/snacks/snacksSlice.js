@@ -22,6 +22,7 @@ const INITIAL_STATE = {
     quantity: 0,
     expiration_dtm: null
   },
+  snackImageUpload: null,
   isAddBatchOpen: false,
   isEditBatchOpen: false,
   loading: false,
@@ -75,6 +76,9 @@ const snacksSlice = createSlice({
     },
     setIsAddSnackOpen: (state, action) => {
       state.isAddSnackOpen = action.payload;
+    },
+    setSnackImageUpload: (state, action) => {
+      state.snackImageUpload = action.payload;
     }
   },
   extraReducers: {
@@ -106,7 +110,8 @@ export const {
   setIsAddBatchOpen,
   setIsEditBatchOpen,
   setQuantity,
-  setIsAddSnackOpen
+  setIsAddSnackOpen,
+  setSnackImageUpload
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;
