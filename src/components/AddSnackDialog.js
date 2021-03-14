@@ -3,18 +3,21 @@ import * as Yup from 'yup';
 import { Button, Dialog, Divider } from '@material-ui/core';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import {React, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CategorySelect from './ManageSnack/CategorySelect';
+import { DateTime } from 'luxon';
 // import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
+import {addSnack} from '../services/SnacksService';
 import dialogStyles from '../styles/Dialog.module.css';
 import {
   setIsAddSnackOpen
 } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ManageSnack.module.css';
-import { useDispatch } from 'react-redux';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const today = DateTime.now().set({ hour: 0, minute: 0 });
 
 const initialState = { 
   snackname: '',
@@ -29,14 +32,17 @@ const AddSnackDialog = (props) => {
   const { open, handleSubmit } = props;
   const [category, setCategory] = useState('');
   const [snackObj, setSnackObj] = useState(initialState);
+  const [date, setDate] = useState(today);
+  const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const handleCategorySet = (options) => {
-    setCategory(options.value);
+    setCategory(options.value); // category id 
   };
 
   const closeDialog = () => {
     setCategory('');
     setSnackObj(initialState);
+    addForm.resetForm();
     dispatch(setIsAddSnackOpen(false));
   };
 
@@ -44,10 +50,10 @@ const AddSnackDialog = (props) => {
     initialValues: initialState,
     onSubmit: async (values, actions) => {
       await sleep(500);
+      values.quantity = values.quantity === '' ? 0 : values.quantity;
       setSnackObj(values);
-      console.log(snackObj);
-      //TODO: Add new snack API calls
-      alert(JSON.stringify(values, null, 2));
+      setDate(today.plus(parseInt(values.expiration)));
+      addSnack(userId, snackObj, category, date);
       actions.resetForm({values: initialState});
       closeDialog();
     },
@@ -55,11 +61,7 @@ const AddSnackDialog = (props) => {
       snackname: Yup.string()
         .min(1, 'Must be at least 1 characters')
         .max(30, 'Must be less than 30 characters')
-        .required('Required')
-        .matches(
-          /^[a-zA-Z0-9]+$/,
-          'Cannot contain special characters or spaces'
-        ),
+        .required('Required'),
       description: Yup.string()
         .min(1, 'Must be at least 1 characters')
         .max(200, 'Must be less than 200 characters'),
@@ -135,17 +137,17 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
-                    label='Quantity'
-                    id='quantity'
-                    name='quantity'
+                    label='Re-order point'
+                    id='reorder'
+                    name='reorder'
                     type='text'
                   />
                 </div>
                 <div className={styles.frame__row}>
                   <InputLiveFeedback
-                    label='Re-order point'
-                    id='reorder'
-                    name='reorder'
+                    label='Quantity'
+                    id='quantity'
+                    name='quantity'
                     type='text'
                   />
                   <InputLiveFeedback
@@ -161,7 +163,7 @@ const AddSnackDialog = (props) => {
             <div className={styles.bottom}>
               <Button
                 type='submit'
-                disabled={category == ''} // make it disabled when input is not entered 
+                disabled={!addForm.dirty || !addForm.isValid || !category} // make it disabled when input is not entered 
                 className={styles.button}
               >
                 Submit

@@ -84,10 +84,10 @@ export const TRANSACTION_TYPES = {
 };
 
 export const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'candy', label: 'Candy' },
-  { value: 'chips', label: 'Chips' },
-  { value: 'cookies', label: 'Cookies' },
-  { value: 'crackers', label: 'Crackers' },
-  { value: 'fruits', label: 'Fruits' }
+  { value: '1', label: 'Chocolate' },
+  { value: '2', label: 'Candy' },
+  { value: '3', label: 'Chips' },
+  { value: '4', label: 'Cookies' },
+  { value: '5', label: 'Crackers' },
+  { value: '6', label: 'Fruits' }
 ];
