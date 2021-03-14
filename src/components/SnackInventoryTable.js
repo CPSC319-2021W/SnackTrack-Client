@@ -218,10 +218,10 @@ const SnackInventoryTable = (props) => {
                         >
                           {column.format
                             ? column.format(
-                                value,
-                                snacks[i].is_active,
-                                snacks[i].order_threshold
-                              )
+                              value,
+                              snacks[i].is_active,
+                              snacks[i].order_threshold
+                            )
                             : value}
                         </TableCell>
                       );
