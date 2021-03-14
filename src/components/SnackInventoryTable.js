@@ -5,7 +5,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
   TablePagination,
   TableRow
@@ -248,21 +247,23 @@ const SnackInventoryTable = (props) => {
               );
             })}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                className={styles.pagination}
-                count={total_rows}
-                page={current_page}
-                rowsPerPage={rowsPerPage}
-                labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
-                rowsPerPageOptions={[rowsPerPage]}
-                onChangePage={(event, page) => onChangePage(page, activeSnacks)}
-              />
-            </TableRow>
-          </TableFooter>
         </Table>
       </TableContainer>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TablePagination
+              className={styles.pagination}
+              count={total_rows}
+              page={current_page}
+              rowsPerPage={rowsPerPage}
+              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
+              rowsPerPageOptions={[rowsPerPage]}
+              onChangePage={(event, page) => onChangePage(page, activeSnacks)}
+            />
+          </TableRow>
+        </TableBody>
+      </Table>
       <ManageBatchDialog
         newSnackBatch
         open={isAddBatchOpen}

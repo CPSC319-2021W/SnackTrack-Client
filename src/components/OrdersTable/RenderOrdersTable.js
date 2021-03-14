@@ -6,7 +6,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
   TablePagination,
   TableRow
@@ -243,21 +242,23 @@ const RenderOrdersTable = (props) => {
               );
             })}
           </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                className={styles.pagination}
-                count={total_rows}
-                page={current_page}
-                rowsPerPage={rowsPerPage}
-                labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
-                rowsPerPageOptions={[rowsPerPage]}
-                onChangePage={(event, page) => onChangePage(page)}
-              />
-            </TableRow>
-          </TableFooter>
         </Table>
       </TableContainer>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TablePagination
+              className={styles.pagination}
+              count={total_rows}
+              page={current_page}
+              rowsPerPage={rowsPerPage}
+              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
+              rowsPerPageOptions={[rowsPerPage]}
+              onChangePage={(event, page) => onChangePage(page)}
+            />
+          </TableRow>
+        </TableBody>
+      </Table>
     </Card>
   );
 };

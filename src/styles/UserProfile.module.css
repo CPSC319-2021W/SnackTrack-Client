@@ -6,25 +6,57 @@
 
 .tables__container {
   display: flex;
+  flex-direction: row;
 }
 
 .ordersTable {
-  width: 69%;
-  max-width: 69%;
+  width: 70%;
+  margin-right: 1rem;
 }
 
 .paymentsTable {
   width: 30%;
-  max-width: 30%;
-  margin-left: auto;
 }
 
 .goBack {
   color: BASE_BLUE;
+  fill: BASE_BLUE;
   cursor: pointer;
   transition: 0.1s;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .goBack:hover {
   color: DARK_BLUE;
+  fill: DARK_BLUE;
+}
+
+.icon__container {
+  fill: inherit;
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: transparent;
+  border: none;
+  margin-right: 0.25rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .tables__container {
+    flex-direction: column;
+  }
+
+  .ordersTable {
+    width: 100%;
+  }
+  
+  .paymentsTable {
+    width: 100%;
+  }
 }

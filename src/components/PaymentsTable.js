@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableFooter,
   TableHead,
   TablePagination,
   TableRow
@@ -139,21 +138,23 @@ const PaymentsTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>{error ? renderPlaceholder() : renderRows()}</TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                className={styles.pagination}
-                count={totalRows}
-                page={currentPage}
-                rowsPerPage={rowsPerPage}
-                labelDisplayedRows={({ page }) => `Page ${page + 1} of ${totalPages}`}
-                rowsPerPageOptions={[rowsPerPage]}
-                onChangePage={(event, page) => onChangePage(page)}
-              />
-            </TableRow>
-          </TableFooter>
         </Table>
       </TableContainer>
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TablePagination
+              className={styles.pagination}
+              count={totalRows}
+              page={currentPage}
+              rowsPerPage={rowsPerPage}
+              labelDisplayedRows={({ page }) => `Page ${page + 1} of ${totalPages}`}
+              rowsPerPageOptions={[rowsPerPage]}
+              onChangePage={(event, page) => onChangePage(page)}
+            />
+          </TableRow>
+        </TableBody>
+      </Table>
     </Card>
   );
 };
