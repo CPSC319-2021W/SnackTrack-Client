@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
@@ -19,20 +20,20 @@ import { getUserById } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
 import usersStyles from '../styles/UserProfile.module.css';
 
-import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
-
 const INITIAL_PAYMENTS = {
   total_rows: 0,
   payments: [],
   total_pages: 1,
-  current_page: 0
+  current_page: 0,
+  initial: true
 };
 
 const INITIAL_ORDERS = {
   total_rows: 0,
   transactions: [],
   total_pages: 1,
-  current_page: 0
+  current_page: 0,
+  initial: true
 };
 
 const UserProfile = () => {
@@ -129,6 +130,8 @@ const UserProfile = () => {
       <div className={usersStyles.tables__container}>
         <div className={usersStyles.ordersTable}>
           <OrdersTable
+            isLoaded={!ordersResponse.initial}
+            isEmpty={ordersResponse.transactions.length === 0}
             data={ordersResponse}
             rowsPerPage={rowsPerPage}
             updateProfileBalance={updateProfileBalance}
@@ -139,6 +142,8 @@ const UserProfile = () => {
         </div>
         <div className={usersStyles.paymentsTable}>
           <PaymentsTable
+            isLoaded={!paymentsResponse.initial}
+            isEmpty={paymentsResponse.payments.length === 0}
             error={paymentsError}
             data={paymentsResponse}
             rowsPerPage={rowsPerPage}

@@ -50,9 +50,6 @@
 .cell__payments__base {
   width: 90px;
   max-width: 115px;
-  height: 52px;
-  max-height: 52px;
-  border-bottom: 0;
 }
 
 .cell__payments__date {

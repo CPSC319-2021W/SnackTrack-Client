@@ -25,6 +25,8 @@ import { useDispatch } from 'react-redux';
 const RenderOrdersTable = (props) => {
   const dispatch = useDispatch();
   const {
+    isLoaded,
+    isEmpty,
     data,
     rowsPerPage,
     selectedOrders,
@@ -48,11 +50,8 @@ const RenderOrdersTable = (props) => {
   };
 
   const emptyRows = () => {
-    let numRows = 0;
-    if (transactions != null) {
-      numRows = transactions.length;
-    }
-    const rowsToFill = rowsPerPage - numRows;
+    const emptyValue = isLoaded && isEmpty ? 1 : 0;
+    const rowsToFill = rowsPerPage - transactions.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
 
@@ -196,42 +195,49 @@ const RenderOrdersTable = (props) => {
                           ? column.format(value, order.payment_id)
                           : column.id === 'transaction_amount' ||
                             column.id === 'transaction_dtm'
-                            ? column.format(value)
-                            : value}
+                          ? column.format(value)
+                          : value}
                         {column.id === 'checkbox' &&
                         isPaymentPending(
                           transactions[i].payment_id,
                           transactions[i].transaction_type_id
                         ) ? (
-                            <Checkbox
-                              size='small'
-                              checked={checkIsSelected(transactions[i].transaction_id)}
-                              onClick={() =>
-                                onSelectOrder(
-                                  transactions[i].transaction_id,
-                                  transactions[i].transaction_amount
-                                )
-                              }
-                            />
-                          ) : null}
+                          <Checkbox
+                            size='small'
+                            checked={checkIsSelected(transactions[i].transaction_id)}
+                            onClick={() =>
+                              onSelectOrder(
+                                transactions[i].transaction_id,
+                                transactions[i].transaction_amount
+                              )
+                            }
+                          />
+                        ) : null}
                         {column.id === 'actions' &&
                         isPaymentPending(
                           transactions[i].payment_id,
                           transactions[i].transaction_type_id
                         ) ? (
-                            <Button
-                              className={styles.button__edit}
-                              onClick={() => openEditOrderDialog(transactions[i])}
-                            >
+                          <Button
+                            className={styles.button__edit}
+                            onClick={() => openEditOrderDialog(transactions[i])}
+                          >
                             Edit Order
-                            </Button>
-                          ) : null}
+                          </Button>
+                        ) : null}
                       </TableCell>
                     );
                   })}
                 </TableRow>
               );
             })}
+            {isLoaded && isEmpty ? (
+              <TableRow tabIndex={-1}>
+                <TableCell className={styles.cell} colSpan={columns.length}>
+                  <p>There is nothing to display.</p>
+                </TableCell>
+              </TableRow>
+            ) : null}
             {emptyRows().map((row) => {
               return (
                 <TableRow key={row} tabIndex={-1}>

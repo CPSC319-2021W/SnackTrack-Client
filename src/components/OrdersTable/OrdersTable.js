@@ -10,7 +10,16 @@ import { setBalance } from '../../redux/features/users/usersSlice';
 
 const Orders = (props) => {
   const dispatch = useDispatch();
-  const { data, rowsPerPage, updateProfileBalance, onChangePage, onHandleApiResponse, onMakePayment } = props;
+  const {
+    isLoaded,
+    isEmpty,
+    data,
+    rowsPerPage,
+    updateProfileBalance,
+    onChangePage,
+    onHandleApiResponse,
+    onMakePayment
+  } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
   const { username, balance } = useSelector((state) => state.usersReducer.profile);
@@ -183,6 +192,8 @@ const Orders = (props) => {
   return (
     <div>
       <RenderOrdersTable
+        isLoaded={isLoaded}
+        isEmpty={isEmpty}
         data={data}
         rowsPerPage={rowsPerPage}
         selectedOrders={selectedOrders}

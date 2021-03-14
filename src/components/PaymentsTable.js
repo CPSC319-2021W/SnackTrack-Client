@@ -16,38 +16,17 @@ import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const PaymentsTable = (props) => {
-  const { error, data, rowsPerPage, onChangePage } = props;
+  const { isLoaded, isEmpty, error, data, rowsPerPage, onChangePage } = props;
   const { payments } = data;
   const currentPage = data.current_page;
   const totalRows = data.total_rows;
   const totalPages = data.total_pages;
 
   const emptyRows = () => {
-    const rowsToFill = rowsPerPage - payments.length;
+    const emptyValue = isLoaded && isEmpty ? 1 : 0;
+    const rowsToFill = rowsPerPage - payments.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
-
-  const columns = [
-    {
-      id: 'payment_dtm',
-      label: 'Payment Date',
-      format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
-      }
-    },
-    {
-      id: 'payment_amount',
-      label: 'Amount',
-      format: (amount) => {
-        amount = amount / 100;
-        return `$${amount.toFixed(2)}`;
-      }
-    },
-    {
-      id: 'created_by',
-      label: 'Processed By'
-    }
-  ];
 
   const renderPlaceholder = () => {
     return (
@@ -74,6 +53,7 @@ const PaymentsTable = (props) => {
                   <TableCell
                     key={column.id}
                     className={classNames({
+                      [styles.cell]: true,
                       [styles.cell__payments__base]: true,
                       [styles.cell__payments__date]: column.id === 'payment_dtm',
                       [styles.cell__payments__processed]: column.id === 'created_by'
@@ -89,6 +69,19 @@ const PaymentsTable = (props) => {
             </TableRow>
           );
         })}
+        {isLoaded && isEmpty ? (
+          <TableRow tabIndex={-1}>
+            <TableCell
+              className={classNames({
+                [styles.cell]: true,
+                [styles.cell__payments__base]: true
+              })}
+              colSpan={columns.length}
+            >
+              <p>There is nothing to display.</p>
+            </TableCell>
+          </TableRow>
+        ) : null}
         {emptyRows().map((row) => {
           return (
             <TableRow key={row} tabIndex={-1}>
@@ -97,6 +90,7 @@ const PaymentsTable = (props) => {
                   <TableCell
                     key={column.id}
                     className={classNames({
+                      [styles.cell]: true,
                       [styles.cell__payments__base]: true,
                       [styles.cell__payments__date]: column.id === 'payment_dtm',
                       [styles.cell__payments__processed]: column.id === 'created_by'
@@ -110,6 +104,28 @@ const PaymentsTable = (props) => {
       </Fragment>
     );
   };
+
+  const columns = [
+    {
+      id: 'payment_dtm',
+      label: 'Payment Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+      }
+    },
+    {
+      id: 'payment_amount',
+      label: 'Amount',
+      format: (amount) => {
+        amount = amount / 100;
+        return `$${amount.toFixed(2)}`;
+      }
+    },
+    {
+      id: 'created_by',
+      label: 'Processed By'
+    }
+  ];
 
   return (
     <Card className={styles.paper}>
@@ -127,6 +143,8 @@ const PaymentsTable = (props) => {
                   key={column.id}
                   className={classNames({
                     [styles.secondaryHeader]: true,
+                    [styles.cell]: true,
+
                     [styles.cell__payments__base]: true,
                     [styles.cell__payments__date]: column.id === 'payment_dtm',
                     [styles.cell__payments__processed]: column.id === 'created_by'
