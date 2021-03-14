@@ -9,7 +9,7 @@ const TextInputLiveFeedback = ({ label, ...props }) => {
   const [didFocus, setDidFocus] = useState(false);
   const handleFocus = () => setDidFocus(true);
   const showFeedback =
-    (!!didFocus && field.value.trim().length > 2) || meta.touched;
+    (didFocus && field.value.trim().length > 2) || meta.touched;
 
   return (
     <div
@@ -19,7 +19,7 @@ const TextInputLiveFeedback = ({ label, ...props }) => {
         }` ) }
     >
       <div className={styles.form__flex}>
-        <div className={styles.lable}>{label}</div>{' '}
+        <div className={styles.label}>{label}</div>
         {showFeedback ? (
           <div
             id={`${props.id}-feedback`}

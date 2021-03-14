@@ -73,12 +73,12 @@ const AddSnackDialog = (props) => {
     validationSchema: Yup.object({
       snackname: Yup.string()
         .min(1, 'Must be at least 1 characters')
-        .max(30, 'Must be less than 30 characters')
+        .max(128, 'Must be less than 128 characters')
         .required('Required'),
         
       description: Yup.string()
         .min(1, 'Must be at least 1 characters')
-        .max(200, 'Must be less than 200 characters'),
+        .max(128, 'Must be less than 128 characters'),
 
       price: Yup.string()
         .min(0, 'Must be at least $0')
@@ -89,17 +89,17 @@ const AddSnackDialog = (props) => {
       quantity: Yup.string()
         .min(0, 'Must be at least $0')
         .max(6, 'Must be less than 6 digits')
-        .matches(/^\d*[.]?\d*$/, 'Number only'),
+        .matches(/^[0-9]*$/, 'Number only'),
 
       reorder: Yup.string()
         .min(0, 'Must be at least $0')
         .max(6, 'Must be less than 6 digits')
-        .matches(/^\d*[.]?\d*$/, 'Number only'),
+        .matches(/^[0-9]*$/, 'Number only'),
 
       expiration: Yup.string()
         .min(0, 'Must be at least 0')
         .max(6, 'Must be less than 6 digits')
-        .matches(/^\d*[.]?\d*$/, 'Number only')
+        .matches(/^[0-9]*$/, 'Number only')
     })
   });
 
@@ -130,12 +130,12 @@ const AddSnackDialog = (props) => {
                     name='snackname'
                     type='text'
                   />
-                  <div className={styles.category__lable}>
+                  <div className={styles.category__label}>
                     <p>Category</p>
                     <CategorySelect handleSelectCategory={handleCategorySet} />
                   </div>
                 </div>
-                <div className={styles.textarea_lable}>
+                <div className={styles.textarea_label}>
                   <p>Description</p>
                   <Field name='description' as='textarea' className={styles.textarea} />
                 </div>

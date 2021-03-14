@@ -1,8 +1,10 @@
 import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../../styles/Colors.module.css';
 
+import { CATEGORIES_LIST } from '../../constants';
 import React from 'react';
 import Select from 'react-select';
-import { options } from '../../constants';
+
+const options = CATEGORIES_LIST.map((category) => ({ value: category.id, label: category.name }));
 
 const CategorySelect = (props) => {
   const { handleSelectCategory } = props;
@@ -54,7 +56,7 @@ const CategorySelect = (props) => {
     }),
     indicatorSeparator: (base) => ({
       ...base,
-      height: '0px'
+      display: 'none'
     }),
     placeholder: (base) => ({
       ...base,

@@ -157,13 +157,8 @@ const SnackInventoryTable = (props) => {
   };
 
   const handleSubmit = async (event) => {
-    console.log(event);
     if (event.key === 'Enter' || event.type === 'click') {
-      try {
-        setAddSnackOpen(false);
-      } catch (err) {
-        console.log(err);
-      }
+      setAddSnackOpen(false);
     }
   };
 

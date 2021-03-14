@@ -45,12 +45,12 @@
   flex-direction: row;
 }
 
-.category__lable {
+.category__label {
   flex-direction: column;
   margin-right: 15px;
 }
 
-.category__lable > p {
+.category__label > p {
   margin-bottom: 5px;
 }
 
@@ -121,25 +121,6 @@
   background-color: LIGHT_GREY;
 }
 
-.button__photo {
-  width: 94px;
-  height: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  color: BASE_BLUE;
-  background-color: LIGHT_BLUE;
-  border: none;
-  line-height: 1;
-  text-transform: none;
-  border-radius: 3px;
-  justify-content: center;
-}
-
-.button__photo:hover {
-  color: DARK_BLUE;
-  background-color: BASE_BLUE_HOVER;
-}
-
 .input[type="text"],
 .input[type="number"] {
   width: 100%;
@@ -157,10 +138,6 @@
   margin-bottom: 10px;
 }
 
-.textarea_lable {
-  margin-right: 15px;
-}
-
 .textarea {
   width: 100%;
   min-width: 360px;
@@ -175,7 +152,7 @@
   margin-right: 15px;
 }
 
-.lable {
+.label {
   font-size: 14px;
   line-height: 18px;
   color: DARK_GREY;  
