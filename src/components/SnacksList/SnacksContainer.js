@@ -121,7 +121,15 @@ const SnacksContainer = (props) => {
     <div>
       <CategoryFilter selectedFilters={filters} />
       <div>
-        <SnackGrid snacks={snacksToDisplay} loaded={isLoaded} onClick={openSnackOrder} />
+        {snacksToDisplay.length === 0 && isLoaded ? (
+          <h6>There are no snacks that match your filter/search criteria.</h6>
+        ) : (
+          <SnackGrid
+            snacks={snacksToDisplay}
+            loaded={isLoaded}
+            onClick={openSnackOrder}
+          />
+        )}
       </div>
       <OrderSnackDialog
         open={isSnackOrderOpen}
