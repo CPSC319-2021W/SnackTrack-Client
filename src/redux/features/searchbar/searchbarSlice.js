@@ -1,19 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_STATE = {
-  searchValue: ''
+  usersSearchValue: '',
+  snackSearchValue: ''
 };
 
 const searchbarSlice = createSlice({
   name: 'searchbar',
   initialState: INITIAL_STATE,
   reducers: {
-    setValue: (state, action) => {
-      state.searchValue = action.payload;
+    setUserSearchValue: (state, action) => {
+      state.usersSearchValue = action.payload;
+    },
+    setSnackSearchValue: (state, action) => {
+      state.snackSearchValue = action.payload;
     }
   }
 });
 
-export const { setValue } = searchbarSlice.actions;
+export const { setUserSearchValue, setSnackSearchValue } = searchbarSlice.actions;
 
 export default searchbarSlice.reducer;
