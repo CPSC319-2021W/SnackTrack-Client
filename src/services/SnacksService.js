@@ -55,20 +55,19 @@ const deleteBatch = async (batchId) => {
   await httpClient.delete(`/snack_batches/${batchId}`, authHeader);
 };
 
-const addSnack = async (username, snackObj, category, date) => {
+const addSnack = async (username, snackObj) => {
   try {
-    console.log(snackObj);
+    console.log(username, snackObj);
     const data = { snack_name: snackObj.snackname,  
-      snack_type_id: category, 
+      snack_type_id: snackObj.category, 
       description: snackObj.description,
-      image_url: 'https://cottagelife.com/wp-content/uploads/2014/12/coffee_crisp_chocolate_bar-e1419970585437.jpg', 
-      quantity: parseInt(snackObj.quantity), 
-      price: parseInt(snackObj.price) * 100, 
+      image_url: snackObj.image_url, 
+      quantity: snackObj.quantity, 
+      price: snackObj.price, 
       is_active: true, 
-      order_threshold: parseInt(snackObj.reorder),
-      expiration_dtm: date, 
+      order_threshold: snackObj.reorder,
+      expiration_dtm: snackObj.expiration, 
       last_updated_by: username };
-    console.log(data);
     const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
     await httpClient.post('/snacks', data, authHeader);
   } catch (err) {

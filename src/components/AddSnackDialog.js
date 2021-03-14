@@ -34,7 +34,7 @@ const AddSnackDialog = (props) => {
   const { open, handleSubmit } = props;
   const [category, setCategory] = useState('');
   const [snackObj, setSnackObj] = useState(initialState);
-  const [date, setDate] = useState(today);
+  const [expirationDate, setExpirationDate] = useState(today);
   const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
     (state) => state.snacksReducer
@@ -57,14 +57,19 @@ const AddSnackDialog = (props) => {
 
   const addForm = useFormik({
     initialValues: initialState,
-    onSubmit: async (values, actions) => {
+    onSubmit: async (values) => {
       await sleep(500);
-      values.quantity = values.quantity === '' ? 0 : values.quantity;
-      values.image_uri = snackImageUpload;
+      snackObj.snackname = values.snackname;
+      snackObj.category = category; 
+      snackObj.description = values.description;
+      snackObj.image_uri = snackImageUpload;
+      snackObj.quantity = values.quantity === '' ? 0 : values.quantity;
+      snackObj.price = parseInt(values.price) * 100; 
+      snackObj.reorder = parseInt(values.reorder);
       setSnackObj(values);
-      setDate(today.plus(parseInt(values.expiration)));
-      addSnack(username, snackObj, category, date);
-      actions.resetForm({values: initialState});
+      setExpirationDate(today.plus(parseInt(values.expiration)));
+      snackObj.expiration = expirationDate;
+      addSnack(username, snackObj);
       closeDialog();
     },
     validationSchema: Yup.object({
