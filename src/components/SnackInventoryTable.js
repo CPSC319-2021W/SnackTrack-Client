@@ -34,7 +34,8 @@ const SnackInventoryTable = (props) => {
     activeSnacks,
     data,
     rowsPerPage,
-    onAddBatch,
+    onAddBatchOrEdit,
+    onDeleteBatch,
     onChangePage
   } = props;
   const { snacks, current_page, total_rows, total_pages } = data;
@@ -196,6 +197,7 @@ const SnackInventoryTable = (props) => {
                     tabIndex={-1}
                     className={classNames({
                       [styles.row]: true,
+                      [styles.row__selectable]: true,
                       [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch
                     })}
                     onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
@@ -268,9 +270,15 @@ const SnackInventoryTable = (props) => {
         newSnackBatch
         open={isAddBatchOpen}
         batch={selectedBatch}
-        onAddBatch={onAddBatch}
+        onDeleteBatch={onDeleteBatch}
+        onAddBatchOrEdit={onAddBatchOrEdit}
       />
-      <ManageBatchDialog open={isEditBatchOpen} batch={selectedBatch} />
+      <ManageBatchDialog
+        open={isEditBatchOpen}
+        batch={selectedBatch}
+        onDeleteBatch={onDeleteBatch}
+        onAddBatchOrEdit={onAddBatchOrEdit}
+      />
     </Card>
   );
 };

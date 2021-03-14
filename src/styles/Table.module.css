@@ -172,6 +172,10 @@
   background-color: INNER_LIGHT_GREY;
 }
 
+.row__selectable {
+  cursor: pointer;
+}
+
 .row__selected {
   background-color: INNER_LIGHT_GREY;
 }
