@@ -14,6 +14,7 @@ import { ROUTES } from '../constants';
 import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
+import UserProfileNotFound from '../pages/UserProfileNotFound';
 import { getUserById } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
 import usersStyles from '../styles/UserProfile.module.css';
@@ -36,6 +37,7 @@ const UserProfile = () => {
   const history = useHistory();
   const { id } = useParams();
   const [user, setUser] = useState(null);
+  const [userNotFound, setUserNotFound] = useState(false);
   const dispatch = useDispatch();
   const [rowsPerPage] = useState(8);
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
@@ -84,8 +86,12 @@ const UserProfile = () => {
   };
 
   useEffect(async () => {
-    const userResponse = await getUserById(id);
-    setUser(userResponse);
+    try {
+      const userResponse = await getUserById(id);
+      setUser(userResponse);
+    } catch (err) {
+      setUserNotFound(true);
+    }
   }, []);
 
   useEffect(async () => {
@@ -107,7 +113,7 @@ const UserProfile = () => {
     }
   }, [user]);
 
-  return (
+  return !userNotFound ? (
     <div className={styles.base}>
       <div className={styles.header}>
         <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
@@ -141,6 +147,15 @@ const UserProfile = () => {
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleClose}
       />
+    </div>
+  ) : (
+    <div className={styles.base}>
+      <div className={styles.header}>
+        <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
+          Back To Users List
+        </h5>
+      </div>
+      <UserProfileNotFound />
     </div>
   );
 };

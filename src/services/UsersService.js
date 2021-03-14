@@ -23,14 +23,9 @@ const getUsersAdmin = async () => {
 };
 
 const getUserById = async (userId) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(`/users/${userId}`, authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle 404
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(`/users/${userId}`, authHeader);
+  return data;
 };
 
 const getUserOrders = async (userId, page, rowsPerPage) => {
