@@ -55,24 +55,18 @@ const deleteBatch = async (batchId) => {
   await httpClient.delete(`/snack_batches/${batchId}`, authHeader);
 };
 
-const addSnack = async (username, snackObj) => {
-  try {
-    console.log(username, snackObj);
-    const data = { snack_name: snackObj.snackname,  
-      snack_type_id: snackObj.category, 
-      description: snackObj.description,
-      image_url: snackObj.image_url, 
-      quantity: snackObj.quantity, 
-      price: snackObj.price, 
-      is_active: true, 
-      order_threshold: snackObj.reorder,
-      expiration_dtm: snackObj.expiration, 
-      last_updated_by: username };
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    await httpClient.post('/snacks', data, authHeader);
-  } catch (err) {
-    console.log(err);
-  }
+const addSnack = async (snackRequest) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.post('/snacks', snackRequest, authHeader);
+  return data;
 };
 
-export { getSnackBatch, getSnacks, makeSuggestion, addBatch, editBatch, deleteBatch, addSnack };
+export {
+  getSnackBatch,
+  getSnacks,
+  makeSuggestion,
+  addBatch,
+  editBatch,
+  deleteBatch,
+  addSnack
+};

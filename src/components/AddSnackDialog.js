@@ -13,11 +13,10 @@ import CategorySelect from './ManageSnack/CategorySelect';
 import { DateTime } from 'luxon';
 import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
-import {addSnack} from '../services/SnacksService';
+import { addSnack } from '../services/SnacksService';
 import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/ManageSnack.module.css';
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const today = DateTime.now().set({ hour: 0, minute: 0 });
 
 const initialState = {
@@ -33,20 +32,17 @@ const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
   const { open, handleSubmit } = props;
   const [category, setCategory] = useState('');
-  const [snackObj, setSnackObj] = useState(initialState);
-  const [expirationDate, setExpirationDate] = useState(today);
   const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
     (state) => state.snacksReducer
   );
 
   const handleCategorySet = (options) => {
-    setCategory(options.value); // category id 
+    setCategory(options.value);
   };
 
   const closeDialog = () => {
     setCategory('');
-    setSnackObj(initialState);
     addForm.resetForm();
     dispatch(setIsAddSnackOpen(false));
   };
@@ -57,19 +53,21 @@ const AddSnackDialog = (props) => {
 
   const addForm = useFormik({
     initialValues: initialState,
-    onSubmit: async (values) => {
-      await sleep(500);
-      snackObj.snackname = values.snackname;
-      snackObj.category = category; 
-      snackObj.description = values.description;
-      snackObj.image_uri = snackImageUpload;
-      snackObj.quantity = values.quantity === '' ? 0 : values.quantity;
-      snackObj.price = parseInt(values.price) * 100; 
-      snackObj.reorder = parseInt(values.reorder);
-      setSnackObj(values);
-      setExpirationDate(today.plus(parseInt(values.expiration)));
-      snackObj.expiration = expirationDate;
-      addSnack(username, snackObj);
+    onSubmit: async (values, actions) => {
+      const snackRequest = {
+        last_updated_by: username,
+        snack_name: values.snackname,
+        snack_type_id: parseInt(category),
+        description: values.description,
+        image_uri: snackImageUpload.url,
+        price: parseInt(values.price) * 100,
+        quantity: values.quantity === '' ? 0 : values.quantity,
+        order_threshold: values.reorder === '' ? null : values.reorder,
+        expiration_dtm: values.expiration ? today.plus(parseInt(values.expiration)) : null
+      };
+      const snack = await addSnack(snackRequest);
+      actions.resetForm({ values: initialState });
+      console.log(snack);
       closeDialog();
     },
     validationSchema: Yup.object({
@@ -77,9 +75,11 @@ const AddSnackDialog = (props) => {
         .min(1, 'Must be at least 1 characters')
         .max(30, 'Must be less than 30 characters')
         .required('Required'),
+        
       description: Yup.string()
         .min(1, 'Must be at least 1 characters')
         .max(200, 'Must be less than 200 characters'),
+
       price: Yup.string()
         .min(0, 'Must be at least $0')
         .max(6, 'Must be less than 6 digits')
@@ -107,13 +107,12 @@ const AddSnackDialog = (props) => {
     <Dialog
       aria-labelledby='snack-manage-dialog'
       open={open}
-      onClose={closeDialog} 
+      onClose={closeDialog}
       onSubmit={handleSubmit}
       onCancel={closeDialog}
-    > 
+    >
       <div className={styles.form}>
         <FormikProvider variant='outlined' value={addForm}>
-          {console.log(snackObj)}
           <Form>
             <div className={dialogStyles.header}>
               <div className={styles.title}>Add New Snack</div>
@@ -133,9 +132,7 @@ const AddSnackDialog = (props) => {
                   />
                   <div className={styles.category__lable}>
                     <p>Category</p>
-                    <CategorySelect 
-                      handleSelectCategory={handleCategorySet}
-                    />
+                    <CategorySelect handleSelectCategory={handleCategorySet} />
                   </div>
                 </div>
                 <div className={styles.textarea_lable}>
@@ -178,14 +175,13 @@ const AddSnackDialog = (props) => {
                 type='submit'
                 disabled={
                   !addForm.dirty || !addForm.isValid || !category || !snackImageUpload
-                } // make it disabled when input is not entered
+                } 
                 className={styles.button}
               >
                 Submit
               </Button>
-              {/* TODO: Needs to change AppButton */}
             </div>
-          </Form> 
+          </Form>
         </FormikProvider>
       </div>
     </Dialog>
