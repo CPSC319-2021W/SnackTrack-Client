@@ -156,12 +156,6 @@ const SnackInventoryTable = (props) => {
     setAddSnackOpen(true);
   };
 
-  const handleSubmit = async (event) => {
-    if (event.key === 'Enter' || event.type === 'click') {
-      setAddSnackOpen(false);
-    }
-  };
-
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
@@ -281,8 +275,7 @@ const SnackInventoryTable = (props) => {
         </Table>
       </TableContainer>
       <AddSnackDialog 
-        open={isAddSnackOpen}
-        handleSubmit={handleSubmit}   
+        open={isAddSnackOpen} 
       />
       <ManageBatchDialog
         newSnackBatch

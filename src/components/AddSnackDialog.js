@@ -30,7 +30,7 @@ const initialState = {
 
 const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
-  const { open, handleSubmit } = props;
+  const { open } = props;
   const [category, setCategory] = useState('');
   const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
@@ -108,7 +108,6 @@ const AddSnackDialog = (props) => {
       aria-labelledby='snack-manage-dialog'
       open={open}
       onClose={closeDialog}
-      onSubmit={handleSubmit}
       onCancel={closeDialog}
     >
       <div className={styles.form}>
