@@ -130,7 +130,7 @@ const UserProfile = () => {
       <div className={usersStyles.tables__container}>
         <div className={usersStyles.ordersTable}>
           <OrdersTable
-            isLoaded={!ordersResponse.initial}
+            isLoaded={!ordersResponse.initial && !paymentsResponse.initial}
             isEmpty={ordersResponse.transactions.length === 0}
             data={ordersResponse}
             rowsPerPage={rowsPerPage}
@@ -142,7 +142,7 @@ const UserProfile = () => {
         </div>
         <div className={usersStyles.paymentsTable}>
           <PaymentsTable
-            isLoaded={!paymentsResponse.initial}
+            isLoaded={!ordersResponse.initial && !paymentsResponse.initial}
             isEmpty={paymentsResponse.payments.length === 0}
             error={paymentsError}
             data={paymentsResponse}

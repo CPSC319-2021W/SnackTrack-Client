@@ -20,7 +20,8 @@ const INITIAL_SNACKS = {
 const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
-  const [snacks, setSnacks] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [snacks, setSnacks] = useState(null);
   const [allActiveSnacks, setAllActiveSnacks] = useState([]);
   const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
   const [inactiveSnacks, setInactiveSnacks] = useState(INITIAL_SNACKS);
@@ -92,21 +93,14 @@ const Inventory = () => {
   }, []);
 
   useEffect(() => {
-    setAllActiveSnacks(snacks.filter((snack) => snack.is_active));
-    setActiveSnacks(
-      toPaginatedSnacks(
-        snacks.filter((snack) => snack.is_active),
-        0,
-        rowsPerPage
-      )
-    );
-    setInactiveSnacks(
-      toPaginatedSnacks(
-        snacks.filter((snack) => !snack.is_active),
-        0,
-        rowsPerPage
-      )
-    );
+    if (snacks) {
+      const allActiveSnacks = snacks.filter((snack) => snack.is_active);
+      const allInactiveSnacks = snacks.filter((snack) => !snack.is_active);
+      setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
+      setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
+      setAllActiveSnacks(allActiveSnacks);
+      setIsLoaded(true);
+    }
   }, [snacks]);
 
   return (
@@ -116,6 +110,8 @@ const Inventory = () => {
       </div>
       <SnackInventoryTable
         activeSnacks
+        isLoaded={isLoaded}
+        isEmpty={activeSnacks.snacks.length === 0}
         snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
         rowsPerPage={rowsPerPage}
@@ -124,6 +120,8 @@ const Inventory = () => {
         onChangePage={handleChangePage}
       />
       <SnackInventoryTable
+        isLoaded={isLoaded}
+        isEmpty={inactiveSnacks.snacks.length === 0}
         data={inactiveSnacks}
         rowsPerPage={rowsPerPage}
         onAddBatchOrEdit={handleBatchAddOrEdit}
