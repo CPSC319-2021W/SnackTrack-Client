@@ -55,6 +55,14 @@ const CategorySelect = (props) => {
     indicatorSeparator: (base) => ({
       ...base,
       height: '0px'
+    }),
+    placeholder: (base) => ({
+      ...base,
+      color: BASE_BLUE,
+      '&:hover': {
+        color: DARK_BLUE
+      },
+      height: '80%'
     })
   };
 

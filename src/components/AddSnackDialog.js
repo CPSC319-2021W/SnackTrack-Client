@@ -16,7 +16,8 @@ import { useDispatch } from 'react-redux';
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const initialState = { snackname: '',
+const initialState = { 
+  snackname: '',
   description: '',
   price: '',
   quantity: '',
@@ -39,12 +40,15 @@ const AddSnackDialog = (props) => {
     dispatch(setIsAddSnackOpen(false));
   };
 
-  const formik = useFormik({
-    initialValues: snackObj,
-    onSubmit: async (values) => {
+  const addForm = useFormik({
+    initialValues: initialState,
+    onSubmit: async (values, actions) => {
       await sleep(500);
-      //setSnackObj(values);
+      setSnackObj(values);
+      console.log(snackObj);
+      //TODO: Add new snack API calls
       alert(JSON.stringify(values, null, 2));
+      actions.resetForm({values: initialState});
       closeDialog();
     },
     validationSchema: Yup.object({
@@ -88,10 +92,11 @@ const AddSnackDialog = (props) => {
       open={open}
       onClose={closeDialog} 
       onSubmit={handleSubmit}
+      onCancel={closeDialog}
     > 
       <div className={styles.form}>
-        <FormikProvider variant='outlined' value={formik}>
-          {console.log(formik)}
+        <FormikProvider variant='outlined' value={addForm}>
+          {console.log(snackObj)}
           <Form>
             <div className={dialogStyles.header}>
               <div className={styles.title}>Add New Snack</div>
