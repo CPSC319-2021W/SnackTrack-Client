@@ -34,12 +34,12 @@ const Orders = (props) => {
   };
 
   const clearLocalStates = () => {
-    setSelectedOrders([]);
-    setSelectedPages([]);
     setSubtotalAmount(0);
     setPayForOrdersDisabled(true);
     setUncheckedOrders([]);
     setUncheckedOrdersIds([]);
+    setSelectedOrders([]);
+    setSelectedPages([]);
   };
 
   const handlePayForOrders = async () => {
