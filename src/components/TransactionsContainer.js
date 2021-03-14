@@ -37,13 +37,13 @@ const TransactionsContainer = (props) => {
         <div className={styles.column__field__small}>
           <p className={styles.column__text}>Quantity</p>
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__small}>
           <p className={styles.column__text}>Amount</p>
         </div>
         <div className={styles.column__field__small}>
           <p className={styles.column__text}>Status</p>
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__small}>
           <p className={styles.column__text}>Actions</p>
         </div>
       </Fragment>
@@ -53,13 +53,13 @@ const TransactionsContainer = (props) => {
   const renderPaymentsHeader = () => {
     return (
       <Fragment>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__pay}>
           <p>Payment Date</p>
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__pay}>
           <p>Amount</p>
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__pay}>
           <p>Processed By</p>
         </div>
       </Fragment>

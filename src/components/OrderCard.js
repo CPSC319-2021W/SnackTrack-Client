@@ -90,13 +90,13 @@ const OrderCard = (props) => {
         <div className={styles.column__field__small}>
           <p className={styles.column__text}>{ quantity }</p>
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__small}>
           <p className={styles.column__text}>{ renderAmount() }</p>
         </div>
         <div className={styles.column__field__small}>
           { renderStatus() }
         </div>
-        <div className={styles.column__field}>
+        <div className={styles.column__field__small}>
           { renderEditButton() }
         </div>
       </Card>

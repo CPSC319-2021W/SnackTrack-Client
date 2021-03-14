@@ -23,8 +23,12 @@
 
 .small {
     font-size: 0.8rem;
-    height: 26px;
+    height: 30px;
     min-width: 0;
+}
+
+.small > span {
+    line-height: 0.8rem;
 }
 
 .secondary {

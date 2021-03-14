@@ -26,14 +26,14 @@ const PaymentCard = (props) => {
   return (
     <Fragment>
       <Card variant='outlined' className={styles.card__base}>
-        <div className={styles.column__field}>
-          <p>{ renderDate() }</p>
+        <div className={styles.column__field__pay}>
+          <p className={styles.column__text}>{ renderDate() }</p>
         </div>
-        <div className={styles.column__field}>
-          <p>{ renderAmount() }</p>
+        <div className={styles.column__field__pay}>
+          <p className={styles.column__text}>{ renderAmount() }</p>
         </div>
-        <div className={styles.column__field}>
-          <p>{ created_by }</p>
+        <div className={styles.column__field__pay}>
+          <p className={styles.column__text}>{ created_by }</p>
         </div>
       </Card>
       <Card variant='outlined' className={styles.mobile__base}>
@@ -42,7 +42,11 @@ const PaymentCard = (props) => {
             <p className={styles.column__text__mobile}>{ renderDate() }</p>
           </div>
           <div>
-            <p className={styles.column__text__mobile}>{ renderAmount() }</p>
+            <p className={classNames({
+              [styles.column__text__mobile]: true,
+              [styles.column__text__title]: true
+            })}>{ renderAmount() }
+            </p>
           </div>
         </div>
         <div className={styles.column__container__right}>

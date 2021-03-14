@@ -18,12 +18,20 @@
     width: 20%;
 }
 
+.column__field__pay {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0rem 0.65rem;
+    width: 33%;
+}
+
 .column__field__small {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin: 0rem 0.65rem;
-    width: 10%;
+    width: 15%;
 }
 
 .status__bar {
@@ -72,6 +80,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+.column__text {
+    text-align: left;
 }
 
 .column__text__mobile {
