@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Checkbox,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -50,7 +51,7 @@ const RenderOrdersTable = (props) => {
   };
 
   const emptyRows = () => {
-    const emptyValue = isLoaded && isEmpty ? 1 : 0;
+    const emptyValue = isEmpty ? 1 : 0;
     const rowsToFill = rowsPerPage - transactions.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
@@ -167,70 +168,82 @@ const RenderOrdersTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((order, i) => {
-              return (
-                <TableRow
-                  key={i}
-                  tabIndex={-1}
-                  className={classNames({
-                    [styles.row]: !checkIsSelected(transactions[i].transaction_id),
-                    [styles.row__selected]: checkIsSelected(
-                      transactions[i].transaction_id
-                    )
-                  })}
+            {isLoaded ? (
+              transactions.map((order, i) => {
+                return (
+                  <TableRow
+                    key={i}
+                    tabIndex={-1}
+                    className={classNames({
+                      [styles.row]: !checkIsSelected(transactions[i].transaction_id),
+                      [styles.row__selected]: checkIsSelected(
+                        transactions[i].transaction_id
+                      )
+                    })}
+                  >
+                    {columns.map((column) => {
+                      const value = order[column.id];
+                      return (
+                        <TableCell
+                          key={column.id}
+                          className={classNames({
+                            [styles.cell]: true,
+                            [styles.cell__small]: true,
+                            [styles.cell__medium]: column.id !== 'checkbox'
+                          })}
+                          title={column.id === 'snack_name' ? value : null}
+                        >
+                          {column.id === 'transaction_type_id'
+                            ? column.format(value, order.payment_id)
+                            : column.id === 'transaction_amount' ||
+                              column.id === 'transaction_dtm'
+                              ? column.format(value)
+                              : value}
+                          {column.id === 'checkbox' &&
+                            isPaymentPending(
+                              transactions[i].payment_id,
+                              transactions[i].transaction_type_id
+                            ) ? (
+                              <Checkbox
+                                size='small'
+                                checked={checkIsSelected(transactions[i].transaction_id)}
+                                onClick={() =>
+                                  onSelectOrder(
+                                    transactions[i].transaction_id,
+                                    transactions[i].transaction_amount
+                                  )
+                                }
+                              />
+                            ) : null}
+                          {column.id === 'actions' &&
+                            isPaymentPending(
+                              transactions[i].payment_id,
+                              transactions[i].transaction_type_id
+                            ) ? (
+                              <Button
+                                className={styles.button__edit}
+                                onClick={() => openEditOrderDialog(transactions[i])}
+                              >
+                                Edit Order
+                              </Button>
+                            ) : null}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
+            ) : (
+              <TableRow tabIndex={-1}>
+                <TableCell
+                  className={styles.cell}
+                  align='center'
+                  colSpan={columns.length}
                 >
-                  {columns.map((column) => {
-                    const value = order[column.id];
-                    return (
-                      <TableCell
-                        key={column.id}
-                        className={classNames({
-                          [styles.cell]: true,
-                          [styles.cell__small]: true,
-                          [styles.cell__medium]: column.id !== 'checkbox'
-                        })}
-                        title={column.id === 'snack_name' ? value : null}
-                      >
-                        {column.id === 'transaction_type_id'
-                          ? column.format(value, order.payment_id)
-                          : column.id === 'transaction_amount' ||
-                            column.id === 'transaction_dtm'
-                            ? column.format(value)
-                            : value}
-                        {column.id === 'checkbox' &&
-                        isPaymentPending(
-                          transactions[i].payment_id,
-                          transactions[i].transaction_type_id
-                        ) ? (
-                            <Checkbox
-                              size='small'
-                              checked={checkIsSelected(transactions[i].transaction_id)}
-                              onClick={() =>
-                                onSelectOrder(
-                                  transactions[i].transaction_id,
-                                  transactions[i].transaction_amount
-                                )
-                              }
-                            />
-                          ) : null}
-                        {column.id === 'actions' &&
-                        isPaymentPending(
-                          transactions[i].payment_id,
-                          transactions[i].transaction_type_id
-                        ) ? (
-                            <Button
-                              className={styles.button__edit}
-                              onClick={() => openEditOrderDialog(transactions[i])}
-                            >
-                            Edit Order
-                            </Button>
-                          ) : null}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
+                  <CircularProgress color='secondary' size={30} thickness={5} />
+                </TableCell>
+              </TableRow>
+            )}
             {isLoaded && isEmpty ? (
               <TableRow tabIndex={-1}>
                 <TableCell className={styles.cell} colSpan={columns.length}>

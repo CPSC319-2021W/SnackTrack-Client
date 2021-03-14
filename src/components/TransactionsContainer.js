@@ -5,6 +5,7 @@ import {
 } from '../redux/features/transactions/transactionsSlice';
 
 import AppButton from './AppButton';
+import { CircularProgress } from '@material-ui/core';
 import OrderCard from './OrderCard';
 import PaymentCard from './PaymentCard';
 import styles from '../styles/TransactionsCard.module.css';
@@ -81,14 +82,16 @@ const TransactionsContainer = (props) => {
         {transactions ? renderOrdersHeader() : null}
         {payments ? renderPaymentsHeader() : null}
       </div>
-      {isInitialLoaded
-        ? transactions?.map((order, i) => (
-            <OrderCard key={i} order={order} onEdit={openEditOrderDialog} />
-          ))
-        : null}
-      {isInitialLoaded
-        ? payments?.map((payment, i) => <PaymentCard key={i} payment={payment} />)
-        : null}
+      {isInitialLoaded ? (
+        transactions?.map((order, i) => (
+          <OrderCard key={i} order={order} onEdit={openEditOrderDialog} />
+        ))
+      ) : (
+        <CircularProgress color='secondary' size={30} thickness={5} />
+      )}
+      {payments?.map((payment, i) => (
+        <PaymentCard key={i} payment={payment} />
+      ))}
       {isInitialLoaded && current_page + 1 < total_pages ? (
         <div className={styles.load__button__container}>
           <AppButton

@@ -1,5 +1,6 @@
 import {
   Card,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -23,7 +24,7 @@ const PaymentsTable = (props) => {
   const totalPages = data.total_pages;
 
   const emptyRows = () => {
-    const emptyValue = isLoaded && isEmpty ? 1 : 0;
+    const emptyValue = isEmpty ? 1 : 0;
     const rowsToFill = rowsPerPage - payments.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
@@ -44,31 +45,39 @@ const PaymentsTable = (props) => {
   const renderRows = () => {
     return (
       <Fragment>
-        {payments.map((payment, i) => {
-          return (
-            <TableRow key={i} tabIndex={-1} className={styles.row}>
-              {columns.map((column) => {
-                const value = payment[column.id];
-                return (
-                  <TableCell
-                    key={column.id}
-                    className={classNames({
-                      [styles.cell]: true,
-                      [styles.cell__payments__base]: true,
-                      [styles.cell__payments__date]: column.id === 'payment_dtm',
-                      [styles.cell__payments__processed]: column.id === 'created_by'
-                    })}
-                    title={column.id === 'created_by' ? value : null}
-                  >
-                    {column.id === 'payment_amount' || column.id === 'payment_dtm'
-                      ? column.format(value)
-                      : value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          );
-        })}
+        {isLoaded ? (
+          payments.map((payment, i) => {
+            return (
+              <TableRow key={i} tabIndex={-1} className={styles.row}>
+                {columns.map((column) => {
+                  const value = payment[column.id];
+                  return (
+                    <TableCell
+                      key={column.id}
+                      className={classNames({
+                        [styles.cell]: true,
+                        [styles.cell__payments__base]: true,
+                        [styles.cell__payments__date]: column.id === 'payment_dtm',
+                        [styles.cell__payments__processed]: column.id === 'created_by'
+                      })}
+                      title={column.id === 'created_by' ? value : null}
+                    >
+                      {column.id === 'payment_amount' || column.id === 'payment_dtm'
+                        ? column.format(value)
+                        : value}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow tabIndex={-1}>
+            <TableCell className={styles.cell} align='center' colSpan={columns.length}>
+              <CircularProgress color='secondary' size={30} thickness={5} />
+            </TableCell>
+          </TableRow>
+        )}
         {isLoaded && isEmpty ? (
           <TableRow tabIndex={-1}>
             <TableCell

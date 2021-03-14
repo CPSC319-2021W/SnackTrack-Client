@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -57,7 +58,7 @@ const SnackInventoryTable = (props) => {
   };
 
   const emptyRows = () => {
-    const emptyValue = isLoaded && isEmpty ? 1 : 0;
+    const emptyValue = isEmpty ? 1 : 0;
     const rowsToFill = rowsPerPage - snacks.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
@@ -192,13 +193,7 @@ const SnackInventoryTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoaded && isEmpty ? (
-              <TableRow tabIndex={-1}>
-                <TableCell className={styles.cell} colSpan={columns.length}>
-                  <p>There is nothing to display.</p>
-                </TableCell>
-              </TableRow>
-            ) : (
+            {isLoaded ? (
               snacks.map((snack, i) => {
                 return (
                   <Fragment key={i}>
@@ -250,7 +245,24 @@ const SnackInventoryTable = (props) => {
                   </Fragment>
                 );
               })
+            ) : (
+              <TableRow tabIndex={-1}>
+                <TableCell
+                  className={styles.cell}
+                  align='center'
+                  colSpan={columns.length}
+                >
+                  <CircularProgress color='secondary' size={30} thickness={5} />
+                </TableCell>
+              </TableRow>
             )}
+            {isLoaded && isEmpty ? (
+              <TableRow tabIndex={-1}>
+                <TableCell className={styles.cell} colSpan={columns.length}>
+                  <p>There is nothing to display.</p>
+                </TableCell>
+              </TableRow>
+            ) : null}
             {emptyRows().map((row) => {
               return (
                 <TableRow key={row} tabIndex={-1}>
