@@ -1,21 +1,19 @@
 import { Fragment, React, useEffect, useState } from 'react';
 import { Tab, Tabs } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-
 import { getUserOrders, getUserPayments } from '../services/UsersService';
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../redux/features/notifications/notificationsSlice';
-import { NOTIFICATIONS } from '../constants';
-import { makePayment } from '../services/TransactionsService';
-import { setBalance } from '../redux/features/users/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
 import EditOrderDialog from '../components/EditOrderDialog';
+import { NOTIFICATIONS } from '../constants';
 import ToastNotification from '../components/ToastNotification';
 import TransactionsContainer from '../components/TransactionsContainer';
-
+import { makePayment } from '../services/TransactionsService';
+import { setBalance } from '../redux/features/users/usersSlice';
 import styles from '../styles/Page.module.css';
 
 const INITIAL_PAYMENTS = {
@@ -35,17 +33,8 @@ const INITIAL_ORDERS = {
 const TabPanel = (props) => {
   const { children, value, index, ...other } = props;
   return (
-    <div
-      role='tabpanel'
-      hidden={value !== index}
-      id={`tabpanel-${ index }`}
-      { ...other }
-    >
-      {value === index && (
-        <Fragment>
-          { children }
-        </Fragment>
-      )}
+    <div role='tabpanel' hidden={value !== index} id={`tabpanel-${index}`} {...other}>
+      {value === index && <Fragment>{children}</Fragment>}
     </div>
   );
 };
@@ -55,6 +44,7 @@ const Transactions = () => {
   const [rowsPerPage] = useState(8);
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
+  const [isInitialLoaded, setIsInitialLoaded] = useState(false);
   const [isListLoading, setIsListLoading] = useState(false);
   const [isPayAllLoading, setIsPayAllLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
@@ -147,6 +137,7 @@ const Transactions = () => {
         openToastNotification(true);
         handleApiResponse('ERROR');
       }
+      setIsInitialLoaded(true);
     }
   };
 
@@ -165,26 +156,19 @@ const Transactions = () => {
           <Tab disableRipple label='Orders' />
           <Tab disableRipple label='Payments' />
         </Tabs>
-        {
-          tabValue === 0
-            ? (
-              <div className={styles.action__button__container}>
-                <AppButton
-                  primary
-                  loading={isPayAllLoading}
-                  onClick={handleMakePayment}
-                >
-                  Pay All
-                </AppButton>
-              </div>
-            )
-            : null
-        }
+        {tabValue === 0 ? (
+          <div className={styles.action__button__container}>
+            <AppButton primary loading={isPayAllLoading} onClick={handleMakePayment}>
+              Pay All
+            </AppButton>
+          </div>
+        ) : null}
       </div>
       <TabPanel value={tabValue} index={0}>
         <TransactionsContainer
           data={ordersResponse}
           rowsPerPage={rowsPerPage}
+          isInitialLoaded={isInitialLoaded}
           isLoading={isListLoading}
           onLoadMore={handleOrdersLoadMore}
         />
@@ -193,6 +177,7 @@ const Transactions = () => {
         <TransactionsContainer
           data={paymentsResponse}
           rowsPerPage={rowsPerPage}
+          isInitialLoaded={isInitialLoaded}
           isLoading={isListLoading}
           onLoadMore={handlePaymentsLoadMore}
         />

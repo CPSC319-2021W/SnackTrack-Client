@@ -1,5 +1,6 @@
 import {
   Card,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -16,15 +17,101 @@ import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
 const PaymentsTable = (props) => {
-  const { error, data, rowsPerPage, onChangePage } = props;
+  const { isLoaded, isEmpty, error, data, rowsPerPage, onChangePage } = props;
   const { payments } = data;
   const currentPage = data.current_page;
   const totalRows = data.total_rows;
   const totalPages = data.total_pages;
 
   const emptyRows = () => {
-    const rowsToFill = rowsPerPage - payments.length;
+    const emptyValue = isEmpty ? 1 : 0;
+    const rowsToFill = rowsPerPage - payments.length - emptyValue;
     return [...Array(rowsToFill).keys()];
+  };
+
+  const renderPlaceholder = () => {
+    return (
+      <TableRow>
+        <TableCell colSpan={columns.length} className={styles.placeholder__container}>
+          <div className={styles.placeholder__image__container}>
+            <SadFace className={styles.placeholder__image} />
+            <h6 className={styles.placeholder__text}>{'rip'}</h6>
+          </div>
+        </TableCell>
+      </TableRow>
+    );
+  };
+
+  const renderRows = () => {
+    return (
+      <Fragment>
+        {isLoaded ? (
+          payments.map((payment, i) => {
+            return (
+              <TableRow key={i} tabIndex={-1} className={styles.row}>
+                {columns.map((column) => {
+                  const value = payment[column.id];
+                  return (
+                    <TableCell
+                      key={column.id}
+                      className={classNames({
+                        [styles.cell]: true,
+                        [styles.cell__payments__base]: true,
+                        [styles.cell__payments__date]: column.id === 'payment_dtm',
+                        [styles.cell__payments__processed]: column.id === 'created_by'
+                      })}
+                      title={column.id === 'created_by' ? value : null}
+                    >
+                      {column.id === 'payment_amount' || column.id === 'payment_dtm'
+                        ? column.format(value)
+                        : value}
+                    </TableCell>
+                  );
+                })}
+              </TableRow>
+            );
+          })
+        ) : (
+          <TableRow tabIndex={-1}>
+            <TableCell className={styles.cell} align='center' colSpan={columns.length}>
+              <CircularProgress color='secondary' size={30} thickness={5} />
+            </TableCell>
+          </TableRow>
+        )}
+        {isLoaded && isEmpty ? (
+          <TableRow tabIndex={-1}>
+            <TableCell
+              className={classNames({
+                [styles.cell]: true,
+                [styles.cell__payments__base]: true
+              })}
+              colSpan={columns.length}
+            >
+              <p>There is nothing to display.</p>
+            </TableCell>
+          </TableRow>
+        ) : null}
+        {emptyRows().map((row) => {
+          return (
+            <TableRow key={row} tabIndex={-1}>
+              {columns.map((column) => {
+                return (
+                  <TableCell
+                    key={column.id}
+                    className={classNames({
+                      [styles.cell]: true,
+                      [styles.cell__payments__base]: true,
+                      [styles.cell__payments__date]: column.id === 'payment_dtm',
+                      [styles.cell__payments__processed]: column.id === 'created_by'
+                    })}
+                  />
+                );
+              })}
+            </TableRow>
+          );
+        })}
+      </Fragment>
+    );
   };
 
   const columns = [
@@ -49,68 +136,6 @@ const PaymentsTable = (props) => {
     }
   ];
 
-  const renderPlaceholder = () => {
-    return (
-      <TableRow>
-        <TableCell colSpan={columns.length} className={styles.placeholder__container}>
-          <div className={styles.placeholder__image__container}>
-            <SadFace className={styles.placeholder__image} />
-            <h6 className={styles.placeholder__text}>{'rip'}</h6>
-          </div>
-        </TableCell>
-      </TableRow>
-    );
-  };
-
-  const renderRows = () => {
-    return (
-      <Fragment>
-        {payments.map((payment, i) => {
-          return (
-            <TableRow key={i} tabIndex={-1} className={styles.row}>
-              {columns.map((column) => {
-                const value = payment[column.id];
-                return (
-                  <TableCell
-                    key={column.id}
-                    className={classNames({
-                      [styles.cell__payments__base]: true,
-                      [styles.cell__payments__date]: column.id === 'payment_dtm',
-                      [styles.cell__payments__processed]: column.id === 'created_by'
-                    })}
-                    title={column.id === 'created_by' ? value : null}
-                  >
-                    {column.id === 'payment_amount' || column.id === 'payment_dtm'
-                      ? column.format(value)
-                      : value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          );
-        })}
-        {emptyRows().map((row) => {
-          return (
-            <TableRow key={row} tabIndex={-1}>
-              {columns.map((column) => {
-                return (
-                  <TableCell
-                    key={column.id}
-                    className={classNames({
-                      [styles.cell__payments__base]: true,
-                      [styles.cell__payments__date]: column.id === 'payment_dtm',
-                      [styles.cell__payments__processed]: column.id === 'created_by'
-                    })}
-                  />
-                );
-              })}
-            </TableRow>
-          );
-        })}
-      </Fragment>
-    );
-  };
-
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
@@ -127,6 +152,7 @@ const PaymentsTable = (props) => {
                   key={column.id}
                   className={classNames({
                     [styles.secondaryHeader]: true,
+                    [styles.cell]: true,
                     [styles.cell__payments__base]: true,
                     [styles.cell__payments__date]: column.id === 'payment_dtm',
                     [styles.cell__payments__processed]: column.id === 'created_by'

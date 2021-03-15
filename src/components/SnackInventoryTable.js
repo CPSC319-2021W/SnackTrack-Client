@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -32,6 +33,8 @@ const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
   const DEFAULT_ORDER_THRESHOLD = 10;
   const {
+    isLoaded,
+    isEmpty,
     snacksForAddBatch,
     activeSnacks,
     data,
@@ -58,7 +61,8 @@ const SnackInventoryTable = (props) => {
   };
 
   const emptyRows = () => {
-    const rowsToFill = rowsPerPage - snacks.length;
+    const emptyValue = isEmpty ? 1 : 0;
+    const rowsToFill = rowsPerPage - snacks.length - emptyValue;
     return [...Array(rowsToFill).keys()];
   };
 
@@ -199,56 +203,76 @@ const SnackInventoryTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {snacks.map((snack, i) => {
-              return (
-                <Fragment key={i}>
-                  <TableRow
-                    key={i}
-                    tabIndex={-1}
-                    className={classNames({
-                      [styles.row]: true,
-                      [styles.row__selectable]: true,
-                      [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch
-                    })}
-                    onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
-                  >
-                    {columns.map((column) => {
-                      let value;
-                      if (column.id === 'status') {
-                        value = snack['quantity'];
-                      } else {
-                        value = snack[column.id];
-                      }
-                      return (
-                        <TableCell
-                          key={column.id}
-                          className={`${styles.cell} ${styles.cell__small} ${
-                            column.label === 'Status' || column.id === 'snack_name'
-                              ? styles.cell__medium
-                              : null
-                          }`}
-                          title={column.id === 'snack_name' ? value : null}
-                        >
-                          {column.format
-                            ? column.format(
-                              value,
-                              snacks[i].is_active,
-                              snacks[i].order_threshold
-                            )
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                  <SnackBatchesSubTable
-                    id={snacks[i]?.snack_id}
-                    snackName={snacks[i]?.snack_name}
-                    open={selectedSnackForBatch}
-                    colSpan={columns.length}
-                  />
-                </Fragment>
-              );
-            })}
+            {isLoaded ? (
+              snacks.map((snack, i) => {
+                return (
+                  <Fragment key={i}>
+                    <TableRow
+                      key={i}
+                      tabIndex={-1}
+                      className={classNames({
+                        [styles.row]: true,
+                        [styles.row__selectable]: true,
+                        [styles.row__selected]:
+                          snacks[i].snack_id === selectedSnackForBatch
+                      })}
+                      onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
+                    >
+                      {columns.map((column) => {
+                        let value;
+                        if (column.id === 'status') {
+                          value = snack['quantity'];
+                        } else {
+                          value = snack[column.id];
+                        }
+                        return (
+                          <TableCell
+                            key={column.id}
+                            className={`${styles.cell} ${styles.cell__small} ${
+                              column.label === 'Status' || column.id === 'snack_name'
+                                ? styles.cell__medium
+                                : null
+                            }`}
+                            title={column.id === 'snack_name' ? value : null}
+                          >
+                            {column.format
+                              ? column.format(
+                                value,
+                                snacks[i].is_active,
+                                snacks[i].order_threshold
+                              )
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                    <SnackBatchesSubTable
+                      id={snacks[i]?.snack_id}
+                      snackName={snacks[i]?.snack_name}
+                      open={selectedSnackForBatch}
+                      colSpan={columns.length}
+                    />
+                  </Fragment>
+                );
+              })
+            ) : (
+              <TableRow tabIndex={-1}>
+                <TableCell
+                  className={styles.cell}
+                  align='center'
+                  colSpan={columns.length}
+                >
+                  <CircularProgress color='secondary' size={30} thickness={5} />
+                </TableCell>
+              </TableRow>
+            )}
+            {isLoaded && isEmpty ? (
+              <TableRow tabIndex={-1}>
+                <TableCell className={styles.cell} colSpan={columns.length}>
+                  <p>There is nothing to display.</p>
+                </TableCell>
+              </TableRow>
+            ) : null}
             {emptyRows().map((row) => {
               return (
                 <TableRow key={row} tabIndex={-1}>
