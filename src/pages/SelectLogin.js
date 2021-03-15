@@ -39,9 +39,9 @@ const SelectLogin = () => {
     isLoaded(users.length > 0);
   }, [users]);
 
-  useEffect(() => {
-    const getAllUsers = () => {
-      const data = getUsersCommon();
+  useEffect(async () => {
+    const getAllUsers = async () => {
+      const data = await getUsersCommon();
       setUsers(data.users);
     };
     getAllUsers();
