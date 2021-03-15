@@ -1,18 +1,16 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-
-import { Redirect, Route } from 'react-router-dom';
-import { Container } from '@material-ui/core';
-
 import BottomNavigation from '../components/BottomNavigation';
+import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
-import { ROUTES } from '../constants';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import Unauthorized from '../pages/Unauthorized';
 import { isAdmin } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
+import { useSelector } from 'react-redux';
 
 const AdminRoute = ({ component: Component, signOut, ...rest }) => {
   const { firstName, lastName } = useSelector((state) => state.usersReducer.profile);
-  
+
   return (
     <Route
       {...rest}
@@ -29,13 +27,10 @@ const AdminRoute = ({ component: Component, signOut, ...rest }) => {
             <Container fixed className={styles.content}>
               <Component {...props} />
             </Container>
-            <BottomNavigation
-              isAdminRoute
-              handleLogOut={signOut}
-            />
+            <BottomNavigation isAdminRoute handleLogOut={signOut} />
           </div>
         ) : (
-          <Redirect to={ROUTES.LOGIN} />
+          <Unauthorized />
         )
       }
     />

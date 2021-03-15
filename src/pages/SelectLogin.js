@@ -12,7 +12,7 @@ const SelectLogin = () => {
   const [loaded, isLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState(users);
-  const { searchValue } = useSelector((state) => state.searchbarReducer);
+  const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const options = {
     keys: ['first_name', 'last_name', 'username']
@@ -32,16 +32,16 @@ const SelectLogin = () => {
   };
 
   useEffect(() => {
-    handleSearch(searchValue);
-  }, [loaded, searchValue]);
+    handleSearch(usersSearchValue);
+  }, [loaded, usersSearchValue]);
 
   useEffect(() => {
     isLoaded(users.length > 0);
   }, [users]);
 
-  useEffect(() => {
-    const getAllUsers = () => {
-      const data = getUsersCommon();
+  useEffect(async () => {
+    const getAllUsers = async () => {
+      const data = await getUsersCommon();
       setUsers(data.users);
     };
     getAllUsers();

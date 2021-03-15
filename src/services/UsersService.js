@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
-import { mockDBCall } from '../mockServer';
 
 const authenticate = async (token) => {
   try {
@@ -13,8 +12,9 @@ const authenticate = async (token) => {
   }
 };
 
-const getUsersCommon = () => {
-  return mockDBCall('users', 0, 1000);
+const getUsersCommon = async () => {
+  const { data } = await httpClient.get('/users/common');
+  return data;
 };
 const getUsersAdmin = async () => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
@@ -23,14 +23,9 @@ const getUsersAdmin = async () => {
 };
 
 const getUserById = async (userId) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(`/users/${userId}`, authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle 404
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(`/users/${userId}`, authHeader);
+  return data;
 };
 
 const getUserOrders = async (userId, page, rowsPerPage) => {
