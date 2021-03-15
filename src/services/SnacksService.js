@@ -57,4 +57,18 @@ const deleteBatch = async (batchId) => {
   await httpClient.delete(`/snack_batches/${batchId}`, authHeader);
 };
 
-export { getSnackBatch, getSnacks, makeSuggestion, addBatch, editBatch, deleteBatch };
+const addSnack = async (snackRequest) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.post('/snacks', snackRequest, authHeader);
+  return data;
+};
+
+export {
+  getSnackBatch,
+  getSnacks,
+  makeSuggestion,
+  addBatch,
+  editBatch,
+  deleteBatch,
+  addSnack
+};

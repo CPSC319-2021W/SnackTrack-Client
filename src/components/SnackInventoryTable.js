@@ -12,6 +12,7 @@ import {
 import { Fragment, React, useEffect } from 'react';
 import {
   setIsAddBatchOpen,
+  setIsAddSnackOpen,
   setSelectedBatch,
   setSelectedSnackForBatch,
   setSnackBatches
@@ -19,6 +20,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
+import AddSnackDialog from './AddSnackDialog';
 import { CATEGORIES_LIST } from '../constants';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
@@ -43,7 +45,8 @@ const SnackInventoryTable = (props) => {
     selectedSnackForBatch,
     selectedBatch,
     isAddBatchOpen,
-    isEditBatchOpen
+    isEditBatchOpen,
+    isAddSnackOpen
   } = useSelector((state) => state.snacksReducer);
 
   const setSelectedSnack = (snackId) => {
@@ -151,6 +154,12 @@ const SnackInventoryTable = (props) => {
     }
   ];
 
+  const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
+
+  const openAddSnack = () => {
+    setAddSnackOpen(true);
+  };
+
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
@@ -167,7 +176,8 @@ const SnackInventoryTable = (props) => {
               handleSelectBatch={handleAddBatch}
             />
             <div className={styles.cell__pay}>
-              <Button className={styles.button__base} onClick={() => {}}>
+              <Button className={styles.button__base} onClick={
+                openAddSnack}>
                 Add New Snack
               </Button>
             </div>
@@ -251,6 +261,9 @@ const SnackInventoryTable = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
+      <AddSnackDialog 
+        open={isAddSnackOpen} 
+      />
       <Table>
         <TableBody>
           <TableRow>
