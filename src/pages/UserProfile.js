@@ -134,6 +134,8 @@ const UserProfile = () => {
           <div className={usersStyles.tables__container}>
             <div className={usersStyles.ordersTable}>
               <OrdersTable
+                isLoaded={!ordersResponse.initial}
+                isEmpty={ordersResponse.transactions.length === 0}
                 data={ordersResponse}
                 rowsPerPage={rowsPerPage}
                 updateProfileBalance={updateProfileBalance}
@@ -144,6 +146,8 @@ const UserProfile = () => {
             </div>
             <div className={usersStyles.paymentsTable}>
               <PaymentsTable
+                isLoaded={!paymentsResponse.initial}
+                isEmpty={paymentsResponse.payments.length === 0}
                 error={paymentsError}
                 data={paymentsResponse}
                 rowsPerPage={rowsPerPage}
