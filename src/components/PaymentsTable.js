@@ -153,7 +153,6 @@ const PaymentsTable = (props) => {
                   className={classNames({
                     [styles.secondaryHeader]: true,
                     [styles.cell]: true,
-
                     [styles.cell__payments__base]: true,
                     [styles.cell__payments__date]: column.id === 'payment_dtm',
                     [styles.cell__payments__processed]: column.id === 'created_by'

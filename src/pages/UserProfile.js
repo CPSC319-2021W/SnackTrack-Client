@@ -116,7 +116,7 @@ const UserProfile = () => {
     }
   }, [user]);
 
-  return !userNotFound ? (
+  return (
     <div className={styles.base}>
       <div className={styles.header}>
         <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
@@ -126,46 +126,39 @@ const UserProfile = () => {
           Back to Users List
         </h5>
       </div>
-      {user ? <UserCard user={user} /> : <UserCardSkeleton />}
-      <div className={usersStyles.tables__container}>
-        <div className={usersStyles.ordersTable}>
-          <OrdersTable
-            isLoaded={!ordersResponse.initial && !paymentsResponse.initial}
-            isEmpty={ordersResponse.transactions.length === 0}
-            data={ordersResponse}
-            rowsPerPage={rowsPerPage}
-            updateProfileBalance={updateProfileBalance}
-            onHandleApiResponse={handleApiResponse}
-            onChangePage={handleOrderChangePage}
-            onMakePayment={handleMakePayment}
-          />
-        </div>
-        <div className={usersStyles.paymentsTable}>
-          <PaymentsTable
-            isLoaded={!ordersResponse.initial && !paymentsResponse.initial}
-            isEmpty={paymentsResponse.payments.length === 0}
-            error={paymentsError}
-            data={paymentsResponse}
-            rowsPerPage={rowsPerPage}
-            setSnackBar={handleApiResponse}
-            onChangePage={handlePaymentChangePage}
-          />
-        </div>
-      </div>
+      {userNotFound ? (
+        <UserProfileNotFound />
+      ) : (
+        <>
+          {user ? <UserCard user={user} /> : <UserCardSkeleton />}
+          <div className={usersStyles.tables__container}>
+            <div className={usersStyles.ordersTable}>
+              <OrdersTable
+                data={ordersResponse}
+                rowsPerPage={rowsPerPage}
+                updateProfileBalance={updateProfileBalance}
+                onHandleApiResponse={handleApiResponse}
+                onChangePage={handleOrderChangePage}
+                onMakePayment={handleMakePayment}
+              />
+            </div>
+            <div className={usersStyles.paymentsTable}>
+              <PaymentsTable
+                error={paymentsError}
+                data={paymentsResponse}
+                rowsPerPage={rowsPerPage}
+                setSnackBar={handleApiResponse}
+                onChangePage={handlePaymentChangePage}
+              />
+            </div>
+          </div>
+        </>
+      )}
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}
         onClose={handleClose}
       />
-    </div>
-  ) : (
-    <div className={styles.base}>
-      <div className={styles.header}>
-        <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
-          Back To Users List
-        </h5>
-      </div>
-      <UserProfileNotFound />
     </div>
   );
 };

@@ -22,10 +22,12 @@ const INITIAL_STATE = {
     quantity: 0,
     expiration_dtm: null
   },
+  snackImageUpload: null,
   isAddBatchOpen: false,
   isEditBatchOpen: false,
   loading: false,
-  error: null
+  error: null,
+  isAddSnackOpen: false
 };
 
 const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async (activeOnly) => {
@@ -71,6 +73,12 @@ const snacksSlice = createSlice({
       const { snacks } = state;
       const index = snacks.findIndex((snack) => snack.snack_id === snackId);
       state.snacks[index].quantity = snacks[index].quantity - newQuantity;
+    },
+    setIsAddSnackOpen: (state, action) => {
+      state.isAddSnackOpen = action.payload;
+    },
+    setSnackImageUpload: (state, action) => {
+      state.snackImageUpload = action.payload;
     }
   },
   extraReducers: {
@@ -101,7 +109,9 @@ export const {
   setSelectedBatch,
   setIsAddBatchOpen,
   setIsEditBatchOpen,
-  setQuantity
+  setQuantity,
+  setIsAddSnackOpen,
+  setSnackImageUpload
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;

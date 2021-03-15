@@ -1,0 +1,33 @@
+@value LIGHT_GREY, MID_GREY from './Colors.module.css';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+}
+
+.buttonContainer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden {
+    display: none;
+}
+
+.imageUploadBox {
+    width: 150px;
+    height: 150px;
+    border: 1px solid LIGHT_GREY;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.imageUploadGreyBox {
+    width: 150px;
+    height: 150px;
+    background: MID_GREY;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
