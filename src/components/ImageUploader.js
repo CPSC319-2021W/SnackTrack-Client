@@ -67,7 +67,8 @@ const ImageUploader = () => {
         className={styles.hidden}
         id='imageUpload'
         type='file'
-        accept='image/*'
+        accept='image/*;'
+        capture='camera'
         onChange={handleImageUpload}
       />
       <div className={styles.buttonContainer}>
