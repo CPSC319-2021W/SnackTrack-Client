@@ -229,3 +229,17 @@ input[type='number'] {
   justify-content: space-between;
   padding: 0.75rem;
 }
+
+.text__title {
+  margin: 0;
+}
+
+.text__body {
+  font-size: 1rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
+.text__emp {
+  color: BASE_BLUE;
+  font-weight: 600;
+}
