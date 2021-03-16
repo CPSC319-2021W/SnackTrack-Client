@@ -21,7 +21,9 @@ const isAdmin = () => {
   if (token) {
     const decoded = jwt.decode(token);
     const { is_admin } = decoded;
-    return is_admin;
+    if (is_admin) {
+      return token;
+    }
   }
   return false;
 };
