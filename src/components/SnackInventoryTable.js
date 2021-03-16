@@ -92,7 +92,7 @@ const SnackInventoryTable = (props) => {
 
   useEffect(() => {
     setSelectedSnack(false);
-  }, [snacks]);
+  }, []);
 
   const columns = [
     { id: 'snack_id', label: 'Snack ID' },
