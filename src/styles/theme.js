@@ -66,7 +66,8 @@ export const theme = createMuiTheme({
     },
     MuiButtonBase: {
       root: {
-        fontFamily: 'TT Norms'
+        fontFamily: 'TT Norms',
+        fontVariantLigatures: 'no-common-ligatures'
       }
     },
     MuiCheckbox: {
