@@ -19,6 +19,7 @@ const SelectLogin = () => {
   };
 
   const handleSearch = (value) => {
+    value = value.trim();
     if (value === '') {
       setUsersToDisplay(users);
     } else {

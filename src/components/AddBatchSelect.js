@@ -1,15 +1,47 @@
-import React from 'react';
-import Select from 'react-select';
+import {
+  BASE_BLUE,
+  DARKER_GREY,
+  DARK_BLUE,
+  LIGHT_BLUE,
+  WHITE
+} from '../styles/Colors.module.css';
+import { React, useEffect, useState } from 'react';
 
-import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../styles/Colors.module.css';
+import Fuse from 'fuse.js';
+import Select from 'react-select';
 
 const AddBatchSelect = (props) => {
   const { data, selectedBatch, handleSelectBatch } = props;
+  const [allOptions, setAllOptions] = useState([]);
+  const [searchedOptions, setSearchedOptions] = useState([]);
 
-  const options = data.map((item) => ({
-    value: item.snack_id,
-    label: item.snack_name
-  }));
+  const searchOptions = {
+    keys: ['label']
+  };
+
+  const handleSearch = (searchValue) => {
+    searchValue = searchValue.trim();
+    if (searchValue === '') {
+      setSearchedOptions(allOptions);
+    } else {
+      const fuse = new Fuse(allOptions, searchOptions);
+      const results = fuse.search(searchValue);
+      const searchedBatches = results.map((itemIndexPair) => {
+        return itemIndexPair.item;
+      });
+      setSearchedOptions(searchedBatches);
+    }
+  };
+
+  useEffect(() => {
+    const options = data.map((item) => ({
+      value: item.snack_id,
+      label: item.snack_name
+    }));
+    console.log(allOptions);
+    setAllOptions(options);
+    setSearchedOptions(options);
+  }, [data]);
 
   const customStyles = {
     container: (base) => ({
@@ -71,11 +103,15 @@ const AddBatchSelect = (props) => {
         isSearchable
         placeholder={'Add Snack Batch'}
         noOptionsMessage={() => 'No snacks found.'}
-        options={options}
+        options={searchedOptions}
+        filterOption={(options) => options}
         styles={customStyles}
-        value={selectedBatch.snack_id
-          ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
-          : null}
+        value={
+          selectedBatch.snack_id
+            ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
+            : null
+        }
+        onInputChange={handleSearch}
         onChange={handleSelectBatch}
       />
     </div>

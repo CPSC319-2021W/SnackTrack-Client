@@ -40,6 +40,7 @@ const SnacksContainer = (props) => {
   };
 
   const handleSearch = (snacksArray, searchValue) => {
+    searchValue = searchValue.trim();
     if (searchValue === '') {
       setSnacksToDisplay(snacksArray);
     } else {
