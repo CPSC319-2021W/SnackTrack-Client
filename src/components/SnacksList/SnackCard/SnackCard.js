@@ -5,9 +5,9 @@ import {
 } from '../../../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import React, { useState } from 'react';
 import AppButton from '../../AppButton';
 import NumberFormat from 'react-number-format';
-import React, { useState } from 'react';
 import { TRANSACTION_TYPES } from '../../../constants';
 import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
