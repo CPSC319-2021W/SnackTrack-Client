@@ -1,4 +1,4 @@
-import { Button, Card, Dialog, Divider } from '@material-ui/core';
+import { Card, Dialog, Divider } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
 import { addBatch, deleteBatch, editBatch } from '../services/SnacksService';
 import {
@@ -11,6 +11,7 @@ import {
   setSelectedBatch
 } from '../redux/features/snacks/snacksSlice';
 
+import AppButton from './AppButton';
 import DatePickerInput from './DatePickerInput';
 import { DateTime } from 'luxon';
 import InputField from './InputField';
@@ -32,6 +33,8 @@ const ManageBatchDialog = (props) => {
     quantity: null,
     date: null
   });
+  const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
 
   const checkForErrors = !!errors.quantity || !!errors.date || !quantity;
 
@@ -74,6 +77,7 @@ const ManageBatchDialog = (props) => {
 
   const onSubmit = async (event, func, apiResponse) => {
     if (event.key === 'Enter' || event.type === 'click') {
+      setIsSubmitLoading(true);
       try {
         const dateString = date ? date.toUTC().toISO() : null;
         const newBatch = await func({
@@ -89,11 +93,13 @@ const ManageBatchDialog = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsSubmitLoading(false);
       closeDialog();
     }
   };
 
   const deleteSnackBatch = async () => {
+    setIsDeleteLoading(true);
     try {
       await deleteBatch(snack_batch_id);
       onApiResponse('BATCH_DELETE_SUCCESS');
@@ -103,6 +109,7 @@ const ManageBatchDialog = (props) => {
       onApiResponse('ERROR');
       openToastNotification(true);
     }
+    setIsDeleteLoading(false);
     closeDialog();
   };
 
@@ -181,22 +188,18 @@ const ManageBatchDialog = (props) => {
           })}
         >
           {newSnackBatch ? null : (
-            <Button
-              className={classNames({
-                [styles.button__light]: true,
-                [styles.button__wide]: true
-              })}
-              onClick={deleteSnackBatch}
+            <AppButton
+              secondary
+              loading={isDeleteLoading}
+              onClick={deleteSnackBatch || isSubmitLoading}
             >
               Delete Batch
-            </Button>
+            </AppButton>
           )}
-          <Button
-            disabled={checkForErrors}
-            className={classNames({
-              [styles.button]: true,
-              [styles.button__wide]: !newSnackBatch
-            })}
+          <AppButton
+            primary
+            disabled={checkForErrors || isDeleteLoading}
+            loading={isSubmitLoading}
             onClick={
               newSnackBatch
                 ? (event) => {
@@ -207,8 +210,8 @@ const ManageBatchDialog = (props) => {
                 }
             }
           >
-            {newSnackBatch ? 'Submit' : 'Save Changes'}
-          </Button>
+            { newSnackBatch ? 'Submit' : 'Save Changes' }
+          </AppButton>
         </div>
       </Card>
     </Dialog>

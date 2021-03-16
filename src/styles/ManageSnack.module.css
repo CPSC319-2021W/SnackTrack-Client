@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, BASE_BLUE_HOVER, LIGHT_BLUE from colors;
+@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE from colors;
 
 .form {
   width: 600px;

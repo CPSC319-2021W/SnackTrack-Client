@@ -28,6 +28,7 @@ const Snacks = () => {
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
+  const [isSuggestionLoading, setIsSuggestionLoading] = useState(false);
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -51,6 +52,7 @@ const Snacks = () => {
       return;
     }
     if (event.key === 'Enter' || event.type === 'click') {
+      setIsSuggestionLoading(true);
       try {
         await makeSuggestion(userId, suggestion);
         setIsSuggestionOpen(false);
@@ -61,6 +63,7 @@ const Snacks = () => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsSuggestionLoading(false);
     }
   };
 
@@ -124,6 +127,7 @@ const Snacks = () => {
       <SuggestionDialog
         open={isSuggestionOpen}
         value={suggestionText}
+        isLoading={isSuggestionLoading}
         handleClose={handleCloseSuggestion}
         onSubmit={handleSubmit}
         onChangeText={handleChangeText}

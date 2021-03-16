@@ -137,24 +137,9 @@
   border: 2px solid DARK_GREY;
 }
 
-.button {
+.button__container {
   width: 90%;
-  height: 40px;
-  font-weight: 700;
-  color: WHITE;
-  background-color: BASE_BLUE;
-  text-transform: none;
   margin: auto;
-  border-radius: 6px;
-}
-
-.button:hover {
-  background-color: DARK_BLUE;
-}
-
-.button:disabled {
-  color: MID_GREY;
-  background-color: LIGHT_GREY;
 }
 
 @media (max-width: 1280px) {

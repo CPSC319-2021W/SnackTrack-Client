@@ -1,4 +1,4 @@
-import { Button, Card, Dialog, Divider, Input } from '@material-ui/core';
+import { Card, Dialog, Divider, Input } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
 import { cancelOrder, editOrder } from '../services/TransactionsService';
 import {
@@ -7,6 +7,7 @@ import {
 } from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import AppButton from './AppButton';
 import NumberFormat from 'react-number-format';
 import { DateTime as dt } from 'luxon';
 import editOrderStyles from '../styles/EditOrderDialog.module.css';
@@ -29,6 +30,8 @@ const EditOrderDialog = (props) => {
   const { balance } = useSelector((state) => state.usersReducer.profile);
 
   const [newQuantity, setNewQuantity] = useState(quantity);
+  const [isSaveLoading, setIsSaveLoading] = useState(false);
+  const [isCancelLoading, setIsCancelLoading] = useState(false);
 
   const updateBalance = (balance) => {
     dispatch(setBalance(balance));
@@ -51,6 +54,7 @@ const EditOrderDialog = (props) => {
 
   const onCancelOrder = async (event) => {
     if (event.type === 'click') {
+      setIsCancelLoading(true);
       try {
         await cancelOrder(transaction_id);
         onApiResponse('CANCEL_SUCCESS');
@@ -61,12 +65,14 @@ const EditOrderDialog = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsCancelLoading(false);
       closeDialog();
     }
   };
 
   const onSubmit = async (event) => {
     if (event.key === 'Enter' || event.type === 'click') {
+      setIsSaveLoading(true);
       try {
         await editOrder(transaction_id, parseInt(newQuantity), parseInt(newTotal));
         onApiResponse('CHANGES_SUCCESS');
@@ -78,6 +84,7 @@ const EditOrderDialog = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsSaveLoading(false);
       closeDialog();
     }
   };
@@ -142,16 +149,23 @@ const EditOrderDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <div className={styles.labelContainer}>
-          <Button
-            className={`${editOrderStyles.button} ${editOrderStyles.button__red}`}
+        <div className={styles.twoButton__footer}>
+          <AppButton
+            secondary
+            loading={isCancelLoading}
+            disabled={isSaveLoading}
             onClick={onCancelOrder}
           >
             Cancel Order
-          </Button>
-          <Button className={editOrderStyles.button} onClick={onSubmit}>
-            Save Changes
-          </Button>
+          </AppButton>
+          <AppButton
+            primary
+            loading={isSaveLoading}
+            disabled={isCancelLoading}
+            onClick={onSubmit}
+          >
+            Save
+          </AppButton>
         </div>
       </Card>
     </Dialog>

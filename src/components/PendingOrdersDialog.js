@@ -1,5 +1,4 @@
 import {
-  Button,
   Checkbox,
   Dialog,
   Divider,
@@ -12,9 +11,10 @@ import {
 } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
 
+import AppButton from './AppButton';
 import { claimPendingOrders } from '../services/TransactionsService';
 import { deselectOne } from '../helpers/CheckboxHelpers';
-import dialogStyles from '../styles/PendingOrdersDialog.module.css';
+import dialogStyles from '../styles/Dialog.module.css';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
 
@@ -23,6 +23,8 @@ const PendingOrdersDialog = (props) => {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isApproveDisabled, setIsApproveDisabled] = useState(true);
+  const [isApproveLoading, setIsApproveLoading] = useState(false);
+  const [isDeclineLoading, setIsDeclineLoading] = useState(false);
 
   const selectAllOrders = () => {
     let ordersToSelect = pendingOrders.map((order) => order.transaction_id);
@@ -89,6 +91,7 @@ const PendingOrdersDialog = (props) => {
   };
 
   const approveOrders = () => {
+    setIsApproveLoading(true);
     try {
       const declinedOrders = selectedOrders.filter(
         (orderId) => !pendingOrders.includes(orderId)
@@ -100,16 +103,19 @@ const PendingOrdersDialog = (props) => {
         `You have claimed ${selectedOrders.length} of ${pendingOrders.length} orders.`
       );
     }
+    setIsApproveLoading(false);
     handleOnClose();
   };
 
   const declineAllOrders = () => {
+    setIsDeclineLoading(true);
     try {
       claimPendingOrders([], pendingOrders);
     } catch (err) {
       console.log(err);
       console.log('All orders declined!');
     }
+    setIsDeclineLoading(false);
     handleOnClose();
   };
 
@@ -223,21 +229,24 @@ const PendingOrdersDialog = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <div className={styles.footer}>
-        <Button
-          className={`${dialogStyles.button__base} ${dialogStyles.button__decline}`}
+      <Divider />
+      <div className={dialogStyles.twoButton__footer}>
+        <AppButton
+          secondary
           disabled={!isApproveDisabled}
+          loading={isDeclineLoading}
           onClick={declineAllOrders}
         >
           Decline all
-        </Button>
-        <Button
-          className={`${dialogStyles.button__base} ${dialogStyles.button__approve}`}
+        </AppButton>
+        <AppButton
+          primary
           disabled={isApproveDisabled}
+          loading={isApproveLoading}
           onClick={approveOrders}
         >
           Approve
-        </Button>
+        </AppButton>
       </div>
     </Dialog>
   );

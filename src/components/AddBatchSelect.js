@@ -38,6 +38,7 @@ const AddBatchSelect = (props) => {
       ...base,
       height: '38px',
       border: `2px solid ${BASE_BLUE}`,
+      borderRadius: '6px',
       '&:hover': {
         border: `2px solid ${DARK_BLUE}`
       },

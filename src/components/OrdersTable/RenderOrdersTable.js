@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   Checkbox,
   CircularProgress,
@@ -17,6 +16,7 @@ import {
   setOrderToEdit
 } from '../../redux/features/transactions/transactionsSlice';
 
+import AppButton from '../AppButton';
 import React from 'react';
 import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
@@ -38,7 +38,8 @@ const RenderOrdersTable = (props) => {
     checkIsAllSelected,
     onPayForOrders,
     payForOrdersDisabled,
-    isCheckboxDisabled
+    isCheckboxDisabled,
+    isPayLoading
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
 
@@ -143,14 +144,15 @@ const RenderOrdersTable = (props) => {
           <h4 className={styles.primaryHeader__text}>Orders</h4>
         </div>
         <div className={styles.cell__pay}>
-          <Button
-            className={styles.button__base}
+          <AppButton
+            primary
             disabled={payForOrdersDisabled}
-            onClick={() => onPayForOrders()}
+            loading={isPayLoading}
+            onClick={onPayForOrders}
           >
             Pay for
             {selectedOrders.length > 1 ? ` ${selectedOrders.length} Orders` : ' Order'}
-          </Button>
+          </AppButton>
         </div>
       </div>
       <TableContainer>
@@ -220,12 +222,13 @@ const RenderOrdersTable = (props) => {
                               transactions[i].payment_id,
                               transactions[i].transaction_type_id
                             ) ? (
-                              <Button
-                                className={styles.button__edit}
+                              <AppButton
+                                secondary
+                                small
                                 onClick={() => openEditOrderDialog(transactions[i])}
                               >
                                 Edit Order
-                              </Button>
+                              </AppButton>
                             ) : null}
                         </TableCell>
                       );
