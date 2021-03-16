@@ -1,6 +1,7 @@
 import { Button, Card, CardMedia, Dialog, Divider, Input } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
 
+import AppButton from './AppButton';
 import NumberFormat from 'react-number-format';
 import classNames from 'classnames';
 import styles from '../styles/Dialog.module.css';
@@ -13,7 +14,8 @@ const OrderSnackDialog = (props) => {
     onSubmit,
     setSnackQuantity,
     handleClose,
-    onChangeQuantity
+    onChangeQuantity,
+    isOrderLoading
   } = props;
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
   const { snack_id, snack_name, description, image_uri, price, quantity } = selectedSnack;
@@ -107,13 +109,16 @@ const OrderSnackDialog = (props) => {
           </div>
         </div>
         <Divider />
-        <Button
-          className={styles.button}
-          disabled={isDisabled}
-          onClick={(event) => onSubmit(event, snack_id, value)}
-        >
-          Confirm
-        </Button>
+        <div className={styles.oneButton__footer}>
+          <AppButton
+            primary
+            disabled={isDisabled}
+            loading={isOrderLoading}
+            onClick={(event) => onSubmit(event, snack_id, value)}
+          >
+            Confirm
+          </AppButton>
+        </div>
       </Card>
     </Dialog>
   );

@@ -19,6 +19,7 @@ const SnacksContainer = (props) => {
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snacksToDisplay, setSnacksToDisplay] = useState([]);
   const [snackQuantity, setSnackQuantity] = useState(1);
+  const [isOrderLoading, setIsOrderLoading] = useState(false);
   const { selectedSnack } = useSelector((state) => state.snacksReducer);
   const { snackSearchValue } = useSelector((state) => state.searchbarReducer);
 
@@ -70,6 +71,7 @@ const SnacksContainer = (props) => {
 
   const handleSubmit = async (event, snackId, quantity) => {
     if (event.key === 'Enter' || event.type === 'click') {
+      setIsOrderLoading(true);
       const transactionAmount = snackQuantity * selectedSnack.price;
       const { PENDING, PURCHASE } = TRANSACTION_TYPES;
       let transactionTypeId = PENDING;
@@ -95,6 +97,7 @@ const SnacksContainer = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsOrderLoading(false);
       setIsSnackOrderOpen(false);
     }
   };
@@ -134,6 +137,7 @@ const SnacksContainer = (props) => {
       <OrderSnackDialog
         open={isSnackOrderOpen}
         value={snackQuantity}
+        isOrderLoading={isOrderLoading}
         setSnackQuantity={setSnackQuantity}
         handleClose={handleCloseSnackOrder}
         onSubmit={handleSubmit}

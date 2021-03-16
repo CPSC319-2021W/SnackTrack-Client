@@ -32,6 +32,7 @@ const Orders = (props) => {
   const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
+  const [isPayLoading, setIsPayLoading] = useState(false);
 
   // TODO: Delete this function after Transactions Redesign
   const updateBalance = (balance) => {
@@ -52,7 +53,8 @@ const Orders = (props) => {
   };
 
   const handlePayForOrders = async () => {
-    if (selectedOrders.length > 0)
+    if (selectedOrders.length > 0) {
+      setIsPayLoading(true);
       try {
         await makePayment(userId, selectedOrders, subtotalAmount, username);
         updateProfileBalance(subtotalAmount);
@@ -63,6 +65,8 @@ const Orders = (props) => {
       } catch (err) {
         onHandleApiResponse('ERROR');
       }
+      setIsPayLoading(false);
+    }
   };
 
   const handleSelectOneOrder = (name, amount) => {
@@ -201,6 +205,7 @@ const Orders = (props) => {
         checkIsSelected={isOrderSelected}
         checkIsAllSelected={isAllOrdersSelected}
         isCheckboxDisabled={isCheckboxDisabled()}
+        isPayLoading={isPayLoading}
         onChangePage={onChangePage}
         onEditOrder={editOrder}
         onSelectAllOrders={handleSelectAllOrders}
