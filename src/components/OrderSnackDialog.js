@@ -47,7 +47,7 @@ const OrderSnackDialog = (props) => {
       aria-labelledby='snack-order-dialog'
       open={open}
       onClose={handleClose}
-      onSubmit={onSubmit}
+      onSubmit={(event) => onSubmit(event, snack_id)}
     >
       <Card variant='outlined' className={styles.card}>
         <div className={styles.header}>
@@ -92,7 +92,7 @@ const OrderSnackDialog = (props) => {
                   value={value}
                   type='number'
                   onChange={onChangeQuantity}
-                  onKeyPress={onSubmit}
+                  onKeyPress={(event) => onSubmit(event, snack_id)}
                 />
                 <Button
                   className={classNames({
@@ -114,7 +114,7 @@ const OrderSnackDialog = (props) => {
             primary
             disabled={isDisabled}
             loading={isOrderLoading}
-            onClick={(event) => onSubmit(event, snack_id, value)}
+            onClick={(event) => onSubmit(event, snack_id)}
           >
             Confirm
           </AppButton>

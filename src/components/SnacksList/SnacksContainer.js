@@ -69,7 +69,7 @@ const SnacksContainer = (props) => {
     }
   };
 
-  const handleSubmit = async (event, snackId, quantity) => {
+  const handleSubmit = async (event, snackId) => {
     if (event.key === 'Enter' || event.type === 'click') {
       setIsOrderLoading(true);
       const transactionAmount = snackQuantity * selectedSnack.price;
@@ -91,7 +91,7 @@ const SnacksContainer = (props) => {
         if (transactionTypeId != PENDING) {
           updateBalance(balance + transactionAmount);
         }
-        updateSnackQuantity(snackId, quantity);
+        updateSnackQuantity(snackId, snackQuantity);
       } catch (err) {
         console.log(err);
         onApiResponse('ERROR');

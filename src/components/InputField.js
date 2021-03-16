@@ -6,7 +6,7 @@ import styles from '../styles/Input.module.css';
 
 const InputField = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { id, label, small, value, placeholder, onChange, error } = props;
+  const { id, label, small, value, placeholder, onChange, onKeyPress, error } = props;
 
   return (
     <div className={styles.input__group}>
@@ -33,6 +33,7 @@ const InputField = (props) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
+          onKeyPress={onKeyPress}
           onBlur={() => setIsFocused(false)}
           onFocus={() => setIsFocused(true)}
         />

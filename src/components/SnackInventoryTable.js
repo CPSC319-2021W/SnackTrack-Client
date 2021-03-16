@@ -313,7 +313,6 @@ const SnackInventoryTable = (props) => {
         newSnackBatch
         open={isAddBatchOpen}
         batch={selectedBatch}
-        onDeleteBatch={onDeleteBatch}
         onAddBatchOrEdit={onAddBatchOrEdit}
       />
       <ManageBatchDialog
