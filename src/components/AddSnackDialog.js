@@ -9,6 +9,7 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import { DateTime } from 'luxon';
 import ImageUploader from './ImageUploader';
@@ -32,6 +33,7 @@ const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
   const { open } = props;
   const [category, setCategory] = useState('');
+  const [isBatchDetailsOpen, setIsBatchDetailsOpen] = useState(false);
   const { username } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUpload } = useSelector(
     (state) => state.snacksReducer
@@ -42,12 +44,13 @@ const AddSnackDialog = (props) => {
   };
 
   const closeDialog = () => {
-    setCategory('');
-    addForm.resetForm();
     dispatch(setIsAddSnackOpen(false));
   };
 
   useEffect(() => {
+    setCategory('');
+    addForm.resetForm();
+    setIsBatchDetailsOpen(false);
     dispatch(setSnackImageUpload(null));
   }, [isAddSnackOpen]);
 
@@ -75,7 +78,7 @@ const AddSnackDialog = (props) => {
         .min(1, 'Must be at least 1 characters')
         .max(128, 'Must be less than 128 characters')
         .required('Required'),
-        
+
       description: Yup.string()
         .min(1, 'Must be at least 1 characters')
         .max(128, 'Must be less than 128 characters'),
@@ -153,18 +156,30 @@ const AddSnackDialog = (props) => {
                   />
                 </div>
                 <div className={styles.frame__row}>
-                  <InputLiveFeedback
-                    label='Quantity'
-                    id='quantity'
-                    name='quantity'
-                    type='text'
-                  />
-                  <InputLiveFeedback
-                    label='Date of expiration'
-                    id='expiration'
-                    name='expiration'
-                    type='text'
-                  />
+                  {isBatchDetailsOpen ? (
+                    <>
+                      <InputLiveFeedback
+                        label='Quantity'
+                        id='quantity'
+                        name='quantity'
+                        type='text'
+                      />
+                      <InputLiveFeedback
+                        label='Date of expiration'
+                        id='expiration'
+                        name='expiration'
+                        type='text'
+                      />
+                    </>
+                  ) : (
+                    <AppButton
+                      secondary
+                      fullWidth
+                      onClick={() => setIsBatchDetailsOpen(true)}
+                    >
+                      Add First Batch
+                    </AppButton>
+                  )}
                 </div>
               </div>
             </div>
@@ -174,7 +189,7 @@ const AddSnackDialog = (props) => {
                 type='submit'
                 disabled={
                   !addForm.dirty || !addForm.isValid || !category || !snackImageUpload
-                } 
+                }
                 className={styles.button}
               >
                 Submit
