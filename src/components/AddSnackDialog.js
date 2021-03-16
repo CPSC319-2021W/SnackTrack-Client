@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import { DateTime } from 'luxon';
+import { ReactComponent as DeleteIcon } from '../assets/icons/delete.svg';
 import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import { addSnack } from '../services/SnacksService';
@@ -41,6 +42,12 @@ const AddSnackDialog = (props) => {
 
   const handleCategorySet = (options) => {
     setCategory(options.value);
+  };
+
+  const deleteBatchDetails = () => {
+    setIsBatchDetailsOpen(false);
+    addForm.setFieldValue('quantity', '');
+    addForm.setFieldValue('expiration', '');
   };
 
   const closeDialog = () => {
@@ -170,6 +177,12 @@ const AddSnackDialog = (props) => {
                         name='expiration'
                         type='text'
                       />
+                      <button
+                        className={styles.deleteIcon__container}
+                        onClick={deleteBatchDetails}
+                      >
+                        <DeleteIcon className={styles.deleteIcon} />
+                      </button>
                     </>
                   ) : (
                     <AppButton

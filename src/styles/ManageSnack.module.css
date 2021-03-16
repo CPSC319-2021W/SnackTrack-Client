@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE from colors;
+@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE, BASE_RED from colors;
 
 .form {
   width: 600px;
@@ -31,6 +31,41 @@
   text-align: left;
   
 }
+
+
+.deleteIcon__container {
+  width: 2rem;
+  height: 2rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  fill: BASE_RED;
+}
+
+.deleteIcon__container:focus {
+  outline: 0;
+}
+
+
+.icon__container:hover {
+  opacity: 100%;
+  fill: BASE_RED;
+}
+
+.deleteIcon {
+  height: 1rem;
+  width: 1rem;
+  opacity: 80%;
+  fill:inherit;
+  transition: 0.2s;
+}
+
+.deleteIcon:hover {
+  font-weight: bold;
+  opacity: inherit;
+  fill: inherit;
+}
+
 
 .frame__row {
   display: flex;
