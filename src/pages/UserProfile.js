@@ -9,7 +9,6 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import AppButton from '../components/AppButton';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
-import dialogStyles from '../styles/Dialog.module.css';
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
@@ -19,6 +18,7 @@ import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserProfileNotFound from '../pages/UserProfileNotFound';
+import dialogStyles from '../styles/Dialog.module.css';
 import { getUserById } from '../services/UsersService';
 import styles from '../styles/Page.module.css';
 import usersStyles from '../styles/UserProfile.module.css';
