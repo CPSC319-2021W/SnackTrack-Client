@@ -2,8 +2,7 @@ import { React, useRef } from 'react';
 
 import AppButton from '../components/AppButton';
 import Jimp from 'jimp/es';
-import { saveImage } from '../services/ImagesService';
-import { setSnackImageUpload } from '../redux/features/snacks/snacksSlice';
+import { setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ImageUploader.module.css';
 import { useDispatch } from 'react-redux';
 
@@ -12,8 +11,8 @@ const ImageUploader = () => {
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
-  const setImageUpload = (imageUpload) => {
-    dispatch(setSnackImageUpload(imageUpload));
+  const setImageUploadData = (imageUploadData) => {
+    dispatch(setSnackImageUploadData(imageUploadData));
   };
 
   const handleImageUpload = async (e) => {
@@ -31,8 +30,7 @@ const ImageUploader = () => {
                 .quality(100)
                 .getBase64Async(Jimp.MIME_PNG);
 
-              const data = await saveImage(img);
-              setImageUpload(data);
+              setImageUploadData(img);
               current.src = img;
               return;
             })

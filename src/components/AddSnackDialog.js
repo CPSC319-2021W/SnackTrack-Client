@@ -5,7 +5,7 @@ import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
 import {
   setIsAddSnackOpen,
-  setSnackImageUpload
+  setSnackImageUploadData
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,6 +17,7 @@ import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import { addSnack } from '../services/SnacksService';
 import dialogStyles from '../styles/Dialog.module.css';
+import { saveImage } from '../services/ImagesService';
 import styles from '../styles/ManageSnack.module.css';
 
 const today = DateTime.now().set({ hour: 0, minute: 0 });
@@ -36,7 +37,7 @@ const AddSnackDialog = (props) => {
   const [category, setCategory] = useState('');
   const [isBatchDetailsOpen, setIsBatchDetailsOpen] = useState(false);
   const { username } = useSelector((state) => state.usersReducer.profile);
-  const { isAddSnackOpen, snackImageUpload } = useSelector(
+  const { isAddSnackOpen, snackImageUploadData } = useSelector(
     (state) => state.snacksReducer
   );
 
@@ -58,18 +59,19 @@ const AddSnackDialog = (props) => {
     setCategory('');
     addForm.resetForm();
     setIsBatchDetailsOpen(false);
-    dispatch(setSnackImageUpload(null));
+    dispatch(setSnackImageUploadData(null));
   }, [isAddSnackOpen]);
 
   const addForm = useFormik({
     initialValues: initialState,
     onSubmit: async (values, actions) => {
+      const imageResponse = await saveImage(snackImageUploadData);
       const snackRequest = {
         last_updated_by: username,
         snack_name: values.snackname,
         snack_type_id: parseInt(category),
         description: values.description,
-        image_uri: snackImageUpload.url,
+        image_uri: imageResponse.url,
         price: parseInt(values.price) * 100,
         quantity: values.quantity === '' ? 0 : values.quantity,
         order_threshold: values.reorder === '' ? null : values.reorder,
@@ -201,7 +203,7 @@ const AddSnackDialog = (props) => {
               <Button
                 type='submit'
                 disabled={
-                  !addForm.dirty || !addForm.isValid || !category || !snackImageUpload
+                  !addForm.dirty || !addForm.isValid || !category || !snackImageUploadData
                 }
                 className={styles.button}
               >
