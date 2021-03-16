@@ -7,11 +7,14 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
+import AppButton from '../components/AppButton';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
+import dialogStyles from '../styles/Dialog.module.css';
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import { ROUTES } from '../constants';
+import TextDialog from '../components/TextDialog';
 import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
@@ -46,6 +49,7 @@ const UserProfile = () => {
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
+  const [isTextDialogOpen, setIsTextDialogOpen] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
@@ -88,6 +92,19 @@ const UserProfile = () => {
     setUser({ ...user, balance: user.balance - amount });
   };
 
+  const handleOpenDialog = () => {
+    setIsTextDialogOpen(true);
+  };
+
+
+  const handleCloseDialog = () => {
+    setIsTextDialogOpen(false);
+  };
+
+  const handleDelete = async () => {
+    // TODO: add API call when ready
+  };
+
   useEffect(async () => {
     try {
       const userResponse = await getUserById(id);
@@ -125,6 +142,14 @@ const UserProfile = () => {
           </div>
           Back to Users List
         </h5>
+        <div className={styles.top_button__container}>
+          <AppButton
+            outline
+            onClick={handleOpenDialog}
+          >
+            Delete User
+          </AppButton>
+        </div>
       </div>
       {userNotFound ? (
         <UserProfileNotFound />
@@ -158,6 +183,21 @@ const UserProfile = () => {
           </div>
         </>
       )}
+      <TextDialog
+        open={isTextDialogOpen}
+        title={'Wait a sec!'}
+        submitText={'Yes, delete'}
+        declineText={'No, keep them'}
+        handleClose={handleCloseDialog}
+        onDecline={handleCloseDialog}
+        onSubmit={handleDelete}
+      >
+        Are you sure you want to delete&nbsp;
+        <span className={dialogStyles.text__emp}>
+          { user?.first_name } { user?.last_name }
+        </span>
+        ?
+      </TextDialog>
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}
