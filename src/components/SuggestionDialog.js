@@ -1,11 +1,12 @@
-import { Button, Card, Dialog, Divider, Input } from '@material-ui/core';
+import { Card, Dialog, Divider, Input } from '@material-ui/core';
 import { React, useState } from 'react';
 
+import AppButton from './AppButton';
 import classNames from 'classnames';
 import styles from '../styles/SuggestionDialog.module.css';
 
 const SuggestionDialog = (props) => {
-  const { open, value, onSubmit, handleClose, onChangeText } = props;
+  const { open, value, onSubmit, handleClose, isLoading, onChangeText } = props;
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -33,9 +34,16 @@ const SuggestionDialog = (props) => {
           onFocus={() => setIsFocused(true)}
         />
         <Divider />
-        <Button disabled={!value.trim()} className={styles.button} onClick={onSubmit}>
-          Send
-        </Button>
+        <div className={styles.button__container}>
+          <AppButton
+            primary
+            loading={isLoading}
+            disabled={!value.trim()}
+            onClick={onSubmit}
+          >
+            Send
+          </AppButton>
+        </div>
       </Card>
     </Dialog>
   );

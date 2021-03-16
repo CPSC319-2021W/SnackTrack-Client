@@ -11,6 +11,7 @@ const AppButton = (props) => {
     secondary,
     outline,
     small,
+    large,
     fullWidth,
     disabled,
     loading,
@@ -24,6 +25,7 @@ const AppButton = (props) => {
       [styles.primary]: primary,
       [styles.secondary]: secondary,
       [styles.outline]: outline,
+      [styles.large]: large,
       [styles.small]: small,
       [styles.fullWidth]: fullWidth
     })}

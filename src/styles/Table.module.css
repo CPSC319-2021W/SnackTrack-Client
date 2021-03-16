@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, BASE_BLUE_HOVER, LIGHT_BLUE, DARK_BLUE, DARK_BLUE, MID_GREY, LIGHT_GREY, DARK_GREY, INNER_LIGHT_GREY, ORANGE, RED, GREEN from colors;
+@value BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE, DARK_BLUE, DARK_BLUE, MID_GREY, LIGHT_GREY, DARK_GREY, INNER_LIGHT_GREY, ORANGE, RED, GREEN from colors;
 
 @value effects: './Effects.module.css';
 @value DEFAULT_SHADOW from effects;
@@ -149,7 +149,7 @@
 
 .button__edit:hover {
   color: DARK_BLUE;
-  background-color: BASE_BLUE_HOVER;
+  background-color: LIGHT_BLUE_HOVER;
 }
 
 .button__batch_edit {
@@ -183,6 +183,7 @@
 }
 
 .footer {
+  border-top: 1px solid rgba(224, 224, 224, 1);
   padding: 1rem;
 }
 

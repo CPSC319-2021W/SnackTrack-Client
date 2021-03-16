@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, LIGHT_GREY, MID_GREY, ORANGE, RED from colors;
+@value BASE_BLUE, LIGHT_BLUE_HOVER, DARK_BLUE, GREEN, LIGHT_BLUE, LIGHT_GREY, MID_GREY, ORANGE, RED from colors;
 
 .card__base {
     display: flex;

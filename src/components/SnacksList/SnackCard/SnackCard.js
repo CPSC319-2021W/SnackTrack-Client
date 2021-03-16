@@ -1,12 +1,13 @@
-import { Button, Card, CardActionArea, CardMedia } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../../../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import React, { useState } from 'react';
+import AppButton from '../../AppButton';
 import NumberFormat from 'react-number-format';
-import React from 'react';
 import { TRANSACTION_TYPES } from '../../../constants';
 import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
@@ -28,6 +29,7 @@ const SnackCard = (props) => {
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const DEFAULT_ORDER_THRESHOLD = 10;
+  const [isLoading, setIsLoading] = useState(false);
 
   const updateSnackQuantity = (snackId, newQuantity) => {
     dispatch(setQuantity({ snackId, newQuantity }));
@@ -41,6 +43,7 @@ const SnackCard = (props) => {
 
   const handleOrder = async (event) => {
     if (event.type === 'click') {
+      setIsLoading(true);
       const { PENDING, PURCHASE } = TRANSACTION_TYPES;
       let transactionTypeId = PENDING;
       if (isAuthenticated()) {
@@ -59,6 +62,7 @@ const SnackCard = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      setIsLoading(false);
     }
   };
 
@@ -131,9 +135,17 @@ const SnackCard = (props) => {
           </p>
         </div>
       </CardActionArea>
-      <Button className={styles.button} disabled={quantity === 0} onClick={handleOrder}>
-        Grab One
-      </Button>
+      <div className={styles.button__container}>
+        <AppButton
+          primary
+          fullWidth
+          large
+          loading={isLoading}
+          disabled={quantity === 0}
+          onClick={handleOrder}>
+          Grab One
+        </AppButton>
+      </div>
     </Card>
   );
 };

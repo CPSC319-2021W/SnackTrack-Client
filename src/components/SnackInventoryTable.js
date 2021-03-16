@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CircularProgress,
   Table,
@@ -22,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
+import AppButton from '../components/AppButton';
 import { CATEGORIES_LIST } from '../constants';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
@@ -151,9 +151,13 @@ const SnackInventoryTable = (props) => {
       id: 'actions',
       label: 'Actions',
       format: () => (
-        <Button className={styles.button__edit} onClick={() => {}}>
+        <AppButton
+          secondary
+          small
+          onClick={() => {}}
+        >
           Edit
-        </Button>
+        </AppButton>
       )
     }
   ];
@@ -180,10 +184,12 @@ const SnackInventoryTable = (props) => {
               handleSelectBatch={handleAddBatch}
             />
             <div className={styles.cell__pay}>
-              <Button className={styles.button__base} onClick={
-                openAddSnack}>
+              <AppButton
+                primary
+                onClick={openAddSnack}
+              >
                 Add New Snack
-              </Button>
+              </AppButton>
             </div>
           </div>
         ) : null}

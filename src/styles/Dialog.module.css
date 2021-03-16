@@ -1,7 +1,8 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, BASE_BLUE_HOVER, DARK_BLUE from colors;
+@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, LIGHT_BLUE, BASE_BLUE, LIGHT_BLUE_HOVER, DARK_BLUE from colors;
 
 .card {
+  min-width: 260px;
   max-width: 320px;
   display: flex;
   flex-direction: column;
@@ -111,7 +112,7 @@
 }
 
 .stepper__button:hover {
-  background-color: BASE_BLUE_HOVER;
+  background-color: LIGHT_BLUE_HOVER;
 }
 
 .stepper__button:disabled {
@@ -203,7 +204,7 @@ input[type='number'] {
 }
 
 .button__light:hover {
-  background-color: BASE_BLUE_HOVER;
+  background-color: LIGHT_BLUE_HOVER;
 }
 
 .button__light:disabled {
@@ -220,11 +221,13 @@ input[type='number'] {
 .oneButton__footer {
   display: flex;
   justify-content: flex-end;
+  padding: 0.75rem;
 }
 
 .twoButton__footer {
   display: flex;
   justify-content: space-between;
+  padding: 0.75rem;
 }
 
 .text__title {
