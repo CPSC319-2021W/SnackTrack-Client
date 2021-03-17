@@ -41,6 +41,7 @@ const TextAreaField = (props) => {
           onBlur={onBlur || handleBlur}
           onFocus={() => setIsFocused(true)}
         />
+        <p className={styles.error__message}>{error}</p>
       </div>
     </div>
   );

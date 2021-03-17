@@ -47,6 +47,11 @@ const AddSnackDialog = (props) => {
     (state) => state.snacksReducer
   );
 
+  const handleUpdateDescription = (event) => {
+    const { value } = event.target;
+    addForm.setFieldValue('description', value);
+  };
+
   const handleCategorySet = (options) => {
     setCategory(options.value);
   };
@@ -92,7 +97,7 @@ const AddSnackDialog = (props) => {
         description: values.description,
         image_uri: imageResponse.url,
         price: parseInt(values.price) * 100,
-        quantity: values.quantity === '' ? 0 : values.quantity,
+        quantity: values.quantity === '' ? 0 : parseInt(values.quantity),
         order_threshold: values.reorder === '' ? null : values.reorder,
         expiration_dtm: expiryDate ? expiryDate.toUTC().toISO() : null
       };
@@ -166,6 +171,8 @@ const AddSnackDialog = (props) => {
                     label='Description'
                     id='description'
                     name='description'
+                    error={addForm.errors.description}
+                    onChange={handleUpdateDescription}
                   />
                 </div>
                 <div className={styles.frame__row}>
