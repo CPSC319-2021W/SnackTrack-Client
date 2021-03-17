@@ -3,7 +3,7 @@ export const ROUTES = {
   SELECT: '/select-login',
   SNACKS: '/',
   TRANSACTIONS: '/transactions',
-  ADMIN: '/admin',
+  DASHBOARD: '/admin',
   INVENTORY: '/admin/inventory',
   USERS: '/admin/users'
 };
