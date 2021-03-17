@@ -7,8 +7,8 @@ import {
 } from '../styles/Colors.module.css';
 import { React, useEffect, useState } from 'react';
 
-import Fuse from 'fuse.js';
 import Select from 'react-select';
+import { handleSearch } from '../helpers/SearchHelpers';
 
 const AddBatchSelect = (props) => {
   const { data, selectedBatch, handleSelectBatch } = props;
@@ -17,20 +17,6 @@ const AddBatchSelect = (props) => {
 
   const searchOptions = {
     keys: ['label']
-  };
-
-  const handleSearch = (searchValue) => {
-    searchValue = searchValue.trim();
-    if (searchValue === '') {
-      setSearchedOptions(allOptions);
-    } else {
-      const fuse = new Fuse(allOptions, searchOptions);
-      const results = fuse.search(searchValue);
-      const searchedBatches = results.map((itemIndexPair) => {
-        return itemIndexPair.item;
-      });
-      setSearchedOptions(searchedBatches);
-    }
   };
 
   useEffect(() => {
@@ -111,7 +97,9 @@ const AddBatchSelect = (props) => {
             ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
             : null
         }
-        onInputChange={handleSearch}
+        onInputChange={(searchValue) =>
+          handleSearch(allOptions, searchValue, setSearchedOptions, searchOptions)
+        }
         onChange={handleSelectBatch}
       />
     </div>

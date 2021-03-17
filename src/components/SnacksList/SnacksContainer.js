@@ -3,10 +3,10 @@ import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksS
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
-import Fuse from 'fuse.js';
 import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
 import { TRANSACTION_TYPES } from '../../constants';
+import { handleSearch } from '../../helpers/SearchHelpers';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
 import { setBalance } from '../../redux/features/users/usersSlice';
@@ -37,20 +37,6 @@ const SnacksContainer = (props) => {
 
   const selectSnack = (snackId) => {
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
-  };
-
-  const handleSearch = (snacksArray, searchValue) => {
-    searchValue = searchValue.trim();
-    if (searchValue === '') {
-      setSnacksToDisplay(snacksArray);
-    } else {
-      const fuse = new Fuse(snacksArray, searchOptions);
-      const results = fuse.search(searchValue);
-      const searchedSnacks = results.map((itemIndexPair) => {
-        return itemIndexPair.item;
-      });
-      setSnacksToDisplay(searchedSnacks);
-    }
   };
 
   const handleCloseSnackOrder = () => {
@@ -105,12 +91,12 @@ const SnacksContainer = (props) => {
 
   useEffect(() => {
     if (filters.length === 0) {
-      handleSearch(snacks, snackSearchValue.trim());
+      handleSearch(snacks, snackSearchValue, setSnacksToDisplay, searchOptions);
     } else {
       const filtered = snacks.filter((item) => {
         return filters.includes(item.snack_type_id);
       });
-      handleSearch(filtered, snackSearchValue.trim());
+      handleSearch(filtered, snackSearchValue, setSnacksToDisplay, searchOptions);
     }
   }, [filters, snackSearchValue]);
 
