@@ -65,7 +65,7 @@ const SnacksContainer = (props) => {
   const handleChangeQuantity = (event) => {
     const { value } = event.target;
     if (value >= 0 || value === '') {
-      setSnackQuantity(value);
+      setSnackQuantity(Math.floor(value));
     }
   };
 
