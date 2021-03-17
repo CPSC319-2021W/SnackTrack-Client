@@ -189,10 +189,11 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                 </div>
+                <Divider className={styles.divide} />
+
                 <div>
                   {isBatchDetailsOpen ? (
                     <>
-                      <Divider className={styles.divide} />
                       <div className={styles.frame__row}>
                         <InputLiveFeedback
                           small
