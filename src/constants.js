@@ -85,6 +85,7 @@ export const TRANSACTION_TYPES = {
 };
 
 export const FIELD_ERROR_MESSAGES = {
+  PRICE: 'Enter a valid price!',
   NAN: 'Gotta be a number!',
   EMPTY: "Can't be blank!"
 };

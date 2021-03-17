@@ -116,7 +116,7 @@ const AddSnackDialog = (props) => {
         .min(0, 'Must be at least $0')
         .max(6, 'Must be less than 6 digits')
         .required(FIELD_ERROR_MESSAGES.EMPTY)
-        .matches(/^\d*[.]?\d*$/, FIELD_ERROR_MESSAGES.NAN),
+        .matches(/^[1-9]\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
 
       quantity: Yup.string()
         .min(0, 'Must be at least $0')
