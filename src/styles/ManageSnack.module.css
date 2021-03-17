@@ -124,10 +124,6 @@
   justify-content: flex-end;
 }
 
-.textarea_container {
-  margin-bottom: 1rem;
-}
-
 .label {
   font-size: 14px;
   line-height: 18px;

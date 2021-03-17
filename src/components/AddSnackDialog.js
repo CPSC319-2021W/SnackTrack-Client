@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { Dialog, Divider, Tooltip } from '@material-ui/core';
+import { Dialog, Divider } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
 import {
@@ -156,7 +156,7 @@ const AddSnackDialog = (props) => {
               <div className={styles.frame__column}>
                 <div className={styles.frame__row}>
                   <InputLiveFeedback
-                    label='Snack name'
+                    label='Snack Name'
                     id='snackname'
                     name='snackname'
                     type='text'
@@ -183,7 +183,7 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
-                    label='Re-order point'
+                    label='Reorder Point'
                     id='reorder'
                     name='reorder'
                     type='text'
@@ -208,14 +208,12 @@ const AddSnackDialog = (props) => {
                           date={expiryDate}
                           onChangeDate={handleChangeDate}
                         />
-                        <Tooltip title='Remove'>
-                          <button
-                            className={styles.deleteIcon__container}
-                            onClick={deleteBatchDetails}
-                          >
-                            <DeleteIcon className={styles.deleteIcon} />
-                          </button>
-                        </Tooltip>
+                        <button
+                          className={styles.deleteIcon__container}
+                          onClick={deleteBatchDetails}
+                        >
+                          <DeleteIcon className={styles.deleteIcon} />
+                        </button>
                       </div>
                     </>
                   ) : (
