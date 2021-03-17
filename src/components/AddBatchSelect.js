@@ -24,7 +24,6 @@ const AddBatchSelect = (props) => {
       value: item.snack_id,
       label: item.snack_name
     }));
-    console.log(allOptions);
     setAllOptions(options);
     setSearchedOptions(options);
   }, [data]);
