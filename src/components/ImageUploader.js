@@ -1,14 +1,15 @@
 import { React, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
 import Jimp from 'jimp/es';
 import { setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ImageUploader.module.css';
-import { useDispatch } from 'react-redux';
 
 const ImageUploader = () => {
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
+  const { snackImageUploadData } = useSelector((state) => state.snacksReducer);
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
@@ -48,19 +49,12 @@ const ImageUploader = () => {
 
   return (
     <div className={styles.container}>
-      {uploadedImage ? (
-        <div
-          className={styles.imageUploadGreyBox}
-          onClick={() => imageUploader.current.click()}
-        >
-          <img ref={uploadedImage} className={styles.imageUploadBox} />
-        </div>
-      ) : (
-        <div
-          className={styles.imageUploadGreyBox}
-          onClick={() => imageUploader.current.click()}
-        />
-      )}
+      <div
+        className={styles.imageUploadGreyBox}
+        onClick={() => imageUploader.current.click()}
+      >
+        <img ref={uploadedImage} className={styles.imageUploadBox} />
+      </div>
       <input
         ref={imageUploader}
         className={styles.hidden}
@@ -76,7 +70,7 @@ const ImageUploader = () => {
           loading={isUploading}
           onClick={() => imageUploader.current.click()}
         >
-          Upload Photo
+          {snackImageUploadData ? 'Reupload Photo' : 'Upload Photo'}
         </AppButton>
       </div>
     </div>
