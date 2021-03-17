@@ -1,58 +1,56 @@
-import { BASE_BLUE, DARKER_GREY, DARK_BLUE, LIGHT_BLUE, WHITE } from '../../styles/Colors.module.css';
+import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_BLUE, LIGHT_GREY, MID_GREY, WHITE } from '../../styles/Colors.module.css';
 
+import React, { useState } from 'react';
 import { CATEGORIES_LIST } from '../../constants';
-import React from 'react';
 import Select from 'react-select';
+import styles from '../../styles/Field.module.css';
+
+import classNames from 'classnames';
 
 const options = CATEGORIES_LIST.map((category) => ({ value: category.id, label: category.name }));
 
 const CategorySelect = (props) => {
-  const { handleSelectCategory } = props;
+  const { id, label, error, handleSelectCategory } = props;
+
+  const [isFocused, setIsFocused] = useState(false);
 
   const customStyles = {
     container: (base) => ({
       ...base,
-      width: '100%',
-      height: '24px',
-      minHeight: '20px',
-      minWidth: '180px'
+      width: '100%'
     }),
     option: (base, state) => ({
       ...base,
-      color: state.isSelected ? DARK_BLUE : DARKER_GREY,
+      color: state.isSelected ? DARK_BLUE : DARK_GREY,
       fontWeight: state.isSelected ? '600' : '400',
       backgroundColor: state.isSelected ? LIGHT_BLUE : WHITE,
       '&:hover': {
-        backgroundColor: '#F1F9FF'
+        backgroundColor: state.isSelected ? LIGHT_BLUE : '#F1F9FF'
       },
       cursor: 'pointer'
     }),
     control: (base, state) => ({
       ...base,
-      height: '24px',
+      height: '32px',
       width: '100%',
-      minHeight: '20px',
-      minWidth: '180px',
-      border: `2px solid ${BASE_BLUE}`,
+      minHeight: 0,
+      border: state.isFocused ? `2px solid ${BASE_BLUE}` : `1px solid ${LIGHT_GREY}`,
       '&:hover': {
-        border: `2px solid ${DARK_BLUE}`
+        border: state.isFocused ? `2px solid ${BASE_BLUE}` : `1px solid ${MID_GREY}`
       },
-      fontWeight: '600',
-      backgroundColor: state.hasValue ? LIGHT_BLUE : WHITE,
+      borderRadius: '6px',
+      backgroundColor: state.hasValue ? WHITE : INNER_LIGHT_GREY,
       boxShadow: 'none',
       cursor: 'pointer'
     }),
-    singleValue: (base) => ({
+    singleValue: (base, state) => ({
       ...base,
-      fontWeight: '600',
-      color: BASE_BLUE
+      color: state.isFocused ? BASE_BLUE : DARK_GREY
     }),
     dropdownIndicator: (base) => ({
       ...base,
-      color: BASE_BLUE,
-      '&:hover': {
-        color: DARK_BLUE
-      }
+      color: MID_GREY,
+      padding: '4px'
     }),
     indicatorSeparator: (base) => ({
       ...base,
@@ -60,20 +58,32 @@ const CategorySelect = (props) => {
     }),
     placeholder: (base) => ({
       ...base,
-      color: BASE_BLUE,
-      '&:hover': {
-        color: DARK_BLUE
-      },
-      height: '80%'
+      color: MID_GREY
     })
   };
 
   return (
-    <div>
-      <Select options={options} 
-        placeholder={'Select Category'}
-        styles={customStyles}
-        onChange={handleSelectCategory}/>
+    <div className={styles.input__group}>
+      <label
+        className={classNames({
+          [styles.label__base]: true,
+          [styles.label__focused]: isFocused,
+          [styles.label__error]: error
+        })}
+        htmlFor={id}
+      >
+        { label }
+      </label>
+      <div className={styles.input__container}>
+        <Select
+          isSearchable={false}
+          options={options} 
+          placeholder={'Select Category'}
+          styles={customStyles}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onChange={handleSelectCategory}/>
+      </div>
     </div>
   );
 };

@@ -12,7 +12,7 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 
 import AppButton from './AppButton';
-import DatePickerInput from './DatePickerInput';
+import DatePickerField from './DatePickerField';
 import { DateTime } from 'luxon';
 import InputField from './InputField';
 import classNames from 'classnames';
@@ -171,7 +171,7 @@ const ManageBatchDialog = (props) => {
           </div>
           <div className={styles.labelContainer}>
             <div>
-              <DatePickerInput
+              <DatePickerField
                 label='Expiry Date'
                 date={date}
                 error={errors.date}

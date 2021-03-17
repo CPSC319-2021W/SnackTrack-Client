@@ -23,7 +23,7 @@ const AddBatchSelect = (props) => {
       fontWeight: state.isSelected ? '600' : '400',
       backgroundColor: state.isSelected ? LIGHT_BLUE : WHITE,
       '&:hover': {
-        backgroundColor: '#F1F9FF'
+        backgroundColor: state.isSelected ? LIGHT_BLUE : '#F1F9FF'
       },
       cursor: 'pointer'
     }),
@@ -61,7 +61,7 @@ const AddBatchSelect = (props) => {
     }),
     indicatorSeparator: (base) => ({
       ...base,
-      backgroundColor: BASE_BLUE
+      display: 'none'
     })
   };
 

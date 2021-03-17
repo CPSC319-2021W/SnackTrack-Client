@@ -83,3 +83,8 @@ export const TRANSACTION_TYPES = {
   CANCEL: 2,
   PENDING: 3
 };
+
+export const FIELD_ERROR_MESSAGES = {
+  NAN: 'Gotta be a number!',
+  EMPTY: 'Can\'t be blank!'
+};

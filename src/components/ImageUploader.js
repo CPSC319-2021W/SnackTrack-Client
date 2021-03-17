@@ -71,7 +71,7 @@ const ImageUploader = () => {
       />
       <div className={styles.buttonContainer}>
         <AppButton secondary onClick={() => imageUploader.current.click()}>
-          Upload photo
+          Upload Photo
         </AppButton>
       </div>
     </div>
