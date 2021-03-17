@@ -78,7 +78,7 @@ const CategorySelect = (props) => {
         <Select
           isSearchable={false}
           options={options} 
-          placeholder={'Select Category'}
+          placeholder=''
           styles={customStyles}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}

@@ -185,7 +185,7 @@ const AddSnackDialog = (props) => {
                 <div>
                   {isBatchDetailsOpen ? (
                     <>
-                      <Divider className={styles.divide}/>
+                      <Divider className={styles.divide} />
                       <div className={styles.frame__row}>
                         <InputLiveFeedback
                           small
@@ -195,7 +195,7 @@ const AddSnackDialog = (props) => {
                           type='text'
                         />
                         <DatePickerField
-                          label='Date of Expiration'
+                          label='Expiration Date'
                           id='expiration'
                           error={dateError}
                           date={expiryDate}

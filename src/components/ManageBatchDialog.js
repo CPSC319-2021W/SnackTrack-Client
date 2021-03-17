@@ -172,7 +172,7 @@ const ManageBatchDialog = (props) => {
           <div className={styles.labelContainer}>
             <div>
               <DatePickerField
-                label='Expiry Date'
+                label='Expiration Date'
                 date={date}
                 error={errors.date}
                 onChangeDate={handleChangeDate}

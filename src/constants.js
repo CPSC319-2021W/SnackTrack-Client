@@ -86,5 +86,5 @@ export const TRANSACTION_TYPES = {
 
 export const FIELD_ERROR_MESSAGES = {
   NAN: 'Gotta be a number!',
-  EMPTY: 'Can\'t be blank!'
+  EMPTY: "Can't be blank!"
 };
