@@ -42,11 +42,20 @@ const Inventory = () => {
 
   const handleChangePage = (page, isActive) => {
     isActive = isActive || false;
-    const newSnackPage = toPaginatedSnacks(
-      snacks.filter((snack) => snack.is_active === isActive),
-      page,
-      rowsPerPage
-    );
+    let newSnackPage;
+    try {
+      newSnackPage = toPaginatedSnacks(
+        snacks.filter((snack) => snack.is_active === isActive),
+        page,
+        rowsPerPage
+      );
+    } catch (err) {
+      newSnackPage = toPaginatedSnacks(
+        snacks.filter((snack) => snack.is_active === isActive),
+        0,
+        rowsPerPage
+      );
+    }
     if (isActive) {
       setActiveSnacks(newSnackPage);
     } else {
@@ -96,14 +105,21 @@ const Inventory = () => {
     if (snacks) {
       const allActiveSnacks = snacks.filter((snack) => snack.is_active);
       const allInactiveSnacks = snacks.filter((snack) => !snack.is_active);
-      setActiveSnacks(
-        toPaginatedSnacks(allActiveSnacks, activeSnacks.current_page, rowsPerPage)
-      );
-      setInactiveSnacks(
-        toPaginatedSnacks(allInactiveSnacks, inactiveSnacks.current_page, rowsPerPage)
-      );
-      setAllActiveSnacks(allActiveSnacks);
-      setIsLoaded(true);
+      try {
+        setActiveSnacks(
+          toPaginatedSnacks(allActiveSnacks, activeSnacks.current_page, rowsPerPage)
+        );
+        setInactiveSnacks(
+          toPaginatedSnacks(allInactiveSnacks, inactiveSnacks.current_page, rowsPerPage)
+        );
+        setAllActiveSnacks(allActiveSnacks);
+        setIsLoaded(true);
+      } catch (err) {
+        setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
+        setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
+        setAllActiveSnacks(allActiveSnacks);
+        setIsLoaded(true);
+      }
     }
   }, [snacks]);
 

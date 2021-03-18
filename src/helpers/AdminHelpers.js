@@ -7,7 +7,10 @@ const toPaginatedSnacks = (snacks, page, rowsPerPage) => {
     total_rows: totalRows
   };
 
-  if (startRow < 0 || startRow >= totalRows) {
+  if (startRow < 0 || startRow > totalRows) {
+    throw new RangeError();
+  }
+  if (startRow === totalRows) {
     res.snacks = [];
     res.current_page = 0;
     res.total_pages = 1;
