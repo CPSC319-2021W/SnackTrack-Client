@@ -6,21 +6,15 @@ import styles from '../styles/Field.module.css';
 
 const InputField = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { id, label, small, value, placeholder, onChange, onFocus, error } = props;
-
-  const handleBlur = () => {
-    setIsFocused(false);
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
+  const { id, label, small, value, placeholder, onChange, onKeyPress, error } = props;
 
   return (
-    <div className={classNames({
-      [styles.input__group]: true,
-      [styles.input__small]: small
-    })}>
+    <div
+      className={classNames({
+        [styles.input__group]: true,
+        [styles.input__small]: small
+      })}
+    >
       <label
         className={classNames({
           [styles.label__base]: true,
@@ -43,12 +37,11 @@ const InputField = (props) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onBlur={handleBlur}
-          onFocus={onFocus ? onFocus : handleFocus}
+          onKeyPress={onKeyPress}
+          onBlur={() => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
         />
-        <p className={styles.error__message}>
-          { error }
-        </p>
+        <p className={styles.error__message}>{error}</p>
       </div>
     </div>
   );
