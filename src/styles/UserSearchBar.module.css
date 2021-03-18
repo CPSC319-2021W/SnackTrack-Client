@@ -9,6 +9,7 @@
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
   margin-bottom: 1rem;
+  max-width: 300px;
 }
 
 .searchBar__focused {

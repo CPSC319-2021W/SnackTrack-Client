@@ -1,30 +1,26 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY, DARK_GREY from colors;
+@value BASE_BLUE, BASE_RED, DARK_BLUE, VIOLET, LIGHT_BLUE, LIGHT_GREY, DARK_GREY, WHITE from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW from effects;
 
+.page__content {
+  display: flex;
+  flex-direction: column;
+}
+
 .list__container {
-  width: 60%;
-  max-width: 700px;
-  min-width: 400px;
-  min-height: 912px;
-  margin: 0 auto;
-  padding: 1rem;
-  background-color: white;
-  border-radius: 10px;
-  border: 1px solid LIGHT_GREY;
+  display: flex;
+  justify-content: center;
 }
 
 .list {
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  overflow-y: auto;
+  flex-direction: row;
   align-items: center;
-  background-color: transparent;
+  flex-wrap: wrap;
 }
 
 .balance {
@@ -42,7 +38,7 @@
 }
 
 .balance__value {
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
   color: DARK_BLUE;
   text-align: right;
@@ -52,4 +48,114 @@
 
 .balance__value__large {
   font-size: 2rem;
+}
+
+.card__base {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.action_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user__fullname {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 1rem 0 0.2rem 0;
+}
+
+.admin__pill {
+  color: WHITE;
+  background-color: BASE_BLUE;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 0.6rem;
+  padding: 5px 12px;
+  border-radius: 24px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.icon__svg {
+  width: 2rem;
+  height: 2rem;
+  fill: BASE_BLUE;
+}
+
+@media (max-width: 960px) {
+  .user__fullname {
+    margin: 0.8rem 0 0.2rem 0;
+  }
+
+  .image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 538px) {
+  .user__fullname {
+    font-size: 14px;
+    margin: 0.6rem 0 0.2rem 0;
+  }
+
+  .balance__value {
+    font-size: 22px;
+  }
+
+  .image {
+    width: 100px;
+    height: 100px;
+  }
+
+  .admin__pill {
+    font-size: 0.6rem;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .image {
+    width: 85px;
+    height: 85px;
+  }
+}
+
+@media (max-width: 320px) {
+  .user__fullname {
+    font-size: 12px;
+    margin: 0.7rem 0 0.2rem 0;
+  }
+
+  .balance__value {
+    font-size: 18px;
+  }
+
+  .image {
+    width: 70px;
+    height: 70px;
+  }
 }
