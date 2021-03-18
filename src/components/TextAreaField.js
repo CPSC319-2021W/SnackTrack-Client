@@ -4,17 +4,16 @@ import { Input } from '@material-ui/core';
 import classNames from 'classnames';
 import styles from '../styles/Field.module.css';
 
-const InputField = (props) => {
+const TextAreaField = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { id, label, small, value, placeholder, onChange, onKeyPress, error } = props;
+  const { id, label, value, placeholder, onChange, onBlur, error } = props;
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   return (
-    <div
-      className={classNames({
-        [styles.input__group]: true,
-        [styles.input__small]: small
-      })}
-    >
+    <div className={styles.textarea__group}>
       <label
         className={classNames({
           [styles.label__base]: true,
@@ -27,8 +26,10 @@ const InputField = (props) => {
       </label>
       <div className={styles.input__container}>
         <Input
+          multiline
+          rows={4}
           className={classNames({
-            [styles.input__base]: true,
+            [styles.textarea__base]: true,
             [styles.input__focused]: isFocused,
             [styles.input__error]: error
           })}
@@ -37,8 +38,7 @@ const InputField = (props) => {
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onKeyPress={onKeyPress}
-          onBlur={() => setIsFocused(false)}
+          onBlur={onBlur || handleBlur}
           onFocus={() => setIsFocused(true)}
         />
         <p className={styles.error__message}>{error}</p>
@@ -47,4 +47,4 @@ const InputField = (props) => {
   );
 };
 
-export default InputField;
+export default TextAreaField;

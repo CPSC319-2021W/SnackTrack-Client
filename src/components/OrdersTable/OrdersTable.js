@@ -1,15 +1,13 @@
 import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
 import { editOrder, makePayment } from '../../services/TransactionsService';
-import { useDispatch, useSelector } from 'react-redux';
 
 import EditOrderDialog from '../../components/EditOrderDialog';
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
-import { setBalance } from '../../redux/features/users/usersSlice';
+import { useSelector } from 'react-redux';
 
 const Orders = (props) => {
-  const dispatch = useDispatch();
   const {
     isLoaded,
     isEmpty,
@@ -22,7 +20,7 @@ const Orders = (props) => {
   } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
-  const { username, balance } = useSelector((state) => state.usersReducer.profile);
+  const { username } = useSelector((state) => state.usersReducer.profile);
   const { isEditOrderOpen, orderToEdit } = useSelector(
     (state) => state.transactionsReducer
   );
@@ -33,11 +31,6 @@ const Orders = (props) => {
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
   const [isPayLoading, setIsPayLoading] = useState(false);
-
-  // TODO: Delete this function after Transactions Redesign
-  const updateBalance = (balance) => {
-    dispatch(setBalance(balance));
-  };
 
   const isCheckboxDisabled = () => {
     return uncheckedOrders.length === 0 && selectedOrders.length === 0;
@@ -57,10 +50,9 @@ const Orders = (props) => {
       setIsPayLoading(true);
       try {
         await makePayment(userId, selectedOrders, subtotalAmount, username);
-        updateProfileBalance(subtotalAmount);
-        updateBalance(balance - subtotalAmount);
         await onMakePayment();
         onHandleApiResponse('PAYMENT_SUCCESS');
+        updateProfileBalance(subtotalAmount);
         clearLocalStates();
       } catch (err) {
         onHandleApiResponse('ERROR');

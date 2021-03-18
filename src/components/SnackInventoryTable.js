@@ -79,6 +79,12 @@ const SnackInventoryTable = (props) => {
     }
   };
 
+  const handleOpenRow = async (snackId) => {
+    if (activeSnacks) {
+      await handleGetSnackBatch(snackId);
+    }
+  };
+
   const setAddBatchOpen = () => dispatch(setIsAddBatchOpen(true));
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
@@ -92,7 +98,7 @@ const SnackInventoryTable = (props) => {
 
   useEffect(() => {
     setSelectedSnack(false);
-  }, [snacks]);
+  }, []);
 
   const columns = [
     { id: 'snack_id', label: 'Snack ID' },
@@ -218,11 +224,11 @@ const SnackInventoryTable = (props) => {
                       tabIndex={-1}
                       className={classNames({
                         [styles.row]: true,
-                        [styles.row__selectable]: true,
+                        [styles.row__selectable]: activeSnacks,
                         [styles.row__selected]:
                           snacks[i].snack_id === selectedSnackForBatch
                       })}
-                      onClick={() => handleGetSnackBatch(snacks[i].snack_id)}
+                      onClick={() => handleOpenRow(snacks[i].snack_id)}
                     >
                       {columns.map((column) => {
                         let value;
@@ -252,12 +258,14 @@ const SnackInventoryTable = (props) => {
                         );
                       })}
                     </TableRow>
-                    <SnackBatchesSubTable
-                      id={snacks[i]?.snack_id}
-                      snackName={snacks[i]?.snack_name}
-                      open={selectedSnackForBatch}
-                      colSpan={columns.length}
-                    />
+                    {activeSnacks ? (
+                      <SnackBatchesSubTable
+                        id={snacks[i]?.snack_id}
+                        snackName={snacks[i]?.snack_name}
+                        open={selectedSnackForBatch}
+                        colSpan={columns.length}
+                      />
+                    ) : null}
                   </Fragment>
                 );
               })
@@ -313,7 +321,6 @@ const SnackInventoryTable = (props) => {
         newSnackBatch
         open={isAddBatchOpen}
         batch={selectedBatch}
-        onDeleteBatch={onDeleteBatch}
         onAddBatchOrEdit={onAddBatchOrEdit}
       />
       <ManageBatchDialog

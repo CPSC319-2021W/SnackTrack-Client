@@ -106,15 +106,18 @@ const Inventory = () => {
       const allActiveSnacks = snacks.filter((snack) => snack.is_active);
       const allInactiveSnacks = snacks.filter((snack) => !snack.is_active);
       try {
-        setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
-        setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
+        setActiveSnacks(
+          toPaginatedSnacks(allActiveSnacks, activeSnacks.current_page, rowsPerPage)
+        );
+        setInactiveSnacks(
+          toPaginatedSnacks(allInactiveSnacks, inactiveSnacks.current_page, rowsPerPage)
+        );
         setAllActiveSnacks(allActiveSnacks);
         setIsLoaded(true);
       } catch (err) {
         setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
         setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
         setAllActiveSnacks(allActiveSnacks);
-
         setIsLoaded(true);
       }
     }

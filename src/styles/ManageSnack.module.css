@@ -1,68 +1,87 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE from colors;
+@value DARK_GREY, MID_GREY, LIGHT_GREY, RED, BASE_BLUE, LIGHT_BLUE_HOVER, LIGHT_BLUE, BASE_RED from colors;
 
 .form {
-  width: 600px;
-  height: 477px;
+  width: 520px;
 }
 
 .title {
   color: DARK_GREY;
   font-size: 18px;
   font-weight: bold;
-  width: 300px;
   align-self: flex-start;
-  margin-left: 10px;
   line-height: 22px;
-  margin-right: 1rem;
   text-overflow: ellipsis;
 }
 
 .container {
   display: flex;
   flex-direction: row;
-  margin: 0.75rem;  
+  margin: 1rem;  
 }
 
 .container > * {
   color: DARK_GREY;
   font-size: 14px;
   font-weight: 500;
-  text-align: left;
-  
+  text-align: left;  
+}
+
+.deleteIcon__container {
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.deleteIcon__container:focus {
+  outline: 0;
+}
+
+.icon__container:hover {
+  opacity: 100%;
+}
+
+.deleteIcon {
+  height: 1rem;
+  width: 1rem;
+  opacity: 60%;
+  transition: 0.2s;
+}
+
+.deleteIcon path {
+  fill: BASE_RED;
+}
+
+.deleteIcon:hover {
+  font-weight: bold;
+  opacity: inherit;
 }
 
 .frame__row {
   display: flex;
   width: 100%;
-  min-width: 250px;
   flex-direction: row;
-}
-
-.frame__row_mobile {
-  display: flex;
-  min-width: 180px;
-  flex-direction: row;
-}
-
-.category__label {
-  flex-direction: column;
-  margin-right: 15px;
-}
-
-.category__label > p {
-  margin-bottom: 5px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .frame__column {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  padding-left: 1rem;
 }
 
 .frame__image {
   display: flex;
   flex-direction: column;
-  padding: 0.75rem;
   align-items: center;
 }
 
@@ -96,60 +115,13 @@
   font-weight: 400;
 }
 
-.button {
-  width: 125px;
-  height: 30.25px;
-  font-weight: 700;
-  color: #ffffff;
-  background-color: BASE_BLUE;
-  text-transform: none;
-  margin: 0.75rem;
-  margin-right: 1rem;
+.input__size__override {
+  width: 80px;
 }
 
 .bottom {
   display: flex;
   justify-content: flex-end;
-}
-
-.button:hover {
-  background-color: DARK_BLUE;
-}
-
-.button:disabled {
-  color: MID_GREY;
-  background-color: LIGHT_GREY;
-}
-
-.input[type="text"],
-.input[type="number"] {
-  width: 100%;
-  height: 24px;
-  min-width: 180px;
-  color: DARK_GREY;
-  font-size: 1rem;
-  border: 1.5px solid LIGHT_GREY;
-  background-color: #f9f9f9;
-  border-radius: 3px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding-left: 7px;
-  padding-right: 7px;
-  margin-bottom: 10px;
-}
-
-.textarea {
-  width: 100%;
-  min-width: 360px;
-  height: 68px;
-  color: DARK_GREY;
-  font-size: 1rem;
-  border: 1.5px solid LIGHT_GREY;
-  background-color: #f9f9f9;
-  border-radius: 3px;
-  font-size: 0.75rem;
-  margin-bottom: 15px;
-  margin-right: 15px;
 }
 
 .label {
@@ -163,54 +135,50 @@
   font-size: 0.7rem;
 }
 
-@media (max-width: 600px) {
-  .form {
-    margin-left: 25px;
-    margin-right: 25px;
-    width: 311px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.divide {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 590px) {
+  .form, form {
+    max-width: 380px;
   }
   
   .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0.75rem;
-  }
-
-  .frame__row_mobile {
     width: 100%;
-    min-width: 250px;
-    flex-direction: column;
+    margin: 0;
+    padding: 1rem;
   }
 
   .frame__row {
     width: 100%;
-    min-width: 115px;
-  }
-  
-  .frame__column {
     flex-direction: column;
   }
   
-  .textarea {
+  .frame__column {
     width: 100%;
-    min-width: 250px;
+    flex-direction: column;
+    padding: 1rem 0 0 0;
   }
+}
 
-  .form__flex {
+@media (max-width: 425px) {
+  .form, form {
+    width: 340px;
+  }
+}
+
+@media (max-width: 375px) {
+  .form, form {
+    width: 300px;
+  }
+}
+
+@media (max-width: 320px) {
+  .form, form {
     width: 100%;
-    min-width: 115px;
-  }
-
-  .button {
-    width: 65px;
-  }
-
-  .input[type="text"] {
-    min-width: 115px;
   }
 }

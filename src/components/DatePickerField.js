@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import classNames from 'classnames';
-import styles from '../styles/Input.module.css';
+import styles from '../styles/Field.module.css';
 
-const InputField = (props) => {
+const DatePickerField = (props) => {
   const { id, label, date, onChangeDate, error } = props;
   const [isFocused, setIsFocused] = useState(false);
 
@@ -20,7 +20,10 @@ const InputField = (props) => {
       >
         {label}
       </label>
-      <div className={styles.input__container}>
+      <div className={classNames({
+        [styles.input__container]: true,
+        [styles.calendar__adornment]: true
+      })}>
         <KeyboardDatePicker
           autoOk
           disablePast
@@ -44,4 +47,4 @@ const InputField = (props) => {
   );
 };
 
-export default InputField;
+export default DatePickerField;

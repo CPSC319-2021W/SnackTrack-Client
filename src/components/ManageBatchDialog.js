@@ -12,7 +12,7 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 
 import AppButton from './AppButton';
-import DatePickerInput from './DatePickerInput';
+import DatePickerField from './DatePickerField';
 import { DateTime } from 'luxon';
 import InputField from './InputField';
 import classNames from 'classnames';
@@ -75,7 +75,7 @@ const ManageBatchDialog = (props) => {
     }
   };
 
-  const onSubmit = async (event, func, apiResponse) => {
+  const handleSubmit = async (event, func, apiResponse) => {
     if (event.key === 'Enter' || event.type === 'click') {
       setIsSubmitLoading(true);
       try {
@@ -136,10 +136,10 @@ const ManageBatchDialog = (props) => {
       onSubmit={
         newSnackBatch
           ? (event) => {
-            onSubmit(event, addBatch, 'BATCH_SUCCESS');
+            handleSubmit(event, addBatch, 'BATCH_SUCCESS');
           }
           : (event) => {
-            onSubmit(event, editBatch, 'CHANGES_SUCCESS');
+            handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
           }
       }
       onCancel={onCancel}
@@ -167,15 +167,33 @@ const ManageBatchDialog = (props) => {
               value={quantity}
               error={errors.quantity ? errors.quantity : null}
               onChange={handleChangeQuantity}
+              onKeyPress={
+                newSnackBatch
+                  ? (event) => {
+                    handleSubmit(event, addBatch, 'BATCH_SUCCESS');
+                  }
+                  : (event) => {
+                    handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
+                  }
+              }
             />
           </div>
           <div className={styles.labelContainer}>
             <div>
-              <DatePickerInput
-                label='Expiry Date'
+              <DatePickerField
+                label='Expiration Date'
                 date={date}
                 error={errors.date}
                 onChangeDate={handleChangeDate}
+                onKeyPress={
+                  newSnackBatch
+                    ? (event) => {
+                      handleSubmit(event, addBatch, 'BATCH_SUCCESS');
+                    }
+                    : (event) => {
+                      handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
+                    }
+                }
               />
             </div>
           </div>
@@ -190,8 +208,9 @@ const ManageBatchDialog = (props) => {
           {newSnackBatch ? null : (
             <AppButton
               secondary
+              disabled={isSubmitLoading}
               loading={isDeleteLoading}
-              onClick={deleteSnackBatch || isSubmitLoading}
+              onClick={deleteSnackBatch}
             >
               Delete Batch
             </AppButton>
@@ -203,10 +222,10 @@ const ManageBatchDialog = (props) => {
             onClick={
               newSnackBatch
                 ? (event) => {
-                  onSubmit(event, addBatch, 'BATCH_SUCCESS');
+                  handleSubmit(event, addBatch, 'BATCH_SUCCESS');
                 }
                 : (event) => {
-                  onSubmit(event, editBatch, 'CHANGES_SUCCESS');
+                  handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
                 }
             }
           >
