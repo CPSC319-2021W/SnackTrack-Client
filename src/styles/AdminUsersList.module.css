@@ -99,12 +99,6 @@
   right: 0;
 }
 
-.icon__svg {
-  width: 2rem;
-  height: 2rem;
-  fill: BASE_BLUE;
-}
-
 @media (max-width: 960px) {
   .user__fullname {
     margin: 0.8rem 0 0.2rem 0;
