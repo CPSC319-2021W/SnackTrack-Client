@@ -1,14 +1,15 @@
-import { ReactComponent as HomeIcon } from '../assets/icons/home.svg';
+import { ReactComponent as DashboardIcon } from '../assets/icons/dashboard.svg';
+import { ReactComponent as InventoryIcon } from '../assets/icons/box.svg';
 import { ReactComponent as LogoutIcon } from '../assets/icons/logout.svg';
 import { ROUTES } from '../constants';
 import { React } from 'react';
-import { ReactComponent as TransactionsIcon } from '../assets/icons/receipt.svg';
+import { ReactComponent as UserGroupIcon } from '../assets/icons/usergroup.svg';
 import classNames from 'classnames';
 import iconStyles from '../styles/HeaderBar.module.css';
 import styles from '../styles/BottomNavigation.module.css';
 import { useHistory } from 'react-router-dom';
 
-const BottomNavigation = (props) => {
+const BottomNavigationAdmin = (props) => {
   const { handleLogOut } = props;
   const history = useHistory();
   const { pathname } = history.location;
@@ -17,25 +18,37 @@ const BottomNavigation = (props) => {
     <div className={styles.bottomNav__base}>
       <button
         className={iconStyles.icon__container}
-        onClick={() => history.push(ROUTES.SNACKS)}
+        onClick={() => history.push(ROUTES.DASHBOARD)}
       >
-        <HomeIcon
+        <DashboardIcon
           className={classNames({
             [iconStyles.unselectable]: true,
             [styles.icon__base]: true,
-            [styles.icon__active]: pathname === ROUTES.SNACKS
+            [styles.icon__active]: pathname === ROUTES.DASHBOARD
           })}
         />
       </button>
       <button
         className={iconStyles.icon__container}
-        onClick={() => history.push(ROUTES.TRANSACTIONS)}
+        onClick={() => history.push(ROUTES.INVENTORY)}
       >
-        <TransactionsIcon
+        <InventoryIcon
           className={classNames({
             [iconStyles.unselectable]: true,
             [styles.icon__base]: true,
-            [styles.icon__active]: pathname === ROUTES.TRANSACTIONS
+            [styles.icon__active]: pathname === ROUTES.INVENTORY
+          })}
+        />
+      </button>
+      <button
+        className={iconStyles.icon__container}
+        onClick={() => history.push(ROUTES.USERS)}
+      >
+        <UserGroupIcon
+          className={classNames({
+            [iconStyles.unselectable]: true,
+            [styles.icon__base]: true,
+            [styles.icon__active]: pathname.includes(ROUTES.USERS)
           })}
         />
       </button>
@@ -51,4 +64,4 @@ const BottomNavigation = (props) => {
   );
 };
 
-export default BottomNavigation;
+export default BottomNavigationAdmin;

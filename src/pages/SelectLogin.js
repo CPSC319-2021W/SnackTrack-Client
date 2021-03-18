@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from 'react';
 
-import Fuse from 'fuse.js';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
 import { getUsersCommon } from '../services/UsersService';
+import { handleSearch } from '../helpers/SearchHelpers';
 import styles from '../styles/Login.module.css';
 import { useSelector } from 'react-redux';
 
@@ -14,25 +14,12 @@ const SelectLogin = () => {
   const [usersToDisplay, setUsersToDisplay] = useState(users);
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
-  const options = {
+  const searchOptions = {
     keys: ['first_name', 'last_name', 'username']
   };
 
-  const handleSearch = (value) => {
-    if (value === '') {
-      setUsersToDisplay(users);
-    } else {
-      const fuse = new Fuse(users, options);
-      const results = fuse.search(value);
-      const filteredUsers = results.map((itemIndexPair) => {
-        return itemIndexPair.item;
-      });
-      setUsersToDisplay(filteredUsers);
-    }
-  };
-
   useEffect(() => {
-    handleSearch(usersSearchValue);
+    handleSearch(users, usersSearchValue, setUsersToDisplay, searchOptions);
   }, [loaded, usersSearchValue]);
 
   useEffect(() => {

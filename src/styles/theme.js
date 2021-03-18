@@ -66,7 +66,8 @@ export const theme = createMuiTheme({
     },
     MuiButtonBase: {
       root: {
-        fontFamily: 'TT Norms'
+        fontFamily: 'TT Norms',
+        fontVariantLigatures: 'no-common-ligatures'
       }
     },
     MuiCheckbox: {
@@ -93,20 +94,27 @@ export const theme = createMuiTheme({
         color: BASE_BLUE
       }
     },
+    MuiInputBase: {
+      input: {
+        fontSize: '14px',
+        fontWeight: 500
+      }
+    },
     MuiInput: {
       input: {
-        fontSize: '1rem',
+        fontSize: '14px',
+        fontWeight: 500,
         paddingLeft: '7px',
         paddingRight: '7px'
       }
     },
     MuiOutlinedInput: {
       root: {
-        height: '34px',
+        height: '32px',
         margin: 0,
         backgroundColor: INNER_LIGHT_GREY,
         border: `1.5px solid ${LIGHT_GREY}`,
-        borderRadius: '4px',
+        borderRadius: '6px',
         '&$focused': {
           backgroundColor: WHITE,
           border: `2px solid ${BASE_BLUE}`

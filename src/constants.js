@@ -3,7 +3,7 @@ export const ROUTES = {
   SELECT: '/select-login',
   SNACKS: '/',
   TRANSACTIONS: '/transactions',
-  ADMIN: '/admin',
+  DASHBOARD: '/admin',
   INVENTORY: '/admin/inventory',
   USERS: '/admin/users'
 };
@@ -82,4 +82,10 @@ export const TRANSACTION_TYPES = {
   PURCHASE: 1,
   CANCEL: 2,
   PENDING: 3
+};
+
+export const FIELD_ERROR_MESSAGES = {
+  PRICE: 'Enter a valid price!',
+  NAN: 'Gotta be a number!',
+  EMPTY: "Can't be blank!"
 };
