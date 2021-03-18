@@ -1,22 +1,24 @@
-import { React, useRef } from 'react';
+import { React, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
 import Jimp from 'jimp/es';
-import { saveImage } from '../services/ImagesService';
-import { setSnackImageUpload } from '../redux/features/snacks/snacksSlice';
+import { setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ImageUploader.module.css';
-import { useDispatch } from 'react-redux';
 
 const ImageUploader = () => {
   const dispatch = useDispatch();
+  const [isUploading, setIsUploading] = useState(false);
+  const { snackImageUploadData } = useSelector((state) => state.snacksReducer);
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
-  const setImageUpload = (imageUpload) => {
-    dispatch(setSnackImageUpload(imageUpload));
+  const setImageUploadData = (imageUploadData) => {
+    dispatch(setSnackImageUploadData(imageUploadData));
   };
 
   const handleImageUpload = async (e) => {
+    setIsUploading(true);
     const [file] = e.target.files;
     if (file) {
       const reader = new FileReader();
@@ -24,44 +26,35 @@ const ImageUploader = () => {
       current.file = file;
       reader.onload = async () => {
         try {
-          Jimp.read(reader.result)
-            .then(async (image) => {
-              const img = await image
-                .cover(250, 250)
-                .quality(100)
-                .getBase64Async(Jimp.MIME_PNG);
+          Jimp.read(reader.result).then(async (image) => {
+            const img = await image
+              .cover(250, 250)
+              .quality(100)
+              .getBase64Async(Jimp.MIME_PNG);
 
-              const data = await saveImage(img);
-              setImageUpload(data);
-              current.src = img;
-              return;
-            })
-            .catch((err) => {
-              console.error(err);
-            });
+            setImageUploadData(img);
+            current.src = img;
+          });
         } catch (err) {
           console.log(err);
+        } finally {
+          setIsUploading(false);
         }
       };
       reader.readAsDataURL(file);
+    } else {
+      setIsUploading(false);
     }
   };
 
   return (
     <div className={styles.container}>
-      {uploadedImage ? (
-        <div
-          className={styles.imageUploadGreyBox}
-          onClick={() => imageUploader.current.click()}
-        >
-          <img ref={uploadedImage} className={styles.imageUploadBox} />
-        </div>
-      ) : (
-        <div
-          className={styles.imageUploadBox}
-          onClick={() => imageUploader.current.click()}
-        />
-      )}
+      <div
+        className={styles.imageUploadGreyBox}
+        onClick={() => imageUploader.current.click()}
+      >
+        <img ref={uploadedImage} className={styles.imageUploadBox} />
+      </div>
       <input
         ref={imageUploader}
         className={styles.hidden}
@@ -72,8 +65,12 @@ const ImageUploader = () => {
         onChange={handleImageUpload}
       />
       <div className={styles.buttonContainer}>
-        <AppButton secondary onClick={() => imageUploader.current.click()}>
-          Upload photo
+        <AppButton
+          secondary
+          loading={isUploading}
+          onClick={() => imageUploader.current.click()}
+        >
+          {snackImageUploadData ? 'Reupload Photo' : 'Upload Photo'}
         </AppButton>
       </div>
     </div>

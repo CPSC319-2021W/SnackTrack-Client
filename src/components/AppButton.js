@@ -7,6 +7,7 @@ import styles from '../styles/AppButton.module.css';
 
 const AppButton = (props) => {
   const {
+    type,
     primary,
     secondary,
     outline,
@@ -20,17 +21,19 @@ const AppButton = (props) => {
   } = props;
 
   return (
-    <Button className={classNames({
-      [styles.base]: true,
-      [styles.primary]: primary,
-      [styles.secondary]: secondary,
-      [styles.outline]: outline,
-      [styles.large]: large,
-      [styles.small]: small,
-      [styles.fullWidth]: fullWidth
-    })}
-    disabled={(primary || secondary) && disabled}
-    onClick={loading ? null : onClick}>
+    <Button
+      type={type}
+      className={classNames({
+        [styles.base]: true,
+        [styles.primary]: primary,
+        [styles.secondary]: secondary,
+        [styles.outline]: outline,
+        [styles.large]: large,
+        [styles.small]: small,
+        [styles.fullWidth]: fullWidth
+      })}
+      disabled={(primary || secondary) && disabled}
+      onClick={loading ? null : onClick}>
       {
         loading ? (
           <div className={styles.progress__container}>
