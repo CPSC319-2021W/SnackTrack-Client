@@ -208,8 +208,8 @@ export const theme = createMuiTheme({
       },
       track: {
         borderRadius: '26px',
-        border: MID_GREY,
-        backgroundColor: LIGHT_GREY
+        border: LIGHT_GREY,
+        backgroundColor: MID_GREY
       }
     }
   },
