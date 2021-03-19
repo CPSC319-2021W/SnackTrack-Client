@@ -6,6 +6,7 @@ import {
   HEADER_GREY,
   INNER_LIGHT_GREY,
   LIGHT_GREY,
+  MID_GREY,
   RED,
   WHITE
 } from '../styles/Colors.module.css';
@@ -186,6 +187,29 @@ export const theme = createMuiTheme({
       tooltip: {
         backgroundColor: HEADER_GREY,
         fontWeight: 600
+      }
+    },
+    MuiSwitch: {
+      root: {
+        height: '25px',
+        width: '44px',
+        padding: 0
+      },
+      colorSecondary: {
+        '&$checked': {
+          color: BASE_BLUE,
+          '& + $track': {
+            backgroundColor: BASE_BLUE
+          }
+        }
+      },
+      switchBase: {
+        padding: '2px'
+      },
+      track: {
+        borderRadius: '26px',
+        border: MID_GREY,
+        backgroundColor: LIGHT_GREY
       }
     }
   },
