@@ -1,5 +1,5 @@
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ROUTES } from '../../constants';
 import { Switch } from '@material-ui/core';
 import adminStyles from '../../styles/AdminUsersList.module.css';
@@ -19,7 +19,7 @@ const UserCard = (props) => {
   const regex = new RegExp(`(${routeToMatch}/[0-9]+){1,1}`);
   const noHover = Boolean(pathname.match(regex));
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(user.is_admin);
 
   const formatPrice = (amount) => {
     amount = amount / 100;
@@ -49,10 +49,6 @@ const UserCard = (props) => {
     // TODO: make API call to promote user to admin
     setIsAdmin(!isAdmin);
   };
-
-  useEffect(() => {
-    setIsAdmin(user.is_admin);
-  }, []);
 
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
 
