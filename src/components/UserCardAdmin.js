@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 
 const UserCardAdmin = (props) => {
   const { user: { user_id, first_name, last_name, image_uri, balance, is_admin } } = props;
-  // console.log(props.user);
 
   const history = useHistory();
 
