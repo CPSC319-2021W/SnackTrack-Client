@@ -75,12 +75,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .user__fullname {
   font-size: 16px;
   font-weight: 500;
-  margin: 1rem 0 0.2rem 0;
+  margin: 0.85rem 0 0.2rem 0;
+}
+
+.user__email {
+  margin: 0 0 0.5rem 0;
+  padding: 0 1rem;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .admin__pill {
@@ -99,7 +109,7 @@
   right: 0;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .user__fullname {
     margin: 0.8rem 0 0.2rem 0;
   }
@@ -110,10 +120,50 @@
   }
 }
 
+@media (max-width: 960px) {
+  .user__fullname {
+    margin: 0.5rem 0 0.2rem 0;
+  }
+
+  .image {
+    width: 85px;
+    height: 85px;
+  }
+
+  .user__email {
+    margin: 0 0 0.5rem 0;
+  }
+}
+
 @media (max-width: 538px) {
   .user__fullname {
     font-size: 14px;
-    margin: 0.6rem 0 0.2rem 0;
+    margin: 0.5rem 0 0.1rem 0;
+  }
+
+  .balance__value {
+    font-size: 20px;
+  }
+
+  .image {
+    width: 65px;
+    height: 65px;
+  }
+
+  .admin__pill {
+    font-size: 0.6rem;
+    margin: 0.5rem;
+  }
+
+  .user__email {
+    margin: 0 0 0.4rem 0;
+  }
+}
+
+@media (max-width: 425px) {
+  .user__fullname {
+    font-size: 16px;
+    margin: 0.6rem 0 0.1rem 0;
   }
 
   .balance__value {
@@ -121,27 +171,29 @@
   }
 
   .image {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
   }
 
-  .admin__pill {
-    font-size: 0.6rem;
-    margin: 0.5rem;
+  .user__email {
+    margin: 0 0 0.6rem 0;
   }
 }
 
 @media (max-width: 375px) {
-  .image {
-    width: 85px;
-    height: 85px;
+  .user__fullname {
+    margin: 0.4rem 0 0.1rem 0;
+  }
+
+  .balance__value {
+    font-size: 20px;
   }
 }
 
 @media (max-width: 320px) {
   .user__fullname {
     font-size: 12px;
-    margin: 0.7rem 0 0.2rem 0;
+    margin: 0.5rem 0 0.1rem 0;
   }
 
   .balance__value {
@@ -149,7 +201,11 @@
   }
 
   .image {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .user__email {
+    margin: 0 0 0.4rem 0;
   }
 }

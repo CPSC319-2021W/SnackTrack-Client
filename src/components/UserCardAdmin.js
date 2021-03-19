@@ -9,7 +9,7 @@ import styles from '../styles/SnackCard.module.css';
 import { useHistory } from 'react-router-dom';
 
 const UserCardAdmin = (props) => {
-  const { user: { user_id, first_name, last_name, image_uri, balance, is_admin } } = props;
+  const { user: { user_id, first_name, last_name, email_address, image_uri, balance, is_admin } } = props;
 
   const history = useHistory();
 
@@ -49,6 +49,9 @@ const UserCardAdmin = (props) => {
         <div className={adminStyles.content}>
           <p className={adminStyles.user__fullname}>
             { first_name } { last_name }
+          </p>
+          <p className={adminStyles.user__email}>
+            { email_address }
           </p>
           <p className={adminStyles.balance__value}>
             {formatPrice(balance)}
