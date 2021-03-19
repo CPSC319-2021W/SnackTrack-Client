@@ -2,6 +2,7 @@ import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 
 import { ROUTES } from '../../constants';
 import React from 'react';
+import { Switch } from '@material-ui/core';
 import adminStyles from '../../styles/AdminUsersList.module.css';
 import classNames from 'classnames';
 import defaultAvatar from '../../images/illustrations/defaultAvatar.svg';
@@ -43,6 +44,10 @@ const UserCard = (props) => {
     return expandUser;
   };
 
+  const handleMakeAdmin = () => {
+    // TODO: make API call to promote user to admin
+  };
+
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
 
   return (
@@ -58,16 +63,32 @@ const UserCard = (props) => {
         onClick={onClick()}
       >
         <CardMedia
-          className={styles.image}
+          className={classNames({
+            [styles.image]: !noHover,
+            [styles.image__noHover]: noHover
+          })}
           title={user.first_name}
           component='img'
           image={img}
         />
         <div className={styles.text}>
-          <p className={styles.fullname}>
+          <p className={styles.text__emphasis}>
             {user.first_name} {user.last_name}
           </p>
-          <p>{user.username}</p>
+          <p className={styles.text__reg}>
+            {user.email_address}
+          </p>
+          {noHover ? (
+            <div className={styles.switch__container}>
+              <p className={styles.text__sub}>Promote to Admin</p>
+              <Switch
+                disableRipple
+                checked={user.is_admin}
+                name='admin'
+                onChange={handleMakeAdmin}
+              />
+            </div>
+          ) : null}
         </div>
         {pathname === ROUTES.USERS || noHover ? (
           <div className={adminStyles.balance}>
