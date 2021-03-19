@@ -1,7 +1,6 @@
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-
+import React, { useEffect, useState } from 'react';
 import { ROUTES } from '../../constants';
-import React from 'react';
 import { Switch } from '@material-ui/core';
 import adminStyles from '../../styles/AdminUsersList.module.css';
 import classNames from 'classnames';
@@ -19,6 +18,8 @@ const UserCard = (props) => {
   const routeToMatch = ROUTES.USERS.split('/').join('\\/');
   const regex = new RegExp(`(${routeToMatch}/[0-9]+){1,1}`);
   const noHover = Boolean(pathname.match(regex));
+
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const formatPrice = (amount) => {
     amount = amount / 100;
@@ -46,7 +47,12 @@ const UserCard = (props) => {
 
   const handleMakeAdmin = () => {
     // TODO: make API call to promote user to admin
+    setIsAdmin(!isAdmin);
   };
+
+  useEffect(() => {
+    setIsAdmin(user.is_admin);
+  }, []);
 
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
 
@@ -83,7 +89,7 @@ const UserCard = (props) => {
               <p className={styles.text__sub}>Promote to Admin</p>
               <Switch
                 disableRipple
-                checked={user.is_admin}
+                checked={isAdmin}
                 name='admin'
                 onChange={handleMakeAdmin}
               />
