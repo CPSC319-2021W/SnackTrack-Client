@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from 'react';
 
-import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
-import UserLoginList from '../components/UserLoginList';
+import { CircularProgress } from '@material-ui/core';
 import UserSearchBar from '../components/UserSearchBar';
+import UsersContainerAdmin from '../components/UsersContainerAdmin';
 import adminStyles from '../styles/AdminUsersList.module.css';
 import { getUsersAdmin } from '../services/UsersService';
 import { handleSearch } from '../helpers/SearchHelpers';
@@ -10,7 +10,7 @@ import styles from '../styles/Page.module.css';
 import { useSelector } from 'react-redux';
 
 const Users = () => {
-  const [loaded, isLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState(users);
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
@@ -19,53 +19,36 @@ const Users = () => {
     keys: ['first_name', 'last_name', 'username']
   };
 
-  useEffect(() => {
-    handleSearch(users, usersSearchValue, setUsersToDisplay, searchOptions);
-  }, [loaded, usersSearchValue]);
-
-  useEffect(() => {
-    isLoaded(users.length > 0);
+  useEffect(async () => {
+    const { users } = await getUsersAdmin();
+    setUsers(users);
+    setIsLoaded(users.length > 0);
   }, [users]);
 
-  useEffect(async () => {
-    const getAllUsers = async () => {
-      const data = await getUsersAdmin();
-      setUsers(data.users);
-    };
-    await getAllUsers();
-  }, []);
+  useEffect(() => {
+    handleSearch(users, usersSearchValue, setUsersToDisplay, searchOptions);
+  }, [isLoaded, usersSearchValue]);
 
-  let loginList;
-
-  if (loaded) {
-    if (usersToDisplay.length > 0) {
-      loginList = <UserLoginList className={adminStyles.list} users={usersToDisplay} />;
+  const renderList = () => {
+    if (usersToDisplay.length === 0) {
+      return <p>{"We couldn't find that user. Please try again."}</p>;
     } else {
-      loginList = <p>{"We couldn't find that user. Please try again."}</p>;
+      return <UsersContainerAdmin users={usersToDisplay} />;
     }
-  } else {
-    loginList = (
-      <div className={adminStyles.list}>
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-      </div>
-    );
-  }
+  };
 
   return (
     <div className={styles.base}>
       <div className={styles.header}>
         <h5 className={styles.title}>Users</h5>
       </div>
-      <div className={adminStyles.list__container}>
+      <div className={adminStyles.page__content}>
         <UserSearchBar />
-        {loginList}
+        { isLoaded ? renderList() : (
+          <div className={adminStyles.list__container}>
+            <CircularProgress color='secondary' size={30} thickness={5} />
+          </div>
+        ) }
       </div>
     </div>
   );
