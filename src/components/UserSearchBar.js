@@ -44,7 +44,7 @@ const UserSearchBar = () => {
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
       )}
-      placeholder={pathname === ROUTES.SELECT ? 'Enter your name...' : 'Enter a name...'}
+      placeholder={pathname === ROUTES.COMMON ? 'Enter your name...' : 'Enter a name...'}
       value={value}
       onChange={handleChange}
       onBlur={() => setIsFocused(false)}
