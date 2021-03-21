@@ -23,7 +23,7 @@ const Users = () => {
     const { users } = await getUsersAdmin();
     setUsers(users);
     setIsLoaded(users.length > 0);
-  }, [users]);
+  }, []);
 
   useEffect(() => {
     handleSearch(users, usersSearchValue, setUsersToDisplay, searchOptions);
