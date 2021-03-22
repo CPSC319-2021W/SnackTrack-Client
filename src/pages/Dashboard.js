@@ -14,15 +14,15 @@ const greeting = () => {
   } else if (today.hour < 17) {
     return GREETING.AFTERNOON;
   } else {
-    return GREETING.NIGHT;
+    return GREETING.EVENING;
   }
 };
 
 const Dashboard = () => {  
   const { firstName } = useSelector((state) => state.usersReducer.profile);
   const [snacks, setSnacks] = useState(null);
-  const [activeSnacks, setActiveSnacks] = useState(0);
-  const [inactiveSnacks, setInactiveSnacks] = useState(0);
+  const [activeSnacksLength, setActiveSnacksLength] = useState(0);
+  const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
   useEffect(async () => {
     const snacksResponse = await getSnacks(false);
@@ -31,11 +31,11 @@ const Dashboard = () => {
   
   useEffect(() => {
     if (snacks) {
-      const allActiveSnacks = snacks.filter((snack) => snack.is_active).length;
-      const allInactiveSnacks = snacks.filter((snack) => !snack.is_active).length;
+      const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
+      const allInactiveSnacksLength = snacks.filter((snack) => !snack.is_active).length;
       try {
-        setActiveSnacks(allActiveSnacks);
-        setInactiveSnacks(allInactiveSnacks); 
+        setActiveSnacksLength(allActiveSnacksLength);
+        setInactiveSnacksLength(allInactiveSnacksLength); 
       } catch (err) {
         console.log(err);
       }  
@@ -47,8 +47,8 @@ const Dashboard = () => {
       <div className={styles.header}>
         <h5 className={`${styles.title} ${dashStyles.greeting}`} >{greeting()} {firstName}!</h5>
         <div className={dashStyles.tile}>
-          <div className={dashStyles.base}><h5>{activeSnacks} </h5><p>Active Snacks</p></div>
-          <div className={dashStyles.base}><h5>{inactiveSnacks} </h5><p>Inactive Snacks</p></div>
+          <div className={dashStyles.base}><h5>{activeSnacksLength} </h5><p>Active Snacks</p></div>
+          <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
     </div>

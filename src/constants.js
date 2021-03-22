@@ -93,5 +93,5 @@ export const FIELD_ERROR_MESSAGES = {
 export const GREETING = {
   MORNING: 'Good morning, ',
   AFTERNOON: 'Good afternoon, ',
-  NIGHT: 'Good evening, '
+  EVENING: 'Good evening, '
 };
