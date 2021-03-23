@@ -89,3 +89,9 @@ export const FIELD_ERROR_MESSAGES = {
   NAN: 'Gotta be a number!',
   EMPTY: "Can't be blank!"
 };
+
+export const GREETING = {
+  MORNING: 'Good morning, ',
+  AFTERNOON: 'Good afternoon, ',
+  EVENING: 'Good evening, '
+};

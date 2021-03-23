@@ -1,0 +1,50 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
+
+@value effects: './Effects.module.css';
+@value DARK_SHADOW, DEFAULT_LIFT from effects;
+
+.greeting {
+  color: BASE_BLUE;
+  fill: BASE_BLUE;
+  cursor: pointer;
+  transition: 0.1s;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tile {
+  display: flex;
+  flex-direction: row;
+}
+
+.base {
+  height: 67px;
+  display: flex;
+  flex-direction: row;
+  color: LIGHT_GREY;
+  border: 1px solid LIGHT_GREY;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 14px;
+  align-items: center;
+  border-radius: 12px;
+  box-shadow: DEFAULT_LIFT;
+  background-color:WHITE;
+}
+
+.base > h5 {
+  font-size: 36px;
+  font-weight: bold;
+  line-height: 45px;
+  color: DARK_BLUE;
+  padding-right: 17px;
+}
+
+.base > p {
+  font-weight: bold;
+  line-height: 16px;
+  color: DARK_GREY;
+}
