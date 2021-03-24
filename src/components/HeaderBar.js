@@ -79,20 +79,18 @@ const HeaderBar = (props) => {
             </button>
           </Tooltip>
         </div>
-        {balance ? (
-          <div className={styles.label}>
-            <h6 className={styles.label__text}>Total Amount Owing</h6>
-            <h4 className={styles.label__balance}>
-              <NumberFormat
-                value={balance / 100}
-                displayType={'text'}
-                decimalScale={2}
-                fixedDecimalScale={true}
-                prefix={'$'}
-              />
-            </h4>
-          </div>
-        ) : null}
+        <div className={styles.label}>
+          <h6 className={styles.label__text}>Total Amount Owing</h6>
+          <h4 className={styles.label__balance}>
+            <NumberFormat
+              value={balance / 100}
+              displayType={'text'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              prefix={'$'}
+            />
+          </h4>
+        </div>
         <div className={styles.menu__container__right}>
           {firstName &&
             (isAdmin ? (
