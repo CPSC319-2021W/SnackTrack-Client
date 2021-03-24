@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { getUserOrders, getUserPayments } from '../services/UsersService';
+import { deleteUser, getUserOrders, getUserPayments } from '../services/UsersService';
 import {
   setApiResponse,
   setToastNotificationOpen
@@ -53,6 +53,9 @@ const UserProfile = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
+  const { userId } = useSelector(
+    (state) => state.usersReducer.profile
+  );
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -102,7 +105,8 @@ const UserProfile = () => {
   };
 
   const handleDelete = async () => {
-    // TODO: add API call when ready
+    await deleteUser(id);
+    handleGoBack();
   };
 
   useEffect(async () => {
@@ -142,14 +146,18 @@ const UserProfile = () => {
           </div>
           Back to Users List
         </h5>
-        <div className={styles.top_button__container}>
-          <AppButton
-            outline
-            onClick={handleOpenDialog}
-          >
-            Delete User
-          </AppButton>
-        </div>
+        { Number(id) !== userId
+          ? (
+            <div className={styles.top_button__container}>
+              <AppButton
+                outline
+                onClick={handleOpenDialog}
+              >
+                Delete User
+              </AppButton>
+            </div>
+          ) : null
+        }
       </div>
       {userNotFound ? (
         <UserProfileNotFound />

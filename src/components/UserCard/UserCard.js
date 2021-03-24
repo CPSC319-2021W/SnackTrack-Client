@@ -1,5 +1,6 @@
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ROUTES } from '../../constants';
 import { Switch } from '@material-ui/core';
 import adminStyles from '../../styles/AdminUsersList.module.css';
@@ -7,7 +8,6 @@ import classNames from 'classnames';
 import defaultAvatar from '../../images/illustrations/defaultAvatar.svg';
 import { simpleLogin } from '../../redux/features/users/usersSlice';
 import styles from '../../styles/UserCard.module.css';
-import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 const UserCard = (props) => {
@@ -18,6 +18,9 @@ const UserCard = (props) => {
   const routeToMatch = ROUTES.USERS.split('/').join('\\/');
   const regex = new RegExp(`(${routeToMatch}/[0-9]+){1,1}`);
   const noHover = Boolean(pathname.match(regex));
+  const { userId } = useSelector(
+    (state) => state.usersReducer.profile
+  );
 
   const [isAdmin, setIsAdmin] = useState(user.is_admin);
 
@@ -81,15 +84,17 @@ const UserCard = (props) => {
             {noHover ? user.email_address : user.username}
           </p>
           {noHover ? (
-            <div className={styles.switch__container}>
-              <p className={styles.text__sub}>Promote to Admin</p>
-              <Switch
-                disableRipple
-                checked={isAdmin}
-                name='admin'
-                onChange={handleMakeAdmin}
-              />
-            </div>
+            user.user_id !== userId ? (
+              <div className={styles.switch__container}>
+                <p className={styles.text__sub}>Promote to Admin</p>
+                <Switch
+                  disableRipple
+                  checked={isAdmin}
+                  name='admin'
+                  onChange={handleMakeAdmin}
+                />
+              </div>
+            ) : null
           ) : null}
         </div>
         {pathname === ROUTES.USERS || noHover ? (
