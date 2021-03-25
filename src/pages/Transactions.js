@@ -106,7 +106,7 @@ const Transactions = () => {
   const handleMakePayment = async () => {
     setIsPayAllLoading(true);
     try {
-      await makePayment(userId, [], null, username, true);
+      await makePayment(userId, null, null, username, true);
       updateBalance(0);
       handleApiResponse('PAYMENT_SUCCESS');
     } catch (err) {
