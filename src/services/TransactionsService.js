@@ -22,10 +22,10 @@ const getPayments = async (page, rowsPerPage) => {
   }
 };
 
-const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
+const makePayment = async (userId, transactionIds, paymentAmount, processor, payAll) => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
   const { data } = await httpClient.post(
-    '/payments',
+    `/payments${payAll ? '/all' : ''}`,
     {
       user_id: userId,
       payment_amount: paymentAmount,
