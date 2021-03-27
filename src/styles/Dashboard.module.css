@@ -6,9 +6,6 @@
 
 .greeting {
   color: BASE_BLUE;
-  fill: BASE_BLUE;
-  cursor: pointer;
-  transition: 0.1s;
   font-size: 1.2rem;
   display: flex;
   flex-direction: row;

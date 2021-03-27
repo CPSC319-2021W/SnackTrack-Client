@@ -63,6 +63,17 @@ const addSnack = async (snackRequest) => {
   return data;
 };
 
+const getSuggestions = async () => {
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get('/suggestions', authHeader);
+    return data;
+  } catch (err) {
+    // TODO: Handle error
+    console.log(err.toString());
+  }
+};
+
 export {
   getSnackBatch,
   getSnacks,
@@ -70,5 +81,6 @@ export {
   addBatch,
   editBatch,
   deleteBatch,
-  addSnack
+  addSnack,
+  getSuggestions
 };

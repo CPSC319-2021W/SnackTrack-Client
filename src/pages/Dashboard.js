@@ -1,11 +1,13 @@
 import { React, useEffect, useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
+
+import { getSnacks, getSuggestions } from '../services/SnacksService';
 import { GREETING } from '../constants';
+import SuggestionsBox from '../components/SuggestionsBox';
 import dashStyles from '../styles/Dashboard.module.css';
-import { getSnacks } from '../services/SnacksService';
+import { setSuggestions } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/Page.module.css';
-import { useSelector } from 'react-redux';
 
 const today = DateTime.now();
 const greeting = () => {
@@ -18,7 +20,8 @@ const greeting = () => {
   }
 };
 
-const Dashboard = () => {  
+const Dashboard = () => {
+  const dispatch = useDispatch();
   const { firstName } = useSelector((state) => state.usersReducer.profile);
   const [snacks, setSnacks] = useState(null);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
@@ -26,7 +29,14 @@ const Dashboard = () => {
 
   useEffect(async () => {
     const snacksResponse = await getSnacks(false);
-    setSnacks(snacksResponse.snacks);
+    const { snacks } = snacksResponse;
+    setSnacks(snacks);
+
+    const suggestionsResponse = await getSuggestions();
+    const { suggestions } = suggestionsResponse;
+    const suggestionsMap = suggestions.map(suggestion => (
+      { id: suggestion.suggestion_id, text: suggestion.suggestion_text, isActive: false }));
+    dispatch(setSuggestions(suggestionsMap));
   }, []);
   
   useEffect(() => {
@@ -51,6 +61,7 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
+      <SuggestionsBox />
     </div>
   );
 };

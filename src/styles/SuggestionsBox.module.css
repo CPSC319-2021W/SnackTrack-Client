@@ -1,0 +1,62 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY, WHITE, BASE_BLUE, DARK_BLUE, LIGHT_BLUE, LIGHT_BLUE_HOVER from colors;
+
+.card__base {
+  box-shadow: none;
+  border-radius: 12px;
+  border: 1px solid LIGHT_GREY;
+  width: 25%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.title {
+  margin: 1rem 0;
+}
+
+.bean__container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1rem 1rem;
+}
+
+.bean {
+  background-color: LIGHT_BLUE;
+  color: BASE_BLUE;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  padding: 5px 12px;
+  border-radius: 24px;
+  line-height: 1;
+  box-shadow: none;
+  cursor: pointer;
+  transition: 0.1s;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bean:hover {
+  background-color: LIGHT_BLUE_HOVER;
+  color: DARK_BLUE;
+}
+
+.bean__active {
+  background-color: BASE_BLUE;
+  color: WHITE;
+}
+
+.bean__active:hover {
+  background-color: BASE_BLUE;
+  color: WHITE;
+}
