@@ -42,7 +42,7 @@ const SuggestionsBox = () => {
                 })}
                 onClick={() => handleSetActive(bean)}
               >
-                { text}
+                { text }
               </div>
             );
             return text.length > 28
