@@ -9,11 +9,11 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import AppButton from '../components/AppButton';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import { ROUTES } from '../constants';
-import TextDialog from '../components/TextDialog';
 import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
@@ -49,7 +49,7 @@ const UserProfile = () => {
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
-  const [isTextDialogOpen, setIsTextDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
@@ -96,12 +96,11 @@ const UserProfile = () => {
   };
 
   const handleOpenDialog = () => {
-    setIsTextDialogOpen(true);
+    setIsDeleteDialogOpen(true);
   };
 
-
   const handleCloseDialog = () => {
-    setIsTextDialogOpen(false);
+    setIsDeleteDialogOpen(false);
   };
 
   const handleDelete = async () => {
@@ -191,8 +190,8 @@ const UserProfile = () => {
           </div>
         </>
       )}
-      <TextDialog
-        open={isTextDialogOpen}
+      <ConfirmationDialog
+        open={isDeleteDialogOpen}
         title={'Wait a sec!'}
         submitText={'Yes, delete'}
         declineText={'No, keep them'}
@@ -205,7 +204,7 @@ const UserProfile = () => {
           { user?.first_name } { user?.last_name }
         </span>
         ?
-      </TextDialog>
+      </ConfirmationDialog>
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}

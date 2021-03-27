@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
-import { editOrder, makePayment } from '../../services/TransactionsService';
+import { cancelOrder, makePayment } from '../../services/TransactionsService';
 
 import EditOrderDialog from '../../components/EditOrderDialog';
 import RenderOrdersTable from './RenderOrdersTable';
@@ -43,6 +43,13 @@ const Orders = (props) => {
     setUncheckedOrdersIds([]);
     setSelectedOrders([]);
     setSelectedPages([]);
+  };
+
+  const handleCancelOrder = async (order) => {
+    const { transaction_amount } = await cancelOrder(order);
+    await onMakePayment();
+    updateProfileBalance(transaction_amount);
+    clearLocalStates();
   };
 
   const handlePayForOrders = async () => {
@@ -199,7 +206,7 @@ const Orders = (props) => {
         isCheckboxDisabled={isCheckboxDisabled()}
         isPayLoading={isPayLoading}
         onChangePage={onChangePage}
-        onEditOrder={editOrder}
+        onCancelOrder={handleCancelOrder}
         onSelectAllOrders={handleSelectAllOrders}
         onSelectOrder={handleSelectOneOrder}
         onPayForOrders={handlePayForOrders}
