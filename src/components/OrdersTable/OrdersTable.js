@@ -2,7 +2,6 @@ import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
 import { cancelOrder, makePayment } from '../../services/TransactionsService';
 
-import EditOrderDialog from '../../components/EditOrderDialog';
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
 import { useSelector } from 'react-redux';
@@ -21,9 +20,6 @@ const Orders = (props) => {
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
   const { username } = useSelector((state) => state.usersReducer.profile);
-  const { isEditOrderOpen, orderToEdit } = useSelector(
-    (state) => state.transactionsReducer
-  );
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
@@ -211,7 +207,6 @@ const Orders = (props) => {
         onSelectOrder={handleSelectOneOrder}
         onPayForOrders={handlePayForOrders}
       />
-      <EditOrderDialog open={isEditOrderOpen} transaction={orderToEdit} />
     </div>
   );
 };
