@@ -22,8 +22,6 @@ const OrderSnackDialog = (props) => {
   const { snack_id, snack_name, description, image_uri, price, quantity, snack_type_id } = selectedSnack;
   const [isDisabled, setIsDisabled] = useState(false);
 
-  console.log(snack_type_id);
-
   const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
   console.log(category);
 
