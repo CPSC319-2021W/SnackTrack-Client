@@ -1,7 +1,9 @@
 import { Card, Tooltip } from '@material-ui/core';
+import { React, useEffect, useState } from 'react';
 
-import { React } from 'react';
+import { getPopularSnacks } from '../services/SnacksService';
 import styles from '../styles/TopSnacksReport.module.css';
+import { useSelector } from 'react-redux';
 
 const mockTopSnacks = {
   allTime: [
@@ -42,8 +44,23 @@ const mockTopSnacks = {
     }
   ]
 };
+const mock = { start_date: '2021-01-01', end_date: '2021-03-28', transaction_type_id: 1, limit: 5};
 
 const TopSnacksReport = () => {
+  const [popularSnack, setPopularSnacks] = useState(null);
+  const { snacks } = useSelector((state) => state.snacksReducer);
+  // const { snacks } = useSelector((state) => state.snacksReducer);
+  useEffect(async () => {
+    const popularSnackResponse = await getPopularSnacks(mock.start_date, mock.end_date, mock.transaction_type_id, mock.limit);
+    const { popularSnacks } = popularSnackResponse;
+    setPopularSnacks(popularSnacks);
+  }, []);
+
+  useEffect(() => {
+    if (popularSnack && snacks) {
+      console.log(popularSnack);
+    }
+  });
 
   const renderEmptyState = () => {
     return (
