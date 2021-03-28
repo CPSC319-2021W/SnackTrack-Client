@@ -23,7 +23,6 @@ const OrderSnackDialog = (props) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
-  console.log(category);
 
   const increaseQuantity = () => {
     if (quantity > value) {
