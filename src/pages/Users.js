@@ -39,11 +39,13 @@ const Users = () => {
 
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
+      <div className={styles.header__single}>
         <h5 className={styles.title}>Users</h5>
       </div>
       <div className={adminStyles.page__content}>
-        <UserSearchBar />
+        <div className={styles.searchbar__container}>
+          <UserSearchBar />
+        </div>
         { isLoaded ? renderList() : (
           <div className={adminStyles.list__container}>
             <CircularProgress color='secondary' size={30} thickness={5} />

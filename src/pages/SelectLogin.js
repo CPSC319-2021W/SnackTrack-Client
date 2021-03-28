@@ -60,7 +60,9 @@ const SelectLogin = () => {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>SnackTrack</h2>
-      <UserSearchBar />
+      <div className={styles.seachbar__container}>
+        <UserSearchBar />
+      </div>
       <div className={styles.list__container}>{loginList}</div>
     </div>
   );

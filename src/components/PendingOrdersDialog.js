@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 import AppButton from './AppButton';
 import { claimPendingOrders } from '../services/TransactionsService';
@@ -213,7 +214,12 @@ const PendingOrdersDialog = (props) => {
                   {columns.map((column) => {
                     const value = order[column.id];
                     return (
-                      <TableCell key={column.id} className={styles.cell}>
+                      <TableCell
+                        key={column.id}
+                        className={classNames({
+                          [styles.cell]: true,
+                          [styles.cell__lastChild]: column.id === 'transaction_amount'
+                        })}>
                         {column.id === 'transaction_amount' ||
                         column.id === 'transaction_dtm'
                           ? column.format(value)
@@ -237,7 +243,7 @@ const PendingOrdersDialog = (props) => {
           loading={isDeclineLoading}
           onClick={declineAllOrders}
         >
-          Decline all
+          Decline All
         </AppButton>
         <AppButton
           primary
@@ -245,7 +251,7 @@ const PendingOrdersDialog = (props) => {
           loading={isApproveLoading}
           onClick={approveOrders}
         >
-          Approve
+          Claim
         </AppButton>
       </div>
     </Dialog>

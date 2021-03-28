@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import search from '../assets/icons/search.svg';
 import { setSnackSearchValue } from '../redux/features/searchbar/searchbarSlice';
-import styles from '../styles/UserSearchBar.module.css';
+import styles from '../styles/SearchBar.module.css';
 import { useDispatch } from 'react-redux';
 
 const SnackSearchBar = () => {
@@ -29,8 +29,8 @@ const SnackSearchBar = () => {
   return (
     <Input
       className={classNames({
-        [styles.searchBar]: true,
-        [styles.searchBar__focused]: isFocused
+        [styles.snackSearchBar]: true,
+        [styles.snackSearchBar__focused]: isFocused
       })}
       disableUnderline={true}
       startAdornment={(
@@ -38,7 +38,7 @@ const SnackSearchBar = () => {
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
       )}
-      placeholder={'Search for a snack...'}
+      placeholder={'Search'}
       value={value}
       onChange={handleChange}
       onBlur={() => setIsFocused(false)}
