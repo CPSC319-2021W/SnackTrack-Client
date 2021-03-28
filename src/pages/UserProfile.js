@@ -139,7 +139,7 @@ const UserProfile = () => {
 
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
+      <div className={styles.header__single}>
         <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
           <div className={usersStyles.icon__container}>
             <ArrowIcon />

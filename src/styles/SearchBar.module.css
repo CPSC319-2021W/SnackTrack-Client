@@ -1,0 +1,46 @@
+@value colors: './Colors.module.css';
+@value BASE_BLUE, DARK_GREY, LIGHT_GREY, INNER_LIGHT_GREY, WHITE from colors;
+
+.searchBar {
+  color: DARK_GREY;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: WHITE;
+  border-radius: 6px;
+  font-size: 1rem;
+  padding: 0.25rem 0rem;
+  margin-bottom: 1rem;
+  width: 250px;
+}
+
+.searchBar__focused {
+  border: 2px solid BASE_BLUE;
+}
+
+.searchBar__left {
+  margin-left: 0.5rem;
+  float: left;
+  clear: both;
+}
+
+.icon__base {
+  height: 1rem;
+  width: 1rem;
+  position: relative;
+  bottom: 0.5rem;
+  left: 0.3rem;
+  margin-left: 4px;
+}
+
+.snackSearchBar {
+  color: DARK_GREY;
+  border: 1.5px solid LIGHT_GREY;
+  background-color: WHITE;
+  border-radius: 6px;
+  font-size: 1rem;
+  padding: 0.25rem 0rem;
+  width: 250px;
+}
+
+.snackSearchBar__focused {
+  border: 2px solid BASE_BLUE;
+}

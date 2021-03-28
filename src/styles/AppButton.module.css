@@ -6,6 +6,8 @@
     text-transform: none;
     border-radius: 6px;
     min-width: 80px;
+    line-height: 1;
+    padding: 12px 16px;
 }
 
 .primary {

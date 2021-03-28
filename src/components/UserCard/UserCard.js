@@ -98,13 +98,16 @@ const UserCard = (props) => {
           ) : null}
         </div>
         {pathname === ROUTES.USERS || noHover ? (
-          <div className={adminStyles.balance}>
+          <div className={classNames({
+            [adminStyles.balance]: !noHover,
+            [adminStyles.balance__noHover]: noHover
+          })}>
             {noHover ? (
               <p className={adminStyles.balance__text}>Current Balance</p>
             ) : null}
             <p
               className={classNames({
-                [adminStyles.balance__value]: true,
+                [adminStyles.balance__value]: !noHover,
                 [adminStyles.balance__value__large]: noHover
               })}
             >

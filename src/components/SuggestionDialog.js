@@ -21,18 +21,21 @@ const SuggestionDialog = (props) => {
           <h4 className={styles.header__text}>Suggest a snack</h4>
         </div>
         <p className={styles.label}>What would you like to snack on next?</p>
-        <Input
-          autoFocus
-          className={classNames({
-            [styles.input__base]: true,
-            [styles.input__focused]: isFocused
-          })}
-          disableUnderline={true}
-          onChange={onChangeText}
-          onKeyPress={onSubmit}
-          onBlur={() => setIsFocused(false)}
-          onFocus={() => setIsFocused(true)}
-        />
+        <div className={styles.input__container}>
+          <Input
+            autoFocus
+            className={classNames({
+              [styles.input__base]: true,
+              [styles.input__focused]: isFocused
+            })}
+            disableUnderline={true}
+            placeholder='One potato, two potato'
+            onChange={onChangeText}
+            onKeyPress={onSubmit}
+            onBlur={() => setIsFocused(false)}
+            onFocus={() => setIsFocused(true)}
+          />
+        </div>
         <Divider />
         <div className={styles.button__container}>
           <AppButton

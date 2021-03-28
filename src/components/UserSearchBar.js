@@ -5,7 +5,7 @@ import { ROUTES } from '../constants';
 import classNames from 'classnames';
 import search from '../assets/icons/search.svg';
 import { setUserSearchValue } from '../redux/features/searchbar/searchbarSlice';
-import styles from '../styles/UserSearchBar.module.css';
+import styles from '../styles/SearchBar.module.css';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -44,7 +44,7 @@ const UserSearchBar = () => {
           <img className={styles.icon__base} src={search} />
         </InputAdornment>
       )}
-      placeholder={pathname === ROUTES.COMMON ? 'Enter your name...' : 'Enter a name...'}
+      placeholder={pathname === ROUTES.COMMON ? 'Enter your name' : 'Enter a name'}
       value={value}
       onChange={handleChange}
       onBlur={() => setIsFocused(false)}

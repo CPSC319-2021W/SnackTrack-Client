@@ -28,6 +28,10 @@
   margin-right: 20px;
 }
 
+.balance__noHover {
+  margin-left: auto;
+}
+
 .balance__text {
   color: DARK_GREY;
   font-weight: 600;
@@ -48,6 +52,11 @@
 
 .balance__value__large {
   font-size: 2rem;
+  font-weight: bold;
+  color: DARK_BLUE;
+  text-align: right;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .card__base {
@@ -132,6 +141,16 @@
 
   .user__email {
     margin: 0 0 0.5rem 0;
+  }
+}
+
+@media (max-width: 540px) {
+  .balance__noHover {
+    margin: 0;
+  }
+
+  .balance__value__large {
+    text-align: center;
   }
 }
 

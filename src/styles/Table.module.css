@@ -5,7 +5,7 @@
 @value DEFAULT_SHADOW from effects;
 
 .header {
-  height: 68px;
+  /* height: 68px; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -87,8 +87,11 @@
   padding: 0;
   display: flex;
   justify-content: flex-end;
-  border-bottom: 0;
-  margin: 1rem 0;
+  align-items: center;
+}
+
+.cell__lastChild {
+  padding-right: 2rem;
 }
 
 .status__bar {
@@ -246,5 +249,11 @@
 @media (max-width: 959px) {
   .subtable {
     width: 100%;
+  }
+}
+
+@media (max-width: 540px) {
+  .header__actionContainer {
+    padding-bottom: 1rem;
   }
 }
