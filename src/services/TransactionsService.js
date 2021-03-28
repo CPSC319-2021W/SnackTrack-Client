@@ -38,16 +38,25 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor, pay
 };
 
 const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
-  // const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  // try {
-  //   await httpClient.post('/payments', {
-  //   user_id: userId,
-  //   payment_amount: paymentAmount,
-  //   transactions_ids: transactionIds,
-  //   created_by: processor
-  // }, authHeader); } catch (err) {
-  // }
-  throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  approvedOrderIds.forEach(async (id) => {
+    try {
+      await httpClient.put(`/transactions/${id}`, {
+        transaction_type_id: 1
+      }, authHeader);
+    } catch (err) {
+      // TODO: handle error for specific call
+    }
+  });
+  declinedOrderIds.forEach(async (id) => {
+    try {
+      await httpClient.put(`/transactions/${id}`, {
+        transaction_type_id: 4
+      }, authHeader);
+    } catch (err) {
+      // TODO: handle error for specific call
+    }
+  });
 };
 
 const getPendingOrders = async (userId) => {
