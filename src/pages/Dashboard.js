@@ -1,10 +1,11 @@
 import { React, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { DateTime } from 'luxon';
-
 import { getSnacks, getSuggestions } from '../services/SnacksService';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { DateTime } from 'luxon';
 import { GREETING } from '../constants';
 import SuggestionsBox from '../components/SuggestionsBox';
+import TopSnacksReport from '../components/TopSnacksReport';
 import dashStyles from '../styles/Dashboard.module.css';
 import { setSuggestions } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/Page.module.css';
@@ -61,6 +62,7 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
+      <TopSnacksReport />
       <SuggestionsBox />
     </div>
   );

@@ -1,0 +1,82 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY, WHITE, BASE_BLUE, DARK_BLUE, LIGHT_BLUE, LIGHT_BLUE_HOVER from colors;
+
+.card__base {
+  box-shadow: none;
+  border-radius: 12px;
+  border: 1px solid LIGHT_GREY;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 0 1rem;
+}
+
+.header > p {
+  margin-top: 0px;
+}
+
+.title {
+  margin: 1rem 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: 0 1rem 1rem;
+}
+
+.card__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.card {
+  box-shadow: none;
+  width: 20%;
+}
+
+.image {
+  
+  width: 60px;
+  height: 60px;
+  display: flex;
+  margin-right: 14px;
+}
+
+.image > img {
+  width: inherit;
+  height: inherit;
+  border-radius: 12px;
+  border: 1px solid LIGHT_GREY;
+}
+
+.card__description {
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  font-size: 16px;
+  line-height: 20px;
+  align-items: center;
+}
+
+.card__description > h6 {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.card__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.card__unit > p {
+  margin-top: 2px;
+}
