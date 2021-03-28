@@ -1,4 +1,5 @@
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
+import { deselectAllFilters, setQuantity } from '../../../redux/features/snacks/snacksSlice';
 import {
   setApiResponse,
   setToastNotificationOpen
@@ -13,7 +14,6 @@ import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
 import { setBalance } from '../../../redux/features/users/usersSlice';
-import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 import styles from '../../../styles/SnackCard.module.css';
 
 const SnackCard = (props) => {
@@ -30,6 +30,10 @@ const SnackCard = (props) => {
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const DEFAULT_ORDER_THRESHOLD = 10;
   const [isLoading, setIsLoading] = useState(false);
+
+  const clearFilters = () => {
+    dispatch(deselectAllFilters());
+  };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
     dispatch(setQuantity({ snackId, newQuantity }));
@@ -62,6 +66,7 @@ const SnackCard = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      clearFilters();
       setIsLoading(false);
     }
   };
