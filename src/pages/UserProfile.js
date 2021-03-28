@@ -108,6 +108,11 @@ const UserProfile = () => {
     handleGoBack();
   };
 
+  const resetAll = async (amount) => {
+    handleMakePayment();
+    updateProfileBalance(amount);
+  };
+
   useEffect(async () => {
     try {
       const userResponse = await getUserById(id);
@@ -174,6 +179,7 @@ const UserProfile = () => {
                 onHandleApiResponse={handleApiResponse}
                 onChangePage={handleOrderChangePage}
                 onMakePayment={handleMakePayment}
+                onReload={resetAll}
               />
             </div>
             <div className={usersStyles.paymentsTable}>

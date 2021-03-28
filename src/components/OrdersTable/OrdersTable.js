@@ -15,7 +15,8 @@ const Orders = (props) => {
     updateProfileBalance,
     onChangePage,
     onHandleApiResponse,
-    onMakePayment
+    onMakePayment,
+    onReload
   } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
@@ -43,8 +44,7 @@ const Orders = (props) => {
 
   const handleCancelOrder = async (order) => {
     const { transaction_amount } = await cancelOrder(order);
-    await onMakePayment();
-    updateProfileBalance(transaction_amount);
+    onReload(transaction_amount);
     clearLocalStates();
   };
 
