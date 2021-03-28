@@ -37,7 +37,7 @@ const UserSearchBar = () => {
         [styles.searchBar__focused]: isFocused,
         [styles.searchBar__left]: pathname === ROUTES.USERS
       })}
-      autoFocus={true}
+      autoFocus={pathname === ROUTES.COMMON}
       disableUnderline={true}
       startAdornment={(
         <InputAdornment position='start' variant='filled'>

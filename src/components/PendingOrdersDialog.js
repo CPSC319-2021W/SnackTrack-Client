@@ -243,7 +243,7 @@ const PendingOrdersDialog = (props) => {
           loading={isDeclineLoading}
           onClick={declineAllOrders}
         >
-          Decline all
+          Decline All
         </AppButton>
         <AppButton
           primary
@@ -251,7 +251,7 @@ const PendingOrdersDialog = (props) => {
           loading={isApproveLoading}
           onClick={approveOrders}
         >
-          Approve
+          Claim
         </AppButton>
       </div>
     </Dialog>

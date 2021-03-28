@@ -713,8 +713,8 @@
                 transform-origin: 0% 0%;
     }
     100% {
-        -webkit-transform: translateX(80px) translateY(0px);
-                transform: translateX(80px) translateY(0px);
+        -webkit-transform: translateX(85px) translateY(0px);
+                transform: translateX(85px) translateY(0px);
         -webkit-transform-origin: 100% 100%;
                 transform-origin: 100% 100%;
     }
@@ -733,8 +733,8 @@
                 transform-origin: 0% 0%;
     }
     100% {
-        -webkit-transform: translateX(10px) translateY(-50px);
-                transform: translateX(10px) translateY(-50px);
+        -webkit-transform: translateX(60px) translateY(-80px);
+                transform: translateX(60px) translateY(-80px);
         -webkit-transform-origin: 100% 100%;
                 transform-origin: 100% 100%;
     }
@@ -765,6 +765,86 @@
         -webkit-transform: translate(16px, 0) rotate(0);
                 transform: translate(16px, 0) rotate(0);
     }
+}
+
+.active #bite {
+        -webkit-animation: bite 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+                animation: bite 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+      
+@keyframes bite {
+        0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        }
+        100% {
+                -webkit-transform: scale(0.1);
+                        transform: scale(0.1);
+                -webkit-transform-origin: 49% 48%;
+                        transform-origin: 49% 48%;
+        }
+}
+    
+.active #chocolate_chip {
+        -webkit-animation: chocolate_chip 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+                animation: chocolate_chip 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+      
+@keyframes chocolate_chip {
+        0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        }
+        100% {
+                -webkit-transform: scale(0.1);
+                        transform: scale(0.1);
+                -webkit-transform-origin: 49% 48%;
+                        transform-origin: 49% 48%;
+        }
+}
+
+.active #cookie_sprinkle_1 {
+        -webkit-animation: cookie_sprinkle_1 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+                animation: cookie_sprinkle_1 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+      
+@keyframes cookie_sprinkle_1 {
+        0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        }
+        100% {
+                -webkit-transform: scale(0.1);
+                        transform: scale(0.1);
+                -webkit-transform-origin: 49% 48%;
+                        transform-origin: 49% 48%;
+        }
+}
+
+.active #cookie_sprinkle_2 {
+        -webkit-animation: cookie_sprinkle_2 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+                animation: cookie_sprinkle_2 0.1s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+      
+@keyframes cookie_sprinkle_2 {
+        0% {
+                -webkit-transform: scale(1);
+                        transform: scale(1);
+                -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        }
+        100% {
+                -webkit-transform: scale(0.1);
+                        transform: scale(0.1);
+                -webkit-transform-origin: 49% 48%;
+                        transform-origin: 49% 48%;
+        }
 }
 
 .active #cookies_background {

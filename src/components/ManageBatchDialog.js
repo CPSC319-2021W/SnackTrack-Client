@@ -229,7 +229,7 @@ const ManageBatchDialog = (props) => {
                 }
             }
           >
-            { newSnackBatch ? 'Submit' : 'Save Changes' }
+            { newSnackBatch ? 'Submit' : 'Save' }
           </AppButton>
         </div>
       </Card>
