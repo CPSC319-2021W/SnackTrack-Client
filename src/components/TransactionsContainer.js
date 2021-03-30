@@ -1,28 +1,38 @@
-import React, { Fragment } from 'react';
-import {
-  setIsEditOrderOpen,
-  setOrderToEdit
-} from '../redux/features/transactions/transactionsSlice';
+import React, { Fragment, useState } from 'react';
+import { CircularProgress } from '@material-ui/core';
 
 import AppButton from './AppButton';
-import { CircularProgress } from '@material-ui/core';
+import ConfirmationDialog from './ConfirmationDialog';
 import OrderCard from './OrderCard';
 import PaymentCard from './PaymentCard';
+import { cancelOrder } from '../services/TransactionsService';
+import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/TransactionsCard.module.css';
-import { useDispatch } from 'react-redux';
 
 const TransactionsContainer = (props) => {
-  const { data, isInitialLoaded, isLoading, onLoadMore } = props;
+  const { data, isInitialLoaded, isLoading, onLoadMore, onReload } = props;
   const { transactions, payments, total_pages, current_page, total_rows } = data;
 
-  const dispatch = useDispatch();
+  const [orderToCancel, setOrderToCancel] = useState(null);
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [isCancelLoading, setIsCancelLoading] = useState(false);
 
-  const setEditOrderOpen = () => dispatch(setIsEditOrderOpen(true));
-  const setOrderEdit = (order) => dispatch(setOrderToEdit(order));
+  const handleOpenDialog = (order) => {
+    setOrderToCancel(order);
+    setIsCancelDialogOpen(true);
+  };
 
-  const openEditOrderDialog = (order) => {
-    setOrderEdit(order);
-    setEditOrderOpen(true);
+  const handleCloseDialog = () => {
+    setIsCancelDialogOpen(false);
+  };
+
+  const handleCancelOrder = async () => {
+    setIsCancelLoading(true);
+    const { transaction_id } = orderToCancel;
+    const { transaction_amount } = await cancelOrder(transaction_id);
+    onReload(transaction_amount);
+    setIsCancelLoading(false);
+    setIsCancelDialogOpen(false);
   };
 
   const displayEmptyMessage = () => {
@@ -84,7 +94,7 @@ const TransactionsContainer = (props) => {
       </div>
       {isInitialLoaded ? (
         transactions?.map((order, i) => (
-          <OrderCard key={i} order={order} onEdit={openEditOrderDialog} />
+          <OrderCard key={i} order={order} onCancel={handleOpenDialog} />
         ))
       ) : (
         <CircularProgress color='secondary' size={30} thickness={5} />
@@ -106,6 +116,22 @@ const TransactionsContainer = (props) => {
       ) : (
         displayEmptyMessage()
       )}
+      <ConfirmationDialog
+        open={isCancelDialogOpen}
+        title={'Wait a sec!'}
+        submitText={'Yes, cancel'}
+        declineText={'No, keep'}
+        isSubmitLoading={isCancelLoading}
+        handleClose={handleCloseDialog}
+        onDecline={handleCloseDialog}
+        onSubmit={handleCancelOrder}
+      >
+        Are you sure you want to cancel your order of&nbsp;
+        <span className={dialogStyles.text__emp}>
+          { orderToCancel?.snack_name }
+        </span>
+        ?
+      </ConfirmationDialog>
     </div>
   );
 };

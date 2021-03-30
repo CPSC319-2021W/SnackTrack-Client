@@ -8,7 +8,6 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
-import EditOrderDialog from '../components/EditOrderDialog';
 import { NOTIFICATIONS } from '../constants';
 import ToastNotification from '../components/ToastNotification';
 import TransactionsContainer from '../components/TransactionsContainer';
@@ -48,12 +47,9 @@ const Transactions = () => {
   const [isListLoading, setIsListLoading] = useState(false);
   const [isPayAllLoading, setIsPayAllLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
-  const { userId, username } = useSelector((state) => state.usersReducer.profile);
+  const { userId, username, balance } = useSelector((state) => state.usersReducer.profile);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
-  );
-  const { isEditOrderOpen, orderToEdit } = useSelector(
-    (state) => state.transactionsReducer
   );
 
   const updateBalance = (balance) => {
@@ -141,6 +137,11 @@ const Transactions = () => {
     }
   };
 
+  const resetAll = (amount) => {
+    resetTransactions();
+    updateBalance(balance - amount);
+  };
+
   useEffect(async () => {
     await resetTransactions();
   }, [userId]);
@@ -171,6 +172,7 @@ const Transactions = () => {
           isInitialLoaded={isInitialLoaded}
           isLoading={isListLoading}
           onLoadMore={handleOrdersLoadMore}
+          onReload={resetAll}
         />
       </TabPanel>
       <TabPanel value={tabValue} index={1}>
@@ -182,7 +184,6 @@ const Transactions = () => {
           onLoadMore={handlePaymentsLoadMore}
         />
       </TabPanel>
-      <EditOrderDialog open={isEditOrderOpen} transaction={orderToEdit} />
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}

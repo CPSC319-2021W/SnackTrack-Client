@@ -1,11 +1,22 @@
 import { Card, Dialog, Divider } from '@material-ui/core';
 import { React } from 'react';
 
-import AppButton from '../components/AppButton';
+import AppButton from './AppButton';
 import styles from '../styles/Dialog.module.css';
 
-const TextDialog = (props) => {
-  const { open, title, onSubmit, submitText, onDecline, declineText, children, handleClose } = props;
+const ConfirmationDialog = (props) => {
+  const {
+    open,
+    title,
+    onSubmit,
+    submitText,
+    isSubmitLoading,
+    onDecline,
+    declineText,
+    isDeclineLoading,
+    children,
+    handleClose
+  } = props;
 
   return (
     <Dialog
@@ -24,6 +35,7 @@ const TextDialog = (props) => {
             onDecline ? (
               <AppButton
                 secondary
+                loading={isDeclineLoading}
                 onClick={onDecline}
               >
                 { declineText }
@@ -32,6 +44,7 @@ const TextDialog = (props) => {
           }
           <AppButton
             primary
+            loading={isSubmitLoading}
             onClick={onSubmit}
           >
             { submitText }
@@ -42,4 +55,4 @@ const TextDialog = (props) => {
   );
 };
 
-export default TextDialog;
+export default ConfirmationDialog;

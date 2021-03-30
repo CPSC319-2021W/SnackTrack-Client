@@ -11,20 +11,16 @@ import {
   TableRow
 } from '@material-ui/core';
 import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpers';
-import {
-  setIsEditOrderOpen,
-  setOrderToEdit
-} from '../../redux/features/transactions/transactionsSlice';
-
 import AppButton from '../AppButton';
-import React from 'react';
+import ConfirmationDialog from '../ConfirmationDialog';
+
+import React, { useState } from 'react';
 import classNames from 'classnames';
+import dialogStyles from '../../styles/Dialog.module.css';
 import { DateTime as dt } from 'luxon';
 import styles from '../../styles/Table.module.css';
-import { useDispatch } from 'react-redux';
 
 const RenderOrdersTable = (props) => {
-  const dispatch = useDispatch();
   const {
     isLoaded,
     isEmpty,
@@ -37,18 +33,32 @@ const RenderOrdersTable = (props) => {
     checkIsSelected,
     checkIsAllSelected,
     onPayForOrders,
+    onCancelOrder,
     payForOrdersDisabled,
     isCheckboxDisabled,
     isPayLoading
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
 
-  const setEditOrderOpen = () => dispatch(setIsEditOrderOpen(true));
-  const setOrderEdit = (order) => dispatch(setOrderToEdit(order));
+  const [orderToCancel, setOrderToCancel] = useState(null);
+  const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
+  const [isCancelLoading, setIsCancelLoading] = useState(false);
 
-  const openEditOrderDialog = (order) => {
-    setOrderEdit(order);
-    setEditOrderOpen(true);
+  const handleOpenDialog = (order) => {
+    setOrderToCancel(order);
+    setIsCancelDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsCancelDialogOpen(false);
+  };
+
+  const handleCancelOrder = async () => {
+    setIsCancelLoading(true);
+    const { transaction_id } = orderToCancel;
+    onCancelOrder(transaction_id);
+    setIsCancelLoading(false);
+    setIsCancelDialogOpen(false);
   };
 
   const emptyRows = () => {
@@ -225,9 +235,9 @@ const RenderOrdersTable = (props) => {
                               <AppButton
                                 secondary
                                 small
-                                onClick={() => openEditOrderDialog(transactions[i])}
+                                onClick={() => handleOpenDialog(transactions[i])}
                               >
-                                Edit Order
+                                Cancel Order
                               </AppButton>
                             ) : null}
                         </TableCell>
@@ -281,6 +291,22 @@ const RenderOrdersTable = (props) => {
           </TableRow>
         </TableBody>
       </Table>
+      <ConfirmationDialog
+        open={isCancelDialogOpen}
+        title={'Wait a sec!'}
+        submitText={'Yes, cancel'}
+        declineText={'No, keep'}
+        isSubmitLoading={isCancelLoading}
+        handleClose={handleCloseDialog}
+        onDecline={handleCloseDialog}
+        onSubmit={handleCancelOrder}
+      >
+        Are you sure you want to cancel your order of&nbsp;
+        <span className={dialogStyles.text__emp}>
+          { orderToCancel?.snack_name }
+        </span>
+        ?
+      </ConfirmationDialog>
     </Card>
   );
 };

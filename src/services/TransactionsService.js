@@ -2,11 +2,19 @@ import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const cancelOrder = async (transaction_id) => {
-  throw new Error('Not Implemented!', transaction_id);
-};
-
-const editOrder = async (transaction_id, quantity, transaction_amount) => {
-  throw new Error('Not Implemented!', transaction_id, quantity, transaction_amount);
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.put(
+      `/transactions/${transaction_id}`,
+      {
+        transaction_type_id: 2
+      },
+      authHeader
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getPayments = async (page, rowsPerPage) => {
@@ -88,7 +96,6 @@ const makeOrder = async (
 
 export {
   cancelOrder,
-  editOrder,
   getPayments,
   makePayment,
   claimPendingOrders,
