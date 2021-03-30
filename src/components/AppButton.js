@@ -32,7 +32,8 @@ const AppButton = (props) => {
         [styles.cancel]: cancel,
         [styles.large]: large,
         [styles.small]: small,
-        [styles.fullWidth]: fullWidth
+        [styles.fullWidth]: fullWidth,
+        [styles.loading]: loading
       })}
       disabled={(primary || secondary) && disabled}
       onClick={loading ? null : onClick}>
