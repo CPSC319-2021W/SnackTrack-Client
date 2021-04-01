@@ -1,8 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_RED, WHITE from colors;
-
-@value effects: './Effects.module.css';
-@value DARK_SHADOW from effects;
+@value BASE_RED, LIGHT_GREY, WHITE from colors;
 
 .bottomNav__base {
     height: 60px;
@@ -13,11 +10,12 @@
     right: auto;
     position: fixed;
     background-color: WHITE;
-    box-shadow: DARK_SHADOW;
+    border-top: 1px solid LIGHT_GREY;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    z-index: 1100;
 }
 
 .icon__base {

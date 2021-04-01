@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
+@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE, WHITE from colors;
 
 .card {
   display: flex;
@@ -25,20 +25,26 @@
   margin: 1rem;
 }
 
+.input__container {
+  width: 100%;
+  min-height: 60px;
+  padding: 0 1rem 1rem;
+}
+
 .input__base {
   color: DARK_GREY;
   font-size: 1rem;
   border: 1.5px solid LIGHT_GREY;
-  background-color: INNER_LIGHT_GREY;
-  border-radius: 3px;
+  background-color: WHITE;
+  border-radius: 6px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
-  margin: 1rem;
-  margin-top: 0;
+  width: 100%;
 }
 
 .input__focused {
   background-color: WHITE;
+  border: 2px solid BASE_BLUE
 }
 
 .button__container {

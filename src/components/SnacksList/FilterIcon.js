@@ -12,6 +12,7 @@ import { ReactComponent as Chocolate } from '../../assets/icons/chocolate.svg';
 import { ReactComponent as Cookies } from '../../assets/icons/cookies.svg';
 import { ReactComponent as Crackers } from '../../assets/icons/crackers.svg';
 import { ReactComponent as Fruits } from '../../assets/icons/fruits.svg';
+import { ReactComponent as Other } from '../../assets/icons/other.svg';
 
 const FilterIcon = ({ type, isSelected }) => {
   const [hover, setHover] = useState(false);
@@ -78,6 +79,13 @@ const FilterIcon = ({ type, isSelected }) => {
       return (
         <Fragment>
           <Fruits className={getClasses()} />
+          { renderLabel(type) }
+        </Fragment>
+      );
+    case DEFAULT_CATEGORIES.OTHER:
+      return (
+        <Fragment>
+          <Other className={getClasses()} />
           { renderLabel(type) }
         </Fragment>
       );

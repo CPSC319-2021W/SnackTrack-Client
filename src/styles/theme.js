@@ -211,6 +211,11 @@ export const theme = createMuiTheme({
         border: LIGHT_GREY,
         backgroundColor: MID_GREY
       }
+    },
+    MuiPaper: {
+      rounded: {
+        borderRadius: '12px'
+      }
     }
   },
   props: {

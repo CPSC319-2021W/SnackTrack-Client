@@ -100,10 +100,11 @@ const Snacks = () => {
   return (
     <div className={styles.base}>
       <div className={styles.header}>
-        <h5 className={styles.title}>Choose a snack or a category to start!</h5>
-        <div className={styles.suggestBox}>
+        <div className={styles.search__container}>
           <SnackSearchBar />
-          <div className={styles.suggestBoxQ}>{"Can't find what you want?"}</div>
+        </div>
+        <div className={styles.suggestBox}>
+          <p className={styles.suggestBoxQ}>{"Can't find what you want?"}&nbsp;</p>
           <p className={styles.suggestLabel} onClick={openSuggestion}>
             Suggest a snack!
           </p>

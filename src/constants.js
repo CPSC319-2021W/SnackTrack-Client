@@ -14,7 +14,8 @@ export const DEFAULT_CATEGORIES = {
   CHIPS: 'Chips',
   COOKIES: 'Cookies',
   CRACKERS: 'Crackers',
-  FRUITS: 'Fruits'
+  FRUITS: 'Fruits',
+  OTHER: 'Other'
 };
 
 export const CATEGORIES_LIST = [
@@ -46,6 +47,11 @@ export const CATEGORIES_LIST = [
   {
     id: 6,
     name: DEFAULT_CATEGORIES.FRUITS,
+    selected: false
+  },
+  {
+    id: 7,
+    name: DEFAULT_CATEGORIES.OTHER,
     selected: false
   }
 ];

@@ -1,8 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { calculateOrdersSum, isPaymentPending } from '../../helpers/OrdersHelpers.js';
-import { editOrder, makePayment } from '../../services/TransactionsService';
+import { cancelOrder, makePayment } from '../../services/TransactionsService';
 
-import EditOrderDialog from '../../components/EditOrderDialog';
 import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
 import { useSelector } from 'react-redux';
@@ -16,14 +15,12 @@ const Orders = (props) => {
     updateProfileBalance,
     onChangePage,
     onHandleApiResponse,
-    onMakePayment
+    onMakePayment,
+    onReload
   } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
   const { username } = useSelector((state) => state.usersReducer.profile);
-  const { isEditOrderOpen, orderToEdit } = useSelector(
-    (state) => state.transactionsReducer
-  );
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
@@ -43,6 +40,12 @@ const Orders = (props) => {
     setUncheckedOrdersIds([]);
     setSelectedOrders([]);
     setSelectedPages([]);
+  };
+
+  const handleCancelOrder = async (order) => {
+    const { transaction_amount } = await cancelOrder(order);
+    onReload(transaction_amount);
+    clearLocalStates();
   };
 
   const handlePayForOrders = async () => {
@@ -199,12 +202,11 @@ const Orders = (props) => {
         isCheckboxDisabled={isCheckboxDisabled()}
         isPayLoading={isPayLoading}
         onChangePage={onChangePage}
-        onEditOrder={editOrder}
+        onCancelOrder={handleCancelOrder}
         onSelectAllOrders={handleSelectAllOrders}
         onSelectOrder={handleSelectOneOrder}
         onPayForOrders={handlePayForOrders}
       />
-      <EditOrderDialog open={isEditOrderOpen} transaction={orderToEdit} />
     </div>
   );
 };

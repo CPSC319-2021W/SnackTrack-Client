@@ -9,7 +9,7 @@ import AppButton from './AppButton';
 import styles from '../styles/TransactionsCard.module.css';
 
 const OrderCard = (props) => {
-  const { order, onEdit } = props;
+  const { order, onCancel } = props;
   const {
     payment_id,
     snack_name,
@@ -62,16 +62,16 @@ const OrderCard = (props) => {
     return `$${amount.toFixed(2)}`;
   };
 
-  const renderEditButton = () => {
+  const renderCancelButton = () => {
     return (
       isPaymentPending(payment_id, transaction_type_id)
         ? (
           <AppButton
             secondary
             small
-            onClick={() => onEdit(order)}
+            onClick={() => onCancel(order)}
           >
-            Edit Order
+            Cancel Order
           </AppButton>
         )
         : null
@@ -97,7 +97,7 @@ const OrderCard = (props) => {
           { renderStatus() }
         </div>
         <div className={styles.column__field__small}>
-          { renderEditButton() }
+          { renderCancelButton() }
         </div>
       </Card>
       <Card variant='outlined' className={styles.mobile__base}>
@@ -124,7 +124,7 @@ const OrderCard = (props) => {
             { renderStatus('mobile') }
           </div>
           <div>
-            { renderEditButton() }
+            { renderCancelButton() }
           </div>
         </div>
       </Card>
