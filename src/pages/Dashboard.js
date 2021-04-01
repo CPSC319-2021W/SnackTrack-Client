@@ -62,7 +62,7 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
-      <TopSnacksReport />
+      {snacks ? <TopSnacksReport snacks={snacks}/> : <></>}
       <SuggestionsBox />
     </div>
   );

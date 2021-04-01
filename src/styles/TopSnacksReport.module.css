@@ -69,6 +69,7 @@
 .card__description > h6 {
   margin-right: 8px;
   font-size: 18px;
+  line-height: 23px;
 }
 
 .card__unit {

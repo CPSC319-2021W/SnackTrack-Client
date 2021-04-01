@@ -1,10 +1,12 @@
 import { Card, Tooltip } from '@material-ui/core';
-import { React, useEffect, useState } from 'react';
+import { React, useEffect } from 'react';
 
 import { getPopularSnacks } from '../services/SnacksService';
+import { setPopularSnack } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/TopSnacksReport.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+// import { CATEGORIES_LIST } from '../constants';
 const mockTopSnacks = {
   allTime: [
     {
@@ -44,23 +46,30 @@ const mockTopSnacks = {
     }
   ]
 };
-const mock = { start_date: '2021-01-01', end_date: '2021-03-28', transaction_type_id: 1, limit: 5};
 
-const TopSnacksReport = () => {
-  const [popularSnack, setPopularSnacks] = useState(null);
-  const { snacks } = useSelector((state) => state.snacksReducer);
-  // const { snacks } = useSelector((state) => state.snacksReducer);
+const mock = { start_date: '2021-01-01', end_date: '2021-03-31', transaction_type_id: 1, limit: 5};
+
+const TopSnacksReport = (props) => {
+  const dispatch = useDispatch();
+  const { snacks } = props;
   useEffect(async () => {
     const popularSnackResponse = await getPopularSnacks(mock.start_date, mock.end_date, mock.transaction_type_id, mock.limit);
-    const { popularSnacks } = popularSnackResponse;
-    setPopularSnacks(popularSnacks);
-  }, []);
-
-  useEffect(() => {
-    if (popularSnack && snacks) {
-      console.log(popularSnack);
+    try {
+      const popularSnacksMap = popularSnackResponse.map(top => (
+        console.log(snacks.find(item => item.snack_name == top.snack_name)),
+        {
+          snack_name : top.snack_name,
+          total_quantity : top.total_quantity,
+          snack_type : snacks.find(item => item.snack_name == top.snack_name).snack_type_id,
+          image_uri : snacks.find(item => item.snack_name == top.snack_name).image_uri
+        }
+      ));
+      console.log(popularSnacksMap);
+      dispatch(setPopularSnack(popularSnacksMap));
+    }catch (err) {
+      console.log(err);
     }
-  });
+  }, []);
 
   const renderEmptyState = () => {
     return (
@@ -72,11 +81,11 @@ const TopSnacksReport = () => {
   return (
     <Card className={styles.card__base}>
       <div className={styles.header}>
-        <h5 className={styles.title}>Top 5 Snacks</h5>
+        <h5 className={styles.title}>Popular Snacks</h5>
         <p>(by units sold)</p>
       </div>
       <div className={styles.container}>
-        { mockTopSnacks.allTime.length > 0 
+        { mockTopSnacks
           ? mockTopSnacks.allTime.map((snack, i) => {
             const card = (
               <div className={styles.card__container}>
@@ -93,7 +102,7 @@ const TopSnacksReport = () => {
                       ) : <h6>{snack.snack_name}</h6> }
                     <p>{snack.snack_type}</p> 
                   </div>
-                  <p>{snack.sold_units} units</p>
+                  <p>{snack.total_quantity} units</p>
                 </div> 
               </div>
             );
