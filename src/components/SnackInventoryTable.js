@@ -174,7 +174,8 @@ const SnackInventoryTable = (props) => {
         <AppButton
           secondary
           small
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             onEditSnack(snack);
           }}
         >
