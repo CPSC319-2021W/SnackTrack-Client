@@ -167,7 +167,7 @@ const UserProfile = () => {
         <UserProfileNotFound />
       ) : (
         <>
-          {user ? <UserCard user={user} /> : <UserCardSkeleton />}
+          {user ? <UserCard user={user} /> : <UserCardSkeleton noHover />}
           <div className={usersStyles.tables__container}>
             <div className={usersStyles.ordersTable}>
               <OrdersTable
