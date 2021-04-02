@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value GREEN, WHITE, ORANGE, RED, DARK_GREY, LIGHT_GREY from colors;
+@value GREEN, WHITE, ORANGE, RED, DARK_GREY, LIGHT_GREY, INNER_LIGHT_GREY from colors;
 
 .board__container {
   width: 30%;
@@ -20,6 +20,7 @@
 
 .snack__label {
   font-weight: 600;
+  color: DARK_GREY;
 }
 
 .bar__base {
@@ -71,15 +72,15 @@
 }
 
 .stock__reorder {
-  background-color: WHITE;
+  background-color: INNER_LIGHT_GREY;
   color: DARK_GREY;
   border: 2px solid LIGHT_GREY;
   border-left: none;
 }
 
 .stock__none {
-  background-color: WHITE;
-  color: DARK_GREY;
+  background-color: INNER_LIGHT_GREY;
+  color: RED;
   justify-content: center;
   border: 2px solid LIGHT_GREY;
   border-radius: 6px;
