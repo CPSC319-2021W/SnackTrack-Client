@@ -6,7 +6,8 @@ import Jimp from 'jimp/es';
 import { setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ImageUploader.module.css';
 
-const ImageUploader = () => {
+const ImageUploader = (props) => {
+  const { src } = props;
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const { snackImageUploadData } = useSelector((state) => state.snacksReducer);
@@ -53,7 +54,7 @@ const ImageUploader = () => {
         className={styles.imageUploadGreyBox}
         onClick={() => imageUploader.current.click()}
       >
-        <img ref={uploadedImage} className={styles.imageUploadBox} />
+        <img ref={uploadedImage} src={src} className={styles.imageUploadBox} />
       </div>
       <input
         ref={imageUploader}
@@ -70,7 +71,7 @@ const ImageUploader = () => {
           loading={isUploading}
           onClick={() => imageUploader.current.click()}
         >
-          {snackImageUploadData ? 'Reupload Photo' : 'Upload Photo'}
+          {snackImageUploadData || src ? 'Change Photo' : 'Upload Photo'}
         </AppButton>
       </div>
     </div>

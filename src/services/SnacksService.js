@@ -27,10 +27,23 @@ const getSnackBatch = async (snackId) => {
   }
 };
 
-const makeSuggestion = async (userId, suggestion) => {
-  const data = { suggested_by: userId, suggestion_text: suggestion };
+const addSnack = async (snackRequest) => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  await httpClient.post('/suggestions', data, authHeader);
+  const { data } = await httpClient.post('/snacks', snackRequest, authHeader);
+  return data;
+};
+
+const editSnack = async (snackRequest) => {
+  const { snack_id } = snackRequest;
+  delete snackRequest.snack_id;
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.put(`/snacks/${snack_id}`, snackRequest, authHeader);
+  return data;
+};
+
+const deleteSnack = async (snackId) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.delete(`/snacks/${snackId}`, authHeader);
 };
 
 const addBatch = async (batch) => {
@@ -57,10 +70,10 @@ const deleteBatch = async (batchId) => {
   await httpClient.delete(`/snack_batches/${batchId}`, authHeader);
 };
 
-const addSnack = async (snackRequest) => {
+const makeSuggestion = async (userId, suggestion) => {
+  const data = { suggested_by: userId, suggestion_text: suggestion };
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  const { data } = await httpClient.post('/snacks', snackRequest, authHeader);
-  return data;
+  await httpClient.post('/suggestions', data, authHeader);
 };
 
 const getSuggestions = async () => {
@@ -75,12 +88,14 @@ const getSuggestions = async () => {
 };
 
 export {
-  getSnackBatch,
   getSnacks,
-  makeSuggestion,
+  getSnackBatch,
+  addSnack,
+  editSnack,
+  deleteSnack,
   addBatch,
   editBatch,
   deleteBatch,
-  addSnack,
+  makeSuggestion,
   getSuggestions
 };
