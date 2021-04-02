@@ -50,6 +50,7 @@ const StockStatusBar = ({ snack }) => {
                   className={classNames({
                     [styles.bar]: true,
                     [styles.bar__left]: true,
+                    [styles.bar__full]: quantity === reorderPoint,
                     [styles.stock__low]: isOverStock,
                     [styles.stock__under]: isUnderStock
                   })}
@@ -64,6 +65,7 @@ const StockStatusBar = ({ snack }) => {
                   className={classNames({
                     [styles.bar]: true,
                     [styles.bar__right]: true,
+                    [styles.bar__hide]: quantity === reorderPoint,
                     [styles.stock__over]: isOverStock,
                     [styles.stock__reorder]: isUnderStock
                   })}

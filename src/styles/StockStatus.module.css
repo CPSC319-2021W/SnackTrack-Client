@@ -50,6 +50,14 @@
   border-bottom-right-radius: 6px;
 }
 
+.bar__full {
+  border-radius: 6px;
+}
+
+.bar__hide {
+  display: none;
+}
+
 .stock__low {
   background-color: ORANGE;
 }
