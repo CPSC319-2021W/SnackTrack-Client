@@ -101,3 +101,5 @@ export const GREETING = {
   AFTERNOON: 'Good afternoon, ',
   EVENING: 'Good evening, '
 };
+
+export const DEFAULT_ORDER_THRESHOLD = 10;

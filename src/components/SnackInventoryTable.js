@@ -19,10 +19,10 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD } from '../constants';
 import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
 import AppButton from '../components/AppButton';
-import { CATEGORIES_LIST } from '../constants';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
@@ -31,7 +31,6 @@ import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
-  const DEFAULT_ORDER_THRESHOLD = 10;
   const {
     isLoaded,
     isEmpty,

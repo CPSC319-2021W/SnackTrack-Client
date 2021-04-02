@@ -1,0 +1,71 @@
+@value colors: './Colors.module.css';
+@value GREEN, WHITE, ORANGE, RED, DARK_GREY, LIGHT_GREY from colors;
+
+.board__container {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bar__container {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.snack__label {
+  font-weight: 600;
+}
+
+.bar__base {
+  margin-top: 0.5rem;
+  height: 40px;
+  width: 250px;
+  color: WHITE;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 1rem;
+}
+
+.bar__left {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.bar__right {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.stock__low {
+  background-color: ORANGE;
+}
+
+.stock__under {
+  background-color: RED;
+}
+
+.stock__over {
+  background-color: GREEN;
+}
+
+.stock__reorder {
+  background-color: WHITE;
+  color: DARK_GREY;
+}
+
+.stock__none {
+  background-color: WHITE;
+  color: DARK_GREY;
+  justify-content: center;
+  border: 2px solid LIGHT_GREY;
+  border-radius: 6px;
+}
