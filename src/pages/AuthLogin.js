@@ -13,9 +13,9 @@ import { refreshTokenSetup } from '../helpers/AuthHelper';
 import { setUser } from '../redux/features/users/usersSlice';
 import styles from '../styles/Login.module.css';
 
-import { ReactComponent as GalvanizeLogo } from '../assets/galvanize.svg';
-import { ReactComponent as GoogleLogo } from '../assets/google.svg';
-import { ReactComponent as SnackTrackLogo } from '../assets/snacktrack_nobg.svg';
+import { ReactComponent as GalvanizeLogo } from '../assets/logos/galvanize.svg';
+import { ReactComponent as GoogleLogo } from '../assets/logos/google.svg';
+import { ReactComponent as SnackTrackLogo } from '../assets/logos/snacktrack_nobg.svg';
 
 const AuthLogin = () => {
   const dispatch = useDispatch();

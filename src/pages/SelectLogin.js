@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import { ReactComponent as SnackTrackLogo } from '../assets/snacktrack.svg';
+import { ReactComponent as SnackTrackLogo } from '../assets/logos/snacktrack.svg';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
