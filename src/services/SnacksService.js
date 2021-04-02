@@ -76,6 +76,17 @@ const makeSuggestion = async (userId, suggestion) => {
   await httpClient.post('/suggestions', data, authHeader);
 };
 
+const getSuggestions = async () => {
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.get('/suggestions', authHeader);
+    return data;
+  } catch (err) {
+    // TODO: Handle error
+    console.log(err.toString());
+  }
+};
+
 export {
   getSnacks,
   getSnackBatch,
@@ -85,5 +96,6 @@ export {
   addBatch,
   editBatch,
   deleteBatch,
-  makeSuggestion
+  makeSuggestion,
+  getSuggestions
 };

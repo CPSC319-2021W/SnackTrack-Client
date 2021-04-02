@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
+import { deselectAllFilters, selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
@@ -25,6 +25,10 @@ const SnacksContainer = (props) => {
 
   const searchOptions = {
     keys: ['snack_name']
+  };
+
+  const clearFilters = () => {
+    dispatch(deselectAllFilters());
   };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
@@ -84,6 +88,7 @@ const SnacksContainer = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
+      clearFilters();
       setIsOrderLoading(false);
       setIsSnackOrderOpen(false);
     }

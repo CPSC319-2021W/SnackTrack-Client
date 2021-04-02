@@ -57,11 +57,17 @@ const getUserPayments = async (userId, page, rowsPerPage) => {
   }
 };
 
+const deleteUser = async (userId) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.delete(`/users/${userId}`, authHeader);
+};
+
 export {
   authenticate,
   getUsersCommon,
   getUsersAdmin,
   getUserById,
   getUserOrders,
-  getUserPayments
+  getUserPayments,
+  deleteUser
 };

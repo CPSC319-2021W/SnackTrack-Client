@@ -125,7 +125,7 @@ const Inventory = () => {
 
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
+      <div className={styles.header__single}>
         <h5 className={styles.title}>Inventory</h5>
       </div>
       <SnackInventoryTable

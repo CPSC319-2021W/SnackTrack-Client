@@ -1,11 +1,17 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, LIGHT_BLUE_HOVER, DARK_BLUE, LIGHT_BLUE, MID_GREY, LIGHT_GREY, SOFT_BLUE, WHITE from colors;
+@value BASE_BLUE, BASE_RED, BASE_RED_HOVER, LIGHT_BLUE_HOVER, DARK_BLUE, LIGHT_BLUE, MID_GREY, LIGHT_GREY, SOFT_BLUE, WHITE from colors;
 
 .base {
     font-weight: 600;
     text-transform: none;
     border-radius: 6px;
     min-width: 80px;
+    line-height: 1;
+    padding: 12px 16px;
+}
+
+.loading {
+    padding: 7px 12px;
 }
 
 .primary {
@@ -39,11 +45,20 @@
     border: 2px solid DARK_BLUE;
 }
 
+.cancel {
+    background-color: BASE_RED;
+    color: WHITE;
+}
+
+.cancel:hover {
+    background-color: BASE_RED_HOVER;
+    color: WHITE;
+}
+
 .primary:disabled, .secondary:disabled {
     background-color: LIGHT_GREY;
     color: MID_GREY;
 }
-
 
 .fullWidth {
     width: 100%;

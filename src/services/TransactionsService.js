@@ -2,11 +2,19 @@ import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const cancelOrder = async (transaction_id) => {
-  throw new Error('Not Implemented!', transaction_id);
-};
-
-const editOrder = async (transaction_id, quantity, transaction_amount) => {
-  throw new Error('Not Implemented!', transaction_id, quantity, transaction_amount);
+  try {
+    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+    const { data } = await httpClient.put(
+      `/transactions/${transaction_id}`,
+      {
+        transaction_type_id: 2
+      },
+      authHeader
+    );
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const getPayments = async (page, rowsPerPage) => {
@@ -22,10 +30,10 @@ const getPayments = async (page, rowsPerPage) => {
   }
 };
 
-const makePayment = async (userId, transactionIds, paymentAmount, processor) => {
+const makePayment = async (userId, transactionIds, paymentAmount, processor, payAll) => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
   const { data } = await httpClient.post(
-    '/payments',
+    `/payments${payAll ? '/all' : ''}`,
     {
       user_id: userId,
       payment_amount: paymentAmount,
@@ -38,16 +46,25 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor) => 
 };
 
 const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
-  // const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  // try {
-  //   await httpClient.post('/payments', {
-  //   user_id: userId,
-  //   payment_amount: paymentAmount,
-  //   transactions_ids: transactionIds,
-  //   created_by: processor
-  // }, authHeader); } catch (err) {
-  // }
-  throw new Error('Not Implemented!', approvedOrderIds, declinedOrderIds);
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  approvedOrderIds.forEach(async (id) => {
+    try {
+      await httpClient.put(`/transactions/${id}`, {
+        transaction_type_id: 1
+      }, authHeader);
+    } catch (err) {
+      // TODO: handle error for specific call
+    }
+  });
+  declinedOrderIds.forEach(async (id) => {
+    try {
+      await httpClient.put(`/transactions/${id}`, {
+        transaction_type_id: 4
+      }, authHeader);
+    } catch (err) {
+      // TODO: handle error for specific call
+    }
+  });
 };
 
 const getPendingOrders = async (userId) => {
@@ -79,7 +96,6 @@ const makeOrder = async (
 
 export {
   cancelOrder,
-  editOrder,
   getPayments,
   makePayment,
   claimPendingOrders,

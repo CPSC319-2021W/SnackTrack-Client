@@ -48,7 +48,7 @@ const Root = () => {
   });
 
   const switchUser = () => {
-    history.push(ROUTES.SELECT);
+    history.push(ROUTES.COMMON);
   };
 
   return (
@@ -59,7 +59,7 @@ const Root = () => {
           <Switch>
             <Route path={ROUTES.LOGIN} component={AuthLogin} />
             <Route
-              path={ROUTES.SELECT}
+              path={ROUTES.COMMON}
               component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
             />
             <CommonRoute

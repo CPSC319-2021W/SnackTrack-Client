@@ -1,6 +1,6 @@
 export const ROUTES = {
   LOGIN: '/login',
-  SELECT: '/select-login',
+  COMMON: '/common',
   SNACKS: '/',
   TRANSACTIONS: '/transactions',
   DASHBOARD: '/admin',
@@ -14,7 +14,8 @@ export const DEFAULT_CATEGORIES = {
   CHIPS: 'Chips',
   COOKIES: 'Cookies',
   CRACKERS: 'Crackers',
-  FRUITS: 'Fruits'
+  FRUITS: 'Fruits',
+  OTHER: 'Other'
 };
 
 export const CATEGORIES_LIST = [
@@ -46,6 +47,11 @@ export const CATEGORIES_LIST = [
   {
     id: 6,
     name: DEFAULT_CATEGORIES.FRUITS,
+    selected: false
+  },
+  {
+    id: 7,
+    name: DEFAULT_CATEGORIES.OTHER,
     selected: false
   }
 ];
@@ -88,4 +94,10 @@ export const FIELD_ERROR_MESSAGES = {
   PRICE: 'Enter a valid price!',
   NAN: 'Gotta be a number!',
   EMPTY: "Can't be blank!"
+};
+
+export const GREETING = {
+  MORNING: 'Good morning, ',
+  AFTERNOON: 'Good afternoon, ',
+  EVENING: 'Good evening, '
 };

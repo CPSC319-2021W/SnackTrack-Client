@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { getUserOrders, getUserPayments } from '../services/UsersService';
+import { deleteUser, getUserOrders, getUserPayments } from '../services/UsersService';
 import {
   setApiResponse,
   setToastNotificationOpen
@@ -9,11 +9,11 @@ import { useHistory, useParams } from 'react-router-dom';
 
 import AppButton from '../components/AppButton';
 import { ReactComponent as ArrowIcon } from '../assets/icons/arrow.svg';
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import { NOTIFICATIONS } from '../constants';
 import OrdersTable from '../components/OrdersTable/OrdersTable';
 import PaymentsTable from '../components/PaymentsTable';
 import { ROUTES } from '../constants';
-import TextDialog from '../components/TextDialog';
 import ToastNotification from '../components/ToastNotification';
 import UserCard from '../components/UserCard/UserCard';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
@@ -49,9 +49,12 @@ const UserProfile = () => {
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
-  const [isTextDialogOpen, setIsTextDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
+  );
+  const { userId } = useSelector(
+    (state) => state.usersReducer.profile
   );
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
@@ -93,16 +96,21 @@ const UserProfile = () => {
   };
 
   const handleOpenDialog = () => {
-    setIsTextDialogOpen(true);
+    setIsDeleteDialogOpen(true);
   };
 
-
   const handleCloseDialog = () => {
-    setIsTextDialogOpen(false);
+    setIsDeleteDialogOpen(false);
   };
 
   const handleDelete = async () => {
-    // TODO: add API call when ready
+    await deleteUser(id);
+    handleGoBack();
+  };
+
+  const resetAll = async (amount) => {
+    handleMakePayment();
+    updateProfileBalance(amount);
   };
 
   useEffect(async () => {
@@ -135,21 +143,25 @@ const UserProfile = () => {
 
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
+      <div className={styles.header__single}>
         <h5 className={`${styles.title} ${usersStyles.goBack}`} onClick={handleGoBack}>
           <div className={usersStyles.icon__container}>
             <ArrowIcon />
           </div>
           Back to Users List
         </h5>
-        <div className={styles.top_button__container}>
-          <AppButton
-            outline
-            onClick={handleOpenDialog}
-          >
-            Delete User
-          </AppButton>
-        </div>
+        { Number(id) !== userId
+          ? (
+            <div className={styles.top_button__container}>
+              <AppButton
+                outline
+                onClick={handleOpenDialog}
+              >
+                Delete User
+              </AppButton>
+            </div>
+          ) : null
+        }
       </div>
       {userNotFound ? (
         <UserProfileNotFound />
@@ -167,6 +179,7 @@ const UserProfile = () => {
                 onHandleApiResponse={handleApiResponse}
                 onChangePage={handleOrderChangePage}
                 onMakePayment={handleMakePayment}
+                onReload={resetAll}
               />
             </div>
             <div className={usersStyles.paymentsTable}>
@@ -183,8 +196,8 @@ const UserProfile = () => {
           </div>
         </>
       )}
-      <TextDialog
-        open={isTextDialogOpen}
+      <ConfirmationDialog
+        open={isDeleteDialogOpen}
         title={'Wait a sec!'}
         submitText={'Yes, delete'}
         declineText={'No, keep them'}
@@ -197,7 +210,7 @@ const UserProfile = () => {
           { user?.first_name } { user?.last_name }
         </span>
         ?
-      </TextDialog>
+      </ConfirmationDialog>
       <ToastNotification
         open={isToastNotificationOpen}
         notification={NOTIFICATIONS[apiResponse]}
