@@ -80,10 +80,6 @@ const EditSnackDialog = (props) => {
     await addForm.setFieldValue('reorder', selectedSnackToEdit.order_threshold ?? '');
   }, [isEditSnackOpen]);
 
-  useEffect(() => {
-    console.log(addForm.isValid, category);
-  });
-
   const addForm = useFormik({
     initialValues: initialState,
     onSubmit: async (values, actions) => {
@@ -96,6 +92,7 @@ const EditSnackDialog = (props) => {
         imageUri = selectedSnackToEdit.image_uri;
       }
       const snackRequest = {
+        snack_id: selectedSnackToEdit.snack_id,
         last_updated_by: username,
         snack_name: values.snackname,
         snack_type_id: parseInt(category.value),
@@ -201,7 +198,7 @@ const EditSnackDialog = (props) => {
                 primary
                 type='submit'
                 loading={isSubmitLoading}
-                disabled={!category}
+                disabled={!addForm.isValid || !category}
                 onClick={addForm.handleSubmit}
               >
                 Save Changes
