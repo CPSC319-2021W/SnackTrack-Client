@@ -13,8 +13,10 @@ import { Fragment, React, useEffect } from 'react';
 import {
   setIsAddBatchOpen,
   setIsAddSnackOpen,
+  setIsEditSnackOpen,
   setSelectedBatch,
   setSelectedSnackForBatch,
+  setSelectedSnackToEdit,
   setSnackBatches
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +25,7 @@ import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
 import AppButton from '../components/AppButton';
 import { CATEGORIES_LIST } from '../constants';
+import EditSnackDialog from './EditSnackDialog';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
@@ -49,7 +52,8 @@ const SnackInventoryTable = (props) => {
     selectedBatch,
     isAddBatchOpen,
     isEditBatchOpen,
-    isAddSnackOpen
+    isAddSnackOpen,
+    isEditSnackOpen
   } = useSelector((state) => state.snacksReducer);
 
   const setSelectedSnack = (snackId) => {
@@ -58,6 +62,10 @@ const SnackInventoryTable = (props) => {
 
   const setBatches = (batches) => {
     dispatch(setSnackBatches(batches));
+  };
+
+  const setSnackToEdit = (snack) => {
+    dispatch(setSelectedSnackToEdit(snack));
   };
 
   const emptyRows = () => {
@@ -85,7 +93,13 @@ const SnackInventoryTable = (props) => {
     }
   };
 
+  const onEditSnack = (snack) => {
+    setSnackToEdit(snack);
+    setEditSnackOpen();
+  };
+
   const setAddBatchOpen = () => dispatch(setIsAddBatchOpen(true));
+
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
   const handleAddBatch = (option) => {
@@ -156,11 +170,13 @@ const SnackInventoryTable = (props) => {
     {
       id: 'actions',
       label: 'Actions',
-      format: () => (
+      format: (snack) => (
         <AppButton
           secondary
           small
-          onClick={() => {}}
+          onClick={() => {
+            onEditSnack(snack);
+          }}
         >
           Edit
         </AppButton>
@@ -170,9 +186,7 @@ const SnackInventoryTable = (props) => {
 
   const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
 
-  const openAddSnack = () => {
-    setAddSnackOpen(true);
-  };
+  const setEditSnackOpen = () => dispatch(setIsEditSnackOpen(true));
 
   return (
     <Card className={styles.paper}>
@@ -190,10 +204,7 @@ const SnackInventoryTable = (props) => {
               handleSelectBatch={handleAddBatch}
             />
             <div className={styles.cell__pay}>
-              <AppButton
-                primary
-                onClick={openAddSnack}
-              >
+              <AppButton primary onClick={setAddSnackOpen}>
                 Add New Snack
               </AppButton>
             </div>
@@ -247,13 +258,15 @@ const SnackInventoryTable = (props) => {
                             }`}
                             title={column.id === 'snack_name' ? value : null}
                           >
-                            {column.format
-                              ? column.format(
-                                value,
-                                snacks[i].is_active,
-                                snacks[i].order_threshold
-                              )
-                              : value}
+                            {column.id === 'actions'
+                              ? column.format(snack)
+                              : column.format
+                                ? column.format(
+                                  value,
+                                  snacks[i].is_active,
+                                  snacks[i].order_threshold
+                                )
+                                : value}
                           </TableCell>
                         );
                       })}
@@ -299,9 +312,6 @@ const SnackInventoryTable = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <AddSnackDialog 
-        open={isAddSnackOpen} 
-      />
       <Table>
         <TableBody>
           <TableRow>
@@ -317,6 +327,8 @@ const SnackInventoryTable = (props) => {
           </TableRow>
         </TableBody>
       </Table>
+      <AddSnackDialog open={isAddSnackOpen} />
+      <EditSnackDialog open={isEditSnackOpen} />
       <ManageBatchDialog
         newSnackBatch
         open={isAddBatchOpen}
