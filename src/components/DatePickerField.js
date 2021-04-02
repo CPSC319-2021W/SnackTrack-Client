@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { ReactComponent as Calendar } from '../assets/icons/calendar.svg';
 import { KeyboardDatePicker } from '@material-ui/pickers';
 import classNames from 'classnames';
 import styles from '../styles/Field.module.css';
@@ -35,6 +36,7 @@ const DatePickerField = (props) => {
           minDateMessage=''
           value={date}
           error={!!error}
+          keyboardIcon={<Calendar />}
           onChange={onChangeDate}
           onBlur={() => setIsFocused(false)}
           onFocus={() => setIsFocused(true)}

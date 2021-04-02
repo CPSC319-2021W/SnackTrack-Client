@@ -119,6 +119,7 @@
   color: BASE_BLUE;
   background-color: LIGHT_BLUE;
   text-transform: none;
+  border-radius: 6px;
 }
 
 .stepper__button:hover {
@@ -143,8 +144,7 @@
 .input {
   color: DARK_GREY;
   font-size: 1rem;
-  border: 1.5px solid LIGHT_GREY;
-  background-color: INNER_LIGHT_GREY;
+  border: 2px solid LIGHT_BLUE;
   border-radius: 3px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;

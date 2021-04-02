@@ -159,7 +159,12 @@ const Transactions = () => {
         </Tabs>
         {tabValue === 0 ? (
           <div className={styles.action__button__container}>
-            <AppButton primary loading={isPayAllLoading} onClick={handleMakePayment}>
+            <AppButton
+              primary
+              loading={isPayAllLoading}
+              disabled={balance === 0}
+              onClick={handleMakePayment}
+            >
               Pay All
             </AppButton>
           </div>

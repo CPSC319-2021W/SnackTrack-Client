@@ -10,6 +10,7 @@ import {
   TableRow
 } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import AppButton from './AppButton';
@@ -17,15 +18,22 @@ import { claimPendingOrders } from '../services/TransactionsService';
 import { deselectOne } from '../helpers/CheckboxHelpers';
 import dialogStyles from '../styles/Dialog.module.css';
 import { DateTime as dt } from 'luxon';
+import { setBalance } from '../redux/features/users/usersSlice';
 import styles from '../styles/Table.module.css';
 
 const PendingOrdersDialog = (props) => {
+  const dispatch = useDispatch();
   const { pendingOrders, open, handleOnClose, handleCloseNotAllowed } = props;
+  const { balance } = useSelector((state) => state.usersReducer.profile);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isApproveDisabled, setIsApproveDisabled] = useState(true);
   const [isApproveLoading, setIsApproveLoading] = useState(false);
   const [isDeclineLoading, setIsDeclineLoading] = useState(false);
+
+  const updateBalance = (balance) => dispatch(setBalance(balance));
+
+  const getAllPendingOrderIds = () => pendingOrders.map((order) => order.transaction_id);
 
   const selectAllOrders = () => {
     let ordersToSelect = pendingOrders.map((order) => order.transaction_id);
@@ -94,10 +102,16 @@ const PendingOrdersDialog = (props) => {
   const approveOrders = () => {
     setIsApproveLoading(true);
     try {
-      const declinedOrders = selectedOrders.filter(
-        (orderId) => !pendingOrders.includes(orderId)
+      const pendingOrderIds = getAllPendingOrderIds();
+      const declinedOrders = pendingOrderIds.filter(
+        (orderId) => !selectedOrders.includes(orderId)
       );
+      const selected = pendingOrders.filter(
+        (order) => selectedOrders.includes(order.transaction_id)
+      );
+      const finalTotal = selected.reduce((total, order) => total + order.transaction_amount, 0);
       claimPendingOrders(selectedOrders, declinedOrders);
+      updateBalance(balance + finalTotal);
     } catch (err) {
       console.log(err);
       console.log(
@@ -111,7 +125,8 @@ const PendingOrdersDialog = (props) => {
   const declineAllOrders = () => {
     setIsDeclineLoading(true);
     try {
-      claimPendingOrders([], pendingOrders);
+      const pendingOrderIds = getAllPendingOrderIds();
+      claimPendingOrders([], pendingOrderIds);
     } catch (err) {
       console.log(err);
       console.log('All orders declined!');
