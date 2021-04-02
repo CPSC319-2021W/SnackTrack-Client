@@ -22,7 +22,7 @@ const StockStatusBar = ({ snack }) => {
   const renderTitle = () => {
     return (
       <Fragment>
-        <div>{ `Quantity: ${quantity}` }</div>
+        <div>{ `Quantity in Stock: ${quantity}` }</div>
         <div>{ `Reorder Point: ${reorderPoint}` }</div>
       </Fragment>
     );

@@ -6,6 +6,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  padding: 0 1rem;
+}
+
+.title {
+  margin: 1rem 0;
 }
 
 .bar__container {
@@ -20,7 +25,7 @@
 .bar__base {
   margin-top: 0.5rem;
   height: 40px;
-  width: 250px;
+  width: 335px;
   color: WHITE;
   font-weight: 600;
   text-align: center;
@@ -60,6 +65,8 @@
 .stock__reorder {
   background-color: WHITE;
   color: DARK_GREY;
+  border: 2px solid LIGHT_GREY;
+  border-left: none;
 }
 
 .stock__none {
@@ -68,4 +75,10 @@
   justify-content: center;
   border: 2px solid LIGHT_GREY;
   border-radius: 6px;
+}
+
+@media (max-width: 1280px) {
+  .bar__base {
+    width: 238px;
+  }  
 }

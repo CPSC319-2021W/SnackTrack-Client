@@ -5,7 +5,8 @@
   box-shadow: none;
   border-radius: 12px;
   border: 1px solid LIGHT_GREY;
-  width: 25%;
+  width: 30%;
+  height: fit-content;
 }
 
 .header {

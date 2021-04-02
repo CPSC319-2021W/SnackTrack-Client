@@ -87,7 +87,7 @@ const Dashboard = () => {
       }  
     }
   }, [snacks]);
-    
+
   return (
     <div className={styles.base}>
       <div className={styles.header}>
@@ -97,8 +97,10 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
-      <SuggestionsBox />
-      <StockStatusBoard snacks={snacks} />
+      <div className={dashStyles.elements__container}>
+        <SuggestionsBox />
+        <StockStatusBoard snacks={snacks} />
+      </div>
     </div>
   );
 };
