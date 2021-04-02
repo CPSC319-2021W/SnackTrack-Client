@@ -1,11 +1,11 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, WHITE from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, WHITE, LIGHT_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DARKER_SHADOW from effects;
 
 .card {
-  padding: 4rem 1rem;
+  padding: 4rem 2rem;
   box-shadow: DARKER_SHADOW;
   text-align: center;
   align-items: center;
@@ -58,7 +58,7 @@
 }
 
 .logo__container {
-  margin: 0 auto 4rem;
+  margin: 0 auto 6rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,8 +71,12 @@
 }
 
 .st_logo {
-  width: 340px;
+  width: 320px;
   margin: 0 1rem;
+}
+
+.common__logo {
+  width: 340px;
 }
 
 .button__icon {
@@ -96,9 +100,7 @@
   max-width: 700px;
   min-width: 400px;
   min-height: 912px;
-  padding: 1rem 1rem 0;
-  background-color: #EDEFFF;
-  border-radius: 12px;
+  padding: 0 1rem;
 }
 
 .list {
@@ -110,6 +112,7 @@
   overflow-y: auto;
   align-items: center;
   background-color: transparent;
+  padding-top: 1rem;
 }
 
 @media (max-width: 425px) {
