@@ -1,32 +1,26 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, WHITE from colors;
 
 @value effects: './Effects.module.css';
 @value DARKER_SHADOW from effects;
 
-.title {
-  color: VIOLET;
-  font-weight: 700;
-  margin-bottom: 2rem;
-}
-
 .card {
-  padding: 8rem 4rem;
+  padding: 4rem 1rem;
   box-shadow: DARKER_SHADOW;
   text-align: center;
   align-items: center;
 }
 
 .button__login {
-  height: 60px;
   width: 210px;
-  color: #ffffff;
+  height: 50px;
+  color: WHITE;
   font-weight: 700;
   background-color: BASE_BLUE;
   border-radius: 50px;
   border: 0;
   text-transform: none;
-  padding: 1rem 2rem;
+  padding: 1rem;
   letter-spacing: 0.05rem;
 }
 
@@ -64,12 +58,33 @@
 }
 
 .logo__container {
-  max-width: 100px;
-  margin: auto;
+  margin: 0 auto 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo {
+.g_logo {
   width: 100px;
+  margin: 0 1rem;
+}
+
+.st_logo {
+  width: 340px;
+  margin: 0 1rem;
+}
+
+.button__icon {
+  width: 25px;
+  fill: WHITE;
+  display: flex;
+  align-items: center;
+}
+
+.button__text {
+  text-align: left;
+  margin-left: 1rem;
 }
 
 .seachbar__container {
@@ -109,15 +124,21 @@
     border-radius: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    padding: 2rem;
+    justify-content: space-between;
+    padding: 4rem 1rem;
+  }
+
+  .g_logo {
+    width: 80px;
+    margin: 0 1rem;
+  }
+  
+  .st_logo {
+    width: 260px;
+    margin: 0 1rem;
   }
 
   .logo__container {
-    margin: 1rem auto;
-  }
-
-  .title {
-    font-size: 2rem;
+    margin: 4rem auto 0;
   }
 }
