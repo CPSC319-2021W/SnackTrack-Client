@@ -76,7 +76,7 @@ const OrderSnackDialog = (props) => {
           <div>
             <p className={styles.description}>{description}</p>
             <div className={styles.quant__container}>
-              <p className={styles.quantity}>How many would you like?</p>
+              <p className={styles.quantity}>How many can you fit in your pockets?</p>
               <div className={styles.stepper}>
                 <Button
                   className={classNames({
