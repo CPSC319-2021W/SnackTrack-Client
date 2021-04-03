@@ -92,7 +92,7 @@
 }
 
 .seachbar__container {
-  min-height: 60px;
+  min-height: 68px;
 }
 
 .list__container {
@@ -112,7 +112,7 @@
   overflow-y: auto;
   align-items: center;
   background-color: transparent;
-  padding-top: 1rem;
+  padding-top: 2px;
 }
 
 @media (max-width: 425px) {

@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_BLUE, BASE_BLUE from colors;
+@value DARK_BLUE, BASE_BLUE, HEADER_GREY from colors;
 
 .base {
   padding-top: 20px;
@@ -23,7 +23,6 @@
 }
 
 .title {
-  color: HEADER_GREY;
   text-align: left;
   margin: 0;
 }
@@ -55,7 +54,7 @@
 }
 
 .searchbar__container {
-  min-height: 60px;
+  min-height: 68px;
 }
 
 .search__container {
