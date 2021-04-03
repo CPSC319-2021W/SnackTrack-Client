@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react';
-import { deselectAllFilters, selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
+import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
@@ -10,6 +10,7 @@ import { handleSearch } from '../../helpers/SearchHelpers';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
 import { setBalance } from '../../redux/features/users/usersSlice';
+import styles from '../../styles/SnackGrid.module.css';
 
 const SnacksContainer = (props) => {
   const dispatch = useDispatch();
@@ -25,10 +26,6 @@ const SnacksContainer = (props) => {
 
   const searchOptions = {
     keys: ['snack_name']
-  };
-
-  const clearFilters = () => {
-    dispatch(deselectAllFilters());
   };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
@@ -88,36 +85,32 @@ const SnacksContainer = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
-      clearFilters();
       setIsOrderLoading(false);
       setIsSnackOrderOpen(false);
     }
   };
 
   useEffect(() => {
-    if (filters.length === 0) {
-      handleSearch(snacks, snackSearchValue, setSnacksToDisplay, searchOptions);
-    } else {
-      const filtered = snacks.filter((item) => {
-        return filters.includes(item.snack_type_id);
-      });
-      handleSearch(filtered, snackSearchValue, setSnacksToDisplay, searchOptions);
-    }
-  }, [filters, snackSearchValue]);
-
-  useEffect(() => {
     if (snacks.length > 0) {
       setLoaded(true);
-      setSnacksToDisplay(snacks);
+      let filteredSnacks = [];
+      if (filters.length > 0) {
+        filteredSnacks = snacks.filter((snack) => filters.includes(snack.snack_type_id));
+      } else {
+        filteredSnacks = snacks;
+      }
+      handleSearch(filteredSnacks, snackSearchValue, setSnacksToDisplay, searchOptions);
     }
-  }, [snacks]);
+  }, [filters, snackSearchValue, snacks]);
 
   return (
     <div>
       <CategoryFilter selectedFilters={filters} />
       <div>
         {snacksToDisplay.length === 0 && isLoaded ? (
-          <h6>There are no snacks that match your filter/search criteria.</h6>
+          <h6 className={styles.message}>
+            There are no snacks that match your search/filter criteria.
+          </h6>
         ) : (
           <SnackGrid
             snacks={snacksToDisplay}

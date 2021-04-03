@@ -1,6 +1,10 @@
 @value colors: './Colors.module.css';
 @value DARKER_GREY, RED, GREEN from colors;
 
+.container {
+  bottom: 24px;
+}
+
 .toast__base {
   font-weight: 600;
 }
@@ -13,4 +17,10 @@
 .toast__error {
   color: white;
   background-color: DARKER_GREY;
+}
+
+@media (max-width: 425px) {
+  .container {
+    bottom: 70px;
+  }
 }

@@ -1,16 +1,18 @@
+import React, { useState } from 'react';
+
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-import { deselectAllFilters, setQuantity } from '../../../redux/features/snacks/snacksSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import NumberFormat from 'react-number-format';
+import classNames from 'classnames';
+
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../../../redux/features/notifications/notificationsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 
-import { CATEGORIES_LIST, TRANSACTION_TYPES } from '../../../constants';
-import React, { useState } from 'react';
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../../constants';
 import AppButton from '../../AppButton';
-import NumberFormat from 'react-number-format';
-import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
 import { setBalance } from '../../../redux/features/users/usersSlice';
@@ -29,15 +31,10 @@ const SnackCard = (props) => {
   } = props.snack;
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
-  const DEFAULT_ORDER_THRESHOLD = 10;
   const [isLoading, setIsLoading] = useState(false);
 
   const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
   const image = image_uri || category?.defaultImage;
-
-  const clearFilters = () => {
-    dispatch(deselectAllFilters());
-  };
 
   const updateSnackQuantity = (snackId, newQuantity) => {
     dispatch(setQuantity({ snackId, newQuantity }));
@@ -70,7 +67,6 @@ const SnackCard = (props) => {
         onApiResponse('ERROR');
         openToastNotification(true);
       }
-      clearFilters();
       setIsLoading(false);
     }
   };

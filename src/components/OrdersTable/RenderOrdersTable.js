@@ -188,9 +188,8 @@ const RenderOrdersTable = (props) => {
                     tabIndex={-1}
                     className={classNames({
                       [styles.row]: !checkIsSelected(transactions[i].transaction_id),
-                      [styles.row__selected]: checkIsSelected(
-                        transactions[i].transaction_id
-                      )
+                      [styles.row__selected]: checkIsSelected(transactions[i].transaction_id),
+                      [styles.row__lastChild]: i === rowsPerPage - 1
                     })}
                   >
                     {columns.map((column) => {

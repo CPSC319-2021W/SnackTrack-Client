@@ -21,10 +21,10 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD } from '../constants';
 import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
 import AppButton from '../components/AppButton';
-import { CATEGORIES_LIST } from '../constants';
 import EditSnackDialog from './EditSnackDialog';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
@@ -34,7 +34,6 @@ import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
-  const DEFAULT_ORDER_THRESHOLD = 10;
   const {
     isLoaded,
     isEmpty,
@@ -206,7 +205,7 @@ const SnackInventoryTable = (props) => {
             />
             <div className={styles.cell__pay}>
               <AppButton primary onClick={setAddSnackOpen}>
-                Add New Snack
+                Add Snack
               </AppButton>
             </div>
           </div>
@@ -237,8 +236,8 @@ const SnackInventoryTable = (props) => {
                       className={classNames({
                         [styles.row]: true,
                         [styles.row__selectable]: activeSnacks,
-                        [styles.row__selected]:
-                          snacks[i].snack_id === selectedSnackForBatch
+                        [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
+                        [styles.row__lastChild]: i === rowsPerPage  - 1
                       })}
                       onClick={() => handleOpenRow(snacks[i].snack_id)}
                     >
@@ -252,11 +251,12 @@ const SnackInventoryTable = (props) => {
                         return (
                           <TableCell
                             key={column.id}
-                            className={`${styles.cell} ${styles.cell__small} ${
-                              column.label === 'Status' || column.id === 'snack_name'
-                                ? styles.cell__medium
-                                : null
-                            }`}
+                            className={classNames({
+                              [styles.cell]: true,
+                              [styles.cell__small]: true,
+                              [styles.cell__medium]: column.label === 'Status' || column.id === 'snack_name',
+                              [styles.cell__lastChild__noSelect]: column.id === 'actions'
+                            })}
                             title={column.id === 'snack_name' ? value : null}
                           >
                             {column.id === 'actions'
@@ -275,6 +275,7 @@ const SnackInventoryTable = (props) => {
                     {activeSnacks ? (
                       <SnackBatchesSubTable
                         id={snacks[i]?.snack_id}
+                        isLastChild={(i === rowsPerPage - 1)}
                         snackName={snacks[i]?.snack_name}
                         open={selectedSnackForBatch}
                         colSpan={columns.length}

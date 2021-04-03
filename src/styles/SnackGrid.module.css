@@ -1,6 +1,18 @@
+@value colors: './Colors.module.css';
+@value LIGHT_GREY, DARK_GREY from colors;
+
 .container {
   width: 100%;
   margin: 0;
   padding-top: 30px;
   justify-content: flex-start;
+}
+
+.message {
+  background-color: LIGHT_GREY;
+  color: DARK_GREY;
+  font-size: 1rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 12px;
 }

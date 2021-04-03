@@ -8,7 +8,7 @@
   border-radius: 6px;
   font-size: 1rem;
   padding: 0.25rem 0rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   width: 250px;
 }
 
@@ -17,7 +17,6 @@
 }
 
 .searchBar__left {
-  margin-left: 0.5rem;
   float: left;
   clear: both;
 }
@@ -39,8 +38,15 @@
   font-size: 1rem;
   padding: 0.25rem 0rem;
   width: 250px;
+  margin-right: 1rem;
 }
 
 .snackSearchBar__focused {
   border: 2px solid BASE_BLUE;
+}
+
+@media (max-width: 425px) {
+  .snackSearchBar {
+    width: 200px;
+  }
 }
