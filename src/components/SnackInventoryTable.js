@@ -237,8 +237,8 @@ const SnackInventoryTable = (props) => {
                       className={classNames({
                         [styles.row]: true,
                         [styles.row__selectable]: activeSnacks,
-                        [styles.row__selected]:
-                          snacks[i].snack_id === selectedSnackForBatch
+                        [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
+                        [styles.row__lastChild]: i === rowsPerPage  - 1
                       })}
                       onClick={() => handleOpenRow(snacks[i].snack_id)}
                     >
@@ -276,6 +276,7 @@ const SnackInventoryTable = (props) => {
                     {activeSnacks ? (
                       <SnackBatchesSubTable
                         id={snacks[i]?.snack_id}
+                        isLastChild={(i === rowsPerPage - 1)}
                         snackName={snacks[i]?.snack_name}
                         open={selectedSnackForBatch}
                         colSpan={columns.length}
