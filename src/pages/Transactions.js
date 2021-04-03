@@ -155,7 +155,7 @@ const Transactions = () => {
           onChange={handleChangeTab}
         >
           <Tab disableRipple label='Orders' />
-          <Tab disableRipple label='Payments' />
+          <Tab disableRipple label='Payments History' />
         </Tabs>
         {tabValue === 0 ? (
           <div className={styles.action__button__container}>

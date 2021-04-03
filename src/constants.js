@@ -21,38 +21,31 @@ export const DEFAULT_CATEGORIES = {
 export const CATEGORIES_LIST = [
   {
     id: 1,
-    name: DEFAULT_CATEGORIES.CHOCOLATE,
-    selected: false
+    name: DEFAULT_CATEGORIES.CHOCOLATE
   },
   {
     id: 2,
-    name: DEFAULT_CATEGORIES.CANDY,
-    selected: false
+    name: DEFAULT_CATEGORIES.CANDY
   },
   {
     id: 3,
-    name: DEFAULT_CATEGORIES.CHIPS,
-    selected: false
+    name: DEFAULT_CATEGORIES.CHIPS
   },
   {
     id: 4,
-    name: DEFAULT_CATEGORIES.COOKIES,
-    selected: false
+    name: DEFAULT_CATEGORIES.COOKIES
   },
   {
     id: 5,
-    name: DEFAULT_CATEGORIES.CRACKERS,
-    selected: false
+    name: DEFAULT_CATEGORIES.CRACKERS
   },
   {
     id: 6,
-    name: DEFAULT_CATEGORIES.FRUITS,
-    selected: false
+    name: DEFAULT_CATEGORIES.FRUITS
   },
   {
     id: 7,
-    name: DEFAULT_CATEGORIES.OTHER,
-    selected: false
+    name: DEFAULT_CATEGORIES.OTHER
   }
 ];
 

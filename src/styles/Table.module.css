@@ -5,12 +5,11 @@
 @value DEFAULT_SHADOW from effects;
 
 .header {
-  /* height: 68px; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0 0.7rem 0 1rem;
 }
 
 .primaryHeader {
@@ -67,7 +66,6 @@
 
 .cell__small {
   width: 25px;
-  max-width: 25px;
 }
 
 .cell__medium {
@@ -94,10 +92,14 @@
   padding-right: 2rem;
 }
 
+.cell__lastChild__noSelect {
+  padding-right: 1rem;
+}
+
 .status__bar {
   font-size: 0.7rem;
   font-weight: 700;
-  padding: 5px 14px;
+  padding: 5px 12px;
   border-radius: 24px;
   line-height: 1;
   box-shadow: none;
@@ -168,6 +170,10 @@
   background-color: inherit;
 }
 
+.row {
+  border-bottom: 1px solid LIGHT_GREY;
+}
+
 .row:hover {
   background-color: INNER_LIGHT_GREY;
 }
@@ -178,6 +184,18 @@
 
 .row__selected {
   background-color: INNER_LIGHT_GREY;
+}
+
+.row__sub {
+  border: none;
+}
+
+.row__sub > td {
+  border: none;
+}
+
+.row__lastChild {
+  border: none;
 }
 
 .paper {
@@ -227,8 +245,17 @@
 }
 
 .subtable__container {
+  border: 0;
   background-color: INNER_LIGHT_GREY;
   padding: 0;
+}
+
+.subtable__container > div:first-child {
+  border: 0;
+}
+
+.row__lastChild__sub {
+  border-top: 1px solid LIGHT_GREY;
 }
 
 .subtable {

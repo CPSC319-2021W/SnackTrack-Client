@@ -71,7 +71,7 @@
 }
 
 .description {
-  font-size: 16px;
+  font-size: 0.875rem;
   margin-top: 1.2rem;
   margin-bottom: 0;
   text-overflow: ellipsis;
@@ -84,7 +84,7 @@
 }
 
 .quantity {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
 }
 
@@ -122,11 +122,15 @@
   border-radius: 6px;
 }
 
-.stepper__button:hover {
+.stepper .stepper__button:hover {
   background-color: LIGHT_BLUE_HOVER;
 }
 
-.stepper__button:disabled {
+.stepper .stepper__button:focus {
+  background-color: LIGHT_BLUE_HOVER;
+}
+
+.stepper .stepper__button:disabled {
   color: MID_GREY;
   background-color: LIGHT_GREY;
 }

@@ -205,7 +205,7 @@ const SnackInventoryTable = (props) => {
             />
             <div className={styles.cell__pay}>
               <AppButton primary onClick={setAddSnackOpen}>
-                Add New Snack
+                Add Snack
               </AppButton>
             </div>
           </div>
@@ -236,8 +236,8 @@ const SnackInventoryTable = (props) => {
                       className={classNames({
                         [styles.row]: true,
                         [styles.row__selectable]: activeSnacks,
-                        [styles.row__selected]:
-                          snacks[i].snack_id === selectedSnackForBatch
+                        [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
+                        [styles.row__lastChild]: i === rowsPerPage  - 1
                       })}
                       onClick={() => handleOpenRow(snacks[i].snack_id)}
                     >
@@ -251,11 +251,12 @@ const SnackInventoryTable = (props) => {
                         return (
                           <TableCell
                             key={column.id}
-                            className={`${styles.cell} ${styles.cell__small} ${
-                              column.label === 'Status' || column.id === 'snack_name'
-                                ? styles.cell__medium
-                                : null
-                            }`}
+                            className={classNames({
+                              [styles.cell]: true,
+                              [styles.cell__small]: true,
+                              [styles.cell__medium]: column.label === 'Status' || column.id === 'snack_name',
+                              [styles.cell__lastChild__noSelect]: column.id === 'actions'
+                            })}
                             title={column.id === 'snack_name' ? value : null}
                           >
                             {column.id === 'actions'
@@ -274,6 +275,7 @@ const SnackInventoryTable = (props) => {
                     {activeSnacks ? (
                       <SnackBatchesSubTable
                         id={snacks[i]?.snack_id}
+                        isLastChild={(i === rowsPerPage - 1)}
                         snackName={snacks[i]?.snack_name}
                         open={selectedSnackForBatch}
                         colSpan={columns.length}
