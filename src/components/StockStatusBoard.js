@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card } from '@material-ui/core';
 
 import AppButton from './AppButton';
@@ -6,7 +6,6 @@ import StockStatusBar from './StockStatusBar';
 import styles from '../styles/StockStatus.module.css';
 
 const StockStatusBoard = ({ snacks }) => {
-  const [outOfStock, setOutOfStock] = useState([]);
   const [showAll, setShowAll] = useState(false);
 
   const handleShowAll = () => setShowAll(!showAll);
@@ -28,17 +27,13 @@ const StockStatusBoard = ({ snacks }) => {
   };
 
   const renderOutOfStock = () => {
+    const outOfStock = snacks.filter((snack) => snack.quantity === 0);
     return (
       outOfStock.length > 0
         ? outOfStock.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
         : renderPlaceholder()
     );
   };
-
-  useEffect(() => {
-    const filteredSnacks = snacks.filter((snack) => snack.quantity === 0);
-    setOutOfStock(filteredSnacks);
-  }, [outOfStock]);
 
   return (
     <Card variant='outlined' className={styles.board__container}>
