@@ -96,3 +96,8 @@
     justify-content: flex-end;
     padding-bottom: 1rem;
 }
+
+.top_button__container {
+  display: flex;
+  align-items: center;
+}

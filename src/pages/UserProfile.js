@@ -154,7 +154,7 @@ const UserProfile = () => {
           ? (
             <div className={styles.top_button__container}>
               <AppButton
-                outline
+                cancel
                 onClick={handleOpenDialog}
               >
                 Delete User
