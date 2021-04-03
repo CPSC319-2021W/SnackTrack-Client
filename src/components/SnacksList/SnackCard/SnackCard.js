@@ -77,6 +77,11 @@ const SnackCard = (props) => {
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = category?.defaultImage;
+  };
+
   const stockStatusLabel = (quantity, orderThreshold) => {
     orderThreshold = orderThreshold || DEFAULT_ORDER_THRESHOLD;
     let statusLabel;
@@ -123,6 +128,7 @@ const SnackCard = (props) => {
             title={snack_name}
             component='img'
             src={image}
+            onError={handleImageError}
           />
         </div>
         <div className={styles.label}>

@@ -37,6 +37,11 @@ const OrderSnackDialog = (props) => {
     }
   };
 
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = category?.defaultImage;
+  };
+
   useEffect(() => {
     const qty = parseInt(value);
     if (qty === 0 || qty > selectedSnack?.quantity) {
@@ -72,7 +77,12 @@ const OrderSnackDialog = (props) => {
         <Divider />
         <div className={styles.body}>
           <div className={styles.image}>
-            <CardMedia title={snack_name} component='img' src={image} />
+            <CardMedia
+              title={snack_name}
+              component='img'
+              src={image}
+              onError={handleImageError}
+            />
           </div>
           <div>
             <p className={styles.description}>{description}</p>
