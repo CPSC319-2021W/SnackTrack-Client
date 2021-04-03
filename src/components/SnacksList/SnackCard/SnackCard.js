@@ -6,10 +6,11 @@ import {
 } from '../../../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { CATEGORIES_LIST, TRANSACTION_TYPES } from '../../../constants';
 import React, { useState } from 'react';
 import AppButton from '../../AppButton';
 import NumberFormat from 'react-number-format';
-import { TRANSACTION_TYPES } from '../../../constants';
+// import { TRANSACTION_TYPES } from '../../../constants';
 import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
@@ -24,12 +25,16 @@ const SnackCard = (props) => {
     snack_name,
     price,
     quantity,
-    order_threshold
+    order_threshold,
+    snack_type_id
   } = props.snack;
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const DEFAULT_ORDER_THRESHOLD = 10;
   const [isLoading, setIsLoading] = useState(false);
+
+  const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
+  const image = image_uri || category?.defaultImage;
 
   const clearFilters = () => {
     dispatch(deselectAllFilters());
@@ -122,7 +127,7 @@ const SnackCard = (props) => {
             })}
             title={snack_name}
             component='img'
-            src={image_uri}
+            src={image}
           />
         </div>
         <div className={styles.label}>

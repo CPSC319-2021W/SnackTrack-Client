@@ -23,6 +23,7 @@ const OrderSnackDialog = (props) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
   const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
+  const image = image_uri || category?.defaultImage;
 
   const increaseQuantity = () => {
     if (quantity > value) {
@@ -71,7 +72,7 @@ const OrderSnackDialog = (props) => {
         <Divider />
         <div className={styles.body}>
           <div className={styles.image}>
-            <CardMedia title={snack_name} component='img' src={image_uri} />
+            <CardMedia title={snack_name} component='img' src={image} />
           </div>
           <div>
             <p className={styles.description}>{description}</p>
