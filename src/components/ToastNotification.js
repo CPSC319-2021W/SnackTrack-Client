@@ -15,7 +15,7 @@ const ToastNotification = (props) => {
   });
 
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={onClose}>
+    <Snackbar className={styles.container} open={open} autoHideDuration={6000} onClose={onClose}>
       <Alert className={classes} severity={type} onClose={onClose}>
         {message}
       </Alert>

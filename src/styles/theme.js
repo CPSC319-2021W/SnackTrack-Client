@@ -178,7 +178,7 @@ export const theme = createMuiTheme({
           height: '4px',
           borderRadius: '4px',
           width: '100%',
-          maxWidth: '60px',
+          maxWidth: '54px',
           backgroundColor: BASE_RED
         }
       }
@@ -187,7 +187,7 @@ export const theme = createMuiTheme({
       root: {
         color: HEADER_GREY,
         fontWeight: 600,
-        fontSize: '1.05rem',
+        fontSize: '1rem',
         textTransform: 'none'
       }
     },
@@ -230,6 +230,9 @@ export const theme = createMuiTheme({
         width: '20px',
         opacity: 0.75
       }
+    },
+    MuiSnackbar: {
+      anchorOriginBottomCenter: '12px'
     }
   },
   props: {

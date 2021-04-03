@@ -58,6 +58,11 @@
   min-height: 60px;
 }
 
+.search__container {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 540px) {
   .base {
     padding-top: 0;
@@ -75,7 +80,7 @@
   }
 
   .search__container {
-    display: flex;
+    justify-content: space-between;
   }
 }
 
