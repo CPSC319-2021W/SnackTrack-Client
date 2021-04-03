@@ -1,12 +1,14 @@
+import React, { useState } from 'react';
+
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../../../redux/features/notifications/notificationsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 
-import React, { useState } from 'react';
 import AppButton from '../../AppButton';
 import NumberFormat from 'react-number-format';
 import { TRANSACTION_TYPES } from '../../../constants';
