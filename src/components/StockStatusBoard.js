@@ -10,10 +10,10 @@ const StockStatusBoard = ({ snacks }) => {
 
   const handleShowAll = () => setShowAll(!showAll);
 
-  const renderPlaceholder = () => {
+  const renderPlaceholder = (all) => {
     return (
       <div className={styles.placeholder}>
-        No snacks found.
+        No snacks {all ? 'found' : 'out of stock'}.
       </div>
     );
   };
@@ -22,7 +22,7 @@ const StockStatusBoard = ({ snacks }) => {
     return (
       snacks.length > 0
         ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
-        : renderPlaceholder()
+        : renderPlaceholder(true)
     );
   };
 
@@ -31,7 +31,7 @@ const StockStatusBoard = ({ snacks }) => {
     return (
       outOfStock.length > 0
         ? outOfStock.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
-        : renderPlaceholder()
+        : renderPlaceholder(false)
     );
   };
 
