@@ -1,3 +1,11 @@
+import candyPlaceholder from './assets/placeholders/candy.png';
+import chipsPlaceholder from './assets/placeholders/chips.png';
+import chocolatePlaceholder from './assets/placeholders/chocolate.png';
+import cookiesPlaceholder from './assets/placeholders/cookies.png';
+import crackersPlaceholder from './assets/placeholders/crackers.png';
+import fruitsPlaceholder from './assets/placeholders/fruits.png';
+import otherPlaceholder from './assets/placeholders/other.png';
+
 export const ROUTES = {
   LOGIN: '/login',
   COMMON: '/common',
@@ -21,31 +29,38 @@ export const DEFAULT_CATEGORIES = {
 export const CATEGORIES_LIST = [
   {
     id: 1,
-    name: DEFAULT_CATEGORIES.CHOCOLATE
+    name: DEFAULT_CATEGORIES.CHOCOLATE,
+    defaultImage: chocolatePlaceholder
   },
   {
     id: 2,
-    name: DEFAULT_CATEGORIES.CANDY
+    name: DEFAULT_CATEGORIES.CANDY,
+    defaultImage: candyPlaceholder
   },
   {
     id: 3,
-    name: DEFAULT_CATEGORIES.CHIPS
+    name: DEFAULT_CATEGORIES.CHIPS,
+    defaultImage: chipsPlaceholder
   },
   {
     id: 4,
-    name: DEFAULT_CATEGORIES.COOKIES
+    name: DEFAULT_CATEGORIES.COOKIES,
+    defaultImage: cookiesPlaceholder
   },
   {
     id: 5,
-    name: DEFAULT_CATEGORIES.CRACKERS
+    name: DEFAULT_CATEGORIES.CRACKERS,
+    defaultImage: crackersPlaceholder
   },
   {
     id: 6,
-    name: DEFAULT_CATEGORIES.FRUITS
+    name: DEFAULT_CATEGORIES.FRUITS,
+    defaultImage: fruitsPlaceholder
   },
   {
     id: 7,
-    name: DEFAULT_CATEGORIES.OTHER
+    name: DEFAULT_CATEGORIES.OTHER,
+    defaultImage: otherPlaceholder
   }
 ];
 

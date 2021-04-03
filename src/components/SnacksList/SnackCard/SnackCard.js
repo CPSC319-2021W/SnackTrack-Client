@@ -11,7 +11,7 @@ import {
 } from '../../../redux/features/notifications/notificationsSlice';
 import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 
-import { DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../../constants';
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../../constants';
 import AppButton from '../../AppButton';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
@@ -26,11 +26,15 @@ const SnackCard = (props) => {
     snack_name,
     price,
     quantity,
-    order_threshold
+    order_threshold,
+    snack_type_id
   } = props.snack;
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isLoading, setIsLoading] = useState(false);
+
+  const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
+  const image = image_uri || category?.defaultImage;
 
   const updateSnackQuantity = (snackId, newQuantity) => {
     dispatch(setQuantity({ snackId, newQuantity }));
@@ -71,6 +75,11 @@ const SnackCard = (props) => {
     if (quantity > 0) {
       onClick(snack_id);
     }
+  };
+
+  const handleImageError = (e) => {
+    e.target.onerror = null;
+    e.target.src = category?.defaultImage;
   };
 
   const stockStatusLabel = (quantity, orderThreshold) => {
@@ -118,7 +127,8 @@ const SnackCard = (props) => {
             })}
             title={snack_name}
             component='img'
-            src={image_uri}
+            src={image}
+            onError={handleImageError}
           />
         </div>
         <div className={styles.label}>

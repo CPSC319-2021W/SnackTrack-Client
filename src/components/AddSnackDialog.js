@@ -89,13 +89,17 @@ const AddSnackDialog = (props) => {
     initialValues: initialState,
     onSubmit: async (values, actions) => {
       setIsSubmitLoading(true);
-      const imageResponse = await saveImage(snackImageUploadData);
+      let imageResponse = '';
+      if (snackImageUploadData) {
+        const { url } = await saveImage(snackImageUploadData);
+        imageResponse = url;
+      }
       const snackRequest = {
         last_updated_by: username,
         snack_name: values.snackname,
         snack_type_id: parseInt(category),
         description: values.description,
-        image_uri: imageResponse.url,
+        image_uri: imageResponse,
         price: Number(values.price) * 100,
         quantity: values.quantity === '' ? 0 : parseInt(values.quantity),
         order_threshold: values.reorder === '' ? null : values.reorder,
@@ -235,7 +239,7 @@ const AddSnackDialog = (props) => {
                 primary
                 type='submit'
                 loading={isSubmitLoading}
-                disabled={!addForm.isValid || !category || !snackImageUploadData}
+                disabled={!addForm.isValid || !category}
                 onClick={addForm.handleSubmit}
               >
                 Submit
