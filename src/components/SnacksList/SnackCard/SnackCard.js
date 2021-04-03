@@ -10,7 +10,6 @@ import { CATEGORIES_LIST, TRANSACTION_TYPES } from '../../../constants';
 import React, { useState } from 'react';
 import AppButton from '../../AppButton';
 import NumberFormat from 'react-number-format';
-// import { TRANSACTION_TYPES } from '../../../constants';
 import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
