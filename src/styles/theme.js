@@ -230,9 +230,6 @@ export const theme = createMuiTheme({
         width: '20px',
         opacity: 0.75
       }
-    },
-    MuiSnackbar: {
-      anchorOriginBottomCenter: '12px'
     }
   },
   props: {
