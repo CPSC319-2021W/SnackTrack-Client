@@ -2,8 +2,9 @@ import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DateTime } from 'luxon';
 
+import { DEFAULT_ORDER_THRESHOLD, GREETING } from '../constants';
 import { getSnacks, getSuggestions } from '../services/SnacksService';
-import { GREETING } from '../constants';
+import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import dashStyles from '../styles/Dashboard.module.css';
 import { setSuggestions } from '../redux/features/snacks/snacksSlice';
@@ -23,14 +24,49 @@ const greeting = () => {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { firstName } = useSelector((state) => state.usersReducer.profile);
-  const [snacks, setSnacks] = useState(null);
+  const [snacks, setSnacks] = useState([]);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
+
+  const sortSnacks = (snacks) => {
+    return snacks.sort((a, b) => {
+      const quantityA = a.quantity;
+      const reorderPointA = a.order_threshold || DEFAULT_ORDER_THRESHOLD;
+      const quantityLessReorderA = quantityA - reorderPointA;
+      
+      const quantityB = b.quantity;
+      const reorderPointB = b.order_threshold || DEFAULT_ORDER_THRESHOLD;
+      const quantityLessReorderB = quantityB - reorderPointB;
+
+      if (quantityA === 0 && quantityB === 0) {
+        return 0;
+      } else if (quantityA === 0) {
+        return -1;
+      } else if (quantityB === 0) {
+        return 1;
+      } else if (quantityLessReorderA < 0 && quantityLessReorderB < 0) {
+        if (quantityA < quantityB) {
+          return -1;
+        } else if (quantityA > quantityB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      } else if (quantityLessReorderA < quantityLessReorderB) {
+        return -1;
+      } else if (quantityLessReorderA > quantityLessReorderB) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+  };
 
   useEffect(async () => {
     const snacksResponse = await getSnacks(false);
     const { snacks } = snacksResponse;
-    setSnacks(snacks);
+    const sortedSnacks = sortSnacks(snacks);   
+    setSnacks(sortedSnacks);
 
     const suggestionsResponse = await getSuggestions();
     const { suggestions } = suggestionsResponse;
@@ -51,7 +87,7 @@ const Dashboard = () => {
       }  
     }
   }, [snacks]);
-    
+
   return (
     <div className={styles.base}>
       <div className={styles.header}>
@@ -61,7 +97,10 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
-      <SuggestionsBox />
+      <div className={dashStyles.elements__container}>
+        <SuggestionsBox />
+        <StockStatusBoard snacks={snacks} />
+      </div>
     </div>
   );
 };

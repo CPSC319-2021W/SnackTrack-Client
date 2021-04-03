@@ -1,4 +1,9 @@
+import React, { useState } from 'react';
+
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
+import NumberFormat from 'react-number-format';
+import classNames from 'classnames';
+
 import { deselectAllFilters, setQuantity } from '../../../redux/features/snacks/snacksSlice';
 import {
   setApiResponse,
@@ -6,11 +11,8 @@ import {
 } from '../../../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import React, { useState } from 'react';
+import { DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../../constants';
 import AppButton from '../../AppButton';
-import NumberFormat from 'react-number-format';
-import { TRANSACTION_TYPES } from '../../../constants';
-import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
 import { setBalance } from '../../../redux/features/users/usersSlice';
@@ -28,7 +30,6 @@ const SnackCard = (props) => {
   } = props.snack;
   const { onClick } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
-  const DEFAULT_ORDER_THRESHOLD = 10;
   const [isLoading, setIsLoading] = useState(false);
 
   const clearFilters = () => {
