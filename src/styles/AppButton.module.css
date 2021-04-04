@@ -144,4 +144,8 @@
         font-size: 0.75rem;
         padding: 12px 6px;
     }
+
+    .loading {
+        padding: 6px 12px;
+    }
 }
