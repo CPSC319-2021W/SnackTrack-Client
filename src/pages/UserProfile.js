@@ -113,6 +113,10 @@ const UserProfile = () => {
     updateProfileBalance(amount);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
+
   useEffect(async () => {
     try {
       const userResponse = await getUserById(id);
@@ -200,7 +204,7 @@ const UserProfile = () => {
         open={isDeleteDialogOpen}
         title={'Wait a sec!'}
         submitText={'Yes, delete'}
-        declineText={'No, keep them'}
+        declineText={'No, keep'}
         handleClose={handleCloseDialog}
         onDecline={handleCloseDialog}
         onSubmit={handleDelete}

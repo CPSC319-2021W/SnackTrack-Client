@@ -11,6 +11,24 @@
     padding-top: 100px;
 }
 
+.message__container {
+    max-width: 80%;
+    margin: auto;
+}
+
+.fallback__mainMessage {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.fallback__subMessage {
+    font-size: 1rem;
+}
+
+.fallback__disclaimer {
+    font-size: 0.75rem;
+}
+
 @media (max-width: 425px) {
     .content {
         padding-bottom: 40px;
