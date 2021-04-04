@@ -50,6 +50,7 @@ const UserProfile = () => {
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
@@ -65,9 +66,7 @@ const UserProfile = () => {
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getUserPayments(id, page, rowsPerPage);
-    paymentResponse instanceof Error
-      ? openToastNotification(true)
-      : setPaymentsResponse(paymentResponse);
+    setPaymentsResponse(paymentResponse);
   };
 
   const handleOrderChangePage = async (page) => {
@@ -102,8 +101,15 @@ const UserProfile = () => {
   };
 
   const handleDelete = async () => {
-    await deleteUser(id);
-    handleGoBack();
+    try {
+      setIsDeleteLoading(true);
+      await deleteUser(id);
+      setIsDeleteLoading(false);
+      handleGoBack();
+      handleApiResponse('USER_DELETE_SUCCESS');
+    } catch (e) {
+      handleApiResponse('ERROR');
+    }
   };
 
   const resetAll = async (newBalance) => {
@@ -199,12 +205,13 @@ const UserProfile = () => {
         open={isDeleteDialogOpen}
         title={'Wait a sec!'}
         submitText={'Yes, delete'}
-        declineText={'No, keep them'}
+        declineText={'No, keep'}
+        isSubmitLoading={isDeleteLoading}
         handleClose={handleCloseDialog}
         onDecline={handleCloseDialog}
         onSubmit={handleDelete}
       >
-        Are you sure you want to delete&nbsp;
+        Are you sure you want to delete
         <span className={dialogStyles.text__emp}>
           {user?.first_name} {user?.last_name}
         </span>

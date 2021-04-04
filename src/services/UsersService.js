@@ -53,7 +53,6 @@ const getUserPayments = async (userId, page, rowsPerPage) => {
   } catch (err) {
     // TODO: Handle 404
     console.log(err.toString());
-    return new Error(err.message);
   }
 };
 

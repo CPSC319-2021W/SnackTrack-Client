@@ -89,6 +89,10 @@ export const NOTIFICATIONS = {
   CLAIM_ERROR: {
     type: 'error',
     message: 'Please approve or decline pending orders before making new purchases.'
+  },
+  USER_DELETE_SUCCESS: {
+    type: 'success',
+    message: 'User successfully deleted.'
   }
 };
 
