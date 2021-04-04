@@ -53,9 +53,7 @@ const UserProfile = () => {
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  const { userId } = useSelector(
-    (state) => state.usersReducer.profile
-  );
+  const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -91,8 +89,8 @@ const UserProfile = () => {
     await handlePaymentChangePage(0);
   };
 
-  const updateProfileBalance = (amount) => {
-    setUser({ ...user, balance: user.balance - amount });
+  const updateProfileBalance = (newBalance) => {
+    setUser({ ...user, balance: newBalance });
   };
 
   const handleOpenDialog = () => {
@@ -108,9 +106,9 @@ const UserProfile = () => {
     handleGoBack();
   };
 
-  const resetAll = async (amount) => {
+  const resetAll = async (newBalance) => {
     handleMakePayment();
-    updateProfileBalance(amount);
+    updateProfileBalance(newBalance);
   };
 
   useEffect(async () => {
@@ -175,6 +173,7 @@ const UserProfile = () => {
                 isEmpty={ordersResponse.transactions.length === 0}
                 data={ordersResponse}
                 rowsPerPage={rowsPerPage}
+                balance={user?.balance}
                 updateProfileBalance={updateProfileBalance}
                 onHandleApiResponse={handleApiResponse}
                 onChangePage={handleOrderChangePage}
@@ -207,7 +206,7 @@ const UserProfile = () => {
       >
         Are you sure you want to delete&nbsp;
         <span className={dialogStyles.text__emp}>
-          { user?.first_name } { user?.last_name }
+          {user?.first_name} {user?.last_name}
         </span>
         ?
       </ConfirmationDialog>
