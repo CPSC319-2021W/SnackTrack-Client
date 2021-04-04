@@ -20,7 +20,7 @@ const Orders = (props) => {
   } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
-  const { username } = useSelector((state) => state.usersReducer.profile);
+  const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
@@ -52,7 +52,7 @@ const Orders = (props) => {
     if (selectedOrders.length > 0) {
       setIsPayLoading(true);
       try {
-        await makePayment(userId, selectedOrders, subtotalAmount, username);
+        await makePayment(userId, selectedOrders, subtotalAmount, emailAddress);
         await onMakePayment();
         onHandleApiResponse('PAYMENT_SUCCESS');
         updateProfileBalance(subtotalAmount);

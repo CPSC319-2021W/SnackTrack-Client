@@ -16,7 +16,7 @@ const Users = () => {
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'username']
+    keys: ['first_name', 'last_name', 'email_address']
   };
 
   useEffect(async () => {
@@ -46,11 +46,13 @@ const Users = () => {
         <div className={styles.searchbar__container}>
           <UserSearchBar />
         </div>
-        { isLoaded ? renderList() : (
+        {isLoaded ? (
+          renderList()
+        ) : (
           <div className={adminStyles.list__container}>
             <CircularProgress color='secondary' size={30} thickness={5} />
           </div>
-        ) }
+        )}
       </div>
     </div>
   );

@@ -33,7 +33,6 @@ const isCommonLogin = (profile) => {
     userId,
     firstName,
     lastName,
-    username,
     emailAddress,
     imageUri,
     balance,
@@ -43,7 +42,6 @@ const isCommonLogin = (profile) => {
     userId &&
     firstName &&
     lastName &&
-    !username &&
     !emailAddress &&
     !imageUri &&
     !balance &&
