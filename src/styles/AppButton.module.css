@@ -133,6 +133,10 @@
     .base {
         padding: 12px 10px;
     }
+  
+    .loading {
+        padding: 7px 12px;
+    }
 }
 
 @media (max-width: 348px) {
