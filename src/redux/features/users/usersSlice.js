@@ -5,7 +5,6 @@ import { getUserById } from '../../../services/UsersService';
 const INITIAL_STATE = {
   profile: {
     userId: null,
-    username: null,
     emailAddress: null,
     firstName: null,
     lastName: null,
@@ -36,7 +35,6 @@ const usersSlice = createSlice({
     setUser: (state, action) => {
       const {
         user_id,
-        username,
         email_address,
         first_name,
         last_name,
@@ -46,7 +44,6 @@ const usersSlice = createSlice({
       } = action.payload;
       state.profile = {
         userId: user_id,
-        username: username,
         emailAddress: email_address,
         firstName: first_name,
         lastName: last_name,
@@ -60,7 +57,6 @@ const usersSlice = createSlice({
     [getUser.fulfilled]: (state, action) => {
       const {
         user_id,
-        username,
         email_address,
         first_name,
         last_name,
@@ -70,7 +66,6 @@ const usersSlice = createSlice({
         is_authenticated
       } = action.payload;
       state.userId = user_id;
-      state.username = username;
       state.emailAddress = email_address;
       state.firstName = first_name;
       state.lastName = last_name;
@@ -81,7 +76,6 @@ const usersSlice = createSlice({
     },
     [getUser.rejected]: (state, action) => {
       state.userId = null;
-      state.username = null;
       state.emailAddress = null;
       state.firstName = null;
       state.lastName = null;
