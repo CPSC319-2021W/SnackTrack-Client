@@ -55,7 +55,7 @@
     color: WHITE;
 }
 
-.primary:disabled, .secondary:disabled {
+.base:disabled  {
     background-color: LIGHT_GREY;
     color: MID_GREY;
 }
@@ -89,8 +89,55 @@
     margin-right: 0.5rem;
 }
 
-@media (max-width: 425px) {
+.mobile.primary:hover {
+    background-color: BASE_BLUE;
+}
+
+.mobile.primary:active {
+    background-color: DARK_BLUE;
+}
+
+.mobile.secondary:hover {
+    background-color: LIGHT_BLUE;
+    color: BASE_BLUE;
+}
+
+.mobile.secondary:active {
+    background-color: LIGHT_BLUE_HOVER;
+    color: DARK_BLUE;
+}
+
+.mobile.outline:hover {
+    background-color: transparent;
+    color: BASE_BLUE;
+    border: 2px solid BASE_BLUE;
+}
+
+.mobile.outline:active {
+    background-color: SOFT_BLUE;
+    color: DARK_BLUE;
+    border: 2px solid DARK_BLUE;
+}    
+
+.mobile.cancel:hover {
+    background-color: BASE_RED;
+    color: WHITE;
+}
+
+.mobile.cancel:active {
+    background-color: BASE_RED_HOVER;
+    color: WHITE;
+}
+
+@media (max-width: 768px) {
     .base {
         padding: 12px 10px;
+    }
+}
+
+@media (max-width: 348px) {
+    .base {
+        font-size: 0.75rem;
+        padding: 12px 6px;
     }
 }
