@@ -86,6 +86,10 @@
   padding: 6px;
 }
 
+.calendar__adornment > div:first-child {
+  width: 100%;
+}
+
 @media (max-width: 590px) {
   .input__group {
     width: 100%;

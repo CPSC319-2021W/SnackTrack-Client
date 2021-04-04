@@ -84,11 +84,11 @@ const EditSnackDialog = (props) => {
     initialValues: initialState,
     onSubmit: async (values, actions) => {
       setIsSubmitLoading(true);
-      let imageUri;
+      let imageUri = '';
       if (snackImageUploadData) {
-        const imageResponse = await saveImage(snackImageUploadData);
-        imageUri = imageResponse.url;
-      } else {
+        const { url } = await saveImage(snackImageUploadData);
+        imageUri = url;
+      } else if (selectedSnackToEdit.image_uri) {
         imageUri = selectedSnackToEdit.image_uri;
       }
       const snackRequest = {

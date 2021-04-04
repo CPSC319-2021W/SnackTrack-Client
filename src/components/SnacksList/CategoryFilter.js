@@ -9,7 +9,8 @@ import { CATEGORIES_LIST } from '../../constants';
 import styles from '../../styles/Category.module.css';
 
 const CategoryFilter = ({ selectedFilters }) => {
-  const [categories, setCategories] = useState(CATEGORIES_LIST);  
+  const categoriesMapped = CATEGORIES_LIST.map((category) => ({ ...category, 'selected': false }));
+  const [categories, setCategories] = useState(categoriesMapped);  
   const dispatch = useDispatch();
 
   const addFilter = (category) => dispatch(addCategory(category));
@@ -21,7 +22,7 @@ const CategoryFilter = ({ selectedFilters }) => {
     if (categories[i].selected) {
       addFilter(categories[i].id);
     } else {
-      removeFilter(categories[i].id);  
+      removeFilter(categories[i].id);
     }
   };
 

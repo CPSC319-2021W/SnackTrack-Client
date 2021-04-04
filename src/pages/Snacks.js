@@ -6,6 +6,7 @@ import {
 } from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import AppButton from '../components/AppButton';
 import { NOTIFICATIONS } from '../constants';
 import PendingOrdersDialog from '../components/PendingOrdersDialog';
 import SnackSearchBar from '../components/SnackSearchBar';
@@ -15,6 +16,7 @@ import ToastNotification from '../components/ToastNotification';
 import { getPendingOrders } from '../services/TransactionsService';
 import { isAuthenticated } from '../helpers/AuthHelper';
 import { makeSuggestion } from '../services/SnacksService';
+import { setSnackSearchValue } from '../redux/features/searchbar/searchbarSlice';
 import styles from '../styles/Page.module.css';
 
 const Snacks = () => {
@@ -30,6 +32,7 @@ const Snacks = () => {
   const [suggestionText, setSuggestionText] = useState('');
   const [suggestionError, setSuggestionError] = useState(null);
   const [isSuggestionLoading, setIsSuggestionLoading] = useState(false);
+  const [searchValue, updateSearchValue] = useState('');
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -86,12 +89,15 @@ const Snacks = () => {
     openToastNotification(true);
   };
 
+  const handleClearFilters = () => {
+    dispatch(deselectAllFilters());
+    dispatch(setSnackSearchValue(''));
+    updateSearchValue('');
+  };
+
   useEffect(() => {
     dispatch(fetchSnacks(true));
-    return () => {
-      dispatch(deselectAllFilters());
-    };
-  }, [dispatch]);
+  }, []);
 
   useEffect(async () => {
     const token = isAuthenticated();
@@ -108,7 +114,16 @@ const Snacks = () => {
     <div className={styles.base}>
       <div className={styles.header}>
         <div className={styles.search__container}>
-          <SnackSearchBar />
+          <SnackSearchBar
+            searchValue={searchValue}
+            onChangeSearchValue={updateSearchValue}
+          />
+          <AppButton
+            cancel
+            onClick={handleClearFilters}
+          >
+            Clear Filters
+          </AppButton>
         </div>
         <div className={styles.suggestBox}>
           <p className={styles.suggestBoxQ}>{"Can't find what you want?"}&nbsp;</p>

@@ -149,6 +149,10 @@
     margin: 0;
   }
 
+  .balance__text {
+    text-align: center;
+  }
+
   .balance__value__large {
     text-align: center;
   }

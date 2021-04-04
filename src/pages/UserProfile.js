@@ -148,13 +148,18 @@ const UserProfile = () => {
           </div>
           Back to Users List
         </h5>
-        {Number(id) !== userId ? (
-          <div className={styles.top_button__container}>
-            <AppButton outline onClick={handleOpenDialog}>
-              Delete User
-            </AppButton>
-          </div>
-        ) : null}
+        { Number(id) !== userId
+          ? (
+            <div className={styles.top_button__container}>
+              <AppButton
+                cancel
+                onClick={handleOpenDialog}
+              >
+                Delete User
+              </AppButton>
+            </div>
+          ) : null
+        }
       </div>
       {userNotFound ? (
         <UserProfileNotFound />

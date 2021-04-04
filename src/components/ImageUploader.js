@@ -54,7 +54,10 @@ const ImageUploader = (props) => {
         className={styles.imageUploadGreyBox}
         onClick={() => imageUploader.current.click()}
       >
-        <img ref={uploadedImage} src={src} className={styles.imageUploadBox} />
+        { src
+          ? <img ref={uploadedImage} src={src} className={styles.imageUploadBox} />
+          : null
+        }
       </div>
       <input
         ref={imageUploader}

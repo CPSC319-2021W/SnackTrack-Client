@@ -61,7 +61,7 @@
     "react/jsx-equals-spacing": [1, "never"],
     "react/jsx-closing-tag-location": 1,
     "react/require-default-props": 1,
-    "react/forbid-dom-props": [1, { "forbid": ["style"] }],
+    "react/forbid-dom-props": 0,
     "react/display-name": 0,
     "react/jsx-sort-props": [
       1,
