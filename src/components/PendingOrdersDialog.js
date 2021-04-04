@@ -24,7 +24,7 @@ import styles from '../styles/Table.module.css';
 const PendingOrdersDialog = (props) => {
   const dispatch = useDispatch();
   const { pendingOrders, open, handleOnClose, handleCloseNotAllowed } = props;
-  const { balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId, isAdmin, balance } = useSelector((state) => state.usersReducer.profile);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [isApproveDisabled, setIsApproveDisabled] = useState(true);
@@ -110,7 +110,7 @@ const PendingOrdersDialog = (props) => {
         (order) => selectedOrders.includes(order.transaction_id)
       );
       const finalTotal = selected.reduce((total, order) => total + order.transaction_amount, 0);
-      claimPendingOrders(selectedOrders, declinedOrders);
+      claimPendingOrders(userId, isAdmin, selectedOrders, declinedOrders);
       updateBalance(balance + finalTotal);
     } catch (err) {
       console.log(err);
@@ -126,7 +126,7 @@ const PendingOrdersDialog = (props) => {
     setIsDeclineLoading(true);
     try {
       const pendingOrderIds = getAllPendingOrderIds();
-      claimPendingOrders([], pendingOrderIds);
+      claimPendingOrders(userId, isAdmin, [], pendingOrderIds);
     } catch (err) {
       console.log(err);
       console.log('All orders declined!');

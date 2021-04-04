@@ -45,11 +45,13 @@ const makePayment = async (userId, transactionIds, paymentAmount, processor, pay
   return data;
 };
 
-const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
+const claimPendingOrders = (userId, isAdmin, approvedOrderIds, declinedOrderIds) => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
   approvedOrderIds.forEach(async (id) => {
     try {
       await httpClient.put(`/transactions/${id}`, {
+        user_id: userId,
+        is_admin: isAdmin,
         transaction_type_id: 1
       }, authHeader);
     } catch (err) {
@@ -59,6 +61,8 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
   declinedOrderIds.forEach(async (id) => {
     try {
       await httpClient.put(`/transactions/${id}`, {
+        user_id: userId,
+        is_admin: isAdmin,
         transaction_type_id: 4
       }, authHeader);
     } catch (err) {

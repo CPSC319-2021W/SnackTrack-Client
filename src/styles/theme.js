@@ -228,7 +228,9 @@ export const theme = createMuiTheme({
     MuiIconButton: {
       label: {
         width: '20px',
-        opacity: 0.75
+        '& > #calendar_svg': {
+          opacity: 0.75
+        }
       }
     }
   },
