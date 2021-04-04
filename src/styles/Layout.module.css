@@ -1,3 +1,6 @@
+@value colors: './Colors.module.css';
+@value BASE_BLUE, DARK_BLUE from colors;
+
 .base {
     min-height: calc(100vh - 100px);
     text-align: center;
@@ -27,6 +30,16 @@
 
 .fallback__disclaimer {
     font-size: 0.75rem;
+}
+
+.link {
+    font-weight: 600;
+    color: BASE_BLUE;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: DARK_BLUE;
 }
 
 @media (max-width: 425px) {
