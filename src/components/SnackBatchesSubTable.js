@@ -79,7 +79,7 @@ const SnackBatchesSubTable = (props) => {
   ];
 
   return (
-    <TableRow class={isLastChild && open === id ? styles.row__lastChild__sub : null}>
+    <TableRow className={isLastChild && open === id ? styles.row__lastChild__sub : null}>
       <TableCell className={styles.subtable__container} colSpan={colSpan}>
         <Collapse in={open === id} timeout='auto'>
           <Table className={styles.subtable} aria-label='batches'>
