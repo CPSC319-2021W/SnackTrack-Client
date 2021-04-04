@@ -28,6 +28,7 @@
   bottom: 0.5rem;
   left: 0.3rem;
   margin-left: 4px;
+  opacity: 0.25;
 }
 
 .snackSearchBar {
