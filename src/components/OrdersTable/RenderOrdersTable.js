@@ -10,11 +10,11 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
+import React, { useState } from 'react';
 import { isCancelled, isPaid, isPaymentPending } from '../../helpers/OrdersHelpers';
+
 import AppButton from '../AppButton';
 import ConfirmationDialog from '../ConfirmationDialog';
-
-import React, { useState } from 'react';
 import classNames from 'classnames';
 import dialogStyles from '../../styles/Dialog.module.css';
 import { DateTime as dt } from 'luxon';
@@ -32,14 +32,13 @@ const RenderOrdersTable = (props) => {
     onSelectOrder,
     checkIsSelected,
     checkIsAllSelected,
+    balance,
     onPayForOrders,
     onCancelOrder,
-    payForOrdersDisabled,
     isCheckboxDisabled,
     isPayLoading
   } = props;
   const { transactions, current_page, total_rows, total_pages } = data;
-
   const [orderToCancel, setOrderToCancel] = useState(null);
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false);
   const [isCancelLoading, setIsCancelLoading] = useState(false);
@@ -59,6 +58,14 @@ const RenderOrdersTable = (props) => {
     onCancelOrder(transaction_id);
     setIsCancelLoading(false);
     setIsCancelDialogOpen(false);
+  };
+
+  const handlePay = async () => {
+    if (selectedOrders.length === 0) {
+      await onPayForOrders(true);
+    } else {
+      await onPayForOrders(false);
+    }
   };
 
   const emptyRows = () => {
@@ -156,12 +163,15 @@ const RenderOrdersTable = (props) => {
         <div className={styles.cell__pay}>
           <AppButton
             primary
-            disabled={payForOrdersDisabled}
+            disabled={balance === 0}
             loading={isPayLoading}
-            onClick={onPayForOrders}
+            onClick={handlePay}
           >
-            Pay for
-            {selectedOrders.length > 1 ? ` ${selectedOrders.length} Orders` : ' Order'}
+            {selectedOrders.length === 0
+              ? 'Pay All'
+              : `Pay for ${selectedOrders.length} Order${
+                selectedOrders.length > 1 ? 's' : ''
+              }`}
           </AppButton>
         </div>
       </div>
@@ -301,10 +311,7 @@ const RenderOrdersTable = (props) => {
         onSubmit={handleCancelOrder}
       >
         Are you sure you want to cancel your order of&nbsp;
-        <span className={dialogStyles.text__emp}>
-          { orderToCancel?.snack_name }
-        </span>
-        ?
+        <span className={dialogStyles.text__emp}>{orderToCancel?.snack_name}</span>?
       </ConfirmationDialog>
     </Card>
   );

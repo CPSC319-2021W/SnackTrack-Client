@@ -23,19 +23,22 @@ const SnackBatchesSubTable = (props) => {
   const dispatch = useDispatch();
   const { id, snackName, open, colSpan, isLastChild } = props;
   const { snackBatches } = useSelector((state) => state.snacksReducer);
-  const today = dt.now().set({ hour: 0, minute: 0 });
-  const expiringSoon = dt.now().set({ hour: 0, minute: 0 }).plus({ days: 3 });
+  const today = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+  const expiringSoon = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).plus({ days: 3 });
 
   const isBatchExpired = (column, timestamp) => {
     return (
       column === 'expiration_dtm' &&
-      expiringSoon > dt.fromISO(timestamp) &&
-      dt.fromISO(timestamp) > today
+      today >= dt.fromISO(timestamp)
     );
   };
 
   const isBatchExpiring = (column, timestamp) => {
-    return column === 'expiration_dtm' && today > dt.fromISO(timestamp);
+    return (
+      column === 'expiration_dtm' &&
+      expiringSoon > dt.fromISO(timestamp) &&
+      today < dt.fromISO(timestamp)
+    );
   };
 
   const setEditBatchOpen = () => dispatch(setIsEditBatchOpen(true));
@@ -108,8 +111,8 @@ const SnackBatchesSubTable = (props) => {
                             className={classNames({
                               [styles.cell]: true,
                               [styles.cell__small]: true,
-                              [styles.date__expiring]: isBatchExpired(column.id, value),
-                              [styles.date__expired]: isBatchExpiring(column.id, value)
+                              [styles.date__expiring]: isBatchExpiring(column.id, value),
+                              [styles.date__expired]: isBatchExpired(column.id, value)
                             })}
                           >
                             {column.format ? column.format(value, i) : value}

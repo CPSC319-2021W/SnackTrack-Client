@@ -23,7 +23,7 @@ import dialogStyles from '../styles/Dialog.module.css';
 import { saveImage } from '../services/ImagesService';
 import styles from '../styles/ManageSnack.module.css';
 
-const today = DateTime.now().set({ hour: 0, minute: 0 });
+const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
 const initialState = {
   snackname: '',

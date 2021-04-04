@@ -6,11 +6,14 @@ import classNames from 'classnames';
 import styles from '../styles/Field.module.css';
 
 const DatePickerField = (props) => {
-  const { id, label, date, onChangeDate, error } = props;
+  const { id, label, fullWidth, date, onChangeDate, error } = props;
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className={styles.input__group}>
+    <div className={classNames({
+      [styles.input__group]: true,
+      [styles.full]: fullWidth
+    })}>
       <label
         className={classNames({
           [styles.label__base]: true,
