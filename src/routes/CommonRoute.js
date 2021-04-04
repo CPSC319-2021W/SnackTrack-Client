@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { isAuthenticated, isCommonLogin } from '../helpers/AuthHelper';
 
@@ -5,7 +6,6 @@ import BottomNavigation from '../components/BottomNavigation';
 import { Container } from '@material-ui/core';
 import HeaderBar from '../components/HeaderBar';
 import { ROUTES } from '../constants';
-import React from 'react';
 import styles from '../styles/Layout.module.css';
 import { useSelector } from 'react-redux';
 
@@ -13,6 +13,10 @@ const CommonRoute = ({ component: Component, signOut, switchUser, ...rest }) => 
   const { profile } = useSelector((state) => state.usersReducer);
   const token = isAuthenticated();
   const common = isCommonLogin(profile);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <Route
