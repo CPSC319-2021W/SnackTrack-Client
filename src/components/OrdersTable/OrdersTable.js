@@ -12,6 +12,7 @@ const Orders = (props) => {
     isEmpty,
     data,
     rowsPerPage,
+    balance,
     updateProfileBalance,
     onChangePage,
     onHandleApiResponse,
@@ -24,7 +25,6 @@ const Orders = (props) => {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
-  const [payForOrdersDisabled, setPayForOrdersDisabled] = useState(true);
   const [uncheckedOrders, setUncheckedOrders] = useState([]);
   const [uncheckedOrdersIds, setUncheckedOrdersIds] = useState([]);
   const [isPayLoading, setIsPayLoading] = useState(false);
@@ -35,7 +35,6 @@ const Orders = (props) => {
 
   const clearLocalStates = () => {
     setSubtotalAmount(0);
-    setPayForOrdersDisabled(true);
     setUncheckedOrders([]);
     setUncheckedOrdersIds([]);
     setSelectedOrders([]);
@@ -44,24 +43,27 @@ const Orders = (props) => {
 
   const handleCancelOrder = async (order) => {
     const { transaction_amount } = await cancelOrder(order);
-    onReload(transaction_amount);
+    onReload(balance - transaction_amount);
     clearLocalStates();
   };
 
-  const handlePayForOrders = async () => {
-    if (selectedOrders.length > 0) {
-      setIsPayLoading(true);
-      try {
-        await makePayment(userId, selectedOrders, subtotalAmount, username);
-        await onMakePayment();
-        onHandleApiResponse('PAYMENT_SUCCESS');
-        updateProfileBalance(subtotalAmount);
-        clearLocalStates();
-      } catch (err) {
-        onHandleApiResponse('ERROR');
+  const handlePayForOrders = async (payAll) => {
+    setIsPayLoading(true);
+    const amount = payAll ? balance : subtotalAmount;
+    try {
+      if (payAll) {
+        await makePayment(userId, null, null, username, true);
+      } else {
+        await makePayment(userId, selectedOrders, subtotalAmount, username, payAll);
       }
-      setIsPayLoading(false);
+      await onMakePayment();
+      onHandleApiResponse('PAYMENT_SUCCESS');
+      updateProfileBalance(balance - amount);
+      clearLocalStates();
+    } catch (err) {
+      onHandleApiResponse('ERROR');
     }
+    setIsPayLoading(false);
   };
 
   const handleSelectOneOrder = (name, amount) => {
@@ -180,14 +182,6 @@ const Orders = (props) => {
     setUncheckedOrdersIds(uncheckedOrders.map((order) => order.transaction_id));
   }, [uncheckedOrders]);
 
-  useEffect(() => {
-    if (selectedOrders.length === 0) {
-      setPayForOrdersDisabled(true);
-    } else {
-      setPayForOrdersDisabled(false);
-    }
-  }, [selectedOrders]);
-
   return (
     <div>
       <RenderOrdersTable
@@ -196,10 +190,10 @@ const Orders = (props) => {
         data={data}
         rowsPerPage={rowsPerPage}
         selectedOrders={selectedOrders}
-        payForOrdersDisabled={payForOrdersDisabled}
         checkIsSelected={isOrderSelected}
         checkIsAllSelected={isAllOrdersSelected}
         isCheckboxDisabled={isCheckboxDisabled()}
+        balance={balance}
         isPayLoading={isPayLoading}
         onChangePage={onChangePage}
         onCancelOrder={handleCancelOrder}
