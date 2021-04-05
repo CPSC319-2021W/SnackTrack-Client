@@ -42,7 +42,7 @@ const AddSnackDialog = (props) => {
   const [dateError, setDateError] = useState('');
   const [isBatchDetailsOpen, setIsBatchDetailsOpen] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const { username } = useSelector((state) => state.usersReducer.profile);
+  const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUploadData } = useSelector(
     (state) => state.snacksReducer
   );
@@ -95,7 +95,7 @@ const AddSnackDialog = (props) => {
         imageResponse = url;
       }
       const snackRequest = {
-        last_updated_by: username,
+        last_updated_by: emailAddress,
         snack_name: values.snackname,
         snack_type_id: parseInt(category),
         description: values.description,

@@ -23,7 +23,7 @@ const Users = () => {
   );
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'username']
+    keys: ['first_name', 'last_name', 'email_address']
   };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
@@ -59,11 +59,13 @@ const Users = () => {
         <div className={styles.searchbar__container}>
           <UserSearchBar />
         </div>
-        { isLoaded ? renderList() : (
+        {isLoaded ? (
+          renderList()
+        ) : (
           <div className={adminStyles.list__container}>
             <CircularProgress color='secondary' size={30} thickness={5} />
           </div>
-        ) }
+        )}
       </div>
       <ToastNotification
         open={isToastNotificationOpen}

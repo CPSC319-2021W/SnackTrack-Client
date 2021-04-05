@@ -28,7 +28,7 @@ const EditSnackDialog = (props) => {
   const [category, setCategory] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
-  const { username } = useSelector((state) => state.usersReducer.profile);
+  const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const { isEditSnackOpen, snackImageUploadData, selectedSnackToEdit } = useSelector(
     (state) => state.snacksReducer
   );
@@ -93,7 +93,7 @@ const EditSnackDialog = (props) => {
       }
       const snackRequest = {
         snack_id: selectedSnackToEdit.snack_id,
-        last_updated_by: username,
+        last_updated_by: emailAddress,
         snack_name: values.snackname,
         snack_type_id: parseInt(category.value),
         description: values.description,
