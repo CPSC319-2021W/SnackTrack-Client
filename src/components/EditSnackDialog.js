@@ -82,10 +82,10 @@ const EditSnackDialog = (props) => {
   }, [isEditSnackOpen]);
 
   useEffect(() => {
-    if (selectedSnackToEdit) {
-      setIsSnackActivated(selectedSnackToEdit.is_active);
+    if (isEditSnackOpen) {
+      setIsSnackActivated(selectedSnackToEdit?.is_active);
     }
-  }, [selectedSnackToEdit]);
+  }, [isEditSnackOpen]);
 
   const addForm = useFormik({
     initialValues: initialState,
