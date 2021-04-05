@@ -21,6 +21,7 @@ const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const [snacks, setSnacks] = useState(null);
   const [allActiveSnacks, setAllActiveSnacks] = useState([]);
   const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
@@ -50,6 +51,7 @@ const Inventory = () => {
         rowsPerPage
       );
     } catch (err) {
+      console.log(err);
       newSnackPage = toPaginatedSnacks(
         snacks.filter((snack) => snack.is_active === isActive),
         0,
@@ -97,8 +99,13 @@ const Inventory = () => {
 
   useEffect(async () => {
     handleCloseToastNotification();
-    const snacksResponse = await getSnacks(false);
-    setSnacks(snacksResponse.snacks);
+    try {
+      const snacksResponse = await getSnacks(false);
+      setSnacks(snacksResponse.snacks);
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -113,13 +120,13 @@ const Inventory = () => {
           toPaginatedSnacks(allInactiveSnacks, inactiveSnacks.current_page, rowsPerPage)
         );
         setAllActiveSnacks(allActiveSnacks);
-        setIsLoaded(true);
       } catch (err) {
+        console.log(err);
         setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
         setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
         setAllActiveSnacks(allActiveSnacks);
-        setIsLoaded(true);
       }
+      setIsLoaded(true);
     }
   }, [snacks]);
 
@@ -134,6 +141,7 @@ const Inventory = () => {
         isEmpty={activeSnacks.snacks.length === 0}
         snacksForAddBatch={allActiveSnacks}
         data={activeSnacks}
+        error={error}
         rowsPerPage={rowsPerPage}
         onAddBatchOrEdit={handleBatchAddOrEdit}
         onDeleteBatch={handleBatchDelete}

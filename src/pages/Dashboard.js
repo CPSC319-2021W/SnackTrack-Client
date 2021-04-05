@@ -28,6 +28,9 @@ const Dashboard = () => {
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
+  const [suggestionsError, setSuggestionsError] = useState(false);
+  const [snacksError, setSnacksError] = useState(false);
+
   const sortSnacks = (snacks) => {
     return snacks.sort((a, b) => {
       const quantityA = a.quantity;
@@ -63,28 +66,34 @@ const Dashboard = () => {
   };
 
   useEffect(async () => {
-    const snacksResponse = await getSnacks(false);
-    const { snacks } = snacksResponse;
-    const sortedSnacks = sortSnacks(snacks);   
-    setSnacks(sortedSnacks);
+    try {
+      const snacksResponse = await getSnacks(false);
+      const { snacks } = snacksResponse;
+      const sortedSnacks = sortSnacks(snacks);   
+      setSnacks(sortedSnacks);
+    } catch (err) {
+      console.log(err);
+      setSnacksError(true);
+    }
 
-    const suggestionsResponse = await getSuggestions();
-    const { suggestions } = suggestionsResponse;
-    const suggestionsMap = suggestions.map(suggestion => (
-      { id: suggestion.suggestion_id, text: suggestion.suggestion_text, isActive: false }));
-    dispatch(setSuggestions(suggestionsMap));
+    try {
+      const suggestionsResponse = await getSuggestions();
+      const { suggestions } = suggestionsResponse;
+      const suggestionsMap = suggestions.map(suggestion => (
+        { id: suggestion.suggestion_id, text: suggestion.suggestion_text, isActive: false }));
+      dispatch(setSuggestions(suggestionsMap));
+    } catch (err) {
+      console.log(err);
+      setSuggestionsError(true);
+    }
   }, []);
   
   useEffect(() => {
     if (snacks) {
       const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
       const allInactiveSnacksLength = snacks.filter((snack) => !snack.is_active).length;
-      try {
-        setActiveSnacksLength(allActiveSnacksLength);
-        setInactiveSnacksLength(allInactiveSnacksLength); 
-      } catch (err) {
-        console.log(err);
-      }  
+      setActiveSnacksLength(allActiveSnacksLength);
+      setInactiveSnacksLength(allInactiveSnacksLength);
     }
   }, [snacks]);
 
@@ -98,8 +107,8 @@ const Dashboard = () => {
         </div>
       </div>
       <div className={dashStyles.elements__container}>
-        <SuggestionsBox />
-        <StockStatusBoard snacks={snacks} />
+        <SuggestionsBox error={suggestionsError} />
+        <StockStatusBoard snacks={snacks} error={snacksError} />
       </div>
     </div>
   );

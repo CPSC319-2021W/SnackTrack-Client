@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
+import { NOTIFICATIONS } from '../constants';
 import { ReactComponent as SnackTrackLogo } from '../assets/logos/snacktrack.svg';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
@@ -10,6 +11,7 @@ import styles from '../styles/Login.module.css';
 import { useSelector } from 'react-redux';
 
 const SelectLogin = () => {
+  const [error, setError] = useState(null);
   const [loaded, isLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState(users);
@@ -17,6 +19,39 @@ const SelectLogin = () => {
 
   const searchOptions = {
     keys: ['first_name', 'last_name', 'username']
+  };
+
+  const renderList = () => {
+    let loginList;
+    if (loaded) {
+      if (usersToDisplay.length > 0) {
+        loginList = <UserLoginList users={usersToDisplay} />;
+      } else {
+        loginList = <p>{"We couldn't find you. Please try again."}</p>;
+      }
+    } else {
+      loginList = (
+        <div className={styles.list}>
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+          <UserCardSkeleton />
+        </div>
+      );
+    }
+    return loginList;
+  };
+
+  const renderError = () => {
+    return (
+      <p className={styles.error__message}>
+        { NOTIFICATIONS.ERROR.message }
+      </p>
+    );
   };
 
   useEffect(() => {
@@ -29,34 +64,16 @@ const SelectLogin = () => {
 
   useEffect(async () => {
     const getAllUsers = async () => {
-      const data = await getUsersCommon();
-      setUsers(data.users);
+      try {
+        const data = await getUsersCommon();
+        setUsers(data.users);
+      } catch (err) {
+        console.log(err);
+        setError(err);
+      }
     };
     getAllUsers();
   }, []);
-
-  let loginList;
-
-  if (loaded) {
-    if (usersToDisplay.length > 0) {
-      loginList = <UserLoginList users={usersToDisplay} />;
-    } else {
-      loginList = <p>{"We couldn't find you. Please try again."}</p>;
-    }
-  } else {
-    loginList = (
-      <div className={styles.list}>
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-        <UserCardSkeleton />
-      </div>
-    );
-  }
 
   return (
     <div className={styles.container}>
@@ -64,7 +81,9 @@ const SelectLogin = () => {
       <div className={styles.seachbar__container}>
         <UserSearchBar />
       </div>
-      <div className={styles.list__container}>{loginList}</div>
+      <div className={styles.list__container}>
+        { error ? renderError() : renderList() }
+      </div>
     </div>
   );
 };

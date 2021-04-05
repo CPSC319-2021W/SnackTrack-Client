@@ -6,13 +6,14 @@ import RenderOrdersTable from './RenderOrdersTable';
 import { deselectOne } from '../../helpers/CheckboxHelpers';
 import { useSelector } from 'react-redux';
 
-const Orders = (props) => {
+const OrdersTable = (props) => {
   const {
     isLoaded,
     isEmpty,
     data,
     rowsPerPage,
     balance,
+    error,
     updateProfileBalance,
     onChangePage,
     onHandleApiResponse,
@@ -42,8 +43,13 @@ const Orders = (props) => {
   };
 
   const handleCancelOrder = async (order) => {
-    const { transaction_amount } = await cancelOrder(order);
-    onReload(balance - transaction_amount);
+    try {
+      const { transaction_amount } = await cancelOrder(order);
+      onReload(balance - transaction_amount);
+    } catch (err) {
+      console.log(err);
+      onHandleApiResponse('ERROR');
+    }
     clearLocalStates();
   };
 
@@ -59,10 +65,11 @@ const Orders = (props) => {
       await onMakePayment();
       onHandleApiResponse('PAYMENT_SUCCESS');
       updateProfileBalance(balance - amount);
-      clearLocalStates();
     } catch (err) {
+      console.log(err);
       onHandleApiResponse('ERROR');
     }
+    clearLocalStates();
     setIsPayLoading(false);
   };
 
@@ -183,26 +190,25 @@ const Orders = (props) => {
   }, [uncheckedOrders]);
 
   return (
-    <div>
-      <RenderOrdersTable
-        isLoaded={isLoaded}
-        isEmpty={isEmpty}
-        data={data}
-        rowsPerPage={rowsPerPage}
-        selectedOrders={selectedOrders}
-        checkIsSelected={isOrderSelected}
-        checkIsAllSelected={isAllOrdersSelected}
-        isCheckboxDisabled={isCheckboxDisabled()}
-        balance={balance}
-        isPayLoading={isPayLoading}
-        onChangePage={onChangePage}
-        onCancelOrder={handleCancelOrder}
-        onSelectAllOrders={handleSelectAllOrders}
-        onSelectOrder={handleSelectOneOrder}
-        onPayForOrders={handlePayForOrders}
-      />
-    </div>
+    <RenderOrdersTable
+      isLoaded={isLoaded}
+      isEmpty={isEmpty}
+      error={error}
+      data={data}
+      rowsPerPage={rowsPerPage}
+      selectedOrders={selectedOrders}
+      checkIsSelected={isOrderSelected}
+      checkIsAllSelected={isAllOrdersSelected}
+      isCheckboxDisabled={isCheckboxDisabled()}
+      balance={balance}
+      isPayLoading={isPayLoading}
+      onChangePage={onChangePage}
+      onCancelOrder={handleCancelOrder}
+      onSelectAllOrders={handleSelectAllOrders}
+      onSelectOrder={handleSelectOneOrder}
+      onPayForOrders={handlePayForOrders}
+    />
   );
 };
 
-export default Orders;
+export default OrdersTable;

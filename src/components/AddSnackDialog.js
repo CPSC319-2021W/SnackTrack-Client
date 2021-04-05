@@ -36,7 +36,7 @@ const initialState = {
 
 const AddSnackDialog = (props) => {
   const dispatch = useDispatch();
-  const { open } = props;
+  const { open, onHandleApiResponse } = props;
   const [category, setCategory] = useState('');
   const [expiryDate, setExpiryDate] = useState(null);
   const [dateError, setDateError] = useState('');
@@ -105,9 +105,12 @@ const AddSnackDialog = (props) => {
         order_threshold: values.reorder === '' ? null : values.reorder,
         expiration_dtm: expiryDate ? expiryDate.toUTC().toISO() : null
       };
-      const snack = await addSnack(snackRequest);
+      try {
+        await addSnack(snackRequest);
+      } catch (err) {
+        onHandleApiResponse('ERROR');
+      }
       actions.resetForm({ values: initialState });
-      console.log(snack);
       setIsSubmitLoading(false);
       closeDialog();
     },
