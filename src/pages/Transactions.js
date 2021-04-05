@@ -47,7 +47,7 @@ const Transactions = () => {
   const [isListLoading, setIsListLoading] = useState(false);
   const [isPayAllLoading, setIsPayAllLoading] = useState(false);
   const [tabValue, setTabValue] = useState(0);
-  const { userId, username, balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId, emailAddress, balance } = useSelector((state) => state.usersReducer.profile);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
@@ -102,7 +102,7 @@ const Transactions = () => {
   const handleMakePayment = async () => {
     setIsPayAllLoading(true);
     try {
-      await makePayment(userId, null, null, username, true);
+      await makePayment(userId, null, null, emailAddress, true);
       updateBalance(0);
       handleApiResponse('PAYMENT_SUCCESS');
     } catch (err) {
