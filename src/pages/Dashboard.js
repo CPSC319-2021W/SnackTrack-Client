@@ -7,7 +7,9 @@ import { getSnacks, getSuggestions } from '../services/SnacksService';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import dashStyles from '../styles/Dashboard.module.css';
+import { getUsersAdmin } from '../services/UsersService';
 import { setSuggestions } from '../redux/features/snacks/snacksSlice';
+import { setUsers } from '../redux/features/users/usersSlice';
 import styles from '../styles/Page.module.css';
 
 const today = DateTime.now();
@@ -63,15 +65,18 @@ const Dashboard = () => {
   };
 
   useEffect(async () => {
-    const snacksResponse = await getSnacks(false);
-    const { snacks } = snacksResponse;
+    const { users } = await getUsersAdmin();
+    dispatch(setUsers(users));
+
+    const { snacks } = await getSnacks(false);
     const sortedSnacks = sortSnacks(snacks);   
     setSnacks(sortedSnacks);
 
-    const suggestionsResponse = await getSuggestions();
-    const { suggestions } = suggestionsResponse;
-    const suggestionsMap = suggestions.map(suggestion => (
-      { id: suggestion.suggestion_id, text: suggestion.suggestion_text, isActive: false }));
+    const { suggestions } = await getSuggestions();
+    const suggestionsMap = suggestions.map(suggestion => {
+      const { suggestion_id, suggestion_text, suggested_by } = suggestion;
+      return { id: suggestion_id, text: suggestion_text, userId: suggested_by, isActive: false };
+    });
     dispatch(setSuggestions(suggestionsMap));
   }, []);
   

@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     imageUri: null,
     balance: null,
     isAdmin: null
-  }
+  },
+  users: []
 };
 
 const getUser = createAsyncThunk('users/getUsersStatus', async (userId) => {
@@ -51,6 +52,9 @@ const usersSlice = createSlice({
         balance: balance,
         isAdmin: is_admin
       };
+    },
+    setUsers: (state, action) => {
+      state.users = action.payload;
     }
   },
   extraReducers: {
@@ -90,6 +94,6 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-export const { simpleLogin, setBalance, setUser } = usersSlice.actions;
+export const { simpleLogin, setBalance, setUser, setUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;

@@ -11,6 +11,7 @@ import styles from '../styles/SuggestionsBox.module.css';
 const SuggestionsBox = () => {
   const dispatch = useDispatch();
   const { suggestions } = useSelector((state) => state.snacksReducer);
+  const { users } = useSelector((state) => state.usersReducer);
 
   const handleSetActive = (bean) => {
     dispatch(setSuggestionState(bean));
@@ -24,6 +25,15 @@ const SuggestionsBox = () => {
     );
   };
 
+  const renderTooltip = (text, firstName, lastName) => {
+    return (
+      <Fragment>
+        <div>{ text }</div>
+        <div>{ `Suggested by: ${firstName} ${lastName.slice(0, 1)}.` }</div>
+      </Fragment>
+    );
+  };
+
   return (
     <Card className={styles.card__base}>
       <div className={styles.header}>
@@ -33,25 +43,21 @@ const SuggestionsBox = () => {
       <div className={styles.bean__container}>
         { suggestions.length > 0
           ? suggestions.map((bean, i) => {
+            const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
             const { text, isActive } = bean;
-            const child = (
-              <div
-                className={classNames({
-                  [styles.bean]: true,
-                  [styles.bean__active]: isActive
-                })}
-                onClick={() => handleSetActive(bean)}
-              >
-                { text }
-              </div>
+            return (
+              <Tooltip key={i} title={renderTooltip(text, first_name, last_name)}>
+                <div
+                  className={classNames({
+                    [styles.bean]: true,
+                    [styles.bean__active]: isActive
+                  })}
+                  onClick={() => handleSetActive(bean)}
+                >
+                  { text }
+                </div>
+              </Tooltip>
             );
-            return text.length > 28
-              ? ( 
-                <Tooltip key={i} title={text}>
-                  { child }
-                </Tooltip>
-              )
-              : <Fragment key={i}>{ child }</Fragment>;
           })
           : renderEmptyState()
         }

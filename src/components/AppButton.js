@@ -43,7 +43,11 @@ const AppButton = (props) => {
             <div className={styles.progress__text}>
               { children }
             </div>
-            <CircularProgress size={18} thickness={6} />
+            <CircularProgress
+              className={classNames({[styles.secondary]: secondary})}
+              size={18}
+              thickness={6}
+            />
           </div>
         ) : children
       }
