@@ -22,9 +22,7 @@ const Inventory = () => {
   const rowsPerPage = 10;
   const [isLoaded, setIsLoaded] = useState(false);
   const [snacks, setSnacks] = useState(null);
-  const [allActiveSnacks, setAllActiveSnacks] = useState([]);
-  const [activeSnacks, setActiveSnacks] = useState(INITIAL_SNACKS);
-  const [inactiveSnacks, setInactiveSnacks] = useState(INITIAL_SNACKS);
+  const [paginatedSnacks, setPaginatedSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
@@ -40,27 +38,14 @@ const Inventory = () => {
     openToastNotification(false);
   };
 
-  const handleChangePage = (page, isActive) => {
-    isActive = isActive || false;
+  const handleChangePage = (page) => {
     let newSnackPage;
     try {
-      newSnackPage = toPaginatedSnacks(
-        snacks.filter((snack) => snack.is_active === isActive),
-        page,
-        rowsPerPage
-      );
+      newSnackPage = toPaginatedSnacks(snacks, page, rowsPerPage);
     } catch (err) {
-      newSnackPage = toPaginatedSnacks(
-        snacks.filter((snack) => snack.is_active === isActive),
-        0,
-        rowsPerPage
-      );
+      newSnackPage = toPaginatedSnacks(snacks, 0, rowsPerPage);
     }
-    if (isActive) {
-      setActiveSnacks(newSnackPage);
-    } else {
-      setInactiveSnacks(newSnackPage);
-    }
+    setPaginatedSnacks(newSnackPage);
   };
 
   const handleBatchAddOrEdit = (batch, oldQuantity) => {
@@ -103,21 +88,13 @@ const Inventory = () => {
 
   useEffect(() => {
     if (snacks) {
-      const allActiveSnacks = snacks.filter((snack) => snack.is_active);
-      const allInactiveSnacks = snacks.filter((snack) => !snack.is_active);
       try {
-        setActiveSnacks(
-          toPaginatedSnacks(allActiveSnacks, activeSnacks.current_page, rowsPerPage)
+        setPaginatedSnacks(
+          toPaginatedSnacks(snacks, paginatedSnacks.current_page, rowsPerPage)
         );
-        setInactiveSnacks(
-          toPaginatedSnacks(allInactiveSnacks, inactiveSnacks.current_page, rowsPerPage)
-        );
-        setAllActiveSnacks(allActiveSnacks);
         setIsLoaded(true);
       } catch (err) {
-        setActiveSnacks(toPaginatedSnacks(allActiveSnacks, 0, rowsPerPage));
-        setInactiveSnacks(toPaginatedSnacks(allInactiveSnacks, 0, rowsPerPage));
-        setAllActiveSnacks(allActiveSnacks);
+        setPaginatedSnacks(toPaginatedSnacks(snacks, 0, rowsPerPage));
         setIsLoaded(true);
       }
     }
@@ -129,20 +106,10 @@ const Inventory = () => {
         <h5 className={styles.title}>Inventory</h5>
       </div>
       <SnackInventoryTable
-        activeSnacks
         isLoaded={isLoaded}
-        isEmpty={activeSnacks.snacks.length === 0}
-        snacksForAddBatch={allActiveSnacks}
-        data={activeSnacks}
-        rowsPerPage={rowsPerPage}
-        onAddBatchOrEdit={handleBatchAddOrEdit}
-        onDeleteBatch={handleBatchDelete}
-        onChangePage={handleChangePage}
-      />
-      <SnackInventoryTable
-        isLoaded={isLoaded}
-        isEmpty={inactiveSnacks.snacks.length === 0}
-        data={inactiveSnacks}
+        isEmpty={paginatedSnacks.snacks.length === 0}
+        snacksForAddBatch={snacks ?? []}
+        data={paginatedSnacks}
         rowsPerPage={rowsPerPage}
         onAddBatchOrEdit={handleBatchAddOrEdit}
         onDeleteBatch={handleBatchDelete}
