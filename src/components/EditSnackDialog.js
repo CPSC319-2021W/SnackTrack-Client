@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES } from '../constants';
-import { Dialog, Divider } from '@material-ui/core';
+import { Dialog, Divider, Switch } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
 import { deleteSnack, editSnack } from '../services/SnacksService';
@@ -28,6 +28,7 @@ const EditSnackDialog = (props) => {
   const [category, setCategory] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isSnackActivated, setIsSnackActivated] = useState(false);
   const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const { isEditSnackOpen, snackImageUploadData, selectedSnackToEdit } = useSelector(
     (state) => state.snacksReducer
@@ -80,6 +81,12 @@ const EditSnackDialog = (props) => {
     await addForm.setFieldValue('reorder', selectedSnackToEdit.order_threshold ?? '');
   }, [isEditSnackOpen]);
 
+  useEffect(() => {
+    if (isEditSnackOpen) {
+      setIsSnackActivated(selectedSnackToEdit?.is_active);
+    }
+  }, [isEditSnackOpen]);
+
   const addForm = useFormik({
     initialValues: initialState,
     onSubmit: async (values, actions) => {
@@ -98,6 +105,7 @@ const EditSnackDialog = (props) => {
         snack_type_id: parseInt(category.value),
         description: values.description,
         image_uri: imageUri,
+        is_active: isSnackActivated,
         price: Number(values.price) * 100,
         order_threshold: values.reorder === '' ? null : values.reorder
       };
@@ -181,6 +189,17 @@ const EditSnackDialog = (props) => {
                     name='reorder'
                     type='text'
                   />
+                </div>
+                <div className={styles.frame__row}>
+                  <div className={styles.switch__container}>
+                    <p className={styles.text__sub}>Active Snack</p>
+                    <Switch
+                      disableRipple
+                      checked={isSnackActivated}
+                      name='activate'
+                      onChange={() => setIsSnackActivated(!isSnackActivated)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
