@@ -15,6 +15,7 @@ const INITIAL_STATE = {
   },
   selectedFilters: [],
   snackBatches: [],
+  selectedSnackToEdit: {},
   selectedSnackForBatch: null,
   selectedBatch: {
     snack_batch_id: null,
@@ -28,6 +29,7 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   isAddSnackOpen: false,
+  isEditSnackOpen: false,
   suggestions: []
 };
 
@@ -78,6 +80,12 @@ const snacksSlice = createSlice({
     setIsAddSnackOpen: (state, action) => {
       state.isAddSnackOpen = action.payload;
     },
+    setSelectedSnackToEdit: (state, action) => {
+      state.selectedSnackToEdit = action.payload;
+    },
+    setIsEditSnackOpen: (state, action) => {
+      state.isEditSnackOpen = action.payload;
+    },
     setSnackImageUploadData: (state, action) => {
       state.snackImageUploadData = action.payload;
     },
@@ -121,6 +129,8 @@ export const {
   setIsEditBatchOpen,
   setQuantity,
   setIsAddSnackOpen,
+  setSelectedSnackToEdit,
+  setIsEditSnackOpen,
   setSnackImageUploadData,
   setSuggestions,
   setSuggestionState

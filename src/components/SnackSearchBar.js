@@ -7,24 +7,23 @@ import { setSnackSearchValue } from '../redux/features/searchbar/searchbarSlice'
 import styles from '../styles/SearchBar.module.css';
 import { useDispatch } from 'react-redux';
 
-const SnackSearchBar = () => {
+const SnackSearchBar = ({ searchValue, onChangeSearchValue }) => {
   const dispatch = useDispatch();
-  const [value, updateValue] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const WAIT_INTERVAL = 200;
 
   const handleChange = (event) => {
-    updateValue(event.target.value);
+    onChangeSearchValue(event.target.value);
   };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      dispatch(setSnackSearchValue(value));
+      dispatch(setSnackSearchValue(searchValue));
     }, WAIT_INTERVAL);
 
     // remove the previous timer if value changed
     return () => clearTimeout(timeout);
-  }, [value]);
+  }, [searchValue]);
 
   return (
     <Input
@@ -39,7 +38,7 @@ const SnackSearchBar = () => {
         </InputAdornment>
       )}
       placeholder={'Search'}
-      value={value}
+      value={searchValue}
       onChange={handleChange}
       onBlur={() => setIsFocused(false)}
       onFocus={() => setIsFocused(true)}

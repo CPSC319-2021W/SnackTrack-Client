@@ -11,7 +11,7 @@ const UserProfileNotFound = () => {
   const user = {
     first_name: 'User',
     last_name: 'Not Found',
-    username: `There is no user with ID ${id}`,
+    emailAddress: `There is no user with ID ${id}`,
     balance: 404,
     image_uri:
       'https://i.pinimg.com/originals/a6/6e/76/a66e76f9a9f9671b6e5e535f5d44eea3.png'
@@ -35,7 +35,7 @@ const UserProfileNotFound = () => {
           <p className={styles.fullname}>
             {user.first_name} {user.last_name}
           </p>
-          <p>{user.username}</p>
+          <p>{user.emailAddress}</p>
         </div>
         <div className={adminStyles.balance}>
           <p className={adminStyles.balance__text}>Oops!</p>

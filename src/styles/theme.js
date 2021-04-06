@@ -98,7 +98,8 @@ export const theme = createMuiTheme({
     MuiInputBase: {
       input: {
         fontSize: '14px',
-        fontWeight: 500
+        fontWeight: 500,
+        color: DARK_GREY
       }
     },
     MuiInput: {
@@ -137,7 +138,9 @@ export const theme = createMuiTheme({
     },
     MuiPickersCalendarHeader: {
       transitionContainer: {
-        fontWeight: 600
+        '& > p': {
+          fontWeight: 600
+        }
       }
     },
     MuiPickersDay: {
@@ -146,6 +149,11 @@ export const theme = createMuiTheme({
         fontWeight: 600,
         '&:hover': {
           backgroundColor: DARK_BLUE
+        },
+        '& > span': {
+          '& > p': {
+            fontWeight: 600
+          }
         }
       },
       current: {
@@ -170,7 +178,7 @@ export const theme = createMuiTheme({
           height: '4px',
           borderRadius: '4px',
           width: '100%',
-          maxWidth: '60px',
+          maxWidth: '54px',
           backgroundColor: BASE_RED
         }
       }
@@ -179,7 +187,7 @@ export const theme = createMuiTheme({
       root: {
         color: HEADER_GREY,
         fontWeight: 600,
-        fontSize: '1.05rem',
+        fontSize: '1rem',
         textTransform: 'none'
       }
     },
@@ -215,6 +223,12 @@ export const theme = createMuiTheme({
     MuiPaper: {
       rounded: {
         borderRadius: '12px'
+      }
+    },
+    MuiIconButton: {
+      label: {
+        width: '20px',
+        opacity: 0.75
       }
     }
   },

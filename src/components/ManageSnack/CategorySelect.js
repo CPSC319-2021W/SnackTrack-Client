@@ -1,16 +1,27 @@
-import { BASE_BLUE, DARK_BLUE, DARK_GREY, INNER_LIGHT_GREY, LIGHT_BLUE, LIGHT_GREY, MID_GREY, WHITE } from '../../styles/Colors.module.css';
-
+import {
+  BASE_BLUE,
+  DARK_BLUE,
+  DARK_GREY,
+  INNER_LIGHT_GREY,
+  LIGHT_BLUE,
+  LIGHT_GREY,
+  MID_GREY,
+  WHITE
+} from '../../styles/Colors.module.css';
 import React, { useState } from 'react';
+
 import { CATEGORIES_LIST } from '../../constants';
 import Select from 'react-select';
+import classNames from 'classnames';
 import styles from '../../styles/Field.module.css';
 
-import classNames from 'classnames';
-
-const options = CATEGORIES_LIST.map((category) => ({ value: category.id, label: category.name }));
+const options = CATEGORIES_LIST.map((category) => ({
+  value: category.id,
+  label: category.name
+}));
 
 const CategorySelect = (props) => {
-  const { id, label, error, handleSelectCategory } = props;
+  const { id, label, error, categoryValue, handleSelectCategory } = props;
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -72,17 +83,19 @@ const CategorySelect = (props) => {
         })}
         htmlFor={id}
       >
-        { label }
+        {label}
       </label>
       <div className={styles.input__container}>
         <Select
           isSearchable={false}
-          options={options} 
+          options={options}
+          value={categoryValue}
           placeholder=''
           styles={customStyles}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          onChange={handleSelectCategory}/>
+          onChange={handleSelectCategory}
+        />
       </div>
     </div>
   );

@@ -48,7 +48,14 @@ const PaymentsTable = (props) => {
         {isLoaded ? (
           payments.map((payment, i) => {
             return (
-              <TableRow key={i} tabIndex={-1} className={styles.row}>
+              <TableRow
+                key={i}
+                tabIndex={-1}
+                className={classNames({
+                  [styles.row]: true,
+                  [styles.row__lastChild]: i === rowsPerPage - 1
+                })}
+              >
                 {columns.map((column) => {
                   const value = payment[column.id];
                   return (

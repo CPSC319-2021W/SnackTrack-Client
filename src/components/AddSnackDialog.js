@@ -23,7 +23,7 @@ import dialogStyles from '../styles/Dialog.module.css';
 import { saveImage } from '../services/ImagesService';
 import styles from '../styles/ManageSnack.module.css';
 
-const today = DateTime.now().set({ hour: 0, minute: 0 });
+const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
 const initialState = {
   snackname: '',
@@ -42,7 +42,7 @@ const AddSnackDialog = (props) => {
   const [dateError, setDateError] = useState('');
   const [isBatchDetailsOpen, setIsBatchDetailsOpen] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
-  const { username } = useSelector((state) => state.usersReducer.profile);
+  const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const { isAddSnackOpen, snackImageUploadData } = useSelector(
     (state) => state.snacksReducer
   );
@@ -89,14 +89,18 @@ const AddSnackDialog = (props) => {
     initialValues: initialState,
     onSubmit: async (values, actions) => {
       setIsSubmitLoading(true);
-      const imageResponse = await saveImage(snackImageUploadData);
+      let imageResponse = '';
+      if (snackImageUploadData) {
+        const { url } = await saveImage(snackImageUploadData);
+        imageResponse = url;
+      }
       const snackRequest = {
-        last_updated_by: username,
+        last_updated_by: emailAddress,
         snack_name: values.snackname,
         snack_type_id: parseInt(category),
         description: values.description,
-        image_uri: imageResponse.url,
-        price: parseInt(values.price) * 100,
+        image_uri: imageResponse,
+        price: Number(values.price) * 100,
         quantity: values.quantity === '' ? 0 : parseInt(values.quantity),
         order_threshold: values.reorder === '' ? null : values.reorder,
         expiration_dtm: expiryDate ? expiryDate.toUTC().toISO() : null
@@ -121,7 +125,7 @@ const AddSnackDialog = (props) => {
         .min(0, 'Must be at least $0')
         .max(6, 'Must be less than 6 digits')
         .required(FIELD_ERROR_MESSAGES.EMPTY)
-        .matches(/^[1-9]\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
+        .matches(/^\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
 
       quantity: Yup.string()
         .min(0, 'Must be at least $0')
@@ -235,7 +239,7 @@ const AddSnackDialog = (props) => {
                 primary
                 type='submit'
                 loading={isSubmitLoading}
-                disabled={!addForm.isValid || !category || !snackImageUploadData}
+                disabled={!addForm.isValid || !category}
                 onClick={addForm.handleSubmit}
               >
                 Submit

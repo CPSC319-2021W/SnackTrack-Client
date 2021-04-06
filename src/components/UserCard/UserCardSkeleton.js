@@ -5,9 +5,9 @@ import { Skeleton } from '@material-ui/lab';
 
 import React from 'react';
 
-const UserCardSkeleton = () => { 
+const UserCardSkeleton = ({ noHover }) => { 
   return (
-    <Card variant={'outlined'} className={styles.base}>
+    <Card variant={'outlined'} className={ noHover ? styles.base__noHover : styles.base }>
       <div className={styles.action_area}>
         <Skeleton variant={'circle'} animation={'wave'} className={styles.image} />
         <div className={styles.text}>

@@ -50,12 +50,11 @@ const UserProfile = () => {
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  const { userId } = useSelector(
-    (state) => state.usersReducer.profile
-  );
+  const { userId } = useSelector((state) => state.usersReducer.profile);
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -67,9 +66,7 @@ const UserProfile = () => {
 
   const handlePaymentChangePage = async (page) => {
     const paymentResponse = await getUserPayments(id, page, rowsPerPage);
-    paymentResponse instanceof Error
-      ? openToastNotification(true)
-      : setPaymentsResponse(paymentResponse);
+    setPaymentsResponse(paymentResponse);
   };
 
   const handleOrderChangePage = async (page) => {
@@ -91,8 +88,8 @@ const UserProfile = () => {
     await handlePaymentChangePage(0);
   };
 
-  const updateProfileBalance = (amount) => {
-    setUser({ ...user, balance: user.balance - amount });
+  const updateProfileBalance = (newBalance) => {
+    setUser({ ...user, balance: newBalance });
   };
 
   const handleOpenDialog = () => {
@@ -104,13 +101,20 @@ const UserProfile = () => {
   };
 
   const handleDelete = async () => {
-    await deleteUser(id);
-    handleGoBack();
+    try {
+      setIsDeleteLoading(true);
+      await deleteUser(id);
+      setIsDeleteLoading(false);
+      handleGoBack();
+      handleApiResponse('USER_DELETE_SUCCESS');
+    } catch (e) {
+      handleApiResponse('ERROR');
+    }
   };
 
-  const resetAll = async (amount) => {
+  const resetAll = async (newBalance) => {
     handleMakePayment();
-    updateProfileBalance(amount);
+    updateProfileBalance(newBalance);
   };
 
   useEffect(async () => {
@@ -154,7 +158,7 @@ const UserProfile = () => {
           ? (
             <div className={styles.top_button__container}>
               <AppButton
-                outline
+                cancel
                 onClick={handleOpenDialog}
               >
                 Delete User
@@ -167,7 +171,7 @@ const UserProfile = () => {
         <UserProfileNotFound />
       ) : (
         <>
-          {user ? <UserCard user={user} /> : <UserCardSkeleton />}
+          {user ? <UserCard user={user} /> : <UserCardSkeleton noHover />}
           <div className={usersStyles.tables__container}>
             <div className={usersStyles.ordersTable}>
               <OrdersTable
@@ -175,6 +179,7 @@ const UserProfile = () => {
                 isEmpty={ordersResponse.transactions.length === 0}
                 data={ordersResponse}
                 rowsPerPage={rowsPerPage}
+                balance={user?.balance}
                 updateProfileBalance={updateProfileBalance}
                 onHandleApiResponse={handleApiResponse}
                 onChangePage={handleOrderChangePage}
@@ -200,14 +205,15 @@ const UserProfile = () => {
         open={isDeleteDialogOpen}
         title={'Wait a sec!'}
         submitText={'Yes, delete'}
-        declineText={'No, keep them'}
+        declineText={'No, keep'}
+        isSubmitLoading={isDeleteLoading}
         handleClose={handleCloseDialog}
         onDecline={handleCloseDialog}
         onSubmit={handleDelete}
       >
-        Are you sure you want to delete&nbsp;
+        Are you sure you want to delete
         <span className={dialogStyles.text__emp}>
-          { user?.first_name } { user?.last_name }
+          {user?.first_name} {user?.last_name}
         </span>
         ?
       </ConfirmationDialog>

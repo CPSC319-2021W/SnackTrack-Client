@@ -1,10 +1,9 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE, WHITE from colors;
+@value LIGHT_GREY, INNER_LIGHT_GREY, MID_GREY, DARK_GREY, BASE_BLUE, DARK_BLUE, WHITE, RED from colors;
 
 .card {
   display: flex;
   flex-direction: column;
-  width: 350px;
 }
 
 .header {
@@ -27,8 +26,8 @@
 
 .input__container {
   width: 100%;
-  min-height: 60px;
-  padding: 0 1rem 1rem;
+  min-height: 72px;
+  padding: 0 1rem;
 }
 
 .input__base {
@@ -52,4 +51,16 @@
   flex-direction: row;
   justify-content: flex-end;
   padding: 0.75rem;
+}
+
+.error__message {
+  color: RED;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0.4rem 0;
+  text-align: left;
+}
+
+.input__error {
+  border: 2px solid RED;
 }

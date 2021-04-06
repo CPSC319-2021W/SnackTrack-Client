@@ -21,21 +21,24 @@ import styles from '../styles/Table.module.css';
 
 const SnackBatchesSubTable = (props) => {
   const dispatch = useDispatch();
-  const { id, snackName, open, colSpan } = props;
+  const { id, snackName, open, colSpan, isLastChild } = props;
   const { snackBatches } = useSelector((state) => state.snacksReducer);
-  const today = dt.now().set({ hour: 0, minute: 0 });
-  const expiringSoon = dt.now().set({ hour: 0, minute: 0 }).plus({ days: 3 });
+  const today = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+  const expiringSoon = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).plus({ days: 3 });
 
   const isBatchExpired = (column, timestamp) => {
     return (
       column === 'expiration_dtm' &&
-      expiringSoon > dt.fromISO(timestamp) &&
-      dt.fromISO(timestamp) > today
+      today >= dt.fromISO(timestamp)
     );
   };
 
   const isBatchExpiring = (column, timestamp) => {
-    return column === 'expiration_dtm' && today > dt.fromISO(timestamp);
+    return (
+      column === 'expiration_dtm' &&
+      expiringSoon > dt.fromISO(timestamp) &&
+      today < dt.fromISO(timestamp)
+    );
   };
 
   const setEditBatchOpen = () => dispatch(setIsEditBatchOpen(true));
@@ -79,10 +82,9 @@ const SnackBatchesSubTable = (props) => {
   ];
 
   return (
-    <TableRow>
+    <TableRow className={isLastChild && open === id ? styles.row__lastChild__sub : null}>
       <TableCell className={styles.subtable__container} colSpan={colSpan}>
         <Collapse in={open === id} timeout='auto'>
-          <Divider />
           <Table className={styles.subtable} aria-label='batches'>
             <TableHead>
               <TableRow>
@@ -100,7 +102,7 @@ const SnackBatchesSubTable = (props) => {
               {snackBatches.length > 0 ? (
                 snackBatches.map((batch, i) => {
                   return (
-                    <TableRow key={i} tabIndex={-1} className={styles.row}>
+                    <TableRow key={i} tabIndex={-1} className={styles.row__sub}>
                       {columns.map((column) => {
                         let value = batch[column.id];
                         return (
@@ -109,8 +111,8 @@ const SnackBatchesSubTable = (props) => {
                             className={classNames({
                               [styles.cell]: true,
                               [styles.cell__small]: true,
-                              [styles.date__expiring]: isBatchExpired(column.id, value),
-                              [styles.date__expired]: isBatchExpiring(column.id, value)
+                              [styles.date__expiring]: isBatchExpiring(column.id, value),
+                              [styles.date__expired]: isBatchExpired(column.id, value)
                             })}
                           >
                             {column.format ? column.format(value, i) : value}
@@ -121,12 +123,13 @@ const SnackBatchesSubTable = (props) => {
                   );
                 })
               ) : (
-                <TableRow>
+                <TableRow className={styles.row__sub}>
                   <TableCell colSpan={colSpan}>There is nothing to display.</TableCell>
                 </TableRow>
               )}
             </TableBody>
           </Table>
+          { isLastChild ? null : <Divider /> }
         </Collapse>
       </TableCell>
     </TableRow>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 
 import { addCategory, removeCategory } from '../../redux/features/snacks/snacksSlice';
@@ -8,7 +9,8 @@ import { CATEGORIES_LIST } from '../../constants';
 import styles from '../../styles/Category.module.css';
 
 const CategoryFilter = ({ selectedFilters }) => {
-  const [categories, setCategories] = useState(CATEGORIES_LIST);  
+  const categoriesMapped = CATEGORIES_LIST.map((category) => ({ ...category, 'selected': false }));
+  const [categories, setCategories] = useState(categoriesMapped);  
   const dispatch = useDispatch();
 
   const addFilter = (category) => dispatch(addCategory(category));
@@ -20,7 +22,7 @@ const CategoryFilter = ({ selectedFilters }) => {
     if (categories[i].selected) {
       addFilter(categories[i].id);
     } else {
-      removeFilter(categories[i].id);  
+      removeFilter(categories[i].id);
     }
   };
 
@@ -36,7 +38,12 @@ const CategoryFilter = ({ selectedFilters }) => {
     <div className={styles.container}>
       {categories.map(({name, selected}, i) => (
         <div key={i} className={styles.categoryBox}>
-          <button className={styles.buttonToggle} onClick={() => toggleCategory(i)}>
+          <button
+            className={classNames({
+              [styles.buttonToggle]: true,
+              [styles.buttonToggle__lastChild]: i === categories.length - 1
+            })}
+            onClick={() => toggleCategory(i)}>
             <FilterIcon type={name} isSelected={selected} />
           </button>
         </div>

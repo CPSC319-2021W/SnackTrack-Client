@@ -24,7 +24,7 @@ const ManageBatchDialog = (props) => {
   const { newSnackBatch, batch, open, onDeleteBatch, onAddBatchOrEdit, onCancel } = props;
   const { snack_id, snack_batch_id, snack_name } = batch;
 
-  const today = DateTime.now().set({ hour: 0, minute: 0 });
+  const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
   const [oldQuantity, setOldQuantity] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -163,6 +163,7 @@ const ManageBatchDialog = (props) => {
         <div className={styles.body}>
           <div className={styles.labelContainer}>
             <InputField
+              fullWidth
               label='Quantity'
               value={quantity}
               error={errors.quantity ? errors.quantity : null}
@@ -179,23 +180,22 @@ const ManageBatchDialog = (props) => {
             />
           </div>
           <div className={styles.labelContainer}>
-            <div>
-              <DatePickerField
-                label='Expiration Date'
-                date={date}
-                error={errors.date}
-                onChangeDate={handleChangeDate}
-                onKeyPress={
-                  newSnackBatch
-                    ? (event) => {
-                      handleSubmit(event, addBatch, 'BATCH_SUCCESS');
-                    }
-                    : (event) => {
-                      handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
-                    }
-                }
-              />
-            </div>
+            <DatePickerField
+              fullWidth
+              label='Expiration Date'
+              date={date}
+              error={errors.date}
+              onChangeDate={handleChangeDate}
+              onKeyPress={
+                newSnackBatch
+                  ? (event) => {
+                    handleSubmit(event, addBatch, 'BATCH_SUCCESS');
+                  }
+                  : (event) => {
+                    handleSubmit(event, editBatch, 'CHANGES_SUCCESS');
+                  }
+              }
+            />
           </div>
         </div>
         <Divider />

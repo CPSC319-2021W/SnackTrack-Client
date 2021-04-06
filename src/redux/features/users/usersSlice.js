@@ -5,14 +5,14 @@ import { getUserById } from '../../../services/UsersService';
 const INITIAL_STATE = {
   profile: {
     userId: null,
-    username: null,
     emailAddress: null,
     firstName: null,
     lastName: null,
     imageUri: null,
     balance: null,
     isAdmin: null
-  }
+  },
+  users: []
 };
 
 const getUser = createAsyncThunk('users/getUsersStatus', async (userId) => {
@@ -36,7 +36,6 @@ const usersSlice = createSlice({
     setUser: (state, action) => {
       const {
         user_id,
-        username,
         email_address,
         first_name,
         last_name,
@@ -46,7 +45,6 @@ const usersSlice = createSlice({
       } = action.payload;
       state.profile = {
         userId: user_id,
-        username: username,
         emailAddress: email_address,
         firstName: first_name,
         lastName: last_name,
@@ -54,13 +52,15 @@ const usersSlice = createSlice({
         balance: balance,
         isAdmin: is_admin
       };
+    },
+    setUsers: (state, action) => {
+      state.users = action.payload;
     }
   },
   extraReducers: {
     [getUser.fulfilled]: (state, action) => {
       const {
         user_id,
-        username,
         email_address,
         first_name,
         last_name,
@@ -70,7 +70,6 @@ const usersSlice = createSlice({
         is_authenticated
       } = action.payload;
       state.userId = user_id;
-      state.username = username;
       state.emailAddress = email_address;
       state.firstName = first_name;
       state.lastName = last_name;
@@ -81,7 +80,6 @@ const usersSlice = createSlice({
     },
     [getUser.rejected]: (state, action) => {
       state.userId = null;
-      state.username = null;
       state.emailAddress = null;
       state.firstName = null;
       state.lastName = null;
@@ -96,6 +94,6 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-export const { simpleLogin, setBalance, setUser } = usersSlice.actions;
+export const { simpleLogin, setBalance, setUser, setUsers } = usersSlice.actions;
 
 export default usersSlice.reducer;

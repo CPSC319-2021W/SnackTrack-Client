@@ -81,7 +81,7 @@ const UserCard = (props) => {
             {user.first_name} {user.last_name}
           </p>
           <p className={styles.text__reg}>
-            {noHover ? user.email_address : user.username}
+            {user.email_address}
           </p>
           {noHover ? (
             user.user_id !== userId ? (

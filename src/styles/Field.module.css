@@ -44,6 +44,10 @@
   padding: 0.4rem 0rem;
 }
 
+.full {
+  width: 100%;
+}
+
 .input__small {
   min-width: 0;
   width: 120px;
@@ -84,6 +88,10 @@
 
 .calendar__adornment button {
   padding: 6px;
+}
+
+.calendar__adornment > div:first-child {
+  width: 100%;
 }
 
 @media (max-width: 590px) {

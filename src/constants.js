@@ -1,3 +1,11 @@
+import candyPlaceholder from './assets/placeholders/candy.png';
+import chipsPlaceholder from './assets/placeholders/chips.png';
+import chocolatePlaceholder from './assets/placeholders/chocolate.png';
+import cookiesPlaceholder from './assets/placeholders/cookies.png';
+import crackersPlaceholder from './assets/placeholders/crackers.png';
+import fruitsPlaceholder from './assets/placeholders/fruits.png';
+import otherPlaceholder from './assets/placeholders/other.png';
+
 export const ROUTES = {
   LOGIN: '/login',
   COMMON: '/common',
@@ -22,37 +30,37 @@ export const CATEGORIES_LIST = [
   {
     id: 1,
     name: DEFAULT_CATEGORIES.CHOCOLATE,
-    selected: false
+    defaultImage: chocolatePlaceholder
   },
   {
     id: 2,
     name: DEFAULT_CATEGORIES.CANDY,
-    selected: false
+    defaultImage: candyPlaceholder
   },
   {
     id: 3,
     name: DEFAULT_CATEGORIES.CHIPS,
-    selected: false
+    defaultImage: chipsPlaceholder
   },
   {
     id: 4,
     name: DEFAULT_CATEGORIES.COOKIES,
-    selected: false
+    defaultImage: cookiesPlaceholder
   },
   {
     id: 5,
     name: DEFAULT_CATEGORIES.CRACKERS,
-    selected: false
+    defaultImage: crackersPlaceholder
   },
   {
     id: 6,
     name: DEFAULT_CATEGORIES.FRUITS,
-    selected: false
+    defaultImage: fruitsPlaceholder
   },
   {
     id: 7,
     name: DEFAULT_CATEGORIES.OTHER,
-    selected: false
+    defaultImage: otherPlaceholder
   }
 ];
 
@@ -81,6 +89,10 @@ export const NOTIFICATIONS = {
   CLAIM_ERROR: {
     type: 'error',
     message: 'Please approve or decline pending orders before making new purchases.'
+  },
+  USER_DELETE_SUCCESS: {
+    type: 'success',
+    message: 'User successfully deleted.'
   }
 };
 
@@ -101,3 +113,5 @@ export const GREETING = {
   AFTERNOON: 'Good afternoon, ',
   EVENING: 'Good evening, '
 };
+
+export const DEFAULT_ORDER_THRESHOLD = 10;

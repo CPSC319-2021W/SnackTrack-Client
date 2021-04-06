@@ -1,3 +1,4 @@
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD } from '../constants';
 import {
   Card,
   CircularProgress,
@@ -13,8 +14,10 @@ import { Fragment, React, useEffect } from 'react';
 import {
   setIsAddBatchOpen,
   setIsAddSnackOpen,
+  setIsEditSnackOpen,
   setSelectedBatch,
   setSelectedSnackForBatch,
+  setSelectedSnackToEdit,
   setSnackBatches
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,7 +25,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
 import AppButton from '../components/AppButton';
-import { CATEGORIES_LIST } from '../constants';
+import EditSnackDialog from './EditSnackDialog';
 import ManageBatchDialog from '../components/ManageBatchDialog';
 import SnackBatchesSubTable from './SnackBatchesSubTable';
 import classNames from 'classnames';
@@ -31,12 +34,10 @@ import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
   const dispatch = useDispatch();
-  const DEFAULT_ORDER_THRESHOLD = 10;
   const {
     isLoaded,
     isEmpty,
     snacksForAddBatch,
-    activeSnacks,
     data,
     rowsPerPage,
     onAddBatchOrEdit,
@@ -49,7 +50,8 @@ const SnackInventoryTable = (props) => {
     selectedBatch,
     isAddBatchOpen,
     isEditBatchOpen,
-    isAddSnackOpen
+    isAddSnackOpen,
+    isEditSnackOpen
   } = useSelector((state) => state.snacksReducer);
 
   const setSelectedSnack = (snackId) => {
@@ -58,6 +60,10 @@ const SnackInventoryTable = (props) => {
 
   const setBatches = (batches) => {
     dispatch(setSnackBatches(batches));
+  };
+
+  const setSnackToEdit = (snack) => {
+    dispatch(setSelectedSnackToEdit(snack));
   };
 
   const emptyRows = () => {
@@ -80,12 +86,16 @@ const SnackInventoryTable = (props) => {
   };
 
   const handleOpenRow = async (snackId) => {
-    if (activeSnacks) {
-      await handleGetSnackBatch(snackId);
-    }
+    await handleGetSnackBatch(snackId);
+  };
+
+  const onEditSnack = (snack) => {
+    setSnackToEdit(snack);
+    setEditSnackOpen();
   };
 
   const setAddBatchOpen = () => dispatch(setIsAddBatchOpen(true));
+
   const setBatchSelect = (batch) => dispatch(setSelectedBatch(batch));
 
   const handleAddBatch = (option) => {
@@ -156,11 +166,14 @@ const SnackInventoryTable = (props) => {
     {
       id: 'actions',
       label: 'Actions',
-      format: () => (
+      format: (snack) => (
         <AppButton
           secondary
           small
-          onClick={() => {}}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEditSnack(snack);
+          }}
         >
           Edit
         </AppButton>
@@ -170,35 +183,26 @@ const SnackInventoryTable = (props) => {
 
   const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
 
-  const openAddSnack = () => {
-    setAddSnackOpen(true);
-  };
+  const setEditSnackOpen = () => dispatch(setIsEditSnackOpen(true));
 
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
-          <h4 className={styles.primaryHeader__text}>
-            {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
-          </h4>
+          <h4 className={styles.primaryHeader__text}>Snacks</h4>
         </div>
-        {activeSnacks ? (
-          <div className={styles.header__actionContainer}>
-            <AddBatchSelect
-              data={snacksForAddBatch}
-              selectedBatch={selectedBatch}
-              handleSelectBatch={handleAddBatch}
-            />
-            <div className={styles.cell__pay}>
-              <AppButton
-                primary
-                onClick={openAddSnack}
-              >
-                Add New Snack
-              </AppButton>
-            </div>
+        <div className={styles.header__actionContainer}>
+          <AddBatchSelect
+            data={snacksForAddBatch}
+            selectedBatch={selectedBatch}
+            handleSelectBatch={handleAddBatch}
+          />
+          <div className={styles.cell__pay}>
+            <AppButton primary onClick={setAddSnackOpen}>
+              Add Snack
+            </AppButton>
           </div>
-        ) : null}
+        </div>
       </div>
       <TableContainer>
         <Table aria-label='Snack Inventory Table'>
@@ -224,9 +228,10 @@ const SnackInventoryTable = (props) => {
                       tabIndex={-1}
                       className={classNames({
                         [styles.row]: true,
-                        [styles.row__selectable]: activeSnacks,
+                        [styles.row__selectable]: true,
                         [styles.row__selected]:
-                          snacks[i].snack_id === selectedSnackForBatch
+                          snacks[i].snack_id === selectedSnackForBatch,
+                        [styles.row__lastChild]: i === rowsPerPage - 1
                       })}
                       onClick={() => handleOpenRow(snacks[i].snack_id)}
                     >
@@ -240,32 +245,35 @@ const SnackInventoryTable = (props) => {
                         return (
                           <TableCell
                             key={column.id}
-                            className={`${styles.cell} ${styles.cell__small} ${
-                              column.label === 'Status' || column.id === 'snack_name'
-                                ? styles.cell__medium
-                                : null
-                            }`}
+                            className={classNames({
+                              [styles.cell]: true,
+                              [styles.cell__small]: true,
+                              [styles.cell__medium]:
+                                column.label === 'Status' || column.id === 'snack_name',
+                              [styles.cell__lastChild__noSelect]: column.id === 'actions'
+                            })}
                             title={column.id === 'snack_name' ? value : null}
                           >
-                            {column.format
-                              ? column.format(
-                                value,
-                                snacks[i].is_active,
-                                snacks[i].order_threshold
-                              )
-                              : value}
+                            {column.id === 'actions'
+                              ? column.format(snack)
+                              : column.format
+                                ? column.format(
+                                  value,
+                                  snacks[i].is_active,
+                                  snacks[i].order_threshold
+                                )
+                                : value}
                           </TableCell>
                         );
                       })}
                     </TableRow>
-                    {activeSnacks ? (
-                      <SnackBatchesSubTable
-                        id={snacks[i]?.snack_id}
-                        snackName={snacks[i]?.snack_name}
-                        open={selectedSnackForBatch}
-                        colSpan={columns.length}
-                      />
-                    ) : null}
+                    <SnackBatchesSubTable
+                      id={snacks[i]?.snack_id}
+                      isLastChild={i === rowsPerPage - 1}
+                      snackName={snacks[i]?.snack_name}
+                      open={selectedSnackForBatch}
+                      colSpan={columns.length}
+                    />
                   </Fragment>
                 );
               })
@@ -299,9 +307,6 @@ const SnackInventoryTable = (props) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <AddSnackDialog 
-        open={isAddSnackOpen} 
-      />
       <Table>
         <TableBody>
           <TableRow>
@@ -312,11 +317,13 @@ const SnackInventoryTable = (props) => {
               rowsPerPage={rowsPerPage}
               labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
               rowsPerPageOptions={[rowsPerPage]}
-              onChangePage={(event, page) => onChangePage(page, activeSnacks)}
+              onChangePage={(event, page) => onChangePage(page)}
             />
           </TableRow>
         </TableBody>
       </Table>
+      <AddSnackDialog open={isAddSnackOpen} />
+      <EditSnackDialog open={isEditSnackOpen} />
       <ManageBatchDialog
         newSnackBatch
         open={isAddBatchOpen}

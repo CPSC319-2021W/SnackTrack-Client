@@ -45,3 +45,9 @@
   line-height: 16px;
   color: DARK_GREY;
 }
+
+.elements__container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}

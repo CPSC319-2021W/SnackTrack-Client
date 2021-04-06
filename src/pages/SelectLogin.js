@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
+import { ReactComponent as SnackTrackLogo } from '../assets/logos/snacktrack.svg';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
 import UserSearchBar from '../components/UserSearchBar';
@@ -15,7 +16,7 @@ const SelectLogin = () => {
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'username']
+    keys: ['first_name', 'last_name', 'email_address']
   };
 
   useEffect(() => {
@@ -59,7 +60,7 @@ const SelectLogin = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>SnackTrack</h2>
+      <SnackTrackLogo className={styles.common__logo} />
       <div className={styles.seachbar__container}>
         <UserSearchBar />
       </div>

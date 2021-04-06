@@ -1,22 +1,35 @@
 import { React, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { CircularProgress } from '@material-ui/core';
+import { NOTIFICATIONS } from '../constants';
+import ToastNotification from '../components/ToastNotification';
 import UserSearchBar from '../components/UserSearchBar';
 import UsersContainerAdmin from '../components/UsersContainerAdmin';
 import adminStyles from '../styles/AdminUsersList.module.css';
 import { getUsersAdmin } from '../services/UsersService';
 import { handleSearch } from '../helpers/SearchHelpers';
+import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
-import { useSelector } from 'react-redux';
 
 const Users = () => {
+  const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const [users, setUsers] = useState([]);
   const [usersToDisplay, setUsersToDisplay] = useState(users);
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
+  const { isToastNotificationOpen, apiResponse } = useSelector(
+    (state) => state.notificationsReducer
+  );
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'username']
+    keys: ['first_name', 'last_name', 'email_address']
+  };
+
+  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
+
+  const handleClose = () => {
+    openToastNotification(false);
   };
 
   useEffect(async () => {
@@ -46,12 +59,19 @@ const Users = () => {
         <div className={styles.searchbar__container}>
           <UserSearchBar />
         </div>
-        { isLoaded ? renderList() : (
+        {isLoaded ? (
+          renderList()
+        ) : (
           <div className={adminStyles.list__container}>
             <CircularProgress color='secondary' size={30} thickness={5} />
           </div>
-        ) }
+        )}
       </div>
+      <ToastNotification
+        open={isToastNotificationOpen}
+        notification={NOTIFICATIONS[apiResponse]}
+        onClose={handleClose}
+      />
     </div>
   );
 };
