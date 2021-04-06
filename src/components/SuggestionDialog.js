@@ -38,7 +38,7 @@ const SuggestionDialog = (props) => {
           />
           <div className={styles.input__validation}>
             <p className={styles.error__message}>{error}</p>
-            <p className={styles.character__count}>{Math.max(0, max-length)}/{max}</p>
+            <p className={styles.character__count}>{Math.min(max, length)}/{max}</p>
           </div>
         </div>
         <Divider />
