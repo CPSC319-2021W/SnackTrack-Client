@@ -21,19 +21,26 @@ const AuthLogin = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const setProfile = (profile) => dispatch(setUser(profile));
 
   const onSuccess = async (googleUser) => {
-    setIsLoading(true);
-    const token = googleUser.getAuthResponse().id_token;
-    const { accessToken, user } = await authenticate(token);
-    Cookies.set('auth', accessToken, {
-      expires: 30,
-      secure: process.env.REACT_APP_ENV !== 'DEV'
-    });
-    setProfile(user);
-    refreshTokenSetup(googleUser);
-    history.push(ROUTES.SNACKS);
+    try {
+      const token = googleUser.getAuthResponse().id_token;
+      const { accessToken, user } = await authenticate(token);
+      Cookies.set('auth', accessToken, {
+        expires: 30,
+        secure: process.env.REACT_APP_ENV !== 'DEV'
+      });
+      setProfile(user);
+      refreshTokenSetup(googleUser);
+      history.push(ROUTES.SNACKS);
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
+    setIsLoading(false);
   };
 
   const loginFailure = (res) => {
@@ -72,6 +79,17 @@ const AuthLogin = () => {
             <GalvanizeLogo className={styles.g_logo} />
             <SnackTrackLogo className={styles.st_logo} />
           </div>
+          { error
+            ? (
+              <div className={styles.error__container}>
+                <p className={styles.error__message}>
+                  Uh-oh! Something went wrong.
+                </p>
+                <p className={styles.error__message}>
+                  Please try again later.
+                </p>
+              </div>
+            ) : null }
           <Button
             className={classNames({
               [styles.button__login]: true,

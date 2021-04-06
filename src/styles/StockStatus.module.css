@@ -23,6 +23,11 @@
   margin: 1rem 0;
 }
 
+.error__message {
+  width: 100%;
+  text-align: center;
+}
+
 .placeholder {
   width: 100%;
   background-color: INNER_LIGHT_GREY;

@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import AppButton from './AppButton';
+import { GENERIC_ERROR } from '../constants';
 import { setSuggestionState } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/SuggestionsBox.module.css';
 
-const SuggestionsBox = () => {
+const SuggestionsBox = ({ error }) => {
   const dispatch = useDispatch();
   const { suggestions } = useSelector((state) => state.snacksReducer);
   const { users } = useSelector((state) => state.usersReducer);
@@ -25,6 +26,14 @@ const SuggestionsBox = () => {
     );
   };
 
+  const renderError = () => {
+    return (
+      <p>
+        { GENERIC_ERROR }
+      </p>
+    );
+  };
+
   const renderTooltip = (text, firstName, lastName) => {
     return (
       <Fragment>
@@ -34,13 +43,9 @@ const SuggestionsBox = () => {
     );
   };
 
-  return (
-    <Card className={styles.card__base}>
-      <div className={styles.header}>
-        <h5 className={styles.title}>Suggestions</h5>
-        <AppButton cancel>Clear All</AppButton>
-      </div>
-      <div className={styles.bean__container}>
+  const renderBeans = () => {
+    return (
+      <Fragment>
         { suggestions.length > 0
           ? suggestions.map((bean, i) => {
             const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
@@ -61,6 +66,23 @@ const SuggestionsBox = () => {
           })
           : renderEmptyState()
         }
+      </Fragment>
+    );
+  };
+
+  return (
+    <Card className={styles.card__base}>
+      <div className={styles.header}>
+        <h5 className={styles.title}>Suggestions</h5>
+        <AppButton
+          cancel
+          disabled={error}
+        >
+          Clear All
+        </AppButton>
+      </div>
+      <div className={styles.bean__container}>
+        { error ? renderError() : renderBeans() }
       </div>
     </Card>
   );

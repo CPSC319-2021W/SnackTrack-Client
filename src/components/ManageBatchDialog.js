@@ -90,11 +90,12 @@ const ManageBatchDialog = (props) => {
         openToastNotification(true);
         onAddBatchOrEdit(newBatch, oldQuantity);
       } catch (err) {
+        console.log(err);
         onApiResponse('ERROR');
         openToastNotification(true);
       }
       setIsSubmitLoading(false);
-      closeDialog();
+      closeDialog(); 
     }
   };
 
@@ -106,6 +107,7 @@ const ManageBatchDialog = (props) => {
       openToastNotification(true);
       onDeleteBatch({ snack_id, snack_batch_id, quantity });
     } catch (err) {
+      console.log(err);
       onApiResponse('ERROR');
       openToastNotification(true);
     }

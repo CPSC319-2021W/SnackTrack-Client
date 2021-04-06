@@ -2,32 +2,24 @@ import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const cancelOrder = async (transaction_id) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.put(
-      `/transactions/${transaction_id}`,
-      {
-        transaction_type_id: 2
-      },
-      authHeader
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.put(
+    `/transactions/${transaction_id}`,
+    {
+      transaction_type_id: 2
+    },
+    authHeader
+  );
+  return data;
 };
 
 const getPayments = async (page, rowsPerPage) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(
-      `/payments/?page=${page}&size=${rowsPerPage}`,
-      authHeader
-    );
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(
+    `/payments/?page=${page}&size=${rowsPerPage}`,
+    authHeader
+  );
+  return data;
 };
 
 const makePayment = async (userId, transactionIds, paymentAmount, processor, payAll) => {
@@ -68,13 +60,9 @@ const claimPendingOrders = (approvedOrderIds, declinedOrderIds) => {
 };
 
 const getPendingOrders = async (userId) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(`/users/${userId}/pendingOrders`, authHeader);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(`/users/${userId}/pendingOrders`, authHeader);
+  return data;
 };
 
 const makeOrder = async (

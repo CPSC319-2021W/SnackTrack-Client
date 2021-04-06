@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import classNames from 'classnames';
+import { isMobile } from 'react-device-detect';
 
 import { DEFAULT_CATEGORIES } from '../../constants';
 
@@ -14,7 +15,8 @@ import { ReactComponent as Crackers } from '../../assets/icons/crackers.svg';
 import { ReactComponent as Fruits } from '../../assets/icons/fruits.svg';
 import { ReactComponent as Other } from '../../assets/icons/other.svg';
 
-const FilterIcon = ({ type, isSelected }) => {
+const FilterButton = ({ category, lastChild, onToggle }) => {
+  const { name, selected } = category;
   const [hover, setHover] = useState(false);
 
   const renderLabel = () => {
@@ -22,8 +24,8 @@ const FilterIcon = ({ type, isSelected }) => {
       <p className={classNames({
         [styles.unselectable]: true,
         [styles.categoryText]: true,
-        [styles.selectedText]: isSelected || hover })}>
-        { type }
+        [styles.selectedText]: selected || (isMobile ? false : hover) })}>
+        { name }
       </p>
     );
   };
@@ -33,60 +35,60 @@ const FilterIcon = ({ type, isSelected }) => {
       classNames({
         [styles.filter_hover]: hover,
         [styles.icon_button]: true,
-        'active': isSelected
+        'active': selected
       })
     );
   };
 
   const renderSwitch = () => {
-    switch(type) {
+    switch(name) {
     case DEFAULT_CATEGORIES.CANDY:
       return (
         <Fragment>
           <Candy className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.CHIPS:
       return (
         <Fragment>
           <Chips className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.CHOCOLATE:
       return (
         <Fragment>
           <Chocolate className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.COOKIES:
       return (
         <Fragment>
           <Cookies className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.CRACKERS:
       return (
         <Fragment>
           <Crackers className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.FRUITS:
       return (
         <Fragment>
           <Fruits className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     case DEFAULT_CATEGORIES.OTHER:
       return (
         <Fragment>
           <Other className={getClasses()} />
-          { renderLabel(type) }
+          { renderLabel(name) }
         </Fragment>
       );
     default:
@@ -95,10 +97,18 @@ const FilterIcon = ({ type, isSelected }) => {
   };
   
   return (
-    <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <button
+      className={classNames({
+        [styles.buttonToggle]: true,
+        [styles.buttonToggle__lastChild]: lastChild
+      })}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={onToggle}
+    >
       { renderSwitch() }
-    </div>
+    </button>
   );
 };
 
-export default FilterIcon;
+export default FilterButton;

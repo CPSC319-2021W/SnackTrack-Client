@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES } from '../constants';
-import { Dialog, Divider } from '@material-ui/core';
+import { Dialog, Divider, Switch } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
 import { deleteSnack, editSnack } from '../services/SnacksService';
@@ -24,10 +24,11 @@ const options = CATEGORIES_LIST.map((category) => ({
 
 const EditSnackDialog = (props) => {
   const dispatch = useDispatch();
-  const { open } = props;
+  const { open, onHandleApiResponse } = props;
   const [category, setCategory] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isSnackActivated, setIsSnackActivated] = useState(false);
   const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const { isEditSnackOpen, snackImageUploadData, selectedSnackToEdit } = useSelector(
     (state) => state.snacksReducer
@@ -61,15 +62,14 @@ const EditSnackDialog = (props) => {
   };
 
   const removeSnack = async () => {
+    setIsDeleteLoading(true);
     try {
-      setIsDeleteLoading(true);
       await deleteSnack(selectedSnackToEdit.snack_id);
-      closeDialog();
     } catch (err) {
-      console.log(err);
-    } finally {
-      setIsDeleteLoading(false);
+      onHandleApiResponse('ERROR');
     }
+    setIsDeleteLoading(false);
+    closeDialog();
   };
 
   useEffect(async () => {
@@ -78,6 +78,12 @@ const EditSnackDialog = (props) => {
     await addForm.setFieldValue('description', selectedSnackToEdit.description);
     await addForm.setFieldValue('price', selectedSnackToEdit.price / 100);
     await addForm.setFieldValue('reorder', selectedSnackToEdit.order_threshold ?? '');
+  }, [isEditSnackOpen]);
+
+  useEffect(() => {
+    if (isEditSnackOpen) {
+      setIsSnackActivated(selectedSnackToEdit?.is_active);
+    }
   }, [isEditSnackOpen]);
 
   const addForm = useFormik({
@@ -98,10 +104,15 @@ const EditSnackDialog = (props) => {
         snack_type_id: parseInt(category.value),
         description: values.description,
         image_uri: imageUri,
+        is_active: isSnackActivated,
         price: Number(values.price) * 100,
         order_threshold: values.reorder === '' ? null : values.reorder
       };
-      await editSnack(snackRequest);
+      try {
+        await editSnack(snackRequest);
+      } catch (err) {
+        onHandleApiResponse('ERROR');
+      }
       actions.resetForm({ values: blankState });
       setIsSubmitLoading(false);
       closeDialog();
@@ -181,6 +192,17 @@ const EditSnackDialog = (props) => {
                     name='reorder'
                     type='text'
                   />
+                </div>
+                <div className={styles.frame__row}>
+                  <div className={styles.switch__container}>
+                    <p className={styles.text__sub}>Active Snack</p>
+                    <Switch
+                      disableRipple
+                      checked={isSnackActivated}
+                      name='activate'
+                      onChange={() => setIsSnackActivated(!isSnackActivated)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

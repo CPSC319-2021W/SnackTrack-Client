@@ -49,6 +49,7 @@ const UserProfile = () => {
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
   const [paymentsError, setPaymentsError] = useState(false);
+  const [ordersError, setOrdersError] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
   const { isToastNotificationOpen, apiResponse } = useSelector(
@@ -64,23 +65,35 @@ const UserProfile = () => {
     history.push(ROUTES.USERS);
   };
 
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
+  };
+
   const handlePaymentChangePage = async (page) => {
-    const paymentResponse = await getUserPayments(id, page, rowsPerPage);
-    setPaymentsResponse(paymentResponse);
+    try {
+      const paymentResponse = await getUserPayments(id, page, rowsPerPage);
+      setPaymentsResponse(paymentResponse);
+      setPaymentsError(false);
+    } catch (err) {
+      console.log(err);
+      setPaymentsError(true);
+    }
   };
 
   const handleOrderChangePage = async (page) => {
-    const transactionResponse = await getUserOrders(id, page, rowsPerPage);
-    setOrdersResponse(transactionResponse);
+    try {
+      const transactionResponse = await getUserOrders(id, page, rowsPerPage);
+      setOrdersResponse(transactionResponse);
+      setOrdersError(false);
+    } catch (err) {
+      console.log(err);
+      setOrdersError(true);
+    }
   };
 
   const handleClose = () => {
     openToastNotification(false);
-  };
-
-  const handleApiResponse = (response) => {
-    onApiResponse(response);
-    openToastNotification(true);
   };
 
   const handleMakePayment = async () => {
@@ -122,6 +135,7 @@ const UserProfile = () => {
       const userResponse = await getUserById(id);
       setUser(userResponse);
     } catch (err) {
+      console.log(err);
       setUserNotFound(true);
     }
   }, []);
@@ -132,14 +146,14 @@ const UserProfile = () => {
         const orderResponse = await getUserOrders(id, 0, rowsPerPage);
         setOrdersResponse(orderResponse);
       } catch (err) {
-        openToastNotification(true);
-        setPaymentsError(true);
+        console.log(err);
+        setOrdersError(true);
       }
       try {
         const paymentResponse = await getUserPayments(id, 0, rowsPerPage);
         setPaymentsResponse(paymentResponse);
       } catch (err) {
-        openToastNotification(true);
+        console.log(err);
         setPaymentsError(true);
       }
     }
@@ -154,7 +168,7 @@ const UserProfile = () => {
           </div>
           Back to Users List
         </h5>
-        { Number(id) !== userId
+        { Number(id) !== userId && !userNotFound
           ? (
             <div className={styles.top_button__container}>
               <AppButton
@@ -180,6 +194,7 @@ const UserProfile = () => {
                 data={ordersResponse}
                 rowsPerPage={rowsPerPage}
                 balance={user?.balance}
+                error={ordersError}
                 updateProfileBalance={updateProfileBalance}
                 onHandleApiResponse={handleApiResponse}
                 onChangePage={handleOrderChangePage}

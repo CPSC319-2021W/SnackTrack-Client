@@ -9,7 +9,11 @@ import {
   TablePagination,
   TableRow
 } from '@material-ui/core';
-import { Fragment, React, useEffect } from 'react';
+import { Fragment, React, useEffect, useState } from 'react';
+import {
+  setApiResponse,
+  setToastNotificationOpen
+} from '../redux/features/notifications/notificationsSlice';
 import {
   setIsAddBatchOpen,
   setIsAddSnackOpen,
@@ -21,7 +25,7 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD } from '../constants';
+import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD, GENERIC_ERROR } from '../constants';
 import AddBatchSelect from '../components/AddBatchSelect';
 import AddSnackDialog from './AddSnackDialog';
 import AppButton from '../components/AppButton';
@@ -33,13 +37,14 @@ import { getSnackBatch } from '../services/SnacksService';
 import styles from '../styles/Table.module.css';
 
 const SnackInventoryTable = (props) => {
+  const [batchError, setBatchError] = useState(null);
   const dispatch = useDispatch();
   const {
     isLoaded,
     isEmpty,
     snacksForAddBatch,
-    activeSnacks,
     data,
+    error,
     rowsPerPage,
     onAddBatchOrEdit,
     onDeleteBatch,
@@ -67,6 +72,15 @@ const SnackInventoryTable = (props) => {
     dispatch(setSelectedSnackToEdit(snack));
   };
 
+  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
+
+  const onApiResponse = (response) => dispatch(setApiResponse(response));
+
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
+  };
+
   const emptyRows = () => {
     const emptyValue = isEmpty ? 1 : 0;
     const rowsToFill = rowsPerPage - snacks.length - emptyValue;
@@ -80,16 +94,19 @@ const SnackInventoryTable = (props) => {
         setBatches([]);
       }, 300);
     } else {
-      const { snack_batches } = await getSnackBatch(snackId);
-      setBatches(snack_batches);
-      setSelectedSnack(snackId);
+      try {
+        const { snack_batches } = await getSnackBatch(snackId);
+        setBatches(snack_batches);
+        setSelectedSnack(snackId);
+      } catch (err) {
+        console.log(err);
+        setBatchError(snackId);
+      }
     }
   };
 
   const handleOpenRow = async (snackId) => {
-    if (activeSnacks) {
-      await handleGetSnackBatch(snackId);
-    }
+    await handleGetSnackBatch(snackId);
   };
 
   const onEditSnack = (snack) => {
@@ -188,28 +205,127 @@ const SnackInventoryTable = (props) => {
 
   const setEditSnackOpen = () => dispatch(setIsEditSnackOpen(true));
 
+  const renderTableBody = () => {
+    return (
+      <Fragment>
+        {isLoaded ? (
+          snacks.map((snack, i) => {
+            return (
+              <Fragment key={i}>
+                <TableRow
+                  key={i}
+                  tabIndex={-1}
+                  className={classNames({
+                    [styles.row]: true,
+                    [styles.row__selectable]: true,
+                    [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
+                    [styles.row__lastChild]: i === rowsPerPage  - 1
+                  })}
+                  onClick={() => handleOpenRow(snacks[i].snack_id)}
+                >
+                  {columns.map((column) => {
+                    let value;
+                    if (column.id === 'status') {
+                      value = snack['quantity'];
+                    } else {
+                      value = snack[column.id];
+                    }
+                    return (
+                      <TableCell
+                        key={column.id}
+                        className={classNames({
+                          [styles.cell]: true,
+                          [styles.cell__small]: true,
+                          [styles.cell__medium]: column.label === 'Status' || column.id === 'snack_name',
+                          [styles.cell__lastChild__noSelect]: column.id === 'actions'
+                        })}
+                        title={column.id === 'snack_name' ? value : null}
+                      >
+                        {column.id === 'actions'
+                          ? column.format(snack)
+                          : column.format
+                            ? column.format(
+                              value,
+                              snacks[i].is_active,
+                              snacks[i].order_threshold
+                            )
+                            : value}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+                <SnackBatchesSubTable
+                  id={snacks[i]?.snack_id}
+                  error={batchError === snacks[i]?.snack_id}
+                  isLastChild={(i === rowsPerPage - 1)}
+                  snackName={snacks[i]?.snack_name}
+                  open={selectedSnackForBatch}
+                  colSpan={columns.length}
+                />
+              </Fragment>
+            );
+          })
+        ) : (
+          <TableRow tabIndex={-1}>
+            <TableCell
+              className={styles.cell}
+              align='center'
+              colSpan={columns.length}
+            >
+              <CircularProgress color='secondary' size={30} thickness={5} />
+            </TableCell>
+          </TableRow>
+        )}
+        {isLoaded && isEmpty ? (
+          <TableRow tabIndex={-1}>
+            <TableCell className={styles.cell} colSpan={columns.length}>
+              <p>There is nothing to display.</p>
+            </TableCell>
+          </TableRow>
+        ) : null}
+        {emptyRows().map((row) => {
+          return (
+            <TableRow key={row} tabIndex={-1}>
+              {columns.map((column) => {
+                return <TableCell key={column.id} className={styles.cell} />;
+              })}
+            </TableRow>
+          );
+        })}
+      </Fragment>
+    );
+  };
+
+  const renderError = () => {
+    return (
+      <TableRow className={styles.error__row}>
+        <TableCell colSpan={7}>
+          <span className={styles.error__message}>
+            { GENERIC_ERROR }
+          </span>
+        </TableCell>
+      </TableRow>
+    );
+  };
+
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
-          <h4 className={styles.primaryHeader__text}>
-            {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
-          </h4>
+          <h4 className={styles.primaryHeader__text}>Snacks</h4>
         </div>
-        {activeSnacks ? (
-          <div className={styles.header__actionContainer}>
-            <AddBatchSelect
-              data={snacksForAddBatch}
-              selectedBatch={selectedBatch}
-              handleSelectBatch={handleAddBatch}
-            />
-            <div className={styles.cell__pay}>
-              <AppButton primary onClick={setAddSnackOpen}>
-                Add Snack
-              </AppButton>
-            </div>
+        <div className={styles.header__actionContainer}>
+          <AddBatchSelect
+            data={snacksForAddBatch}
+            selectedBatch={selectedBatch}
+            handleSelectBatch={handleAddBatch}
+          />
+          <div className={styles.cell__pay}>
+            <AppButton primary onClick={setAddSnackOpen}>
+              Add Snack
+            </AppButton>
           </div>
-        ) : null}
+        </div>
       </div>
       <TableContainer>
         <Table aria-label='Snack Inventory Table'>
@@ -226,91 +342,7 @@ const SnackInventoryTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isLoaded ? (
-              snacks.map((snack, i) => {
-                return (
-                  <Fragment key={i}>
-                    <TableRow
-                      key={i}
-                      tabIndex={-1}
-                      className={classNames({
-                        [styles.row]: true,
-                        [styles.row__selectable]: activeSnacks,
-                        [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
-                        [styles.row__lastChild]: i === rowsPerPage  - 1
-                      })}
-                      onClick={() => handleOpenRow(snacks[i].snack_id)}
-                    >
-                      {columns.map((column) => {
-                        let value;
-                        if (column.id === 'status') {
-                          value = snack['quantity'];
-                        } else {
-                          value = snack[column.id];
-                        }
-                        return (
-                          <TableCell
-                            key={column.id}
-                            className={classNames({
-                              [styles.cell]: true,
-                              [styles.cell__small]: true,
-                              [styles.cell__medium]: column.label === 'Status' || column.id === 'snack_name',
-                              [styles.cell__lastChild__noSelect]: column.id === 'actions'
-                            })}
-                            title={column.id === 'snack_name' ? value : null}
-                          >
-                            {column.id === 'actions'
-                              ? column.format(snack)
-                              : column.format
-                                ? column.format(
-                                  value,
-                                  snacks[i].is_active,
-                                  snacks[i].order_threshold
-                                )
-                                : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                    {activeSnacks ? (
-                      <SnackBatchesSubTable
-                        id={snacks[i]?.snack_id}
-                        isLastChild={(i === rowsPerPage - 1)}
-                        snackName={snacks[i]?.snack_name}
-                        open={selectedSnackForBatch}
-                        colSpan={columns.length}
-                      />
-                    ) : null}
-                  </Fragment>
-                );
-              })
-            ) : (
-              <TableRow tabIndex={-1}>
-                <TableCell
-                  className={styles.cell}
-                  align='center'
-                  colSpan={columns.length}
-                >
-                  <CircularProgress color='secondary' size={30} thickness={5} />
-                </TableCell>
-              </TableRow>
-            )}
-            {isLoaded && isEmpty ? (
-              <TableRow tabIndex={-1}>
-                <TableCell className={styles.cell} colSpan={columns.length}>
-                  <p>There is nothing to display.</p>
-                </TableCell>
-              </TableRow>
-            ) : null}
-            {emptyRows().map((row) => {
-              return (
-                <TableRow key={row} tabIndex={-1}>
-                  {columns.map((column) => {
-                    return <TableCell key={column.id} className={styles.cell} />;
-                  })}
-                </TableRow>
-              );
-            })}
+            { error ? renderError() : renderTableBody() }
           </TableBody>
         </Table>
       </TableContainer>
@@ -324,13 +356,19 @@ const SnackInventoryTable = (props) => {
               rowsPerPage={rowsPerPage}
               labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
               rowsPerPageOptions={[rowsPerPage]}
-              onChangePage={(event, page) => onChangePage(page, activeSnacks)}
+              onChangePage={(event, page) => onChangePage(page)}
             />
           </TableRow>
         </TableBody>
       </Table>
-      <AddSnackDialog open={isAddSnackOpen} />
-      <EditSnackDialog open={isEditSnackOpen} />
+      <AddSnackDialog
+        open={isAddSnackOpen}
+        onHandleApiResponse={handleApiResponse}
+      />
+      <EditSnackDialog
+        open={isEditSnackOpen}
+        onHandleApiResponse={handleApiResponse}
+      />
       <ManageBatchDialog
         newSnackBatch
         open={isAddBatchOpen}

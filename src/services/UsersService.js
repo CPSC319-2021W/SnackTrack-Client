@@ -2,14 +2,9 @@ import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const authenticate = async (token) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${token}` } };
-    const { data } = await httpClient.post('/authenticate', null, authHeader);
-    return data;
-  } catch (err) {
-    // handle error
-    console.log(err);
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+  const { data } = await httpClient.post('/authenticate', null, authHeader);
+  return data;
 };
 
 const getUsersCommon = async () => {
@@ -29,31 +24,21 @@ const getUserById = async (userId) => {
 };
 
 const getUserOrders = async (userId, page, rowsPerPage) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(
-      `/users/${userId}/transactions/?page=${page}&size=${rowsPerPage}`,
-      authHeader
-    );
-    return data;
-  } catch (err) {
-    // TODO: Handle 404
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(
+    `/users/${userId}/transactions/?page=${page}&size=${rowsPerPage}`,
+    authHeader
+  );
+  return data;
 };
 
 const getUserPayments = async (userId, page, rowsPerPage) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(
-      `/users/${userId}/payments/?page=${page}&size=${rowsPerPage}`,
-      authHeader
-    );
-    return data;
-  } catch (err) {
-    // TODO: Handle 404
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(
+    `/users/${userId}/payments/?page=${page}&size=${rowsPerPage}`,
+    authHeader
+  );
+  return data;
 };
 
 const deleteUser = async (userId) => {
