@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 
 import { addCategory, removeCategory } from '../../redux/features/snacks/snacksSlice';
-import FilterIcon from './FilterIcon';
+import FilterButton from './FilterButton';
 
 import { CATEGORIES_LIST } from '../../constants';
 import styles from '../../styles/Category.module.css';
@@ -36,16 +36,13 @@ const CategoryFilter = ({ selectedFilters }) => {
   
   return (
     <div className={styles.container}>
-      {categories.map(({name, selected}, i) => (
+      {categories.map((category, i) => (
         <div key={i} className={styles.categoryBox}>
-          <button
-            className={classNames({
-              [styles.buttonToggle]: true,
-              [styles.buttonToggle__lastChild]: i === categories.length - 1
-            })}
-            onClick={() => toggleCategory(i)}>
-            <FilterIcon type={name} isSelected={selected} />
-          </button>
+          <FilterButton
+            category={category}
+            lastChild={i === categories.length - 1}
+            onToggle={() => toggleCategory(i)}
+          />
         </div>
       ))}
     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button, CircularProgress } from '@material-ui/core';
 import classNames from 'classnames';
+import { isMobile } from 'react-device-detect';
 
 import styles from '../styles/AppButton.module.css';
 
@@ -25,6 +26,7 @@ const AppButton = (props) => {
     <Button
       type={type}
       className={classNames({
+        [styles.mobile]: isMobile,
         [styles.base]: true,
         [styles.primary]: primary,
         [styles.secondary]: secondary,

@@ -99,6 +99,7 @@ const Snacks = () => {
 
   useEffect(() => {
     dispatch(fetchSnacks(true));
+    return () => handleClearFilters();
   }, []);
 
   useEffect(async () => {

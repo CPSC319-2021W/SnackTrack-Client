@@ -71,7 +71,7 @@ const OrderCard = (props) => {
             small
             onClick={() => onCancel(order)}
           >
-            Cancel Order
+            Cancel
           </AppButton>
         )
         : null
