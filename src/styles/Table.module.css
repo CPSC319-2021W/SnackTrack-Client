@@ -273,6 +273,14 @@
   font-weight: 600;
 }
 
+.error__row > td {
+  border: none;
+}
+
+.error__message {
+  font-weight: 400;
+}
+
 @media (max-width: 959px) {
   .subtable {
     width: 100%;

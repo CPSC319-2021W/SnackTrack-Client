@@ -38,6 +38,11 @@ const Snacks = () => {
 
   const onApiResponse = (response) => dispatch(setApiResponse(response));
 
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
+  };
+
   const handleCloseSuggestion = () => {
     setIsSuggestionOpen(false);
   };
@@ -64,20 +69,18 @@ const Snacks = () => {
         await makeSuggestion(userId, suggestion);
         setIsSuggestionOpen(false);
         setSuggestionText('');
-        onApiResponse('SUGGESTION');
-        openToastNotification(true);
+        handleApiResponse('SUGGESTION');
       } catch (err) {
-        onApiResponse('ERROR');
-        openToastNotification(true);
+        console.log(err);
+        handleApiResponse('ERROR');
       }
       setIsSuggestionLoading(false);
     }
   };
 
   const handleCloseDialog = () => {
-    onApiResponse('CLAIM_SUCCESS');
+    handleApiResponse('CLAIM_SUCCESS');
     setPendingDialogOpen(false);
-    openToastNotification(true);
   };
 
   const handleCloseToastNotification = () => {
@@ -85,8 +88,7 @@ const Snacks = () => {
   };
 
   const handleCloseNotAllowed = () => {
-    onApiResponse('CLAIM_ERROR');
-    openToastNotification(true);
+    handleApiResponse('CLAIM_ERROR');
   };
 
   const handleClearFilters = () => {
@@ -102,10 +104,15 @@ const Snacks = () => {
   useEffect(async () => {
     const token = isAuthenticated();
     if (token && userId) {
-      const { transactions } = await getPendingOrders(userId);
-      if (transactions.length > 0) {
-        setPendingOrders(transactions);
-        setPendingDialogOpen(true);
+      try {
+        const { transactions } = await getPendingOrders(userId);
+        if (transactions.length > 0) {
+          setPendingOrders(transactions);
+          setPendingDialogOpen(true);
+        }
+      } catch (err) {
+        console.log(err);
+        handleApiResponse('PENDING_ORDERS_ERROR');
       }
     }
   }, [userId]);
@@ -136,13 +143,14 @@ const Snacks = () => {
         snacks={snacks}
         filters={selectedFilters}
         openToastNotification={openToastNotification}
-        onApiResponse={onApiResponse}
+        onHandleApiResponse={handleApiResponse}
       />
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
         open={pendingDialogOpen}
         handleOnClose={handleCloseDialog}
         handleCloseNotAllowed={handleCloseNotAllowed}
+        onHandleApiResponse={handleApiResponse}
       />
       <SuggestionDialog
         open={isSuggestionOpen}

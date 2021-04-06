@@ -124,6 +124,10 @@
     margin-top: 1rem;
 }
 
+.error__message {
+    font-weight: 500;
+}
+
 @media (max-width: 425px) {
     .card__base {
         display: none;

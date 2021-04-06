@@ -23,7 +23,7 @@ import styles from '../styles/Table.module.css';
 
 const PendingOrdersDialog = (props) => {
   const dispatch = useDispatch();
-  const { pendingOrders, open, handleOnClose, handleCloseNotAllowed } = props;
+  const { pendingOrders, open, handleOnClose, handleCloseNotAllowed, onHandleApiResponse } = props;
   const { balance } = useSelector((state) => state.usersReducer.profile);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState([]);
@@ -99,7 +99,7 @@ const PendingOrdersDialog = (props) => {
     }
   };
 
-  const approveOrders = () => {
+  const approveOrders = async () => {
     setIsApproveLoading(true);
     try {
       const pendingOrderIds = getAllPendingOrderIds();
@@ -110,26 +110,24 @@ const PendingOrdersDialog = (props) => {
         (order) => selectedOrders.includes(order.transaction_id)
       );
       const finalTotal = selected.reduce((total, order) => total + order.transaction_amount, 0);
-      claimPendingOrders(selectedOrders, declinedOrders);
+      await claimPendingOrders(selectedOrders, declinedOrders);
       updateBalance(balance + finalTotal);
     } catch (err) {
       console.log(err);
-      console.log(
-        `You have claimed ${selectedOrders.length} of ${pendingOrders.length} orders.`
-      );
+      onHandleApiResponse('PENDING_ORDERS_ERROR');
     }
     setIsApproveLoading(false);
     handleOnClose();
   };
 
-  const declineAllOrders = () => {
+  const declineAllOrders = async () => {
     setIsDeclineLoading(true);
     try {
       const pendingOrderIds = getAllPendingOrderIds();
-      claimPendingOrders([], pendingOrderIds);
+      await claimPendingOrders([], pendingOrderIds);
     } catch (err) {
       console.log(err);
-      console.log('All orders declined!');
+      onHandleApiResponse('PENDING_ORDERS_ERROR');
     }
     setIsDeclineLoading(false);
     handleOnClose();

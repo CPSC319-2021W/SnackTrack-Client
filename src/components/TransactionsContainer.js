@@ -3,6 +3,7 @@ import { CircularProgress } from '@material-ui/core';
 
 import AppButton from './AppButton';
 import ConfirmationDialog from './ConfirmationDialog';
+import { GENERIC_ERROR } from '../constants';
 import OrderCard from './OrderCard';
 import PaymentCard from './PaymentCard';
 import { cancelOrder } from '../services/TransactionsService';
@@ -10,7 +11,7 @@ import dialogStyles from '../styles/Dialog.module.css';
 import styles from '../styles/TransactionsCard.module.css';
 
 const TransactionsContainer = (props) => {
-  const { data, isInitialLoaded, isLoading, onLoadMore, onReload } = props;
+  const { data, error, isInitialLoaded, isLoading, onLoadMore, onReload, onHandleApiResponse } = props;
   const { transactions, payments, total_pages, current_page, total_rows } = data;
 
   const [orderToCancel, setOrderToCancel] = useState(null);
@@ -28,9 +29,14 @@ const TransactionsContainer = (props) => {
 
   const handleCancelOrder = async () => {
     setIsCancelLoading(true);
-    const { transaction_id } = orderToCancel;
-    const { transaction_amount } = await cancelOrder(transaction_id);
-    onReload(transaction_amount);
+    try {
+      const { transaction_id } = orderToCancel;
+      const { transaction_amount } = await cancelOrder(transaction_id);
+      onReload(transaction_amount);
+    } catch (err) {
+      console.log(err);
+      onHandleApiResponse('ERROR');
+    }
     setIsCancelLoading(false);
     setIsCancelDialogOpen(false);
   };
@@ -86,36 +92,52 @@ const TransactionsContainer = (props) => {
     );
   };
 
+  const renderError = () => {
+    return (
+      <span className={styles.error__message}>
+        { GENERIC_ERROR }
+      </span>
+    );
+  };
+
+  const renderTransactions = () => {
+    return (
+      <Fragment>
+        {isInitialLoaded ? (
+          transactions?.map((order, i) => (
+            <OrderCard key={i} order={order} onCancel={handleOpenDialog} />
+          ))
+        ) : (
+          <CircularProgress color='secondary' size={30} thickness={5} />
+        )}
+        {payments?.map((payment, i) => (
+          <PaymentCard key={i} payment={payment} />
+        ))}
+        {isInitialLoaded && current_page + 1 < total_pages ? (
+          <div className={styles.load__button__container}>
+            <AppButton
+              primary
+              fullWidth
+              loading={isLoading}
+              onClick={() => onLoadMore(current_page + 1)}
+            >
+              Load More
+            </AppButton>
+          </div>
+        ) : (
+          displayEmptyMessage()
+        )}
+      </Fragment>
+    );
+  };
+
   return (
     <div className={styles.base}>
       <div className={styles.table__header}>
         {transactions ? renderOrdersHeader() : null}
         {payments ? renderPaymentsHeader() : null}
       </div>
-      {isInitialLoaded ? (
-        transactions?.map((order, i) => (
-          <OrderCard key={i} order={order} onCancel={handleOpenDialog} />
-        ))
-      ) : (
-        <CircularProgress color='secondary' size={30} thickness={5} />
-      )}
-      {payments?.map((payment, i) => (
-        <PaymentCard key={i} payment={payment} />
-      ))}
-      {isInitialLoaded && current_page + 1 < total_pages ? (
-        <div className={styles.load__button__container}>
-          <AppButton
-            primary
-            fullWidth
-            loading={isLoading}
-            onClick={() => onLoadMore(current_page + 1)}
-          >
-            Load More
-          </AppButton>
-        </div>
-      ) : (
-        displayEmptyMessage()
-      )}
+      { error ? renderError() : renderTransactions() }
       <ConfirmationDialog
         open={isCancelDialogOpen}
         title={'Wait a sec!'}

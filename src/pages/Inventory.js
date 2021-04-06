@@ -21,6 +21,7 @@ const Inventory = () => {
   const dispatch = useDispatch();
   const rowsPerPage = 10;
   const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(false);
   const [snacks, setSnacks] = useState(null);
   const [paginatedSnacks, setPaginatedSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
@@ -82,8 +83,13 @@ const Inventory = () => {
 
   useEffect(async () => {
     handleCloseToastNotification();
-    const snacksResponse = await getSnacks(false);
-    setSnacks(snacksResponse.snacks);
+    try {
+      const snacksResponse = await getSnacks(false);
+      setSnacks(snacksResponse.snacks);
+    } catch (err) {
+      console.log(err);
+      setError(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -92,11 +98,10 @@ const Inventory = () => {
         setPaginatedSnacks(
           toPaginatedSnacks(snacks, paginatedSnacks.current_page, rowsPerPage)
         );
-        setIsLoaded(true);
       } catch (err) {
         setPaginatedSnacks(toPaginatedSnacks(snacks, 0, rowsPerPage));
-        setIsLoaded(true);
       }
+      setIsLoaded(true);
     }
   }, [snacks]);
 
@@ -110,6 +115,7 @@ const Inventory = () => {
         isEmpty={paginatedSnacks.snacks.length === 0}
         snacksForAddBatch={snacks ?? []}
         data={paginatedSnacks}
+        error={error}
         rowsPerPage={rowsPerPage}
         onAddBatchOrEdit={handleBatchAddOrEdit}
         onDeleteBatch={handleBatchDelete}
