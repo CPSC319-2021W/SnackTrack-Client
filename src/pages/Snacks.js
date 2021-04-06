@@ -30,9 +30,12 @@ const Snacks = () => {
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
+  const [suggestionLength, setSuggestionLength] = useState(0);
   const [suggestionError, setSuggestionError] = useState(null);
   const [isSuggestionLoading, setIsSuggestionLoading] = useState(false);
   const [searchValue, updateSearchValue] = useState('');
+
+  const MAX_CHARACTERS = 32;
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -53,16 +56,20 @@ const Snacks = () => {
 
   const handleChangeText = (event) => {
     const { value } = event.target;
-    if (value.trim().length > 32) {
+    setSuggestionLength(value.trim().length);
+    setSuggestionText(value);
+  };
+
+  useEffect(() => {
+    if (suggestionLength > MAX_CHARACTERS) {
       setSuggestionError('That\'s too long! Try something shorter.');
     } else {
       setSuggestionError(null);
-      setSuggestionText(event.target.value);
     }
-  };
+  }, [suggestionLength]);
 
   const handleSubmit = async (event) => {
-    const suggestion = suggestionText.trim();
+    const suggestion = suggestionText;
     if (event.key === 'Enter' || event.type === 'click') {
       setIsSuggestionLoading(true);
       try {
@@ -154,10 +161,11 @@ const Snacks = () => {
       />
       <SuggestionDialog
         open={isSuggestionOpen}
-        value={suggestionText}
         error={suggestionError}
         isLoading={isSuggestionLoading}
         handleClose={handleCloseSuggestion}
+        length={suggestionLength}
+        max={MAX_CHARACTERS}
         onSubmit={handleSubmit}
         onChangeText={handleChangeText}
       />
