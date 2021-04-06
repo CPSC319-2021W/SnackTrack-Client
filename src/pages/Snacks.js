@@ -69,7 +69,7 @@ const Snacks = () => {
   }, [suggestionLength]);
 
   const handleSubmit = async (event) => {
-    const suggestion = suggestionText;
+    const suggestion = suggestionText.trim();
     if (event.key === 'Enter' || event.type === 'click') {
       setIsSuggestionLoading(true);
       try {
