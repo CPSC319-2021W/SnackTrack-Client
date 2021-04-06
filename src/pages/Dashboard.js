@@ -103,8 +103,8 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
+      <TopSnacksReport />
       <div className={dashStyles.elements__container}>
-        <TopSnacksReport />
         <SuggestionsBox />
         <StockStatusBoard snacks={snacks} />
       </div>
