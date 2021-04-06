@@ -52,11 +52,13 @@ import styles from '../styles/TopSnacksReport.module.css';
 
 const TopSnacksReport = () => {
   const dispatch = useDispatch();
-  const { popularSnack } = useSelector((state) => state.snacksReducer.popularSnacks);
+  const { popularSnacks } = useSelector((state) => state.snacksReducer);
   const today = DateTime.now().toISODate();
 
+  console.log('popularSnacks', popularSnacks);
+
   useEffect(async () => {
-    const { popularSnackResponse } = await getPopularSnacks('2021-01-01', today, 1, 5);
+    const popularSnackResponse = await getPopularSnacks('2021-01-01', today, 1, 5);
     dispatch(setPopularSnacks(popularSnackResponse));
     // console.log(popularSnackResponse);
     // try {
@@ -88,8 +90,8 @@ const TopSnacksReport = () => {
         <p>(by units sold)</p>
       </div>
       <div className={styles.container}>
-        { popularSnack
-          ? popularSnack.map((snack, i) => {
+        { popularSnacks
+          ? popularSnacks.map((snack, i) => {
             const card = (
               <div className={styles.card__container}>
                 <div className={styles.image}>
