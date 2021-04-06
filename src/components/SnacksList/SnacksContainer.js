@@ -88,6 +88,19 @@ const SnacksContainer = (props) => {
     }
   };
 
+  const compareSnacks = (a, b) => {
+    if (a.quantity > 0 && b.quantity <= 0) {
+      // A is in stock and B is not
+      return -1;
+    } else if (a.quantity <= 0 && b.quantity > 0) {
+      // B is in stock and A is not
+      return 1;
+    } else {
+      // otherwise maintain ordering
+      return 0;
+    }
+  };
+
   useEffect(() => {
     if (snacks.length > 0) {
       setLoaded(true);
@@ -97,6 +110,7 @@ const SnacksContainer = (props) => {
       } else {
         filteredSnacks = snacks;
       }
+      filteredSnacks = [...filteredSnacks].sort(compareSnacks);
       handleSearch(filteredSnacks, snackSearchValue, setSnacksToDisplay, searchOptions);
     }
   }, [filters, snackSearchValue, snacks]);
