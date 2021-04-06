@@ -1,3 +1,4 @@
+import { DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../constants';
 import { React, useEffect, useState } from 'react';
 import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CategoryFilter from './CategoryFilter';
 import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
-import { TRANSACTION_TYPES } from '../../constants';
 import { handleSearch } from '../../helpers/SearchHelpers';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
@@ -88,6 +88,18 @@ const SnacksContainer = (props) => {
     }
   };
 
+  const compareSnacks = (a, b) => {
+    const aDiff = a.quantity - (a.order_threshold || DEFAULT_ORDER_THRESHOLD);
+    const bDiff = b.quantity - (b.order_threshold || DEFAULT_ORDER_THRESHOLD);
+    if (aDiff > 0 || bDiff > 0) {
+      // There is at least one snack with high stock, put it first
+      return bDiff - aDiff;
+    } else {
+      // Order descending by quantity
+      return b.quantity - a.quantity;
+    }
+  };
+
   useEffect(() => {
     if (snacks.length > 0) {
       setLoaded(true);
@@ -97,6 +109,7 @@ const SnacksContainer = (props) => {
       } else {
         filteredSnacks = snacks;
       }
+      filteredSnacks = [...filteredSnacks].sort(compareSnacks);
       handleSearch(filteredSnacks, snackSearchValue, setSnacksToDisplay, searchOptions);
     }
   }, [filters, snackSearchValue, snacks]);
