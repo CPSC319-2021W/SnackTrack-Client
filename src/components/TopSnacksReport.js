@@ -2,6 +2,7 @@ import { Card, Tooltip } from '@material-ui/core';
 import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { DateTime } from 'luxon';
 import { getPopularSnacks } from '../services/SnacksService';
 import { setPopularSnacks } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/TopSnacksReport.module.css';
@@ -52,9 +53,10 @@ import styles from '../styles/TopSnacksReport.module.css';
 const TopSnacksReport = () => {
   const dispatch = useDispatch();
   const { popularSnack } = useSelector((state) => state.snacksReducer.popularSnacks);
+  const today = DateTime.now().toISODate();
 
   useEffect(async () => {
-    const { popularSnackResponse } = await getPopularSnacks('2021-01-01', '2021-03-31', 1, 5);
+    const { popularSnackResponse } = await getPopularSnacks('2021-01-01', today, 1, 5);
     dispatch(setPopularSnacks(popularSnackResponse));
     // console.log(popularSnackResponse);
     // try {
