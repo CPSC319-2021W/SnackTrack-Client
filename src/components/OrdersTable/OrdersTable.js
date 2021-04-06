@@ -22,7 +22,7 @@ const OrdersTable = (props) => {
   } = props;
   const { current_page, transactions } = data;
   const userId = transactions[0]?.user_id;
-  const { username } = useSelector((state) => state.usersReducer.profile);
+  const { emailAddress } = useSelector((state) => state.usersReducer.profile);
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
   const [subtotalAmount, setSubtotalAmount] = useState(0);
@@ -58,9 +58,9 @@ const OrdersTable = (props) => {
     const amount = payAll ? balance : subtotalAmount;
     try {
       if (payAll) {
-        await makePayment(userId, null, null, username, true);
+        await makePayment(userId, null, null, emailAddress, true);
       } else {
-        await makePayment(userId, selectedOrders, subtotalAmount, username, payAll);
+        await makePayment(userId, selectedOrders, subtotalAmount, emailAddress, payAll);
       }
       await onMakePayment();
       onHandleApiResponse('PAYMENT_SUCCESS');

@@ -27,7 +27,6 @@ describe('Auth Helpers', () => {
         userId: 1,
         firstName: 'test',
         lastName: 'test',
-        username: 'test',
         emailAddress: 'test@test.com',
         imageUri: 'http://testUri.com',
         balance: 0,
@@ -40,7 +39,6 @@ describe('Auth Helpers', () => {
         userId: 1,
         firstName: 'test',
         lastName: 'test',
-        username: 'test',
         emailAddress: 'test@test.com',
         isAdmin: false
       },

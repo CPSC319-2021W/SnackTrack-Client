@@ -43,7 +43,6 @@ const SnackInventoryTable = (props) => {
     isLoaded,
     isEmpty,
     snacksForAddBatch,
-    activeSnacks,
     data,
     error,
     rowsPerPage,
@@ -107,9 +106,7 @@ const SnackInventoryTable = (props) => {
   };
 
   const handleOpenRow = async (snackId) => {
-    if (activeSnacks) {
-      await handleGetSnackBatch(snackId);
-    }
+    await handleGetSnackBatch(snackId);
   };
 
   const onEditSnack = (snack) => {
@@ -220,7 +217,7 @@ const SnackInventoryTable = (props) => {
                   tabIndex={-1}
                   className={classNames({
                     [styles.row]: true,
-                    [styles.row__selectable]: activeSnacks,
+                    [styles.row__selectable]: true,
                     [styles.row__selected]: snacks[i].snack_id === selectedSnackForBatch,
                     [styles.row__lastChild]: i === rowsPerPage  - 1
                   })}
@@ -257,16 +254,14 @@ const SnackInventoryTable = (props) => {
                     );
                   })}
                 </TableRow>
-                {activeSnacks ? (
-                  <SnackBatchesSubTable
-                    id={snacks[i]?.snack_id}
-                    error={batchError === snacks[i]?.snack_id}
-                    isLastChild={(i === rowsPerPage - 1)}
-                    snackName={snacks[i]?.snack_name}
-                    open={selectedSnackForBatch}
-                    colSpan={columns.length}
-                  />
-                ) : null}
+                <SnackBatchesSubTable
+                  id={snacks[i]?.snack_id}
+                  error={batchError === snacks[i]?.snack_id}
+                  isLastChild={(i === rowsPerPage - 1)}
+                  snackName={snacks[i]?.snack_name}
+                  open={selectedSnackForBatch}
+                  colSpan={columns.length}
+                />
               </Fragment>
             );
           })
@@ -317,24 +312,20 @@ const SnackInventoryTable = (props) => {
     <Card className={styles.paper}>
       <div className={styles.header}>
         <div className={styles.primaryHeader}>
-          <h4 className={styles.primaryHeader__text}>
-            {activeSnacks ? 'Active Snacks' : 'Inactive Snacks'}
-          </h4>
+          <h4 className={styles.primaryHeader__text}>Snacks</h4>
         </div>
-        {activeSnacks ? (
-          <div className={styles.header__actionContainer}>
-            <AddBatchSelect
-              data={snacksForAddBatch}
-              selectedBatch={selectedBatch}
-              handleSelectBatch={handleAddBatch}
-            />
-            <div className={styles.cell__pay}>
-              <AppButton primary onClick={setAddSnackOpen}>
-                Add Snack
-              </AppButton>
-            </div>
+        <div className={styles.header__actionContainer}>
+          <AddBatchSelect
+            data={snacksForAddBatch}
+            selectedBatch={selectedBatch}
+            handleSelectBatch={handleAddBatch}
+          />
+          <div className={styles.cell__pay}>
+            <AppButton primary onClick={setAddSnackOpen}>
+              Add Snack
+            </AppButton>
           </div>
-        ) : null}
+        </div>
       </div>
       <TableContainer>
         <Table aria-label='Snack Inventory Table'>
@@ -365,7 +356,7 @@ const SnackInventoryTable = (props) => {
               rowsPerPage={rowsPerPage}
               labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
               rowsPerPageOptions={[rowsPerPage]}
-              onChangePage={(event, page) => onChangePage(page, activeSnacks)}
+              onChangePage={(event, page) => onChangePage(page)}
             />
           </TableRow>
         </TableBody>

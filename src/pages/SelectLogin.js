@@ -18,7 +18,7 @@ const SelectLogin = () => {
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'username']
+    keys: ['first_name', 'last_name', 'email_address']
   };
 
   const renderList = () => {
