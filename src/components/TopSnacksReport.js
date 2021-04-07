@@ -1,6 +1,6 @@
-import { CATEGORIES_LIST, TOP_SNACK_LENGTH, TOP_SNACK_REQUEST } from '../constants';
 import { Card, Tooltip } from '@material-ui/core';
 import { React, useEffect } from 'react';
+import { TOP_SNACK_LENGTH, TOP_SNACK_REQUEST } from '../constants';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DateTime } from 'luxon';
@@ -35,7 +35,6 @@ const TopSnacksReport = () => {
       <div className={styles.container}>
         { popularSnacks
           ? popularSnacks.map((snack, i) => {
-            const category = CATEGORIES_LIST[snack.snack_type_id - 1].name;
             const card = (
               <div className={styles.card__container}>
                 <div className={styles.image}>
@@ -49,7 +48,6 @@ const TopSnacksReport = () => {
                           <h6>{snack.snack_name.slice(0, TOP_SNACK_LENGTH)}...</h6>
                         </Tooltip>
                       ) : <h6>{snack.snack_name}</h6> }
-                    <p>{category}</p> 
                   </div>
                   <p> {snack.total_quantity} units</p>
                 </div> 
