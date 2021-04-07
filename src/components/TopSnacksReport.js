@@ -1,9 +1,9 @@
+import { CATEGORIES_LIST, TOP_SNACK_REQUEST } from '../constants';
 import { Card, Tooltip } from '@material-ui/core';
 import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DateTime } from 'luxon';
-import { TOP_SNACK_REQUEST } from '../constants';
 import { getPopularSnacks } from '../services/SnacksService';
 import { setPopularSnacks } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/TopSnacksReport.module.css';
@@ -11,10 +11,10 @@ import styles from '../styles/TopSnacksReport.module.css';
 const TopSnacksReport = () => {
   const dispatch = useDispatch();
   const { popularSnacks } = useSelector((state) => state.snacksReducer);
-  const tomorrow = DateTime.local().plus({days: 2}).toISODate();
+  const today= DateTime.local().toISO();
   useEffect(async () => {
     const popularSnackResponse = await getPopularSnacks(
-      TOP_SNACK_REQUEST.START_DATE, tomorrow, 
+      TOP_SNACK_REQUEST.START_DATE, today, 
       TOP_SNACK_REQUEST.TRANSACTION_TYPE_ID, TOP_SNACK_REQUEST.LIMIT);
     dispatch(setPopularSnacks(popularSnackResponse));
     console.log(popularSnackResponse);
@@ -36,6 +36,7 @@ const TopSnacksReport = () => {
       <div className={styles.container}>
         { popularSnacks
           ? popularSnacks.map((snack, i) => {
+            const category = CATEGORIES_LIST[snack.snack_type_id - 1].name;
             const card = (
               <div className={styles.card__container}>
                 <div className={styles.image}>
@@ -46,10 +47,10 @@ const TopSnacksReport = () => {
                     {snack.snack_name.length > 7 
                       ? (
                         <Tooltip key={i} title={snack.snack_name}>
-                          <h6>{snack.snack_name.slice(0, 13)}..</h6>
+                          <h6>{snack.snack_name.slice(0, 7)}..</h6>
                         </Tooltip>
                       ) : <h6>{snack.snack_name}</h6> }
-                    {/* <p>{snack.category}</p>  */}
+                    <p>{category}</p> 
                   </div>
                   <p> {snack.total_quantity} units</p>
                 </div> 
