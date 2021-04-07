@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
+import { setBalance, setSessionBalance } from '../../redux/features/users/usersSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryFilter from './CategoryFilter';
@@ -9,13 +10,14 @@ import { TRANSACTION_TYPES } from '../../constants';
 import { handleSearch } from '../../helpers/SearchHelpers';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
-import { setBalance } from '../../redux/features/users/usersSlice';
 import styles from '../../styles/SnackGrid.module.css';
 
 const SnacksContainer = (props) => {
   const dispatch = useDispatch();
   const { snacks, filters, onHandleApiResponse } = props;
-  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId, balance, sessionBalance } = useSelector(
+    (state) => state.usersReducer.profile
+  );
   const [isLoaded, setLoaded] = useState(snacks.length > 0);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
   const [snacksToDisplay, setSnacksToDisplay] = useState([]);
@@ -35,6 +37,8 @@ const SnacksContainer = (props) => {
   const setSelectedSnack = (snack) => dispatch(selectOneSnack(snack));
 
   const updateBalance = (balance) => dispatch(setBalance(balance));
+
+  const updateSessionBalance = (balance) => dispatch(setSessionBalance(balance));
 
   const selectSnack = (snackId) => {
     setSelectedSnack(snacks.filter((oneSnack) => oneSnack.snack_id === snackId)[0]);
@@ -75,8 +79,10 @@ const SnacksContainer = (props) => {
           parseInt(snackQuantity)
         );
         onHandleApiResponse('ORDER_SUCCESS');
-        if (transactionTypeId != PENDING) {
+        if (transactionTypeId === PURCHASE) {
           updateBalance(balance + transactionAmount);
+        } else if (transactionTypeId === PENDING) {
+          updateSessionBalance(sessionBalance + transactionAmount);
         }
         updateSnackQuantity(snackId, snackQuantity);
       } catch (err) {
