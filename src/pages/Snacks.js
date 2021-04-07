@@ -69,7 +69,7 @@ const Snacks = () => {
         await makeSuggestion(userId, suggestion);
         setIsSuggestionOpen(false);
         setSuggestionText('');
-        handleApiResponse('SUGGESTION');
+        handleApiResponse('SUGGESTION_SUCCESS');
       } catch (err) {
         console.log(err);
         handleApiResponse('ERROR');

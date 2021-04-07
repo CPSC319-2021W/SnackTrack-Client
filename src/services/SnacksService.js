@@ -72,10 +72,14 @@ const getSuggestions = async () => {
   return data;
 };
 
+const deleteAllSuggestions = async () => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.delete('/suggestions', authHeader);
+};
+
 const getSnackBatches = async () => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  const { data } = await httpClient.get('/snack_batches', authHeader);
-  return data;
+  await httpClient.get('/snack_batches', authHeader);
 };
 
 export {
@@ -83,6 +87,7 @@ export {
   getSnackBatch,
   addSnack,
   editSnack,
+  deleteAllSuggestions,
   deleteSnack,
   addBatch,
   editBatch,

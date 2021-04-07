@@ -9,7 +9,7 @@ import { GENERIC_ERROR } from '../constants';
 import { setSuggestionState } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/SuggestionsBox.module.css';
 
-const SuggestionsBox = ({ error }) => {
+const SuggestionsBox = ({ error, handleClearSuggestions }) => {
   const dispatch = useDispatch();
   const { suggestions } = useSelector((state) => state.snacksReducer);
   const { users } = useSelector((state) => state.usersReducer);
@@ -77,6 +77,7 @@ const SuggestionsBox = ({ error }) => {
         <AppButton
           cancel
           disabled={error}
+          onClick={handleClearSuggestions}
         >
           Clear All
         </AppButton>
