@@ -76,9 +76,13 @@ export const NOTIFICATIONS = {
     type: 'success',
     message: 'Cancelled! Please remember to put the snacks back.'
   },
-  SUGGESTION: {
+  SUGGESTION_SUCCESS: {
     type: 'success',
-    message: 'Suggestion sent by carrier pigeon. Keep your eyes out for new snacks!'
+    message: 'Suggestion sent by carrier pigeon. Keep an eye out for new snacks!'
+  },
+  SUGGESTIONS_CLEAR_SUCCESS: {
+    type:'success',
+    message: 'The carrier pigeons have returned home! All suggestions have been cleared.'
   },
   CLAIM_SUCCESS: {
     type: 'success',
