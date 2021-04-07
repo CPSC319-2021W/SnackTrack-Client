@@ -99,6 +99,14 @@ export const NOTIFICATIONS = {
   PENDING_ORDERS_ERROR: {
     type: 'error',
     message: 'There was an issue with your pending orders. We might bother you about them another time.'
+  },
+  ADMIN_PROMOTION_SUCCESS: {
+    type: 'success',
+    message: 'You have successfully promoted this user to Admin.'
+  },
+  ADMIN_DEMOTION_SUCCESS: {
+    type: 'success',
+    message: 'You have revoked this user\'s Admin permissions.'
   }
 };
 

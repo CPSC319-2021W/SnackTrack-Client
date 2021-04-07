@@ -185,7 +185,7 @@ const UserProfile = () => {
         <UserProfileNotFound />
       ) : (
         <>
-          {user ? <UserCard user={user} /> : <UserCardSkeleton noHover />}
+          {user ? <UserCard user={user} onHandleApiResponse={handleApiResponse} /> : <UserCardSkeleton noHover />}
           <div className={usersStyles.tables__container}>
             <div className={usersStyles.ordersTable}>
               <OrdersTable
