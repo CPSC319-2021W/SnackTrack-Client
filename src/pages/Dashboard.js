@@ -186,7 +186,7 @@ const Dashboard = () => {
           onDecline={handleCloseConfirmation}
           onSubmit={clearSuggestions}
         >
-        Are you sure you want to delete all suggestions? This cannot be undone.
+        Are you sure you want to delete all suggestions? This action cannot be undone.
         </ConfirmationDialog>
       </div>
     </div>
