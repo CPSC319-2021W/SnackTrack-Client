@@ -9,6 +9,7 @@ const INITIAL_STATE = {
     firstName: null,
     lastName: null,
     imageUri: null,
+    sessionBalance: null,
     balance: null,
     isAdmin: null
   },
@@ -29,6 +30,10 @@ const usersSlice = createSlice({
       state.profile.userId = user_id;
       state.profile.firstName = first_name;
       state.profile.lastName = last_name;
+      state.profile.sessionBalance = 0;
+    },
+    setSessionBalance: (state, action) => {
+      state.profile.sessionBalance = action.payload;
     },
     setBalance: (state, action) => {
       state.profile.balance = action.payload;
@@ -49,6 +54,7 @@ const usersSlice = createSlice({
         firstName: first_name,
         lastName: last_name,
         imageUri: image_uri,
+        sessionBalance: null,
         balance: balance,
         isAdmin: is_admin
       };
@@ -73,6 +79,7 @@ const usersSlice = createSlice({
       state.emailAddress = email_address;
       state.firstName = first_name;
       state.lastName = last_name;
+      state.sessionBalance = null;
       state.balance = balance;
       state.isActive = is_active;
       state.isAdmin = is_admin;
@@ -84,6 +91,7 @@ const usersSlice = createSlice({
       state.firstName = null;
       state.lastName = null;
       state.balance = null;
+      state.sessionBalance = null;
       state.isActive = null;
       state.isAdmin = null;
       state.isAuthenticated = null;
@@ -94,6 +102,12 @@ const usersSlice = createSlice({
 
 export { getUser };
 
-export const { simpleLogin, setBalance, setUser, setUsers } = usersSlice.actions;
+export const {
+  simpleLogin,
+  setSessionBalance,
+  setBalance,
+  setUser,
+  setUsers
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

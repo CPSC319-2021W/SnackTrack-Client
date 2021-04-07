@@ -76,9 +76,13 @@ export const NOTIFICATIONS = {
     type: 'success',
     message: 'Cancelled! Please remember to put the snacks back.'
   },
-  SUGGESTION: {
+  SUGGESTION_SUCCESS: {
     type: 'success',
-    message: 'Suggestion sent by carrier pigeon. Keep your eyes out for new snacks!'
+    message: 'Suggestion sent by carrier pigeon. Keep an eye out for new snacks!'
+  },
+  SUGGESTIONS_CLEAR_SUCCESS: {
+    type:'success',
+    message: 'The carrier pigeons have returned home! All suggestions have been cleared.'
   },
   CLAIM_SUCCESS: {
     type: 'success',
@@ -99,6 +103,14 @@ export const NOTIFICATIONS = {
   PENDING_ORDERS_ERROR: {
     type: 'error',
     message: 'There was an issue with your pending orders. We might bother you about them another time.'
+  },
+  ADMIN_PROMOTION_SUCCESS: {
+    type: 'success',
+    message: 'You have successfully promoted this user to Admin.'
+  },
+  ADMIN_DEMOTION_SUCCESS: {
+    type: 'success',
+    message: 'You have revoked this user\'s Admin permissions.'
   }
 };
 
@@ -128,4 +140,4 @@ export const TOP_SNACK_REQUEST = {
   LIMIT: 5
 };
 
-export const TOP_SNACK_LENGTH = 7;
+export const TOP_SNACK_LENGTH = 13;

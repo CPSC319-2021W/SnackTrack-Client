@@ -185,7 +185,7 @@ const UserProfile = () => {
         <UserProfileNotFound />
       ) : (
         <>
-          {user ? <UserCard user={user} /> : <UserCardSkeleton noHover />}
+          {user ? <UserCard user={user} onHandleApiResponse={handleApiResponse} /> : <UserCardSkeleton noHover />}
           <div className={usersStyles.tables__container}>
             <div className={usersStyles.ordersTable}>
               <OrdersTable
@@ -228,7 +228,7 @@ const UserProfile = () => {
       >
         Are you sure you want to delete
         <span className={dialogStyles.text__emp}>
-          {user?.first_name} {user?.last_name}
+          {` ${user?.first_name} ${user?.last_name}`}
         </span>
         ?
       </ConfirmationDialog>

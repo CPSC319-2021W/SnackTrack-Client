@@ -1,11 +1,14 @@
-import { DEFAULT_ORDER_THRESHOLD, GREETING } from '../constants';
+import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
-import { getSnacks, getSuggestions } from '../services/SnacksService';
+import { deleteAllSuggestions, getSnacks, getSuggestions } from '../services/SnacksService';
+import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ConfirmationDialog from '../components/ConfirmationDialog';
 import { DateTime } from 'luxon';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
+import ToastNotification from '../components/ToastNotification';
 import TopSnacksReport from '../components/TopSnacksReport';
 import dashStyles from '../styles/Dashboard.module.css';
 import { getUsersAdmin } from '../services/UsersService';
@@ -27,9 +30,15 @@ const greeting = () => {
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { firstName } = useSelector((state) => state.usersReducer.profile);
+  const { isToastNotificationOpen, apiResponse } = useSelector(
+    (state) => state.notificationsReducer
+  );
   const [snacks, setSnacks] = useState([]);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
+
+  const [isConfirmationOpen, setConfirmationOpen] = useState(false);
+  const [isConfirmationLoading, setConfirmationLoading] = useState(false);
 
   const [suggestionsError, setSuggestionsError] = useState(false);
   const [snacksError, setSnacksError] = useState(false);
@@ -66,6 +75,46 @@ const Dashboard = () => {
         return 0;
       }
     });
+  };
+
+  const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
+
+  const handleCloseToast = () => {
+    openToastNotification(false);
+  };
+
+  const handleOpenConfirmation = () => {
+    setConfirmationOpen(true);
+  };
+
+  const handleCloseConfirmation = () => {
+    setConfirmationLoading(false);
+    setConfirmationOpen(false);
+  };
+
+  const onApiResponse = (response) => dispatch(setApiResponse(response));
+
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
+  };
+
+  const handleClearSuggestions = async () => {
+    handleOpenConfirmation();
+  };
+
+  const clearSuggestions = async () => {
+    setConfirmationLoading(true);
+    try {
+      await deleteAllSuggestions();
+      dispatch(setSuggestions([]));
+      handleCloseConfirmation();
+      handleApiResponse('SUGGESTIONS_CLEAR_SUCCESS');
+    } catch (err) {
+      console.err(err);
+      handleCloseConfirmation();
+      handleApiResponse('ERROR');
+    }
   };
 
   useEffect(async () => {
@@ -119,8 +168,25 @@ const Dashboard = () => {
       </div>
       <TopSnacksReport />
       <div className={dashStyles.elements__container}>
-        <SuggestionsBox error={suggestionsError} />
+        <SuggestionsBox error={suggestionsError} handleClearSuggestions={handleClearSuggestions}/>
         <StockStatusBoard snacks={snacks} error={snacksError} />
+        <ToastNotification
+          open={isToastNotificationOpen}
+          notification={NOTIFICATIONS[apiResponse]}
+          onClose={handleCloseToast}
+        />
+        <ConfirmationDialog
+          open={isConfirmationOpen}
+          title={'Wait a sec!'}
+          submitText={'Yes, clear'}
+          declineText={'No, keep'}
+          isSubmitLoading={isConfirmationLoading}
+          handleClose={handleCloseConfirmation}
+          onDecline={handleCloseConfirmation}
+          onSubmit={clearSuggestions}
+        >
+        Are you sure you want to delete all suggestions? This action cannot be undone.
+        </ConfirmationDialog>
       </div>
     </div>
   );

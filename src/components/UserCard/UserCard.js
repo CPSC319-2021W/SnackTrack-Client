@@ -6,6 +6,7 @@ import { Switch } from '@material-ui/core';
 import adminStyles from '../../styles/AdminUsersList.module.css';
 import classNames from 'classnames';
 import defaultAvatar from '../../images/illustrations/defaultAvatar.svg';
+import { setUserAsAdmin } from '../../services/UsersService';
 import { simpleLogin } from '../../redux/features/users/usersSlice';
 import styles from '../../styles/UserCard.module.css';
 import { useHistory } from 'react-router-dom';
@@ -14,7 +15,7 @@ const UserCard = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { pathname } = history.location;
-  const { user } = props;
+  const { user, onHandleApiResponse } = props;
   const routeToMatch = ROUTES.USERS.split('/').join('\\/');
   const regex = new RegExp(`(${routeToMatch}/[0-9]+){1,1}`);
   const noHover = Boolean(pathname.match(regex));
@@ -48,9 +49,27 @@ const UserCard = (props) => {
     return expandUser;
   };
 
-  const handleMakeAdmin = () => {
-    // TODO: make API call to promote user to admin
-    setIsAdmin(!isAdmin);
+  const announceAdminChange = async (response) => {
+    if (typeof onHandleApiResponse === 'function') {
+      onHandleApiResponse(response);
+    }
+  };
+
+  const handleMakeAdmin = async () => {
+    const optimistic = !isAdmin;
+    try {
+      // Make an optimistic UI update
+      setIsAdmin(optimistic);
+
+      await setUserAsAdmin(user.user_id, optimistic);
+      const response = optimistic ? 'ADMIN_PROMOTION_SUCCESS' : 'ADMIN_DEMOTION_SUCCESS';
+      announceAdminChange(response);
+    } catch (err) {
+      console.err(err);
+      announceAdminChange('ERROR');
+      // Revert the optimistic update if it failed
+      setIsAdmin(!optimistic);
+    }
   };
 
   let img = typeof user.image_uri === 'undefined' ? defaultAvatar : user.image_uri;
