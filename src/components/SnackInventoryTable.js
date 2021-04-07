@@ -166,16 +166,16 @@ const SnackInventoryTable = (props) => {
         } else if (quantity === 0) {
           statusLabel = 'OUT OF STOCK';
         } else if (quantity < orderThreshold) {
-          statusLabel = 'LOW ON STOCK';
+          statusLabel = 'LOW STOCK';
         }
         return (
           <span
             className={classNames({
               [styles.status__bar]: true,
-              [styles.status__grey]: !isActive,
-              [styles.status__red]: quantity === 0,
-              [styles.status__orange]: quantity < orderThreshold,
-              [styles.status__green]: isActive && quantity >= orderThreshold
+              [styles.status__grey]: statusLabel === 'INACTIVE',
+              [styles.status__red]: statusLabel === 'OUT OF STOCK',
+              [styles.status__orange]: statusLabel === 'LOW STOCK',
+              [styles.status__green]: statusLabel === 'IN STOCK'
             })}
           >
             {statusLabel}
@@ -200,6 +200,11 @@ const SnackInventoryTable = (props) => {
       )
     }
   ];
+
+  const handleChangePage = (page) => {
+    setSelectedSnack(null);
+    onChangePage(page);
+  };
 
   const setAddSnackOpen = () => dispatch(setIsAddSnackOpen(true));
 
@@ -356,7 +361,7 @@ const SnackInventoryTable = (props) => {
               rowsPerPage={rowsPerPage}
               labelDisplayedRows={({ page }) => `Page ${page + 1} of ${total_pages}`}
               rowsPerPageOptions={[rowsPerPage]}
-              onChangePage={(event, page) => onChangePage(page)}
+              onChangePage={(event, page) => handleChangePage(page)}
             />
           </TableRow>
         </TableBody>

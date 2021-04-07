@@ -116,7 +116,8 @@
 .pill__text {
   font-weight: 600;
   margin-right: 0.5rem;
-  color: BASE_RED
+  color: BASE_RED;
+  white-space: nowrap;
 }
 
 .pill__text__hover {
