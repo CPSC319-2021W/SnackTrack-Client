@@ -1,18 +1,16 @@
+import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { DateTime } from 'luxon';
-
-import { DEFAULT_ORDER_THRESHOLD, GREETING } from '../constants';
-import { getSnacks, getSuggestions } from '../services/SnacksService';
+import { deleteAllSuggestions, getSnacks, getSuggestions } from '../services/SnacksService';
 import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmationDialog from '../components/ConfirmationDialog';
-import { NOTIFICATIONS } from '../constants';
+import { DateTime } from 'luxon';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import ToastNotification from '../components/ToastNotification';
+import TopSnacksReport from '../components/TopSnacksReport';
 import dashStyles from '../styles/Dashboard.module.css';
-import { deleteAllSuggestions } from '../services/SnacksService';
 import { getUsersAdmin } from '../services/UsersService';
 import { setSuggestions } from '../redux/features/snacks/snacksSlice';
 import { setUsers } from '../redux/features/users/usersSlice';
@@ -168,6 +166,7 @@ const Dashboard = () => {
           <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
         </div>
       </div>
+      <TopSnacksReport />
       <div className={dashStyles.elements__container}>
         <SuggestionsBox error={suggestionsError} handleClearSuggestions={handleClearSuggestions}/>
         <StockStatusBoard snacks={snacks} error={snacksError} />

@@ -30,7 +30,8 @@ const INITIAL_STATE = {
   error: null,
   isAddSnackOpen: false,
   isEditSnackOpen: false,
-  suggestions: []
+  suggestions: [],
+  popularSnacks: []
 };
 
 const fetchSnacks = createAsyncThunk('snacks/fetchSnacks', async (activeOnly) => {
@@ -97,6 +98,9 @@ const snacksSlice = createSlice({
       const { suggestions } = state;
       const index = suggestions.findIndex((suggestion) => suggestion.id === id);
       state.suggestions[index].isActive = !isActive;
+    },
+    setPopularSnacks: (state, action) => {
+      state.popularSnacks = action.payload;
     }
   },
   extraReducers: {
@@ -133,7 +137,8 @@ export const {
   setIsEditSnackOpen,
   setSnackImageUploadData,
   setSuggestions,
-  setSuggestionState
+  setSuggestionState,
+  setPopularSnacks
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;

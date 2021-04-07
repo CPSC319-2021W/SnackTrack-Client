@@ -83,6 +83,13 @@ const getSnackBatches = async () => {
   return data;
 };
 
+const getPopularSnacks = async (start_date, end_date, transaction_type_id, limit) => {
+  const endpoint = `/transactions?start_date=${start_date}&end_date=${end_date}&transaction_type_id=${transaction_type_id}&limit=${limit}`;
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(endpoint, authHeader);
+  return data;
+};
+
 export {
   getSnacks,
   getSnackBatch,
@@ -95,5 +102,6 @@ export {
   deleteBatch,
   getSnackBatches,
   makeSuggestion,
-  getSuggestions
+  getSuggestions,
+  getPopularSnacks
 };
