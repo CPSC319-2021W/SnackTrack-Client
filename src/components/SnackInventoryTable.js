@@ -172,10 +172,10 @@ const SnackInventoryTable = (props) => {
           <span
             className={classNames({
               [styles.status__bar]: true,
-              [styles.status__grey]: !isActive,
-              [styles.status__red]: quantity === 0,
-              [styles.status__orange]: quantity < orderThreshold,
-              [styles.status__green]: isActive && quantity >= orderThreshold
+              [styles.status__grey]: statusLabel === 'INACTIVE',
+              [styles.status__red]: statusLabel === 'OUT OF STOCK',
+              [styles.status__orange]: statusLabel === 'LOW STOCK',
+              [styles.status__green]: statusLabel === 'IN STOCK'
             })}
           >
             {statusLabel}
