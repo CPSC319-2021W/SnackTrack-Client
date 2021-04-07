@@ -79,7 +79,8 @@ const deleteAllSuggestions = async () => {
 
 const getSnackBatches = async () => {
   const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-  await httpClient.get('/snack_batches', authHeader);
+  const { data } = await httpClient.get('/snack_batches', authHeader);
+  return data;
 };
 
 export {
