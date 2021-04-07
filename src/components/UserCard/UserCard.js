@@ -110,7 +110,7 @@ const UserCard = (props) => {
                   disableRipple
                   checked={isAdmin}
                   name='admin'
-                  onChange={() => handleMakeAdmin()}
+                  onChange={handleMakeAdmin}
                 />
               </div>
             ) : null
