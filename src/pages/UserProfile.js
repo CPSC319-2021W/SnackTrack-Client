@@ -228,7 +228,7 @@ const UserProfile = () => {
       >
         Are you sure you want to delete
         <span className={dialogStyles.text__emp}>
-          {user?.first_name} {user?.last_name}
+          {` ${user?.first_name} ${user?.last_name}`}
         </span>
         ?
       </ConfirmationDialog>

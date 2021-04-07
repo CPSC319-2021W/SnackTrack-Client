@@ -148,9 +148,9 @@ const TransactionsContainer = (props) => {
         onDecline={handleCloseDialog}
         onSubmit={handleCancelOrder}
       >
-        Are you sure you want to cancel your order of&nbsp;
+        Are you sure you want to cancel your order of
         <span className={dialogStyles.text__emp}>
-          { orderToCancel?.snack_name }
+          {` ${orderToCancel?.snack_name}`}
         </span>
         ?
       </ConfirmationDialog>

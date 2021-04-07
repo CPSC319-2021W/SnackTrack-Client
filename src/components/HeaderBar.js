@@ -21,7 +21,7 @@ const HeaderBar = (props) => {
   const history = useHistory();
   const { handleLogOut } = props;
   const [hover, setHover] = useState(false);
-  const { firstName, lastName, balance, isAdmin } = useSelector(
+  const { firstName, lastName, balance, isAdmin, sessionBalance } = useSelector(
     (state) => state.usersReducer.profile
   );
   const setProfile = (profile) => dispatch(setUser(profile));
@@ -157,6 +157,18 @@ const HeaderBar = (props) => {
     ) : (
       <Container className={styles.bar}>
         <h5 className={styles.greeting}>{`Hi, ${firstName}!`}</h5>
+        <div className={styles.label}>
+          <h6 className={styles.label__text}>Session Balance</h6>
+          <h4 className={styles.label__balance}>
+            <NumberFormat
+              value={sessionBalance / 100}
+              displayType={'text'}
+              decimalScale={2}
+              fixedDecimalScale={true}
+              prefix={'$'}
+            />
+          </h4>
+        </div>
         <Tooltip title='Exit Session'>
           <button className={styles.icon__container} onClick={() => handleLogOut()}>
             <LogoutIcon
