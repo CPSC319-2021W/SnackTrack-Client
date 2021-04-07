@@ -133,3 +133,11 @@ export const GREETING = {
 };
 
 export const DEFAULT_ORDER_THRESHOLD = 10;
+
+export const TOP_SNACK_REQUEST = {
+  START_DATE: '2021-01-01',
+  TRANSACTION_TYPE_ID: TRANSACTION_TYPES.PURCHASE,
+  LIMIT: 5
+};
+
+export const TOP_SNACK_LENGTH = 13;
