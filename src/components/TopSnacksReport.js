@@ -1,4 +1,4 @@
-import { CATEGORIES_LIST, TOP_SNACK_REQUEST } from '../constants';
+import { CATEGORIES_LIST, TOP_SNACK_LENGTH, TOP_SNACK_REQUEST } from '../constants';
 import { Card, Tooltip } from '@material-ui/core';
 import { React, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -46,7 +46,7 @@ const TopSnacksReport = () => {
                     {snack.snack_name.length > 7 
                       ? (
                         <Tooltip key={i} title={snack.snack_name}>
-                          <h6>{snack.snack_name.slice(0, 7)}..</h6>
+                          <h6>{snack.snack_name.slice(0, TOP_SNACK_LENGTH)}..</h6>
                         </Tooltip>
                       ) : <h6>{snack.snack_name}</h6> }
                     <p>{category}</p> 
