@@ -92,7 +92,7 @@ const SnackCard = (props) => {
       statusLabel = 'OUT OF STOCK';
     } else if (quantity < orderThreshold) {
       los = true;
-      statusLabel = 'LOW ON STOCK';
+      statusLabel = 'LOW STOCK';
     } else {
       return;
     }
