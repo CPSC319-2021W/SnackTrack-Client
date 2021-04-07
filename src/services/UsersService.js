@@ -46,12 +46,23 @@ const deleteUser = async (userId) => {
   await httpClient.delete(`/users/${userId}`, authHeader);
 };
 
+const putUser = async (userId, body) => {
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  await httpClient.put(`/users/${userId}`, body, authHeader);
+};
+
+const setUserAsAdmin = async (userId, isAdmin) => {
+  const body = {is_admin: isAdmin};
+  await putUser(userId, body);
+};
+
 export {
   authenticate,
+  deleteUser,
   getUsersCommon,
   getUsersAdmin,
   getUserById,
   getUserOrders,
   getUserPayments,
-  deleteUser
+  setUserAsAdmin
 };
