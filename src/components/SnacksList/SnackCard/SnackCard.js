@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
-
+import {
+  CATEGORIES_LIST,
+  DEFAULT_ORDER_THRESHOLD,
+  TRANSACTION_TYPES
+} from '../../../constants';
 import { Card, CardActionArea, CardMedia } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import NumberFormat from 'react-number-format';
-import classNames from 'classnames';
-
+import React, { useState } from 'react';
 import {
   setApiResponse,
   setToastNotificationOpen
 } from '../../../redux/features/notifications/notificationsSlice';
-import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
+import { setBalance, setSessionBalance } from '../../../redux/features/users/usersSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { CATEGORIES_LIST, DEFAULT_ORDER_THRESHOLD, TRANSACTION_TYPES } from '../../../constants';
 import AppButton from '../../AppButton';
+import NumberFormat from 'react-number-format';
+import classNames from 'classnames';
 import { isAuthenticated } from '../../../helpers/AuthHelper';
 import { makeOrder } from '../../../services/TransactionsService';
-import { setBalance } from '../../../redux/features/users/usersSlice';
+import { setQuantity } from '../../../redux/features/snacks/snacksSlice';
 import styles from '../../../styles/SnackCard.module.css';
 
 const SnackCard = (props) => {
@@ -30,7 +32,9 @@ const SnackCard = (props) => {
     snack_type_id
   } = props.snack;
   const { onClick } = props;
-  const { userId, balance } = useSelector((state) => state.usersReducer.profile);
+  const { userId, balance, sessionBalance } = useSelector(
+    (state) => state.usersReducer.profile
+  );
   const [isLoading, setIsLoading] = useState(false);
 
   const category = CATEGORIES_LIST.find((category) => category.id === snack_type_id);
@@ -46,6 +50,8 @@ const SnackCard = (props) => {
 
   const updateBalance = (balance) => dispatch(setBalance(balance));
 
+  const updateSessionBalance = (balance) => dispatch(setSessionBalance(balance));
+
   const handleOrder = async (event) => {
     if (event.type === 'click') {
       setIsLoading(true);
@@ -58,8 +64,10 @@ const SnackCard = (props) => {
         await makeOrder(userId, transactionTypeId, snack_id, price, 1);
         onApiResponse('ORDER_SUCCESS');
         openToastNotification(true);
-        if (transactionTypeId != PENDING) {
+        if (transactionTypeId === PURCHASE) {
           updateBalance(balance + price);
+        } else if (transactionTypeId === PENDING) {
+          updateSessionBalance(sessionBalance + price);
         }
         updateSnackQuantity(snack_id, 1);
       } catch (err) {
@@ -92,7 +100,7 @@ const SnackCard = (props) => {
       statusLabel = 'OUT OF STOCK';
     } else if (quantity < orderThreshold) {
       los = true;
-      statusLabel = 'LOW ON STOCK';
+      statusLabel = 'LOW STOCK';
     } else {
       return;
     }
@@ -153,7 +161,8 @@ const SnackCard = (props) => {
           large
           loading={isLoading}
           disabled={quantity === 0}
-          onClick={handleOrder}>
+          onClick={handleOrder}
+        >
           Grab One
         </AppButton>
       </div>

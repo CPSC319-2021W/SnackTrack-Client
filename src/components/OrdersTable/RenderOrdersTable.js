@@ -333,8 +333,8 @@ const RenderOrdersTable = (props) => {
         onDecline={handleCloseDialog}
         onSubmit={handleCancelOrder}
       >
-        Are you sure you want to cancel your order of&nbsp;
-        <span className={dialogStyles.text__emp}>{orderToCancel?.snack_name}</span>?
+        Are you sure you want to cancel your order of
+        <span className={dialogStyles.text__emp}>{` ${orderToCancel?.snack_name}`}</span>?
       </ConfirmationDialog>
     </Card>
   );
