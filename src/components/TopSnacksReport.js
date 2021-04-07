@@ -13,10 +13,14 @@ const TopSnacksReport = () => {
   const { popularSnacks } = useSelector((state) => state.snacksReducer);
   const today= DateTime.local().toISO();
   useEffect(async () => {
-    const popularSnackResponse = await getPopularSnacks(
-      TOP_SNACK_REQUEST.START_DATE, today, 
-      TOP_SNACK_REQUEST.TRANSACTION_TYPE_ID, TOP_SNACK_REQUEST.LIMIT);
-    dispatch(setPopularSnacks(popularSnackResponse));
+    try {
+      const popularSnackResponse = await getPopularSnacks(
+        TOP_SNACK_REQUEST.START_DATE, today, 
+        TOP_SNACK_REQUEST.TRANSACTION_TYPE_ID, TOP_SNACK_REQUEST.LIMIT);
+      dispatch(setPopularSnacks(popularSnackResponse));
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   const renderEmptyState = () => {

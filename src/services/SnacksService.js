@@ -84,15 +84,10 @@ const getSnackBatches = async () => {
 };
 
 const getPopularSnacks = async (start_date, end_date, transaction_type_id, limit) => {
-  try {
-    const endpoint = `/transactions?start_date=${start_date}&end_date=${end_date}&transaction_type_id=${transaction_type_id}&limit=${limit}`;
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(endpoint, authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  const endpoint = `/transactions?start_date=${start_date}&end_date=${end_date}&transaction_type_id=${transaction_type_id}&limit=${limit}`;
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(endpoint, authHeader);
+  return data;
 };
 
 export {
