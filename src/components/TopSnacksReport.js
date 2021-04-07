@@ -46,7 +46,7 @@ const TopSnacksReport = () => {
                     {snack.snack_name.length > 7 
                       ? (
                         <Tooltip key={i} title={snack.snack_name}>
-                          <h6>{snack.snack_name.slice(0, TOP_SNACK_LENGTH)}..</h6>
+                          <h6>{snack.snack_name.slice(0, TOP_SNACK_LENGTH)}...</h6>
                         </Tooltip>
                       ) : <h6>{snack.snack_name}</h6> }
                     <p>{category}</p> 
