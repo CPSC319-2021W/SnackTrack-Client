@@ -11,7 +11,7 @@ import styles from '../styles/TopSnacksReport.module.css';
 const TopSnacksReport = () => {
   const dispatch = useDispatch();
   const { popularSnacks } = useSelector((state) => state.snacksReducer);
-  const tomorrow = DateTime.local().plus({days: 1}).toISODate();
+  const tomorrow = DateTime.local().plus({days: 2}).toISODate();
   useEffect(async () => {
     const popularSnackResponse = await getPopularSnacks(
       TOP_SNACK_REQUEST.START_DATE, tomorrow, 
