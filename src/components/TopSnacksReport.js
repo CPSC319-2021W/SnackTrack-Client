@@ -17,7 +17,6 @@ const TopSnacksReport = () => {
       TOP_SNACK_REQUEST.START_DATE, today, 
       TOP_SNACK_REQUEST.TRANSACTION_TYPE_ID, TOP_SNACK_REQUEST.LIMIT);
     dispatch(setPopularSnacks(popularSnackResponse));
-    console.log(popularSnackResponse);
   }, []);
 
   const renderEmptyState = () => {
