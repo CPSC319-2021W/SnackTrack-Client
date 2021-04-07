@@ -1,9 +1,10 @@
-import { React, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { DateTime } from 'luxon';
-
 import { DEFAULT_ORDER_THRESHOLD, GREETING } from '../constants';
+import { React, useEffect, useState } from 'react';
 import { getSnacks, getSuggestions } from '../services/SnacksService';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { DateTime } from 'luxon';
+import ShoppingList from '../components/ShoppingList';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import dashStyles from '../styles/Dashboard.module.css';
@@ -27,6 +28,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { firstName } = useSelector((state) => state.usersReducer.profile);
   const [snacks, setSnacks] = useState([]);
+  const [outOfStockSnacks, setOutOfStockSnacks] = useState([]);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
@@ -38,7 +40,7 @@ const Dashboard = () => {
       const quantityA = a.quantity;
       const reorderPointA = a.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderA = quantityA - reorderPointA;
-      
+
       const quantityB = b.quantity;
       const reorderPointB = b.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderB = quantityB - reorderPointB;
@@ -78,8 +80,10 @@ const Dashboard = () => {
 
     try {
       const { snacks } = await getSnacks(false);
-      const sortedSnacks = sortSnacks(snacks);   
+      const sortedSnacks = sortSnacks(snacks);
+      const outOfStock = snacks.filter((snack) => snack.quantity === 0);
       setSnacks(sortedSnacks);
+      setOutOfStockSnacks(outOfStock);
     } catch (err) {
       console.log(err);
       setSnacksError(true);
@@ -87,9 +91,14 @@ const Dashboard = () => {
 
     try {
       const { suggestions } = await getSuggestions();
-      const suggestionsMap = suggestions.map(suggestion => {
+      const suggestionsMap = suggestions.map((suggestion) => {
         const { suggestion_id, suggestion_text, suggested_by } = suggestion;
-        return { id: suggestion_id, text: suggestion_text, userId: suggested_by, isActive: false };
+        return {
+          id: suggestion_id,
+          text: suggestion_text,
+          userId: suggested_by,
+          isActive: false
+        };
       });
       dispatch(setSuggestions(suggestionsMap));
     } catch (err) {
@@ -97,7 +106,7 @@ const Dashboard = () => {
       setSuggestionsError(true);
     }
   }, []);
-  
+
   useEffect(() => {
     if (snacks) {
       const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
@@ -110,15 +119,28 @@ const Dashboard = () => {
   return (
     <div className={styles.base}>
       <div className={styles.header}>
-        <h5 className={`${styles.title} ${dashStyles.greeting}`} >{greeting()} {firstName}!</h5>
+        <h5 className={`${styles.title} ${dashStyles.greeting}`}>
+          {greeting()} {firstName}!
+        </h5>
         <div className={dashStyles.tile}>
-          <div className={dashStyles.base}><h5>{activeSnacksLength} </h5><p>Active Snacks</p></div>
-          <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
+          <div className={dashStyles.base}>
+            <h5>{activeSnacksLength} </h5>
+            <p>Active Snacks</p>
+          </div>
+          <div className={dashStyles.base}>
+            <h5>{inactiveSnacksLength} </h5>
+            <p>Inactive Snacks</p>
+          </div>
         </div>
       </div>
       <div className={dashStyles.elements__container}>
         <SuggestionsBox error={suggestionsError} />
-        <StockStatusBoard snacks={snacks} error={snacksError} />
+        <ShoppingList snacks={snacks} outOfStock={outOfStockSnacks} />
+        <StockStatusBoard
+          snacks={snacks}
+          outOfStock={outOfStockSnacks}
+          error={snacksError}
+        />
       </div>
     </div>
   );
