@@ -85,15 +85,15 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
       <Fragment>
         {shoppingList.length > 0
           ? shoppingList.map((item, i) => {
-              return (
-                <ShoppingListItem
-                  key={i}
-                  index={++i}
-                  item={item}
-                  onClick={removeFromShoppingList}
-                />
-              );
-            })
+            return (
+              <ShoppingListItem
+                key={i}
+                index={++i}
+                item={item}
+                onClick={removeFromShoppingList}
+              />
+            );
+          })
           : renderEmptyState()}
       </Fragment>
     );
