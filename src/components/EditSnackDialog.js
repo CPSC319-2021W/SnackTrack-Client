@@ -24,7 +24,7 @@ const options = CATEGORIES_LIST.map((category) => ({
 
 const EditSnackDialog = (props) => {
   const dispatch = useDispatch();
-  const { open } = props;
+  const { open, onHandleApiResponse } = props;
   const [category, setCategory] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
@@ -62,15 +62,14 @@ const EditSnackDialog = (props) => {
   };
 
   const removeSnack = async () => {
+    setIsDeleteLoading(true);
     try {
-      setIsDeleteLoading(true);
       await deleteSnack(selectedSnackToEdit.snack_id);
-      closeDialog();
     } catch (err) {
-      console.log(err);
-    } finally {
-      setIsDeleteLoading(false);
+      onHandleApiResponse('ERROR');
     }
+    setIsDeleteLoading(false);
+    closeDialog();
   };
 
   useEffect(async () => {
@@ -109,7 +108,11 @@ const EditSnackDialog = (props) => {
         price: Number(values.price) * 100,
         order_threshold: values.reorder === '' ? null : values.reorder
       };
-      await editSnack(snackRequest);
+      try {
+        await editSnack(snackRequest);
+      } catch (err) {
+        onHandleApiResponse('ERROR');
+      }
       actions.resetForm({ values: blankState });
       setIsSubmitLoading(false);
       closeDialog();

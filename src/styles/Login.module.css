@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, WHITE, LIGHT_GREY from colors;
+@value BASE_BLUE, DARK_BLUE, VIOLET, LIGHT_BLUE, WHITE, LIGHT_GREY, RED from colors;
 
 @value effects: './Effects.module.css';
 @value DARKER_SHADOW from effects;
@@ -58,7 +58,7 @@
 }
 
 .logo__container {
-  margin: 0 auto 6rem;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -72,11 +72,23 @@
 
 .st_logo {
   width: 320px;
-  margin: 0 1rem;
+  margin: 0 1rem 4rem;
 }
 
 .common__logo {
   width: 340px;
+}
+
+.error__container {
+  margin: 1rem auto 2rem;
+}
+
+.error__message {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.7rem;
+  color: RED;
+  text-align: center;
 }
 
 .button__icon {
@@ -128,7 +140,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 4rem 1rem 6rem;
+    padding: 4rem 1rem;
   }
 
   .g_logo {

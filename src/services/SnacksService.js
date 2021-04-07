@@ -2,29 +2,19 @@ import Cookies from 'js-cookie';
 import httpClient from './axios.config.js';
 
 const getSnacks = async (activeOnly) => {
-  try {
-    const endpoint = `/snacks${activeOnly ? '/?active=true' : ''}`;
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(endpoint, authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  const endpoint = `/snacks${activeOnly ? '/?active=true' : ''}`;
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(endpoint, authHeader);
+  return data;
 };
 
 const getSnackBatch = async (snackId) => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get(
-      `/snack_batches/?snack_id=${snackId}`,
-      authHeader
-    );
-    return data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get(
+    `/snack_batches/?snack_id=${snackId}`,
+    authHeader
+  );
+  return data;
 };
 
 const addSnack = async (snackRequest) => {
@@ -77,25 +67,15 @@ const makeSuggestion = async (userId, suggestion) => {
 };
 
 const getSuggestions = async () => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get('/suggestions', authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get('/suggestions', authHeader);
+  return data;
 };
 
 const getSnackBatches = async () => {
-  try {
-    const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
-    const { data } = await httpClient.get('/snack_batches', authHeader);
-    return data;
-  } catch (err) {
-    // TODO: Handle error
-    console.log(err.toString());
-  }
+  const authHeader = { headers: { Authorization: `Bearer ${Cookies.get('auth')}` } };
+  const { data } = await httpClient.get('/snack_batches', authHeader);
+  return data;
 };
 
 const getPopularSnacks = async (start_date, end_date, transaction_type_id, limit) => {

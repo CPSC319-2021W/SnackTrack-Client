@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import React, { Fragment } from 'react';
 
-import { ReactComponent as SadFace } from '../assets/placeholders/sad.svg';
+import { GENERIC_ERROR } from '../constants';
 import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
 import styles from '../styles/Table.module.css';
@@ -29,14 +29,35 @@ const PaymentsTable = (props) => {
     return [...Array(rowsToFill).keys()];
   };
 
-  const renderPlaceholder = () => {
+  const columns = [
+    {
+      id: 'payment_dtm',
+      label: 'Payment Date',
+      format: (timestamp) => {
+        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+      }
+    },
+    {
+      id: 'payment_amount',
+      label: 'Amount',
+      format: (amount) => {
+        amount = amount / 100;
+        return `$${amount.toFixed(2)}`;
+      }
+    },
+    {
+      id: 'created_by',
+      label: 'Processed By'
+    }
+  ];
+
+  const renderError = () => {
     return (
-      <TableRow>
-        <TableCell colSpan={columns.length} className={styles.placeholder__container}>
-          <div className={styles.placeholder__image__container}>
-            <SadFace className={styles.placeholder__image} />
-            <h6 className={styles.placeholder__text}>{'rip'}</h6>
-          </div>
+      <TableRow className={styles.error__row}>
+        <TableCell colSpan={columns.length}>
+          <span className={styles.error__message}>
+            { GENERIC_ERROR }
+          </span>
         </TableCell>
       </TableRow>
     );
@@ -121,28 +142,6 @@ const PaymentsTable = (props) => {
     );
   };
 
-  const columns = [
-    {
-      id: 'payment_dtm',
-      label: 'Payment Date',
-      format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
-      }
-    },
-    {
-      id: 'payment_amount',
-      label: 'Amount',
-      format: (amount) => {
-        amount = amount / 100;
-        return `$${amount.toFixed(2)}`;
-      }
-    },
-    {
-      id: 'created_by',
-      label: 'Processed By'
-    }
-  ];
-
   return (
     <Card className={styles.paper}>
       <div className={styles.header}>
@@ -170,7 +169,9 @@ const PaymentsTable = (props) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{error ? renderPlaceholder() : renderRows()}</TableBody>
+          <TableBody>
+            { error ? renderError() : renderRows() }
+          </TableBody>
         </Table>
       </TableContainer>
       <Table>

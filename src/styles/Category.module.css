@@ -107,4 +107,12 @@
 		margin: 0 -1rem;
 		padding: 0 1rem 1rem 1rem;
 	}
+
+	.filter_hover {
+		transform: none;
+	}
+
+	.button:hover {
+		font-weight: 500;
+	}
 }

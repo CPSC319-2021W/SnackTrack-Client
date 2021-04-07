@@ -43,6 +43,8 @@ const Transactions = () => {
   const [rowsPerPage] = useState(8);
   const [paymentsResponse, setPaymentsResponse] = useState(INITIAL_PAYMENTS);
   const [ordersResponse, setOrdersResponse] = useState(INITIAL_ORDERS);
+  const [paymentsError, setPaymentsError] = useState(false);
+  const [ordersError, setOrdersError] = useState(false);
   const [isInitialLoaded, setIsInitialLoaded] = useState(false);
   const [isListLoading, setIsListLoading] = useState(false);
   const [isPayAllLoading, setIsPayAllLoading] = useState(false);
@@ -78,8 +80,10 @@ const Transactions = () => {
         current_page: response.current_page,
         transactions: prevState.transactions.concat(response.transactions)
       }));
+      setOrdersError(false);
     } catch (err) {
-      handleApiResponse('ERROR');
+      console.log(err);
+      setOrdersError(true);
     }
     setIsListLoading(false);
   };
@@ -93,8 +97,10 @@ const Transactions = () => {
         current_page: response.current_page,
         payments: prevState.payments.concat(response.payments)
       }));
+      setPaymentsError(false);
     } catch (err) {
-      handleApiResponse('ERROR');
+      console.log(err);
+      setPaymentsError(true);
     }
     setIsListLoading(false);
   };
@@ -106,9 +112,10 @@ const Transactions = () => {
       updateBalance(0);
       handleApiResponse('PAYMENT_SUCCESS');
     } catch (err) {
+      console.log(err);
       handleApiResponse('ERROR');
     }
-    await resetTransactions();
+    resetTransactions();
     setIsPayAllLoading(false);
   };
 
@@ -122,16 +129,18 @@ const Transactions = () => {
       try {
         const orderResponse = await getUserOrders(userId, 0, rowsPerPage);
         setOrdersResponse(orderResponse);
+        setOrdersError(false);
       } catch (err) {
-        openToastNotification(true);
-        handleApiResponse('ERROR');
+        console.log(err);
+        setOrdersError(true);
       }
       try {
         const paymentResponse = await getUserPayments(userId, 0, rowsPerPage);
         setPaymentsResponse(paymentResponse);
+        setPaymentsError(false);
       } catch (err) {
-        openToastNotification(true);
-        handleApiResponse('ERROR');
+        console.log(err);
+        setPaymentsError(true);
       }
       setIsInitialLoaded(true);
     }
@@ -162,7 +171,7 @@ const Transactions = () => {
             <AppButton
               primary
               loading={isPayAllLoading}
-              disabled={balance === 0}
+              disabled={balance === 0 || ordersError}
               onClick={handleMakePayment}
             >
               Pay All
@@ -173,9 +182,11 @@ const Transactions = () => {
       <TabPanel value={tabValue} index={0}>
         <TransactionsContainer
           data={ordersResponse}
+          error={ordersError}
           rowsPerPage={rowsPerPage}
           isInitialLoaded={isInitialLoaded}
           isLoading={isListLoading}
+          onHandleApiResponse={handleApiResponse}
           onLoadMore={handleOrdersLoadMore}
           onReload={resetAll}
         />
@@ -183,6 +194,7 @@ const Transactions = () => {
       <TabPanel value={tabValue} index={1}>
         <TransactionsContainer
           data={paymentsResponse}
+          error={paymentsError}
           rowsPerPage={rowsPerPage}
           isInitialLoaded={isInitialLoaded}
           isLoading={isListLoading}

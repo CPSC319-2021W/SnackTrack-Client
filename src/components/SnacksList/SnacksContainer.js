@@ -14,7 +14,7 @@ import styles from '../../styles/SnackGrid.module.css';
 
 const SnacksContainer = (props) => {
   const dispatch = useDispatch();
-  const { snacks, filters, onApiResponse, openToastNotification } = props;
+  const { snacks, filters, onHandleApiResponse } = props;
   const { userId, balance } = useSelector((state) => state.usersReducer.profile);
   const [isLoaded, setLoaded] = useState(snacks.length > 0);
   const [isSnackOrderOpen, setIsSnackOrderOpen] = useState(false);
@@ -74,19 +74,30 @@ const SnacksContainer = (props) => {
           transactionAmount,
           parseInt(snackQuantity)
         );
-        onApiResponse('ORDER_SUCCESS');
-        openToastNotification(true);
+        onHandleApiResponse('ORDER_SUCCESS');
         if (transactionTypeId != PENDING) {
           updateBalance(balance + transactionAmount);
         }
         updateSnackQuantity(snackId, snackQuantity);
       } catch (err) {
         console.log(err);
-        onApiResponse('ERROR');
-        openToastNotification(true);
+        onHandleApiResponse('ERROR');
       }
       setIsOrderLoading(false);
       setIsSnackOrderOpen(false);
+    }
+  };
+
+  const compareSnacks = (a, b) => {
+    if (a.quantity > 0 && b.quantity <= 0) {
+      // A is in stock and B is not
+      return -1;
+    } else if (a.quantity <= 0 && b.quantity > 0) {
+      // B is in stock and A is not
+      return 1;
+    } else {
+      // otherwise maintain ordering
+      return 0;
     }
   };
 
@@ -99,6 +110,7 @@ const SnacksContainer = (props) => {
       } else {
         filteredSnacks = snacks;
       }
+      filteredSnacks = [...filteredSnacks].sort(compareSnacks);
       handleSearch(filteredSnacks, snackSearchValue, setSnacksToDisplay, searchOptions);
     }
   }, [filters, snackSearchValue, snacks]);

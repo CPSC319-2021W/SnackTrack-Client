@@ -30,13 +30,21 @@ const Snacks = () => {
   const { userId } = useSelector((state) => state.usersReducer.profile);
   const [isSuggestionOpen, setIsSuggestionOpen] = useState(false);
   const [suggestionText, setSuggestionText] = useState('');
+  const [suggestionLength, setSuggestionLength] = useState(0);
   const [suggestionError, setSuggestionError] = useState(null);
   const [isSuggestionLoading, setIsSuggestionLoading] = useState(false);
   const [searchValue, updateSearchValue] = useState('');
 
+  const MAX_CHARACTERS = 32;
+
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
   const onApiResponse = (response) => dispatch(setApiResponse(response));
+
+  const handleApiResponse = (response) => {
+    onApiResponse(response);
+    openToastNotification(true);
+  };
 
   const handleCloseSuggestion = () => {
     setIsSuggestionOpen(false);
@@ -48,13 +56,17 @@ const Snacks = () => {
 
   const handleChangeText = (event) => {
     const { value } = event.target;
-    if (value.trim().length > 32) {
+    setSuggestionLength(value.trim().length);
+    setSuggestionText(value);
+  };
+
+  useEffect(() => {
+    if (suggestionLength > MAX_CHARACTERS) {
       setSuggestionError('That\'s too long! Try something shorter.');
     } else {
       setSuggestionError(null);
-      setSuggestionText(event.target.value);
     }
-  };
+  }, [suggestionLength]);
 
   const handleSubmit = async (event) => {
     const suggestion = suggestionText.trim();
@@ -64,20 +76,18 @@ const Snacks = () => {
         await makeSuggestion(userId, suggestion);
         setIsSuggestionOpen(false);
         setSuggestionText('');
-        onApiResponse('SUGGESTION');
-        openToastNotification(true);
+        handleApiResponse('SUGGESTION');
       } catch (err) {
-        onApiResponse('ERROR');
-        openToastNotification(true);
+        console.log(err);
+        handleApiResponse('ERROR');
       }
       setIsSuggestionLoading(false);
     }
   };
 
   const handleCloseDialog = () => {
-    onApiResponse('CLAIM_SUCCESS');
+    handleApiResponse('CLAIM_SUCCESS');
     setPendingDialogOpen(false);
-    openToastNotification(true);
   };
 
   const handleCloseToastNotification = () => {
@@ -85,8 +95,7 @@ const Snacks = () => {
   };
 
   const handleCloseNotAllowed = () => {
-    onApiResponse('CLAIM_ERROR');
-    openToastNotification(true);
+    handleApiResponse('CLAIM_ERROR');
   };
 
   const handleClearFilters = () => {
@@ -97,15 +106,21 @@ const Snacks = () => {
 
   useEffect(() => {
     dispatch(fetchSnacks(true));
+    return () => handleClearFilters();
   }, []);
 
   useEffect(async () => {
     const token = isAuthenticated();
     if (token && userId) {
-      const { transactions } = await getPendingOrders(userId);
-      if (transactions.length > 0) {
-        setPendingOrders(transactions);
-        setPendingDialogOpen(true);
+      try {
+        const { transactions } = await getPendingOrders(userId);
+        if (transactions.length > 0) {
+          setPendingOrders(transactions);
+          setPendingDialogOpen(true);
+        }
+      } catch (err) {
+        console.log(err);
+        handleApiResponse('PENDING_ORDERS_ERROR');
       }
     }
   }, [userId]);
@@ -136,20 +151,22 @@ const Snacks = () => {
         snacks={snacks}
         filters={selectedFilters}
         openToastNotification={openToastNotification}
-        onApiResponse={onApiResponse}
+        onHandleApiResponse={handleApiResponse}
       />
       <PendingOrdersDialog
         pendingOrders={pendingOrders}
         open={pendingDialogOpen}
         handleOnClose={handleCloseDialog}
         handleCloseNotAllowed={handleCloseNotAllowed}
+        onHandleApiResponse={handleApiResponse}
       />
       <SuggestionDialog
         open={isSuggestionOpen}
-        value={suggestionText}
         error={suggestionError}
         isLoading={isSuggestionLoading}
         handleClose={handleCloseSuggestion}
+        length={suggestionLength}
+        max={MAX_CHARACTERS}
         onSubmit={handleSubmit}
         onChangeText={handleChangeText}
       />

@@ -64,6 +64,8 @@ export const CATEGORIES_LIST = [
   }
 ];
 
+export const GENERIC_ERROR = 'Oops. Well this is embarrassing.'; 
+
 export const NOTIFICATIONS = {
   BATCH_SUCCESS: { type: 'success', message: 'New batch added' },
   BATCH_DELETE_SUCCESS: { type: 'success', message: 'Batch deleted' },
@@ -93,6 +95,10 @@ export const NOTIFICATIONS = {
   USER_DELETE_SUCCESS: {
     type: 'success',
     message: 'User successfully deleted.'
+  },
+  PENDING_ORDERS_ERROR: {
+    type: 'error',
+    message: 'There was an issue with your pending orders. We might bother you about them another time.'
   }
 };
 
