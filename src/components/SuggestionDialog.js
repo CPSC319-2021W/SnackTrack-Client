@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import styles from '../styles/SuggestionDialog.module.css';
 
 const SuggestionDialog = (props) => {
-  const { open, value, error, onSubmit, handleClose, isLoading, onChangeText } = props;
+  const { open, error, onSubmit, handleClose, isLoading, onChangeText, length, max} = props;
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -36,14 +36,17 @@ const SuggestionDialog = (props) => {
             onBlur={() => setIsFocused(false)}
             onFocus={() => setIsFocused(true)}
           />
-          <p className={styles.error__message}>{error}</p>
+          <div className={styles.input__validation}>
+            <p className={styles.error__message}>{error}</p>
+            <p className={styles.character__count}>{Math.min(max, length)}/{max}</p>
+          </div>
         </div>
         <Divider />
         <div className={styles.button__container}>
           <AppButton
             primary
             loading={isLoading}
-            disabled={!value.trim() || error}
+            disabled={!length || error}
             onClick={onSubmit}
           >
             Send

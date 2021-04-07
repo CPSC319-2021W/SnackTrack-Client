@@ -61,6 +61,20 @@
   text-align: left;
 }
 
+.character__count {
+  color: DARK_GREY;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0.4rem 0;
+  text-align: right;
+}
+
+.input__validation {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
 .input__error {
   border: 2px solid RED;
 }
