@@ -1,11 +1,19 @@
 import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
-import { deleteAllSuggestions, getSnacks, getSuggestions } from '../services/SnacksService';
-import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
+import {
+  deleteAllSuggestions,
+  getSnacks,
+  getSuggestions
+} from '../services/SnacksService';
+import {
+  setApiResponse,
+  setToastNotificationOpen
+} from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { DateTime } from 'luxon';
+import ShoppingList from '../components/ShoppingList';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import ToastNotification from '../components/ToastNotification';
@@ -34,6 +42,7 @@ const Dashboard = () => {
     (state) => state.notificationsReducer
   );
   const [snacks, setSnacks] = useState([]);
+  const [outOfStockSnacks, setOutOfStockSnacks] = useState([]);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
@@ -48,7 +57,7 @@ const Dashboard = () => {
       const quantityA = a.quantity;
       const reorderPointA = a.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderA = quantityA - reorderPointA;
-      
+
       const quantityB = b.quantity;
       const reorderPointB = b.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderB = quantityB - reorderPointB;
@@ -128,8 +137,10 @@ const Dashboard = () => {
 
     try {
       const { snacks } = await getSnacks(false);
-      const sortedSnacks = sortSnacks(snacks);   
+      const sortedSnacks = sortSnacks(snacks);
+      const outOfStock = snacks.filter((snack) => snack.quantity === 0);
       setSnacks(sortedSnacks);
+      setOutOfStockSnacks(outOfStock);
     } catch (err) {
       console.log(err);
       setSnacksError(true);
@@ -137,9 +148,14 @@ const Dashboard = () => {
 
     try {
       const { suggestions } = await getSuggestions();
-      const suggestionsMap = suggestions.map(suggestion => {
+      const suggestionsMap = suggestions.map((suggestion) => {
         const { suggestion_id, suggestion_text, suggested_by } = suggestion;
-        return { id: suggestion_id, text: suggestion_text, userId: suggested_by, isActive: false };
+        return {
+          id: suggestion_id,
+          text: suggestion_text,
+          userId: suggested_by,
+          isActive: false
+        };
       });
       dispatch(setSuggestions(suggestionsMap));
     } catch (err) {
@@ -147,7 +163,7 @@ const Dashboard = () => {
       setSuggestionsError(true);
     }
   }, []);
-  
+
   useEffect(() => {
     if (snacks) {
       const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
@@ -160,16 +176,32 @@ const Dashboard = () => {
   return (
     <div className={styles.base}>
       <div className={styles.header}>
-        <h5 className={`${styles.title} ${dashStyles.greeting}`} >{greeting()} {firstName}!</h5>
+        <h5 className={`${styles.title} ${dashStyles.greeting}`}>
+          {greeting()} {firstName}!
+        </h5>
         <div className={dashStyles.tile}>
-          <div className={dashStyles.base}><h5>{activeSnacksLength} </h5><p>Active Snacks</p></div>
-          <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
+          <div className={dashStyles.base}>
+            <h5>{activeSnacksLength} </h5>
+            <p>Active Snacks</p>
+          </div>
+          <div className={dashStyles.base}>
+            <h5>{inactiveSnacksLength} </h5>
+            <p>Inactive Snacks</p>
+          </div>
         </div>
       </div>
       <TopSnacksReport />
       <div className={dashStyles.elements__container}>
-        <SuggestionsBox error={suggestionsError} handleClearSuggestions={handleClearSuggestions}/>
-        <StockStatusBoard snacks={snacks} error={snacksError} />
+        <SuggestionsBox
+          error={suggestionsError}
+          handleClearSuggestions={handleClearSuggestions}
+        />
+        <ShoppingList snacks={snacks} outOfStock={outOfStockSnacks} />
+        <StockStatusBoard
+          snacks={snacks}
+          outOfStock={outOfStockSnacks}
+          error={snacksError}
+        />
         <ToastNotification
           open={isToastNotificationOpen}
           notification={NOTIFICATIONS[apiResponse]}
@@ -185,7 +217,7 @@ const Dashboard = () => {
           onDecline={handleCloseConfirmation}
           onSubmit={clearSuggestions}
         >
-        Are you sure you want to delete all suggestions? This action cannot be undone.
+          Are you sure you want to delete all suggestions? This action cannot be undone.
         </ConfirmationDialog>
       </div>
     </div>
