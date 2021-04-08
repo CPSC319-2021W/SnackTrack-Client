@@ -86,9 +86,18 @@ const Dashboard = () => {
         // a with some expired stock, b with all expired stock
         } else if (quantityA - expiredA > 0 && quantityB - expiredB === 0) {
           return 1;
-        // default
+        // a and b with some expired stock
         } else {
-          return 0;
+          // a with less stock than b
+          if (quantityLessReorderA < quantityLessReorderB) {
+            return -1;
+          // b with less stock than a
+          } else if (quantityLessReorderA > quantityLessReorderB) {
+            return 1;
+          // a with equal stock to b
+          } else {
+            return 0;
+          }
         }
       } else if (expiredA > 0) {
         return -1;
