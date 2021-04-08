@@ -22,7 +22,7 @@ const StockStatusBoard = ({ snacks, error }) => {
   const renderAll = () => {
     return (
       snacks.length > 0
-        ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+        ? snacks.filter((snack) => !!snack.expired_quantity).map((snack, i) => <StockStatusBar key={i} snack={snack} />)
         : renderPlaceholder(true)
     );
   };
