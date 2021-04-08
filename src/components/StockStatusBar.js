@@ -6,23 +6,125 @@ import classNames from 'classnames';
 import styles from '../styles/StockStatus.module.css';
 
 const StockStatusBar = ({ snack }) => {
-  const { quantity, snack_name, order_threshold } = snack;
+  const { quantity, snack_name, order_threshold, expired_quantity } = snack;
 
   const reorderPoint = order_threshold || DEFAULT_ORDER_THRESHOLD;
 
-  const isOverStock = quantity >= reorderPoint;
-  const isUnderStock = quantity < reorderPoint;
+  const renderExpiredBar = () => {
+    let leftStock = 0;
+    let midStock = 0;
+    let rightStock = 0;
 
-  const overStockLeft = Math.ceil((reorderPoint / quantity) * 100);
-  const overStockRight = Math.floor(((quantity - reorderPoint) / quantity) * 100);
+    const freshQuantity = quantity - expired_quantity;
+    const isOverStockWithExpired = freshQuantity >= reorderPoint;
+    const isUnderStock = quantity <= reorderPoint;
+    const areEqual = quantity === expired_quantity && quantity === reorderPoint;
 
-  const underStockLeft = Math.ceil((quantity / reorderPoint) * 100);
-  const underStockRight = Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    if (isOverStockWithExpired) {
+      leftStock = Math.floor((reorderPoint / quantity) * 100);
+      midStock =  Math.floor(((freshQuantity - reorderPoint) / quantity) * 100);
+      rightStock =  Math.floor((expired_quantity / quantity) * 100);
+    } else if (isUnderStock) {
+      leftStock =  Math.floor(((freshQuantity) / reorderPoint) * 100);
+      midStock =  Math.floor((expired_quantity / reorderPoint) * 100);
+      rightStock =  Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    } else {
+      leftStock =  Math.floor(((reorderPoint - (expired_quantity - (quantity - reorderPoint))) / quantity) * 100);
+      midStock =  Math.floor(((expired_quantity - (quantity - reorderPoint)) / quantity) * 100);
+      rightStock =  Math.floor(((quantity - reorderPoint) / quantity) * 100);
+    }
+
+    return (
+      <Fragment>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__left]: true,
+            [styles.stock__all__expired]: freshQuantity === 0,
+            [styles.stock__low]: freshQuantity !== 0 && freshQuantity < reorderPoint,
+            [styles.stock__over__line]: isOverStockWithExpired,
+            [styles.hide]: areEqual
+          })}
+          style={{ width: `${leftStock}%` }}
+        >
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.stock__all__expired]: freshQuantity === 0,
+            [styles.stock__low__expired__line]:
+              (freshQuantity !== 0 && freshQuantity < reorderPoint) ||
+              (freshQuantity === 0 && quantity >= reorderPoint && !areEqual),
+            [styles.stock__over]: isOverStockWithExpired,
+            [styles.bar__mid__full]: areEqual
+          })}
+          style={{ width: `${midStock}%` }}
+        >
+          { areEqual ? quantity : null }
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__right]: true,
+            [styles.stock__reorder]: quantity < reorderPoint,
+            [styles.stock__over__expired]: freshQuantity >= reorderPoint,
+            [styles.stock__low__expired]: freshQuantity !== 0,
+            [styles.stock__all__expired]: freshQuantity === 0 && quantity >= reorderPoint,
+            [styles.hide]: areEqual
+          })}
+          style={{ width: `${rightStock}%` }}
+        >
+          { rightStock > 15 ? quantity : null }
+        </div>
+      </Fragment>
+    );
+  };
+
+  const renderDefaultBar = () => {
+    const isOverStock = quantity >= reorderPoint;
+    const isUnderStock = quantity < reorderPoint;
+    
+    const overStockLeft = Math.ceil((reorderPoint / quantity) * 100);
+    const overStockRight = Math.floor(((quantity - reorderPoint) / quantity) * 100);
+  
+    const underStockLeft = Math.ceil((quantity / reorderPoint) * 100);
+    const underStockRight = Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    return (
+      <Fragment>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__left]: true,
+            [styles.bar__full]: quantity === reorderPoint,
+            [styles.stock__under]: isUnderStock,
+            [styles.stock__over__line]: isOverStock
+          })}
+          style={{ width: `${isOverStock ? overStockLeft : underStockLeft}%` }}
+        >
+          { quantity === reorderPoint ? reorderPoint : null }
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__right]: true,
+            [styles.bar__hide]: quantity === reorderPoint,
+            [styles.stock__over]: isOverStock,
+            [styles.stock__reorder]: isUnderStock
+          })}
+          style={{ width: `${isOverStock ? overStockRight : underStockRight}%` }}
+        >
+          { overStockRight > 10 || underStockRight > 10 ? quantity : null }
+        </div>
+      </Fragment>
+    );
+  };
 
   const renderTitle = () => {
     return (
       <Fragment>
-        <div>{ `Quantity in Stock: ${quantity}` }</div>
+        <div>{ `Total Stock: ${quantity}` }</div>
+        <div>{ `Fresh Stock: ${quantity - expired_quantity}` }</div>
+        <div>{ `Expired Stock: ${expired_quantity}` }</div>
         <div>{ `Reorder Point: ${reorderPoint}` }</div>
       </Fragment>
     );
@@ -31,56 +133,29 @@ const StockStatusBar = ({ snack }) => {
   return (
     <div className={styles.bar__container}>
       <span className={styles.snack__label}>{ snack_name }</span>
-      <Tooltip title={renderTitle()}>
-        <div className={styles.bar__base}>
-          { quantity === 0
-            ? (
-              <div
-                className={classNames({
-                  [styles.bar]: true,
-                  [styles.stock__none]: true
-                })}
-                style={{ width: '100%' }}
-              >
-                Out of Stock
-              </div>
-            ) : (
-              <Fragment>
-                <div
-                  className={classNames({
-                    [styles.bar]: true,
-                    [styles.bar__left]: true,
-                    [styles.bar__full]: quantity === reorderPoint,
-                    [styles.stock__low]: isOverStock,
-                    [styles.stock__under]: isUnderStock
-                  })}
-                  style={{ width: `${isOverStock ? overStockLeft : underStockLeft}%` }}
-                >
-                  { isOverStock
-                    ? (overStockLeft > 10 ? reorderPoint : null)
-                    : (underStockLeft > 10 ? quantity : null)
-                  }
-                </div>
-                <div
-                  className={classNames({
-                    [styles.bar]: true,
-                    [styles.bar__right]: true,
-                    [styles.bar__hide]: quantity === reorderPoint,
-                    [styles.stock__over]: isOverStock,
-                    [styles.stock__reorder]: isUnderStock
-                  })}
-                  style={{ width: `${isOverStock ? overStockRight : underStockRight}%` }}
-                >
-                  { isOverStock
-                    ? (overStockRight > 10 ? quantity : null)
-                    : (underStockRight > 10 ? reorderPoint : null)
-                  }
-                </div>
-              </Fragment>
-            )
-          }
-        </div>
-      </Tooltip>
+      { quantity === 0
+        ? (
+          <div className={styles.bar__base}>
+            <div
+              className={classNames({
+                [styles.bar]: true,
+                [styles.stock__none]: true
+              })}
+              style={{ width: '100%' }}
+            >
+              Out of Stock
+            </div>
+          </div>
+        ) : (
+          <Tooltip title={renderTitle()}>
+            <div className={styles.bar__base}>
+              { expired_quantity === 0
+                ? renderDefaultBar()
+                : renderExpiredBar()
+              }
+            </div>
+          </Tooltip>
+        )}
     </div>
   );
 };

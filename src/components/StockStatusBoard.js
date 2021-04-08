@@ -6,7 +6,7 @@ import { GENERIC_ERROR } from '../constants';
 import StockStatusBar from './StockStatusBar';
 import styles from '../styles/StockStatus.module.css';
 
-const StockStatusBoard = ({ snacks, outOfStock, error }) => {
+const StockStatusBoard = ({ snacks, error }) => {
   const [showAll, setShowAll] = useState(false);
 
   const handleShowAll = () => setShowAll(!showAll);
@@ -25,10 +25,13 @@ const StockStatusBoard = ({ snacks, outOfStock, error }) => {
       : renderPlaceholder(true);
   };
 
-  const renderOutOfStock = () => {
-    return outOfStock.length > 0
-      ? outOfStock.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
-      : renderPlaceholder(false);
+  const renderOutOfStockOrExpired = () => {
+    const outOfStockOrExpired = snacks.filter((snack) => snack.quantity === 0 || snack.expired_quantity > 0);
+    return (
+      outOfStockOrExpired.length > 0
+        ? outOfStockOrExpired.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+        : renderPlaceholder(false)
+    );
   };
 
   const renderError = () => {
@@ -39,11 +42,22 @@ const StockStatusBoard = ({ snacks, outOfStock, error }) => {
     <Card variant='outlined' className={styles.board__container}>
       <div className={styles.header}>
         <h5 className={styles.title}>Inventory Levels</h5>
-        <AppButton primary disabled={error} onClick={handleShowAll}>
-          {showAll ? 'Out of Stock' : 'Show All'}
+        <AppButton
+          primary
+          disabled={error}
+          onClick={handleShowAll}
+        >
+          { showAll ? 'High Priority' : 'All' }
         </AppButton>
       </div>
-      {error ? renderError() : showAll ? renderAll() : renderOutOfStock()}
+      { error
+        ? renderError()
+        : (
+          showAll
+            ? renderAll()
+            : renderOutOfStockOrExpired()
+        )
+      }
     </Card>
   );
 };

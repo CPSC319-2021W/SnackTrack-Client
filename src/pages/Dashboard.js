@@ -1,18 +1,11 @@
-import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
-import {
-  deleteAllSuggestions,
-  getSnacks,
-  getSuggestions
-} from '../services/SnacksService';
-import {
-  setApiResponse,
-  setToastNotificationOpen
-} from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { DateTime as dt } from 'luxon';
 
+import { GREETING, NOTIFICATIONS } from '../constants';
+import { deleteAllSuggestions, getSnackBatches, getSnacks, getSuggestions } from '../services/SnacksService';
+import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import ConfirmationDialog from '../components/ConfirmationDialog';
-import { DateTime } from 'luxon';
 import ShoppingList from '../components/ShoppingList';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
@@ -22,9 +15,12 @@ import dashStyles from '../styles/Dashboard.module.css';
 import { getUsersAdmin } from '../services/UsersService';
 import { setSuggestions } from '../redux/features/snacks/snacksSlice';
 import { setUsers } from '../redux/features/users/usersSlice';
+import { sortSnackInventory } from '../helpers/ListHelpers';
 import styles from '../styles/Page.module.css';
 
-const today = DateTime.now();
+const today = dt.now();
+const todayReset = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+
 const greeting = () => {
   if (today.hour < 12) {
     return GREETING.MORNING;
@@ -51,40 +47,6 @@ const Dashboard = () => {
 
   const [suggestionsError, setSuggestionsError] = useState(false);
   const [snacksError, setSnacksError] = useState(false);
-
-  const sortSnacks = (snacks) => {
-    return snacks.sort((a, b) => {
-      const quantityA = a.quantity;
-      const reorderPointA = a.order_threshold || DEFAULT_ORDER_THRESHOLD;
-      const quantityLessReorderA = quantityA - reorderPointA;
-
-      const quantityB = b.quantity;
-      const reorderPointB = b.order_threshold || DEFAULT_ORDER_THRESHOLD;
-      const quantityLessReorderB = quantityB - reorderPointB;
-
-      if (quantityA === 0 && quantityB === 0) {
-        return 0;
-      } else if (quantityA === 0) {
-        return -1;
-      } else if (quantityB === 0) {
-        return 1;
-      } else if (quantityLessReorderA < 0 && quantityLessReorderB < 0) {
-        if (quantityA < quantityB) {
-          return -1;
-        } else if (quantityA > quantityB) {
-          return 1;
-        } else {
-          return 0;
-        }
-      } else if (quantityLessReorderA < quantityLessReorderB) {
-        return -1;
-      } else if (quantityLessReorderA > quantityLessReorderB) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-  };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -137,10 +99,27 @@ const Dashboard = () => {
 
     try {
       const { snacks } = await getSnacks(false);
-      const sortedSnacks = sortSnacks(snacks);
+      const { snack_batches } = await getSnackBatches();
+      const expiredBatches = snack_batches.filter(
+        (batch) => !!batch.expiration_dtm && dt.fromISO(batch.expiration_dtm) <= todayReset
+      );
+      const batchesMap = expiredBatches.reduce((map, batch) => {
+        const { snack_id, quantity } = batch;
+        return {...map, [snack_id]: (map[snack_id] || 0) + quantity };
+      }, {});
+      const mappedSnacks = snacks.map((snack) => {
+        const expiredQuantity = batchesMap[snack.snack_id];
+        return {
+          ...snack,
+          expired_quantity: expiredQuantity || 0
+        };
+      });
+      const sortedSnacks = sortSnackInventory(mappedSnacks);
       const outOfStock = snacks.filter((snack) => snack.quantity === 0);
+
       setSnacks(sortedSnacks);
       setOutOfStockSnacks(outOfStock);
+      setSnacksError(false);
     } catch (err) {
       console.log(err);
       setSnacksError(true);
@@ -158,6 +137,7 @@ const Dashboard = () => {
         };
       });
       dispatch(setSuggestions(suggestionsMap));
+      setSuggestionsError(false);
     } catch (err) {
       console.log(err);
       setSuggestionsError(true);
