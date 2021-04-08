@@ -42,7 +42,8 @@ const StockStatusBar = ({ snack }) => {
             [styles.bar__left]: true,
             [styles.stock__all__expired]: freshQuantity === 0,
             [styles.stock__low]: freshQuantity !== 0 && freshQuantity < reorderPoint,
-            [styles.stock__over__line]: isOverStockWithExpired,
+            [styles.stock__over]: isOverStockWithExpired,
+            [styles.reorder__line]: isOverStockWithExpired,
             [styles.hide]: areEqual
           })}
           style={{ width: `${leftStock}%` }}
@@ -52,10 +53,10 @@ const StockStatusBar = ({ snack }) => {
           className={classNames({
             [styles.bar]: true,
             [styles.stock__all__expired]: freshQuantity === 0,
-            [styles.stock__low__expired__line]:
-              (freshQuantity !== 0 && freshQuantity < reorderPoint) ||
-              (freshQuantity === 0 && quantity >= reorderPoint && !areEqual),
+            [styles.stock__low]: freshQuantity !== 0 && freshQuantity < reorderPoint,
+            [styles.stock__low__expired]: freshQuantity < reorderPoint,
             [styles.stock__over]: isOverStockWithExpired,
+            [styles.reorder__line]: quantity > reorderPoint && freshQuantity < reorderPoint,
             [styles.bar__mid__full]: areEqual
           })}
           style={{ width: `${midStock}%` }}
