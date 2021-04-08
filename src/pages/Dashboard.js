@@ -1,4 +1,4 @@
-import { DEFAULT_ORDER_THRESHOLD, GREETING } from '../constants';
+import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
 import {
   deleteAllSuggestions,
@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ConfirmationDialog from '../components/ConfirmationDialog';
 import { DateTime } from 'luxon';
-import { NOTIFICATIONS } from '../constants';
 import ShoppingList from '../components/ShoppingList';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
