@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0 1rem;
+  /* margin-left: 1rem; */
 }
 
 .header {
@@ -41,7 +42,7 @@
 .bar__base {
   margin-top: 0.5rem;
   height: 40px;
-  width: 335px;
+  width: 336px;
   color: WHITE;
   font-weight: 600;
   text-align: center;
@@ -139,8 +140,28 @@
   border-radius: 6px;
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1279px) {
   .bar__base {
     width: 238px;
-  }  
+  }
+}
+
+@media (max-width: 960px) {
+  .board__container {
+    width: 50%;
+  }
+
+  .bar__base {
+    width: 234px;
+  }
+}
+
+@media (max-width: 425px) {
+  .board__container {
+    width: 100%;
+  }
+
+  .bar__base {
+    width: 234px;
+  }
 }

@@ -160,11 +160,11 @@ const Dashboard = () => {
           {greeting()} {firstName}!
         </h5>
         <div className={dashStyles.tile}>
-          <div className={dashStyles.base}>
+          <div className={`${dashStyles.nugget} ${dashStyles.nugget__left}`}>
             <h5>{activeSnacksLength} </h5>
             <p>Active Snacks</p>
           </div>
-          <div className={dashStyles.base}>
+          <div className={`${dashStyles.nugget} ${dashStyles.nugget__right}`}>
             <h5>{inactiveSnacksLength} </h5>
             <p>Inactive Snacks</p>
           </div>
@@ -172,11 +172,13 @@ const Dashboard = () => {
       </div>
       <TopSnacksReport />
       <div className={dashStyles.elements__container}>
-        <SuggestionsBox
-          error={suggestionsError}
-          handleClearSuggestions={handleClearSuggestions}
-        />
-        <ShoppingList snacks={snacks} outOfStock={outOfStockSnacks} />
+        <div className={dashStyles.section__one}>
+          <ShoppingList snacks={snacks} outOfStock={outOfStockSnacks} />
+          <SuggestionsBox
+            error={suggestionsError}
+            handleClearSuggestions={handleClearSuggestions}
+          />
+        </div>
         <StockStatusBoard
           snacks={snacks}
           outOfStock={outOfStockSnacks}

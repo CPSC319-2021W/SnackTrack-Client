@@ -5,9 +5,11 @@
   box-shadow: none;
   border-radius: 12px;
   border: 1px solid LIGHT_GREY;
-  width: 30%;
+  width: 100%;
   height: fit-content;
   padding: 0 1rem;
+  margin-right: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 .header {
@@ -60,4 +62,10 @@
 .bean__active:hover {
   background-color: BASE_BLUE;
   color: WHITE;
+}
+
+@media (max-width: 960px) {
+  .card__base {
+    margin-bottom: 1rem;
+  }
 }
