@@ -27,11 +27,11 @@ const StockStatusBoard = ({ snacks, error }) => {
     );
   };
 
-  const renderOutOfStock = () => {
-    const outOfStock = snacks.filter((snack) => snack.quantity === 0);
+  const renderOutOfStockOrExpired = () => {
+    const outOfStockOrExpired = snacks.filter((snack) => snack.quantity === 0 || snack.expired_quantity > 0);
     return (
-      outOfStock.length > 0
-        ? outOfStock.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+      outOfStockOrExpired.length > 0
+        ? outOfStockOrExpired.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
         : renderPlaceholder(false)
     );
   };
@@ -53,15 +53,15 @@ const StockStatusBoard = ({ snacks, error }) => {
           disabled={error}
           onClick={handleShowAll}
         >
-          { showAll ? 'Out of Stock' : 'Show All' }
+          { showAll ? 'High Priority' : 'All' }
         </AppButton>
       </div>
       { error
         ? renderError()
         : (
-          !showAll
+          showAll
             ? renderAll()
-            : renderOutOfStock()
+            : renderOutOfStockOrExpired()
         )
       }
     </Card>

@@ -133,27 +133,29 @@ const StockStatusBar = ({ snack }) => {
   return (
     <div className={styles.bar__container}>
       <span className={styles.snack__label}>{ snack_name }</span>
-      <Tooltip title={renderTitle()}>
-        <div className={styles.bar__base}>
-          { quantity === 0
-            ? (
-              <div
-                className={classNames({
-                  [styles.bar]: true,
-                  [styles.stock__none]: true
-                })}
-                style={{ width: '100%' }}
-              >
-                Out of Stock
-              </div>
-            ) : (
-              expired_quantity === 0
+      { quantity === 0
+        ? (
+          <div className={styles.bar__base}>
+            <div
+              className={classNames({
+                [styles.bar]: true,
+                [styles.stock__none]: true
+              })}
+              style={{ width: '100%' }}
+            >
+              Out of Stock
+            </div>
+          </div>
+        ) : (
+          <Tooltip title={renderTitle()}>
+            <div className={styles.bar__base}>
+              { expired_quantity === 0
                 ? renderDefaultBar()
                 : renderExpiredBar()
-            )
-          }
-        </div>
-      </Tooltip>
+              }
+            </div>
+          </Tooltip>
+        )}
     </div>
   );
 };
