@@ -59,7 +59,7 @@ const StockStatusBoard = ({ snacks, error }) => {
       { error
         ? renderError()
         : (
-          showAll
+          !showAll
             ? renderAll()
             : renderOutOfStock()
         )

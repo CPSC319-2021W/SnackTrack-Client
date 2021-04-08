@@ -6,23 +6,144 @@ import classNames from 'classnames';
 import styles from '../styles/StockStatus.module.css';
 
 const StockStatusBar = ({ snack }) => {
-  const { quantity, snack_name, order_threshold } = snack;
+  const { quantity, snack_name, order_threshold, expired_quantity } = snack;
 
   const reorderPoint = order_threshold || DEFAULT_ORDER_THRESHOLD;
 
-  const isOverStock = quantity >= reorderPoint;
-  const isUnderStock = quantity < reorderPoint;
+  const renderExpiredBar = () => {
+    let leftStock = 0;
+    let midStock = 0;
+    let rightStock = 0;
 
-  const overStockLeft = Math.ceil((reorderPoint / quantity) * 100);
-  const overStockRight = Math.floor(((quantity - reorderPoint) / quantity) * 100);
+    const isOverStockWithExpired = quantity - expired_quantity >= reorderPoint;
+    const isUnderStock = quantity <= reorderPoint;
+    const areEqual = quantity === expired_quantity && quantity === reorderPoint;
 
-  const underStockLeft = Math.ceil((quantity / reorderPoint) * 100);
-  const underStockRight = Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    if (isOverStockWithExpired) {
+      leftStock = Math.floor((reorderPoint / quantity) * 100);
+      midStock =  Math.floor(((quantity - expired_quantity - reorderPoint) / quantity) * 100);
+      rightStock =  Math.floor((expired_quantity / quantity) * 100);
+    } else if (isUnderStock) {
+      leftStock =  Math.floor(((quantity - expired_quantity) / reorderPoint) * 100);
+      midStock =  Math.floor((expired_quantity / reorderPoint) * 100);
+      rightStock =  Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    } else {
+      leftStock =  Math.floor(((reorderPoint - (expired_quantity - (quantity - reorderPoint))) / quantity) * 100);
+      midStock =  Math.floor(((expired_quantity - (quantity - reorderPoint)) / quantity) * 100);
+      rightStock =  Math.floor(((quantity - reorderPoint) / quantity) * 100);
+    }
+
+    return (
+      <Fragment>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__left]: true,
+            [styles.stock__low]: isOverStockWithExpired || quantity - expired_quantity > 0,
+            [styles.stock__low__expired]: quantity === expired_quantity,
+            [styles.hide]: areEqual
+          })}
+          style={{ width: `${leftStock}%` }}
+        >
+          {/* { leftStock > 15
+            ? (isOverStockWithExpired
+              ? reorderPoint
+              : (isUnderStock
+                ? quantity - expired_quantity
+                : reorderPoint - (expired_quantity - (quantity - reorderPoint))
+              )
+            ) : null
+          } */}
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__mid__full]: areEqual,
+            [styles.stock__over]: isOverStockWithExpired,
+            [styles.stock__low__expired]: (expired_quantity - (quantity - reorderPoint)) > 0
+          })}
+          style={{ width: `${midStock}%` }}
+        >
+          { areEqual ? quantity : null }
+          {/* { midStock > 15
+            ? (isOverStockWithExpired
+              ? quantity - expired_quantity - reorderPoint
+              : (isUnderStock
+                ? expired_quantity
+                : expired_quantity - (quantity - reorderPoint)
+              )
+            ) : null
+          } */}
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__right]: true,
+            [styles.stock__over__expired]: quantity > reorderPoint,
+            [styles.stock__reorder]: quantity <= reorderPoint,
+            [styles.hide]: areEqual
+          })}
+          style={{ width: `${rightStock}%` }}
+        >
+          { rightStock > 15
+            ? (isUnderStock
+              ? reorderPoint
+              : quantity
+            ) : null
+          }
+        </div>
+      </Fragment>
+    );
+  };
+
+  const renderDefaultBar = () => {
+    const isOverStock = quantity >= reorderPoint;
+    const isUnderStock = quantity < reorderPoint;
+    
+    const overStockLeft = Math.ceil((reorderPoint / quantity) * 100);
+    const overStockRight = Math.floor(((quantity - reorderPoint) / quantity) * 100);
+  
+    const underStockLeft = Math.ceil((quantity / reorderPoint) * 100);
+    const underStockRight = Math.floor(((reorderPoint - quantity) / reorderPoint) * 100);
+    return (
+      <Fragment>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__left]: true,
+            [styles.bar__full]: quantity === reorderPoint,
+            [styles.stock__low]: isOverStock,
+            [styles.stock__under]: isUnderStock
+          })}
+          style={{ width: `${isOverStock ? overStockLeft : underStockLeft}%` }}
+        >
+          { quantity === reorderPoint ? reorderPoint : null }
+        </div>
+        <div
+          className={classNames({
+            [styles.bar]: true,
+            [styles.bar__right]: true,
+            [styles.bar__hide]: quantity === reorderPoint,
+            [styles.stock__over]: isOverStock,
+            [styles.stock__reorder]: isUnderStock
+          })}
+          style={{ width: `${isOverStock ? overStockRight : underStockRight}%` }}
+        >
+          { isOverStock
+            ? (overStockRight > 10 ? quantity : null)
+            : (underStockRight > 10 ? reorderPoint : null)
+          }
+        </div>
+      </Fragment>
+    );
+  };
 
   const renderTitle = () => {
     return (
       <Fragment>
-        <div>{ `Quantity in Stock: ${quantity}` }</div>
+        <div>{ `Total Stock: ${quantity}` }</div>
+        <div>{ `Fresh Stock: ${quantity - expired_quantity}` }</div>
+        <div>{ `Expired Stock: ${expired_quantity}` }</div>
         <div>{ `Reorder Point: ${reorderPoint}` }</div>
       </Fragment>
     );
@@ -45,38 +166,9 @@ const StockStatusBar = ({ snack }) => {
                 Out of Stock
               </div>
             ) : (
-              <Fragment>
-                <div
-                  className={classNames({
-                    [styles.bar]: true,
-                    [styles.bar__left]: true,
-                    [styles.bar__full]: quantity === reorderPoint,
-                    [styles.stock__low]: isOverStock,
-                    [styles.stock__under]: isUnderStock
-                  })}
-                  style={{ width: `${isOverStock ? overStockLeft : underStockLeft}%` }}
-                >
-                  { isOverStock
-                    ? (overStockLeft > 10 ? reorderPoint : null)
-                    : (underStockLeft > 10 ? quantity : null)
-                  }
-                </div>
-                <div
-                  className={classNames({
-                    [styles.bar]: true,
-                    [styles.bar__right]: true,
-                    [styles.bar__hide]: quantity === reorderPoint,
-                    [styles.stock__over]: isOverStock,
-                    [styles.stock__reorder]: isUnderStock
-                  })}
-                  style={{ width: `${isOverStock ? overStockRight : underStockRight}%` }}
-                >
-                  { isOverStock
-                    ? (overStockRight > 10 ? quantity : null)
-                    : (underStockRight > 10 ? reorderPoint : null)
-                  }
-                </div>
-              </Fragment>
+              expired_quantity === 0
+                ? renderDefaultBar()
+                : renderExpiredBar()
             )
           }
         </div>

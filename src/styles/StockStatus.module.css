@@ -90,7 +90,7 @@
 }
 
 .stock__under {
-  background-color: RED;
+  background-color: ORANGE;
 }
 
 .stock__over {
@@ -102,6 +102,22 @@
   color: DARK_GREY;
   border: 2px solid LIGHT_GREY;
   border-left: none;
+}
+
+.stock__low__expired {
+  background-color: rgb(255, 209, 124);
+}
+
+.stock__over__expired {
+  background-color: rgb(180, 216, 180);
+}
+
+.bar__mid__full {
+  border-radius: 6px;
+}
+
+.hide {
+  display: none;
 }
 
 .stock__none {

@@ -1,11 +1,11 @@
-import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
-import { deleteAllSuggestions, getSnacks, getSuggestions } from '../services/SnacksService';
-import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { DateTime as dt } from 'luxon';
 
+import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
+import { deleteAllSuggestions, getSnackBatches, getSnacks, getSuggestions } from '../services/SnacksService';
+import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import ConfirmationDialog from '../components/ConfirmationDialog';
-import { DateTime } from 'luxon';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import ToastNotification from '../components/ToastNotification';
@@ -16,7 +16,9 @@ import { setSuggestions } from '../redux/features/snacks/snacksSlice';
 import { setUsers } from '../redux/features/users/usersSlice';
 import styles from '../styles/Page.module.css';
 
-const today = DateTime.now();
+const today = dt.now();
+const todayReset = dt.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
+
 const greeting = () => {
   if (today.hour < 12) {
     return GREETING.MORNING;
@@ -48,16 +50,49 @@ const Dashboard = () => {
       const quantityA = a.quantity;
       const reorderPointA = a.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderA = quantityA - reorderPointA;
+      const expiredA = a.expired_quantity;
       
       const quantityB = b.quantity;
       const reorderPointB = b.order_threshold || DEFAULT_ORDER_THRESHOLD;
       const quantityLessReorderB = quantityB - reorderPointB;
+      const expiredB = b.expired_quantity;
 
+      // both out of stock
       if (quantityA === 0 && quantityB === 0) {
         return 0;
+      // a out of stock
       } else if (quantityA === 0) {
         return -1;
+      // b out of stock
       } else if (quantityB === 0) {
+        return 1;
+      // both with expired stock
+      } else if (expiredA > 0 && expiredB > 0) {
+        // both with all expired stock
+        if (quantityA - expiredA === 0 && quantityB - expiredB === 0) {
+          // a with less stock than b
+          if (quantityLessReorderA < quantityLessReorderB) {
+            return -1;
+          // b with less stock than a
+          } else if (quantityLessReorderA > quantityLessReorderB) {
+            return 1;
+          // a with equal stock to b
+          } else {
+            return 0;
+          }
+        // a with all expired stock, b with some expired stock
+        } else if (quantityA - expiredA === 0 && quantityB - expiredB > 0) {
+          return -1;
+        // a with some expired stock, b with all expired stock
+        } else if (quantityA - expiredA > 0 && quantityB - expiredB === 0) {
+          return 1;
+        // default
+        } else {
+          return 0;
+        }
+      } else if (expiredA > 0) {
+        return -1;
+      } else if (expiredB > 0) {
         return 1;
       } else if (quantityLessReorderA < 0 && quantityLessReorderB < 0) {
         if (quantityA < quantityB) {
@@ -128,8 +163,24 @@ const Dashboard = () => {
 
     try {
       const { snacks } = await getSnacks(false);
-      const sortedSnacks = sortSnacks(snacks);   
+      const { snack_batches } = await getSnackBatches();
+      const expiredBatches = snack_batches.filter(
+        (batch) => !!batch.expiration_dtm && dt.fromISO(batch.expiration_dtm) <= todayReset
+      );
+      const batchesMap = expiredBatches.reduce((map, batch) => {
+        const { snack_id, quantity } = batch;
+        return {...map, [snack_id]: (map[snack_id] || 0) + quantity };
+      }, {});
+      const mappedSnacks = snacks.map((snack) => {
+        const expiredQuantity = batchesMap[snack.snack_id];
+        return {
+          ...snack,
+          expired_quantity: expiredQuantity || 0
+        };
+      });
+      const sortedSnacks = sortSnacks(mappedSnacks);
       setSnacks(sortedSnacks);
+      setSnacksError(false);
     } catch (err) {
       console.log(err);
       setSnacksError(true);
@@ -142,6 +193,7 @@ const Dashboard = () => {
         return { id: suggestion_id, text: suggestion_text, userId: suggested_by, isActive: false };
       });
       dispatch(setSuggestions(suggestionsMap));
+      setSuggestionsError(false);
     } catch (err) {
       console.log(err);
       setSuggestionsError(true);

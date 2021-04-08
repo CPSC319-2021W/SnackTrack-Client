@@ -103,7 +103,7 @@ const AddSnackDialog = (props) => {
         price: Number(values.price) * 100,
         quantity: values.quantity === '' ? 0 : parseInt(values.quantity),
         order_threshold: values.reorder === '' ? null : values.reorder,
-        expiration_dtm: expiryDate ? expiryDate.toUTC().toISO() : null
+        expiration_dtm: expiryDate ? expiryDate.set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).toUTC().toISO() : null
       };
       try {
         await addSnack(snackRequest);
