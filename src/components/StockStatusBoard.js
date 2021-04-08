@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card } from '@material-ui/core';
 
 import AppButton from './AppButton';
+import { Card } from '@material-ui/core';
 import { GENERIC_ERROR } from '../constants';
 import StockStatusBar from './StockStatusBar';
 import dashStyles from '../styles/Dashboard.module.css';
@@ -21,28 +21,22 @@ const StockStatusBoard = ({ snacks, error }) => {
   };
 
   const renderAll = () => {
-    return (
-      snacks.length > 0
-        ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
-        : renderPlaceholder(true)
-    );
+    return snacks.length > 0
+      ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+      : renderPlaceholder(true);
   };
 
-  const renderOutOfStock = () => {
-    const outOfStock = snacks.filter((snack) => snack.quantity === 0);
+  const renderOutOfStockOrExpired = () => {
+    const outOfStockOrExpired = snacks.filter((snack) => snack.quantity === 0 || snack.expired_quantity > 0);
     return (
-      outOfStock.length > 0
-        ? outOfStock.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+      outOfStockOrExpired.length > 0
+        ? outOfStockOrExpired.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
         : renderPlaceholder(false)
     );
   };
 
   const renderError = () => {
-    return (
-      <p className={styles.error__message}>
-        { GENERIC_ERROR }
-      </p>
-    );
+    return <p className={styles.error__message}>{GENERIC_ERROR}</p>;
   };
 
   return (
@@ -54,7 +48,7 @@ const StockStatusBoard = ({ snacks, error }) => {
           disabled={error}
           onClick={handleShowAll}
         >
-          { showAll ? 'Out of Stock' : 'Show All' }
+          { showAll ? 'High Priority' : 'All' }
         </AppButton>
       </div>
       { error
@@ -62,7 +56,7 @@ const StockStatusBoard = ({ snacks, error }) => {
         : (
           showAll
             ? renderAll()
-            : renderOutOfStock()
+            : renderOutOfStockOrExpired()
         )
       }
     </Card>

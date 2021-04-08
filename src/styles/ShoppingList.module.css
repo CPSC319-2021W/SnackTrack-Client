@@ -1,0 +1,58 @@
+@value colors: './Colors.module.css';
+@value BASE_RED from colors;
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  opacity: 80%;
+  margin: 0.25rem;
+}
+
+.dot:hover {
+  opacity: 100%;
+}
+
+.dot__blue {
+  background-color: blue;
+}
+
+.dot__orange {
+  background-color: ORANGE;
+}
+
+.dot__red {
+  background-color: RED;
+}
+
+.shoppingList__item {
+  display: flex;
+  text-align: left;
+}
+
+.deleteIcon__container {
+  width: 1rem;
+  height: 1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+.deleteIcon {
+  height: 1rem;
+  width: 1rem;
+  opacity: 60%;
+  transition: 0.2s;
+}
+
+.deleteIcon path {
+  fill: BASE_RED;
+}
+
+.deleteIcon:hover {
+  font-weight: bold;
+  opacity: inherit;
+}

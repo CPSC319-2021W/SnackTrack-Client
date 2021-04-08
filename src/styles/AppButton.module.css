@@ -89,6 +89,10 @@
     margin-right: 0.5rem;
 }
 
+.secondary__progress {
+    color: BASE_BLUE;
+}
+
 .mobile.primary:hover {
     background-color: BASE_BLUE;
 }

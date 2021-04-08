@@ -66,10 +66,6 @@
   border-bottom-right-radius: 6px;
 }
 
-.bar__full {
-  border-radius: 6px;
-}
-
 .bar__hide {
   display: none;
 }
@@ -79,11 +75,16 @@
 }
 
 .stock__under {
-  background-color: RED;
+  background-color: ORANGE;
 }
 
 .stock__over {
   background-color: GREEN;
+}
+
+.stock__over__line {
+  background-color: GREEN;
+  border-right: 3px solid BLACK;
 }
 
 .stock__reorder {
@@ -91,6 +92,43 @@
   color: DARK_GREY;
   border: 2px solid LIGHT_GREY;
   border-left: none;
+}
+
+.stock__low__line {
+  background-color: ORANGE;
+  border-right: 3px solid BLACK;
+}
+
+.stock__low__expired {
+  background-color: #FFCC80;
+  border: none;
+  color: WHITE;
+}
+
+.stock__low__expired__line {
+  background-color: #FFCC80;
+  border-right: 3px solid BLACK;
+}
+
+.stock__over__expired {
+  background-color: #A6D7A8;
+}
+
+.stock__all__expired {
+  background-color: #FAA19B;
+}
+
+.bar__mid__full {
+  border-radius: 6px;
+}
+
+.bar__full {
+  border-radius: 6px;
+  border: none;
+}
+
+.hide {
+  display: none;
 }
 
 .stock__none {
