@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import AppButton from './AppButton';
 import { GENERIC_ERROR } from '../constants';
 import { setSuggestionState } from '../redux/features/snacks/snacksSlice';
+
+import dashStyles from '../styles/Dashboard.module.css';
 import styles from '../styles/SuggestionsBox.module.css';
 
 const SuggestionsBox = ({ error, handleClearSuggestions }) => {
@@ -20,7 +22,7 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
 
   const renderEmptyState = () => {
     return (
-      <p>
+      <p className={dashStyles.placeholder}>
         No suggestions.
       </p>
     );
@@ -44,10 +46,10 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
   };
 
   const renderBeans = () => {
-    return (
-      <Fragment>
-        { suggestions.length > 0
-          ? suggestions.map((bean, i) => {
+    return suggestions.length > 0
+      ? (
+        <div className={styles.bean__container}>
+          { suggestions.map((bean, i) => {
             const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
             const { text, isActive } = bean;
             return (
@@ -64,10 +66,9 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
               </Tooltip>
             );
           })
-          : renderEmptyState()
-        }
-      </Fragment>
-    );
+          }
+        </div>
+      ) : renderEmptyState();
   };
 
   return (
@@ -82,9 +83,7 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
           Clear All
         </AppButton>
       </div>
-      <div className={styles.bean__container}>
-        { error ? renderError() : renderBeans() }
-      </div>
+      { error ? renderError() : renderBeans() }
     </Card>
   );
 };

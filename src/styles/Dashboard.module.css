@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
+@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE, INNER_LIGHT_GREY, MID_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW, DEFAULT_LIFT from effects;
@@ -17,30 +17,27 @@
   flex-direction: row;
 }
 
-.base {
+.nugget {
   height: 67px;
   display: flex;
   flex-direction: row;
   color: LIGHT_GREY;
   border: 1px solid LIGHT_GREY;
-  padding-left: 20px;
-  padding-right: 20px;
-  margin: 14px;
+  padding: 0 1rem;
+  margin-left: 1rem;
   align-items: center;
   border-radius: 12px;
-  box-shadow: DEFAULT_LIFT;
   background-color:WHITE;
 }
 
-.base > h5 {
+.nugget > h5 {
   font-size: 36px;
   font-weight: bold;
-  line-height: 45px;
   color: DARK_BLUE;
-  padding-right: 17px;
+  padding-right: 2rem;
 }
 
-.base > p {
+.nugget > p {
   font-weight: bold;
   line-height: 16px;
   color: DARK_GREY;
@@ -50,4 +47,65 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.section__one {
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+}
+
+.placeholder {
+  width: 100%;
+  background-color: INNER_LIGHT_GREY;
+  color: MID_GREY;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 960px) {
+  .section__one {
+    flex-direction: column;
+    margin-right: 1rem;
+    width: 50%;
+  }
+}
+
+@media (max-width: 425px) {
+  .nugget {
+    margin: 0;
+    width: 50%;
+  }
+
+  .nugget__left {
+    margin-right: 1rem;
+  }
+
+  .nugget > h5 {
+    padding-right: 0.8rem;
+  }
+
+  .tile {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .elements__container {
+    flex-direction: column;
+  }
+
+  .section__one {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 375pc) {
+  .nugget > h5 {
+    padding-right: 0.4rem;
+  }
 }

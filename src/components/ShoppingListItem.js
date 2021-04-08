@@ -21,10 +21,10 @@ const ShoppingListItem = (props) => {
 
   return (
     <div className={styles.shoppingList__item}>
-      <p>{`${index}. ${item.snack_name}`}</p>
       <button className={styles.deleteIcon__container} onClick={handleOnClick}>
         <DeleteIcon className={styles.deleteIcon} />
       </button>
+      <p className={styles.list__text}>{`${index}. ${item.snack_name}`}</p>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import AppButton from './AppButton';
 import { Card } from '@material-ui/core';
 import { GENERIC_ERROR } from '../constants';
 import StockStatusBar from './StockStatusBar';
+import dashStyles from '../styles/Dashboard.module.css';
 import styles from '../styles/StockStatus.module.css';
 
 const StockStatusBoard = ({ snacks, error }) => {
@@ -13,7 +14,7 @@ const StockStatusBoard = ({ snacks, error }) => {
 
   const renderPlaceholder = (all) => {
     return (
-      <div className={styles.placeholder}>
+      <div className={dashStyles.placeholder}>
         No snacks {all ? 'found' : 'out of stock'}.
       </div>
     );

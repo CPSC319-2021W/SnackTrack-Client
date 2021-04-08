@@ -31,8 +31,7 @@ const ShoppingListDropDown = (props) => {
   const customStyles = {
     container: (base) => ({
       ...base,
-      width: '170px',
-      marginRight: '1rem'
+      width: '160px'
     }),
     option: (base, state) => ({
       ...base,
@@ -83,21 +82,19 @@ const ShoppingListDropDown = (props) => {
   };
 
   return (
-    <div>
-      <Select
-        isSearchable
-        placeholder={'Add a snack'}
-        noOptionsMessage={() => 'No snacks found.'}
-        options={searchedOptions}
-        filterOption={(options) => options}
-        styles={customStyles}
-        value={null}
-        onInputChange={(searchValue) =>
-          handleSearch(allOptions, searchValue, setSearchedOptions, searchOptions)
-        }
-        onChange={onSubmit}
-      />
-    </div>
+    <Select
+      isSearchable
+      placeholder={'Add Snack'}
+      noOptionsMessage={() => 'No snacks found.'}
+      options={searchedOptions}
+      filterOption={(options) => options}
+      styles={customStyles}
+      value={null}
+      onInputChange={(searchValue) =>
+        handleSearch(allOptions, searchValue, setSearchedOptions, searchOptions)
+      }
+      onChange={onSubmit}
+    />
   );
 };
 
