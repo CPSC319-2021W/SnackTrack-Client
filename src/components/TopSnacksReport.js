@@ -7,6 +7,8 @@ import { DateTime } from 'luxon';
 import { TOP_SNACK_REQUEST } from '../constants';
 import { getPopularSnacks } from '../services/SnacksService';
 import { setPopularSnacks } from '../redux/features/snacks/snacksSlice';
+
+import dashStyles from '../styles/Dashboard.module.css';
 import styles from '../styles/TopSnacksReport.module.css';
 
 const TopSnacksReport = () => {
@@ -26,7 +28,7 @@ const TopSnacksReport = () => {
 
   const renderEmptyState = () => {
     return (
-      <p>
+      <p className={dashStyles.placeholder}>
         No snacks.
       </p>
     );

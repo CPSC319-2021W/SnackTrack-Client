@@ -46,35 +46,29 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
   };
 
   const renderBeans = () => {
-    return (
-      <Fragment>
-        { suggestions.length > 0
-          ? (
-            <div className={styles.bean__container}>
-              { suggestions.map((bean, i) => {
-                const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
-                const { text, isActive } = bean;
-                return (
-                  <Tooltip key={i} title={renderTooltip(text, first_name, last_name)}>
-                    <div
-                      className={classNames({
-                        [styles.bean]: true,
-                        [styles.bean__active]: isActive
-                      })}
-                      onClick={() => handleSetActive(bean)}
-                    >
-                      { text }
-                    </div>
-                  </Tooltip>
-                );
-              })
-              }
-            </div>
-          )
-          : renderEmptyState()
-        }
-      </Fragment>
-    );
+    return suggestions.length > 0
+      ? (
+        <div className={styles.bean__container}>
+          { suggestions.map((bean, i) => {
+            const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
+            const { text, isActive } = bean;
+            return (
+              <Tooltip key={i} title={renderTooltip(text, first_name, last_name)}>
+                <div
+                  className={classNames({
+                    [styles.bean]: true,
+                    [styles.bean__active]: isActive
+                  })}
+                  onClick={() => handleSetActive(bean)}
+                >
+                  { text }
+                </div>
+              </Tooltip>
+            );
+          })
+          }
+        </div>
+      ) : renderEmptyState();
   };
 
   return (

@@ -1,5 +1,5 @@
 import { Card, Tooltip } from '@material-ui/core';
-import { Fragment, React, useEffect, useRef, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import {
   addShoppingListItem,
   addShoppingListItems,
@@ -15,6 +15,8 @@ import ShoppingListItem from './ShoppingListItem';
 import classNames from 'classnames';
 import { clearActiveStates } from '../redux/features/snacks/snacksSlice';
 import { exportComponentAsPNG } from 'react-component-export-image';
+
+import dashStyles from '../styles/Dashboard.module.css';
 import styles from '../styles/ShoppingList.module.css';
 import suggestionStyles from '../styles/SuggestionsBox.module.css';
 
@@ -76,7 +78,7 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
   };
 
   const renderEmptyState = () => {
-    return <p>The shopping list is empty.</p>;
+    return <p className={dashStyles.placeholder}>The shopping list is empty.</p>;
   };
 
   const renderError = () => {
@@ -84,10 +86,10 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
   };
 
   const renderList = () => {
-    return (
-      <Fragment>
-        {shoppingList.length > 0
-          ? shoppingList.map((item, i) => {
+    return shoppingList.length > 0
+      ? (
+        <div className={suggestionStyles.bean__container}>
+          {shoppingList.map((item, i) => {
             return (
               <ShoppingListItem
                 key={i}
@@ -96,10 +98,9 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
                 onClick={removeFromShoppingList}
               />
             );
-          })
-          : renderEmptyState()}
-      </Fragment>
-    );
+          })}
+        </div>
+      ) : renderEmptyState();
   };
 
   useEffect(() => {
@@ -138,36 +139,36 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
             exportComponentAsPNG(componentToSave, { fileName: buildFileName() })
           }
         >
-          Export As PNG
+          Export as PNG
         </AppButton>
       </div>
-      <div>
+      <div className={styles.action__container}>
+        <div className={styles.dot__container}>
+          <Tooltip title='Add Low Stock Snacks'>
+            <span
+              className={classNames({ [styles.dot]: true, [styles.dot__orange]: true })}
+              onClick={addLowStock}
+            />
+          </Tooltip>
+          <Tooltip title='Add Out of Stock Snacks'>
+            <span
+              className={classNames({ [styles.dot]: true, [styles.dot__red]: true })}
+              onClick={addOutOfStock}
+            />
+          </Tooltip>
+          <Tooltip title='Clear All'>
+            <span
+              className={classNames({ [styles.dot]: true, [styles.dot__blue]: true })}
+              onClick={clearAll}
+            />
+          </Tooltip>
+        </div>
         <ShoppingListDropDown
           data={snacks.filter((item) => !hashSet?.has(hashItem(item)))}
           onSubmit={handleAddShoppingList}
         />
-        <Tooltip title='Add Low Stock Snacks'>
-          <span
-            className={classNames({ [styles.dot]: true, [styles.dot__orange]: true })}
-            onClick={addLowStock}
-          />
-        </Tooltip>
-        <Tooltip title='Add Out of Stock Snacks'>
-          <span
-            className={classNames({ [styles.dot]: true, [styles.dot__red]: true })}
-            onClick={addOutOfStock}
-          />
-        </Tooltip>
-        <Tooltip title='Clear All'>
-          <span
-            className={classNames({ [styles.dot]: true, [styles.dot__blue]: true })}
-            onClick={clearAll}
-          />
-        </Tooltip>
       </div>
-      <div className={suggestionStyles.bean__container}>
-        {error ? renderError() : renderList()}
-      </div>
+      { error ? renderError() : renderList() }
     </Card>
   );
 };

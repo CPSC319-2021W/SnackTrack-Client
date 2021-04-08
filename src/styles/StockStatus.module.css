@@ -162,6 +162,36 @@
   }
 
   .bar__base {
-    width: 234px;
+    width: 358px;
+  }
+}
+
+@media (max-width: 414px) {
+  .bar__base {
+    width: 348px;
+  }
+}
+
+@media (max-width: 411px) {
+  .bar__base {
+    width: 346px;
+  }
+}
+
+@media (max-width: 375px) {
+  .bar__base {
+    width: 310px;
+  }
+}
+
+@media (max-width: 360px) {
+  .bar__base {
+    width: 294px;
+  }
+}
+
+@media (max-width: 320px) {
+  .bar__base {
+    width: 254px;
   }
 }
