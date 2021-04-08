@@ -7,6 +7,7 @@
   border: 1px solid LIGHT_GREY;
   width: 30%;
   height: fit-content;
+  padding: 0 1rem;
 }
 
 .header {
@@ -15,7 +16,6 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin: 0 1rem;
 }
 
 .title {
@@ -25,7 +25,7 @@
 .bean__container {
   display: flex;
   flex-direction: column;
-  margin: 0 1rem 1rem;
+  margin: 0 0 1rem;
 }
 
 .bean {

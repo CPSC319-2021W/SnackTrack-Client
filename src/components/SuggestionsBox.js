@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import AppButton from './AppButton';
 import { GENERIC_ERROR } from '../constants';
 import { setSuggestionState } from '../redux/features/snacks/snacksSlice';
+
+import dashStyles from '../styles/Dashboard.module.css';
 import styles from '../styles/SuggestionsBox.module.css';
 
 const SuggestionsBox = ({ error, handleClearSuggestions }) => {
@@ -20,7 +22,7 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
 
   const renderEmptyState = () => {
     return (
-      <p>
+      <p className={dashStyles.placeholder}>
         No suggestions.
       </p>
     );
@@ -47,23 +49,28 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
     return (
       <Fragment>
         { suggestions.length > 0
-          ? suggestions.map((bean, i) => {
-            const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
-            const { text, isActive } = bean;
-            return (
-              <Tooltip key={i} title={renderTooltip(text, first_name, last_name)}>
-                <div
-                  className={classNames({
-                    [styles.bean]: true,
-                    [styles.bean__active]: isActive
-                  })}
-                  onClick={() => handleSetActive(bean)}
-                >
-                  { text }
-                </div>
-              </Tooltip>
-            );
-          })
+          ? (
+            <div className={styles.bean__container}>
+              { suggestions.map((bean, i) => {
+                const { first_name, last_name } = users.find((user) => bean.userId === user.user_id);
+                const { text, isActive } = bean;
+                return (
+                  <Tooltip key={i} title={renderTooltip(text, first_name, last_name)}>
+                    <div
+                      className={classNames({
+                        [styles.bean]: true,
+                        [styles.bean__active]: isActive
+                      })}
+                      onClick={() => handleSetActive(bean)}
+                    >
+                      { text }
+                    </div>
+                  </Tooltip>
+                );
+              })
+              }
+            </div>
+          )
           : renderEmptyState()
         }
       </Fragment>
@@ -82,9 +89,7 @@ const SuggestionsBox = ({ error, handleClearSuggestions }) => {
           Clear All
         </AppButton>
       </div>
-      <div className={styles.bean__container}>
-        { error ? renderError() : renderBeans() }
-      </div>
+      { error ? renderError() : renderBeans() }
     </Card>
   );
 };

@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE from colors;
+@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE, INNER_LIGHT_GREY, MID_GREY from colors;
 
 @value effects: './Effects.module.css';
 @value DARK_SHADOW, DEFAULT_LIFT from effects;
@@ -50,4 +50,15 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+}
+
+.placeholder {
+  width: 100%;
+  background-color: INNER_LIGHT_GREY;
+  color: MID_GREY;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 1rem;
+  text-align: center;
+  margin: 0 0 1rem;
 }
