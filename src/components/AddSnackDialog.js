@@ -107,6 +107,7 @@ const AddSnackDialog = (props) => {
       };
       try {
         await addSnack(snackRequest);
+        onHandleApiResponse('SNACK_SUCCESS');
       } catch (err) {
         onHandleApiResponse('ERROR');
       }

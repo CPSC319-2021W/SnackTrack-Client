@@ -88,15 +88,37 @@ const Dashboard = () => {
           return 1;
         // a and b with some expired stock
         } else {
-          // a with less stock than b
+          // should this ordered by quantity of fresh stock first? then quantity less reorder point?
+          // a with less stock over reorder than b
           if (quantityLessReorderA < quantityLessReorderB) {
+            // if (quantityA - expiredA < quantityB - expiredB) {
+            //   return -1;
+            // } else if (quantityA - expiredA > quantityB - expiredB) {
+            //   return 1;
+            // } else {
+            //   return 0;
+            // }
             return -1;
-          // b with less stock than a
+          // b with less stock over reorder than a
           } else if (quantityLessReorderA > quantityLessReorderB) {
+            // if (quantityA - expiredA < quantityB - expiredB) {
+            //   return -1;
+            // } else if (quantityA - expiredA > quantityB - expiredB) {
+            //   return 1;
+            // } else {
+            //   return 0;
+            // }
             return 1;
           // a with equal stock to b
           } else {
-            return 0;
+            if (quantityA - expiredA < quantityB - expiredB) {
+              return -1;
+            } else if (quantityA - expiredA > quantityB - expiredB) {
+              return 1;
+            } else {
+              return 0;
+            }
+            // return 0;
           }
         }
       } else if (expiredA > 0) {
