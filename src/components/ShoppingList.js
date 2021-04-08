@@ -57,7 +57,10 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
 
   const addLowStock = () => {
     const toAdd = snacks.filter(
-      (snack) => snack.quantity < snack.order_threshold && snack.quantity !== 0
+      (snack) =>
+        snack.quantity < snack.order_threshold &&
+        snack.quantity !== 0 &&
+        !hashSet?.has(hashItem(snack))
     );
     dispatch(addShoppingListItems(toAdd));
   };
