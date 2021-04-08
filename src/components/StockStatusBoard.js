@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Card } from '@material-ui/core';
 
 import AppButton from './AppButton';
+import { Card } from '@material-ui/core';
 import { GENERIC_ERROR } from '../constants';
 import StockStatusBar from './StockStatusBar';
 import styles from '../styles/StockStatus.module.css';
@@ -20,11 +20,9 @@ const StockStatusBoard = ({ snacks, error }) => {
   };
 
   const renderAll = () => {
-    return (
-      snacks.length > 0
-        ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
-        : renderPlaceholder(true)
-    );
+    return snacks.length > 0
+      ? snacks.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
+      : renderPlaceholder(true);
   };
 
   const renderOutOfStockOrExpired = () => {
@@ -37,11 +35,7 @@ const StockStatusBoard = ({ snacks, error }) => {
   };
 
   const renderError = () => {
-    return (
-      <p className={styles.error__message}>
-        { GENERIC_ERROR }
-      </p>
-    );
+    return <p className={styles.error__message}>{GENERIC_ERROR}</p>;
   };
 
   return (

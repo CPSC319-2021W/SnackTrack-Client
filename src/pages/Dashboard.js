@@ -6,6 +6,7 @@ import { GREETING, NOTIFICATIONS } from '../constants';
 import { deleteAllSuggestions, getSnackBatches, getSnacks, getSuggestions } from '../services/SnacksService';
 import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import ShoppingList from '../components/ShoppingList';
 import StockStatusBoard from '../components/StockStatusBoard';
 import SuggestionsBox from '../components/SuggestionsBox';
 import ToastNotification from '../components/ToastNotification';
@@ -37,6 +38,7 @@ const Dashboard = () => {
     (state) => state.notificationsReducer
   );
   const [snacks, setSnacks] = useState([]);
+  const [outOfStockSnacks, setOutOfStockSnacks] = useState([]);
   const [activeSnacksLength, setActiveSnacksLength] = useState(0);
   const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
@@ -113,7 +115,10 @@ const Dashboard = () => {
         };
       });
       const sortedSnacks = sortSnackInventory(mappedSnacks);
+      const outOfStock = snacks.filter((snack) => snack.quantity === 0);
+
       setSnacks(sortedSnacks);
+      setOutOfStockSnacks(outOfStock);
       setSnacksError(false);
     } catch (err) {
       console.log(err);
@@ -122,9 +127,14 @@ const Dashboard = () => {
 
     try {
       const { suggestions } = await getSuggestions();
-      const suggestionsMap = suggestions.map(suggestion => {
+      const suggestionsMap = suggestions.map((suggestion) => {
         const { suggestion_id, suggestion_text, suggested_by } = suggestion;
-        return { id: suggestion_id, text: suggestion_text, userId: suggested_by, isActive: false };
+        return {
+          id: suggestion_id,
+          text: suggestion_text,
+          userId: suggested_by,
+          isActive: false
+        };
       });
       dispatch(setSuggestions(suggestionsMap));
       setSuggestionsError(false);
@@ -133,7 +143,7 @@ const Dashboard = () => {
       setSuggestionsError(true);
     }
   }, []);
-  
+
   useEffect(() => {
     if (snacks) {
       const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
@@ -146,16 +156,32 @@ const Dashboard = () => {
   return (
     <div className={styles.base}>
       <div className={styles.header}>
-        <h5 className={`${styles.title} ${dashStyles.greeting}`} >{greeting()} {firstName}!</h5>
+        <h5 className={`${styles.title} ${dashStyles.greeting}`}>
+          {greeting()} {firstName}!
+        </h5>
         <div className={dashStyles.tile}>
-          <div className={dashStyles.base}><h5>{activeSnacksLength} </h5><p>Active Snacks</p></div>
-          <div className={dashStyles.base}><h5>{inactiveSnacksLength} </h5><p>Inactive Snacks</p></div>
+          <div className={dashStyles.base}>
+            <h5>{activeSnacksLength} </h5>
+            <p>Active Snacks</p>
+          </div>
+          <div className={dashStyles.base}>
+            <h5>{inactiveSnacksLength} </h5>
+            <p>Inactive Snacks</p>
+          </div>
         </div>
       </div>
       <TopSnacksReport />
       <div className={dashStyles.elements__container}>
-        <SuggestionsBox error={suggestionsError} handleClearSuggestions={handleClearSuggestions}/>
-        <StockStatusBoard snacks={snacks} error={snacksError} />
+        <SuggestionsBox
+          error={suggestionsError}
+          handleClearSuggestions={handleClearSuggestions}
+        />
+        <ShoppingList snacks={snacks} outOfStock={outOfStockSnacks} />
+        <StockStatusBoard
+          snacks={snacks}
+          outOfStock={outOfStockSnacks}
+          error={snacksError}
+        />
         <ToastNotification
           open={isToastNotificationOpen}
           notification={NOTIFICATIONS[apiResponse]}
@@ -171,7 +197,7 @@ const Dashboard = () => {
           onDecline={handleCloseConfirmation}
           onSubmit={clearSuggestions}
         >
-        Are you sure you want to delete all suggestions? This action cannot be undone.
+          Are you sure you want to delete all suggestions? This action cannot be undone.
         </ConfirmationDialog>
       </div>
     </div>

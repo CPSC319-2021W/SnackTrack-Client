@@ -93,11 +93,34 @@ const snacksSlice = createSlice({
     setSuggestions: (state, action) => {
       state.suggestions = action.payload;
     },
-    setSuggestionState: (state, action) => {
-      const { id, isActive } = action.payload;
+    setSuggestionStateFalse: (state, action) => {
       const { suggestions } = state;
+      const { id } = action.payload;
       const index = suggestions.findIndex((suggestion) => suggestion.id === id);
+      const recentlyUpdatedIndex = suggestions.findIndex(
+        (suggestion) => suggestion.recentlyUpdated === true
+      );
+      if (recentlyUpdatedIndex !== -1) {
+        state.suggestions[recentlyUpdatedIndex].recentlyUpdated = false;
+      }
+      state.suggestions[index].isActive = false;
+    },
+    setSuggestionState: (state, action) => {
+      const { suggestions } = state;
+      const { id, isActive } = action.payload;
+      const index = suggestions.findIndex((suggestion) => suggestion.id === id);
+      const recentlyUpdatedIndex = suggestions.findIndex(
+        (suggestion) => suggestion.recentlyUpdated === true
+      );
+      if (recentlyUpdatedIndex !== -1) {
+        state.suggestions[recentlyUpdatedIndex].recentlyUpdated = false;
+      }
       state.suggestions[index].isActive = !isActive;
+      state.suggestions[index].recentlyUpdated = true;
+    },
+    clearActiveStates: (state) => {
+      const { suggestions } = state;
+      suggestions.map((suggestion) => (suggestion.isActive = false));
     },
     setPopularSnacks: (state, action) => {
       state.popularSnacks = action.payload;
@@ -137,7 +160,9 @@ export const {
   setIsEditSnackOpen,
   setSnackImageUploadData,
   setSuggestions,
+  setSuggestionStateFalse,
   setSuggestionState,
+  clearActiveStates,
   setPopularSnacks
 } = snacksSlice.actions;
 
