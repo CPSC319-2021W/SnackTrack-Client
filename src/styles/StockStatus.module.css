@@ -105,11 +105,11 @@
 }
 
 .stock__low__expired {
-  background-color: rgb(255, 209, 124);
+  background-color: #FFCC80;
 }
 
 .stock__over__expired {
-  background-color: rgb(180, 216, 180);
+  background-color: #A6D7A8;
 }
 
 .bar__mid__full {

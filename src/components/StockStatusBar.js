@@ -85,12 +85,13 @@ const StockStatusBar = ({ snack }) => {
           })}
           style={{ width: `${rightStock}%` }}
         >
-          { rightStock > 15
+          { rightStock > 15 ? quantity : null }
+          {/* { rightStock > 15
             ? (isUnderStock
               ? reorderPoint
               : quantity
             ) : null
-          }
+          } */}
         </div>
       </Fragment>
     );
@@ -129,10 +130,11 @@ const StockStatusBar = ({ snack }) => {
           })}
           style={{ width: `${isOverStock ? overStockRight : underStockRight}%` }}
         >
-          { isOverStock
+          { overStockRight > 10 || underStockRight > 10 ? quantity : null }
+          {/* { isOverStock
             ? (overStockRight > 10 ? quantity : null)
             : (underStockRight > 10 ? reorderPoint : null)
-          }
+          } */}
         </div>
       </Fragment>
     );
