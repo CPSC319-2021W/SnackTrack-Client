@@ -27,7 +27,7 @@
   color: DARK_GREY;
   font-size: 14px;
   border: 1.5px solid LIGHT_GREY;
-  background-color: INNER_LIGHT_GREY;
+  /* background-color: INNER_LIGHT_GREY; */
   border-radius: 6px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
@@ -38,7 +38,7 @@
   color: DARK_GREY;
   font-size: 14px;
   border: 1.5px solid LIGHT_GREY;
-  background-color: INNER_LIGHT_GREY;
+  /* background-color: INNER_LIGHT_GREY; */
   border-radius: 6px;
   font-size: 0.75rem;
   padding: 0.4rem 0rem;

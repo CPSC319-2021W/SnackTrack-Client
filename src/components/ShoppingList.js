@@ -160,7 +160,7 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
               +
             </span>
           </Tooltip>
-          <Tooltip title='Add Stale Snacks'>
+          <Tooltip title='Add Fully Stale Snacks'>
             <span
               className={classNames({ [styles.dot]: true, [styles.dot__grey]: true })}
               onClick={addStaleStock}

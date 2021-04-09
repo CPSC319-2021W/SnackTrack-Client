@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 
 import {
-  Button,
   Collapse,
   Divider,
   Table,
@@ -72,12 +71,12 @@ const SnackBatchesSubTable = (props) => {
       label: 'Actions',
       format: (none, i) => {
         return (
-          <Button
+          <span
             className={styles.button__batch_edit}
             onClick={() => handleEditBatch(snackBatches[i])}
           >
-            Edit
-          </Button>
+            Edit Batch
+          </span>
         );
       }
     }

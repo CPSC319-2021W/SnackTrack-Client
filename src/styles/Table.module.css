@@ -160,6 +160,7 @@
 }
 
 .button__batch_edit {
+  cursor: pointer;
   font-weight: 700;
   color: BASE_BLUE;
   background-color: inherit;

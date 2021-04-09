@@ -209,7 +209,7 @@ const EditSnackDialog = (props) => {
             <Divider />
             <div className={dialogStyles.twoButton__footer}>
               <AppButton
-                secondary
+                cancel
                 loading={isDeleteLoading}
                 disabled={isSubmitLoading}
                 onClick={removeSnack}

@@ -2,7 +2,6 @@ import {
   BASE_BLUE,
   DARK_BLUE,
   DARK_GREY,
-  INNER_LIGHT_GREY,
   LIGHT_BLUE,
   LIGHT_GREY,
   MID_GREY,
@@ -47,10 +46,10 @@ const CategorySelect = (props) => {
       minHeight: 0,
       border: state.isFocused ? `2px solid ${BASE_BLUE}` : `1px solid ${LIGHT_GREY}`,
       '&:hover': {
-        border: state.isFocused ? `2px solid ${BASE_BLUE}` : `1px solid ${MID_GREY}`
+        border: state.isFocused ? `2px solid ${BASE_BLUE}` : `1px solid ${LIGHT_GREY}`
       },
       borderRadius: '6px',
-      backgroundColor: state.hasValue ? WHITE : INNER_LIGHT_GREY,
+      backgroundColor: WHITE,
       boxShadow: 'none',
       cursor: 'pointer'
     }),
@@ -90,7 +89,7 @@ const CategorySelect = (props) => {
           isSearchable={false}
           options={options}
           value={categoryValue}
-          placeholder=''
+          placeholder='Select Category'
           styles={customStyles}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
