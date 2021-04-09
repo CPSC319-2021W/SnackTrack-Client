@@ -27,7 +27,8 @@ const StockStatusBoard = ({ snacks, error }) => {
   };
 
   const renderOutOfStockOrExpired = () => {
-    const outOfStockOrExpired = snacks.filter((snack) => snack.quantity === 0 || snack.expired_quantity > 0);
+    const outOfStockOrExpired = snacks.filter(
+      (snack) => snack.quantity < snack.order_threshold || snack.quantity === 0 || snack.expired_quantity > 0);
     return (
       outOfStockOrExpired.length > 0
         ? outOfStockOrExpired.map((snack, i) => <StockStatusBar key={i} snack={snack} />)
@@ -40,7 +41,7 @@ const StockStatusBoard = ({ snacks, error }) => {
   };
 
   return (
-    <Card variant='outlined' className={styles.board__container}>
+    <Card className={styles.board__container}>
       <div className={styles.header}>
         <h5 className={styles.title}>Inventory Levels</h5>
         <AppButton
@@ -48,7 +49,7 @@ const StockStatusBoard = ({ snacks, error }) => {
           disabled={error}
           onClick={handleShowAll}
         >
-          { showAll ? 'High Priority' : 'All' }
+          { showAll ? 'Show High Priority' : 'Show All' }
         </AppButton>
       </div>
       { error

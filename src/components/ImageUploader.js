@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
 import Jimp from 'jimp/es';
+import imagePlaceholder from '../assets/placeholders/image.png';
 import { setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ImageUploader.module.css';
 
@@ -54,7 +55,7 @@ const ImageUploader = (props) => {
         className={styles.imageUploadGreyBox}
         onClick={() => imageUploader.current.click()}
       >
-        <img ref={uploadedImage} src={src} className={styles.imageUploadBox} />
+        <img ref={uploadedImage} src={src ? src : imagePlaceholder} className={styles.imageUploadBox} />
       </div>
       <input
         ref={imageUploader}

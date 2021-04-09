@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { Button, Card, CircularProgress } from '@material-ui/core';
 import Cookies from 'js-cookie';
 import classNames from 'classnames';
+import { isMobileOnly } from 'react-device-detect';
 import { useDispatch } from 'react-redux';
 import { useGoogleLogin } from 'react-google-login';
 import { useHistory } from 'react-router-dom';
@@ -70,39 +71,54 @@ const AuthLogin = () => {
     );
   };
 
+  const renderLoginElements = () => {
+    return (
+      <Fragment>
+        <div className={styles.logo__container}>
+          <GalvanizeLogo className={styles.g_logo} />
+          <SnackTrackLogo className={styles.st_logo} />
+        </div>
+        <Button
+          className={classNames({
+            [styles.button__login]: true,
+            [styles.button__loading]: isLoading
+          })}
+          onClick={handleLogIn}
+        >
+          {isLoading ? (
+            <CircularProgress size={30} thickness={5} />
+          ) : renderChildren()}
+        </Button>
+        { error
+          ? (
+            <div className={styles.error__container}>
+              <p className={styles.error__message}>
+                Uh-oh! Something went wrong.
+              </p>
+              <p className={styles.error__message}>
+                Please try again later.
+              </p>
+            </div>
+          ) : null }
+      </Fragment>
+    );
+  };
 
   return (
     <div className={styles.page}>
-      <div className={styles.container}>
-        <Card className={styles.card}>
-          <div className={styles.logo__container}>
-            <GalvanizeLogo className={styles.g_logo} />
-            <SnackTrackLogo className={styles.st_logo} />
+      { isMobileOnly
+        ? (
+          <div className={styles.mobile__container}>
+            { renderLoginElements() }
           </div>
-          { error
-            ? (
-              <div className={styles.error__container}>
-                <p className={styles.error__message}>
-                  Uh-oh! Something went wrong.
-                </p>
-                <p className={styles.error__message}>
-                  Please try again later.
-                </p>
-              </div>
-            ) : null }
-          <Button
-            className={classNames({
-              [styles.button__login]: true,
-              [styles.button__loading]: isLoading
-            })}
-            onClick={handleLogIn}
-          >
-            {isLoading ? (
-              <CircularProgress size={30} thickness={5} />
-            ) : renderChildren()}
-          </Button>
-        </Card>
-      </div>
+        ) : (
+          <div className={styles.container}>
+            <Card className={styles.card}>
+              { renderLoginElements() }
+            </Card>
+          </div>
+        )
+      }
     </div>
   );
 };

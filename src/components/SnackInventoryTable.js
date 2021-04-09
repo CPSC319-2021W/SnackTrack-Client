@@ -195,7 +195,7 @@ const SnackInventoryTable = (props) => {
             onEditSnack(snack);
           }}
         >
-          Edit
+          Edit Snack
         </AppButton>
       )
     }

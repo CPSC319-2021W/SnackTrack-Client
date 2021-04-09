@@ -67,6 +67,16 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
     dispatch(addShoppingListItems(toAdd));
   };
 
+  const addStaleStock = () => {
+    const toAdd = snacks.filter(
+      (snack) =>
+        snack.quantity !== 0 &&
+        snack.quantity - snack.expired_quantity === 0 &&
+        !hashSet?.has(hashItem(snack))
+    );
+    dispatch(addShoppingListItems(toAdd));
+  };
+
   const addOutOfStock = () => {
     const toAdd = outOfStock.filter((snack) => !hashSet?.has(hashItem(snack)));
     dispatch(addShoppingListItems(toAdd));
@@ -134,33 +144,37 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
       <div className={suggestionStyles.header}>
         <h5 className={suggestionStyles.title}>Shopping List</h5>
         <AppButton
-          primary
-          onClick={() =>
-            exportComponentAsPNG(componentToSave, { fileName: buildFileName() })
-          }
+          cancel
+          onClick={clearAll}
         >
-          Export as PNG
+          Clear All
         </AppButton>
       </div>
       <div className={styles.action__container}>
         <div className={styles.dot__container}>
-          <Tooltip title='Add Low Stock Snacks'>
-            <span
-              className={classNames({ [styles.dot]: true, [styles.dot__orange]: true })}
-              onClick={addLowStock}
-            />
-          </Tooltip>
           <Tooltip title='Add Out of Stock Snacks'>
             <span
               className={classNames({ [styles.dot]: true, [styles.dot__red]: true })}
               onClick={addOutOfStock}
-            />
+            >
+              +
+            </span>
           </Tooltip>
-          <Tooltip title='Clear All'>
+          <Tooltip title='Add Fully Stale Snacks'>
             <span
-              className={classNames({ [styles.dot]: true, [styles.dot__blue]: true })}
-              onClick={clearAll}
-            />
+              className={classNames({ [styles.dot]: true, [styles.dot__grey]: true })}
+              onClick={addStaleStock}
+            >
+              +
+            </span>
+          </Tooltip>
+          <Tooltip title='Add Low Stock Snacks'>
+            <span
+              className={classNames({ [styles.dot]: true, [styles.dot__orange]: true })}
+              onClick={addLowStock}
+            >
+              +
+            </span>
           </Tooltip>
         </div>
         <ShoppingListDropDown
@@ -169,6 +183,18 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
         />
       </div>
       { error ? renderError() : renderList() }
+      <div className={styles.button__container}>
+        <AppButton
+          primary
+          fullWidth
+          disabled={error}
+          onClick={() =>
+            exportComponentAsPNG(componentToSave, { fileName: buildFileName() })
+          }
+        >
+          Export as PNG
+        </AppButton>
+      </div>
     </Card>
   );
 };

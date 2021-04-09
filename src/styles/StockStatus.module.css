@@ -1,5 +1,8 @@
 @value colors: './Colors.module.css';
-@value GREEN, WHITE, ORANGE, RED, DARK_GREY, LIGHT_GREY, MID_GREY, INNER_LIGHT_GREY from colors;
+@value GREEN, WHITE, ORANGE, RED, DARK_GREY, LIGHT_GREY, MID_GREY, INNER_LIGHT_GREY, DARK_GREY from colors;
+
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
 
 .board__container {
   width: 30%;
@@ -8,7 +11,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 0 1rem;
-  /* margin-left: 1rem; */
+  box-shadow: DEFAULT_SHADOW;
 }
 
 .header {
@@ -21,6 +24,7 @@
 }
 
 .title {
+  font-size: 1.2rem;
   margin: 1rem 0;
 }
 
@@ -35,13 +39,13 @@
 }
 
 .snack__label {
-  font-weight: 600;
+  font-weight: 500;
   color: DARK_GREY;
 }
 
 .bar__base {
-  margin-top: 0.5rem;
-  height: 40px;
+  margin-top: 0.3rem;
+  height: 24px;
   width: 336px;
   color: WHITE;
   font-weight: 600;
@@ -85,31 +89,17 @@
 
 .stock__over__line {
   background-color: GREEN;
-  border-right: 3px solid BLACK;
+  border-right: 3px solid DARK_GREY;
 }
 
 .stock__low__line {
   background-color: ORANGE;
-  border-right: 3px solid BLACK;
+  border-right: 3px solid DARK_GREY;
 }
 
-.stock__low__expired {
-  background-color: #FFCC80;
-  border: none;
-  color: WHITE;
-}
-
-.stock__low__expired__line {
-  background-color: #FFCC80;
-  border-right: 3px solid BLACK;
-}
-
-.stock__over__expired {
-  background-color: #A6D7A8;
-}
-
-.stock__all__expired {
-  background-color: #FAA19B;
+.stock__expired {
+  background-color: LIGHT_GREY;
+  color: DARK_GREY;
 }
 
 .stock__reorder {
@@ -120,7 +110,7 @@
 }
 
 .reorder__line {
-  border-right: 3px solid BLACK;
+  border-right: 3px solid DARK_GREY;
 }
 
 .bar__mid__full {

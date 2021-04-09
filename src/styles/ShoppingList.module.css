@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value BASE_RED from colors;
+@value BASE_RED, RED, ORANGE, WHITE, LIGHT_GREY, MID_GREY from colors;
 
 .action__container {
   display: flex;
@@ -8,30 +8,54 @@
   margin-bottom: 1rem;
 }
 
+.dot__container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
 .dot {
   height: 25px;
   width: 25px;
   border-radius: 50%;
   display: inline-block;
   cursor: pointer;
-  opacity: 80%;
   margin: 0.25rem;
-}
-
-.dot:hover {
-  opacity: 100%;
-}
-
-.dot__blue {
-  background-color: blue;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1rem;
+  transition: 0.1s;
 }
 
 .dot__orange {
-  background-color: ORANGE;
+  color: ORANGE;
+  background-color: #ffe7ca;
+  border: 3px solid ORANGE;
 }
 
 .dot__red {
-  background-color: RED;
+  color: RED;
+  background-color: #fdd9d7;
+  border: 3px solid RED;
+}
+
+.dot__grey {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+  border: 3px solid MID_GREY;
+}
+
+.dot__orange:hover {
+  background-color: #FFDE9F;
+}
+
+.dot__red:hover {
+  background-color: #fdc8c4;
+}
+
+.dot__grey:hover {
+  background-color: #D8D8D8;
 }
 
 .shoppingList__item {
@@ -71,31 +95,6 @@
   margin: 0.5rem;
 }
 
-@media (max-width: 1024px) {
-  .action__container {
-    margin-top: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .action__container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-
-@media (max-width: 425px) {
-  .action__container {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-}
-
-@media (max-width: 320px) {
-  .action__container {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 0;
-  }
+.button__container {
+  margin-bottom: 1rem;
 }

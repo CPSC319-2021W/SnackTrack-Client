@@ -95,7 +95,7 @@ const UserCard = (props) => {
           component='img'
           image={img}
         />
-        <div className={styles.text}>
+        <div className={`${styles.text} ${noHover ? null : styles.login__text}`}>
           <p className={styles.text__emphasis}>
             {user.first_name} {user.last_name}
           </p>

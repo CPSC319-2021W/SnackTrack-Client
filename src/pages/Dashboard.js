@@ -2,7 +2,7 @@ import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DateTime as dt } from 'luxon';
 
-import { GREETING, NOTIFICATIONS } from '../constants';
+import { DEFAULT_ORDER_THRESHOLD, GREETING, NOTIFICATIONS } from '../constants';
 import { deleteAllSuggestions, getSnackBatches, getSnacks, getSuggestions } from '../services/SnacksService';
 import { setApiResponse, setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import ConfirmationDialog from '../components/ConfirmationDialog';
@@ -39,8 +39,6 @@ const Dashboard = () => {
   );
   const [snacks, setSnacks] = useState([]);
   const [outOfStockSnacks, setOutOfStockSnacks] = useState([]);
-  const [activeSnacksLength, setActiveSnacksLength] = useState(0);
-  const [inactiveSnacksLength, setInactiveSnacksLength] = useState(0);
 
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [isConfirmationLoading, setConfirmationLoading] = useState(false);
@@ -144,29 +142,33 @@ const Dashboard = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (snacks) {
-      const allActiveSnacksLength = snacks.filter((snack) => snack.is_active).length;
-      const allInactiveSnacksLength = snacks.filter((snack) => !snack.is_active).length;
-      setActiveSnacksLength(allActiveSnacksLength);
-      setInactiveSnacksLength(allInactiveSnacksLength);
-    }
-  }, [snacks]);
-
   return (
     <div className={styles.base}>
-      <div className={styles.header}>
+      <div className={dashStyles.header}>
         <h5 className={`${styles.title} ${dashStyles.greeting}`}>
           {greeting()} {firstName}!
         </h5>
-        <div className={dashStyles.tile}>
-          <div className={`${dashStyles.nugget} ${dashStyles.nugget__left}`}>
-            <h5>{activeSnacksLength} </h5>
-            <p>Active Snacks</p>
+        <div className={dashStyles.tile__container}>
+          <div className={`${dashStyles.tile} ${dashStyles.tile__left}`}>
+            <h5 className={dashStyles.out__tile}>{outOfStockSnacks.length} </h5>
+            <p>Out of Stock Snacks</p>
           </div>
-          <div className={`${dashStyles.nugget} ${dashStyles.nugget__right}`}>
-            <h5>{inactiveSnacksLength} </h5>
-            <p>Inactive Snacks</p>
+          <div className={`${dashStyles.tile} ${dashStyles.tile__mid}`}>
+            <h5 className={dashStyles.stale__tile}>
+              { snacks.filter((snack) => snack.quantity !== 0
+                && snack.quantity - snack.expired_quantity === 0).length
+              }
+            </h5>
+            <p>Fully Stale Snacks</p>
+          </div>
+          <div className={`${dashStyles.tile} ${dashStyles.tile__right}`}>
+            <h5 className={dashStyles.low__tile}>
+              { snacks.filter((snack) => snack.quantity !== 0
+                && snack.quantity !== snack.expired_quantity
+                && (snack.quantity - snack.expired_quantity < (snack.order_threshold || DEFAULT_ORDER_THRESHOLD))).length
+              }
+            </h5>
+            <p>Low Stock Snacks</p>
           </div>
         </div>
       </div>

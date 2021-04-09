@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+
 import BottomNavigationAdmin from '../components/BottomNavigationAdmin';
 import { Container } from '@material-ui/core';
 import HeaderBarAdmin from '../components/HeaderBarAdmin';
@@ -8,10 +9,6 @@ import { isAdmin } from '../helpers/AuthHelper';
 import styles from '../styles/Layout.module.css';
 
 const AdminRoute = ({ component: Component, signOut, ...rest }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  });
-
   return (
     <Route
       {...rest}

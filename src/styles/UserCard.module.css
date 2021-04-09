@@ -108,4 +108,20 @@
     margin: 1rem 0;
     text-align: center;
   }
+
+  .skeleton__text {
+    margin-left: 1.2rem;
+  }
+
+  .login__text {
+    width: 65%;
+  }
+
+  .login__text > p {
+    margin-left: 1rem;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

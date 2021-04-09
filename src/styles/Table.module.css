@@ -62,6 +62,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 1rem;
 }
 
 .cell__small {
@@ -94,6 +95,7 @@
 
 .cell__lastChild__noSelect {
   padding-right: 1rem;
+  text-overflow: unset;
 }
 
 .status__bar {
@@ -158,6 +160,7 @@
 }
 
 .button__batch_edit {
+  cursor: pointer;
   font-weight: 700;
   color: BASE_BLUE;
   background-color: inherit;

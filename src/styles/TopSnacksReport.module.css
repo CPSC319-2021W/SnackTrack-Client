@@ -1,10 +1,12 @@
 @value colors: './Colors.module.css';
 @value LIGHT_GREY, WHITE, BASE_BLUE, DARK_BLUE, LIGHT_BLUE, LIGHT_BLUE_HOVER from colors;
 
+@value effects: './Effects.module.css';
+@value DEFAULT_SHADOW from effects;
+
 .card__base {
-  box-shadow: none;
+  box-shadow: DEFAULT_SHADOW;
   border-radius: 12px;
-  border: 1px solid LIGHT_GREY;
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -23,7 +25,8 @@
 }
 
 .title {
-  margin: 1rem 1rem 0 0;
+  font-size: 1.2rem;
+  margin: 1rem 0.8rem 0 0;
 }
 
 .container {

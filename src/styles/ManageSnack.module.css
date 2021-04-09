@@ -139,6 +139,16 @@
   margin-bottom: 1rem;
 }
 
+.switch__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.text__sub {
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
 @media (max-width: 590px) {
   .form, form {
     max-width: 380px;
