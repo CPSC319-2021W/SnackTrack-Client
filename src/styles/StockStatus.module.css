@@ -97,23 +97,9 @@
   border-right: 3px solid DARK_GREY;
 }
 
-.stock__low__expired {
-  background-color: #FFCC80;
-  border: none;
-  color: WHITE;
-}
-
-.stock__low__expired__line {
-  background-color: #FFCC80;
-  border-right: 3px solid DARK_GREY;
-}
-
-.stock__over__expired {
-  background-color: #A6D7A8;
-}
-
-.stock__all__expired {
-  background-color: #FAA19B;
+.stock__expired {
+  background-color: LIGHT_GREY;
+  color: DARK_GREY;
 }
 
 .stock__reorder {

@@ -178,7 +178,8 @@ const Dashboard = () => {
             <div className={`${dashStyles.tile} ${dashStyles.tile__right} ${dashStyles.tile__last}`}>
               <h5 className={dashStyles.low__tile}>
                 { snacks.filter((snack) => snack.quantity !== 0
-                  && (snack.quantity < (snack.order_threshold || DEFAULT_ORDER_THRESHOLD))).length
+                  && snack.quantity !== snack.expired_quantity
+                  && (snack.quantity - snack.expired_quantity < (snack.order_threshold || DEFAULT_ORDER_THRESHOLD))).length
                 }
               </h5>
               <p>Low Stock Snacks</p>

@@ -40,7 +40,7 @@ const StockStatusBar = ({ snack }) => {
           className={classNames({
             [styles.bar]: true,
             [styles.bar__left]: true,
-            [styles.stock__all__expired]: freshQuantity === 0,
+            [styles.stock__expired]: freshQuantity === 0,
             [styles.stock__low]: freshQuantity !== 0 && freshQuantity < reorderPoint,
             [styles.stock__over]: isOverStockWithExpired,
             [styles.reorder__line]: isOverStockWithExpired,
@@ -52,9 +52,8 @@ const StockStatusBar = ({ snack }) => {
         <div
           className={classNames({
             [styles.bar]: true,
-            [styles.stock__all__expired]: freshQuantity === 0,
+            [styles.stock__expired]: freshQuantity === 0 || freshQuantity < reorderPoint,
             [styles.stock__low]: freshQuantity !== 0 && freshQuantity < reorderPoint,
-            [styles.stock__low__expired]: freshQuantity < reorderPoint,
             [styles.stock__over]: isOverStockWithExpired,
             [styles.reorder__line]: quantity > reorderPoint && freshQuantity < reorderPoint,
             [styles.bar__mid__full]: areEqual
@@ -68,9 +67,9 @@ const StockStatusBar = ({ snack }) => {
             [styles.bar]: true,
             [styles.bar__right]: true,
             [styles.stock__reorder]: quantity < reorderPoint,
-            [styles.stock__over__expired]: freshQuantity >= reorderPoint,
-            [styles.stock__low__expired]: freshQuantity !== 0,
-            [styles.stock__all__expired]: freshQuantity === 0 && quantity >= reorderPoint,
+            [styles.stock__expired]: freshQuantity >= reorderPoint
+              || freshQuantity !== 0
+              || freshQuantity === 0 && quantity >= reorderPoint,
             [styles.hide]: areEqual
           })}
           style={{ width: `${rightStock}%` }}
