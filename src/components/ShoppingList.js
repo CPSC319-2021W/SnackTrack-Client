@@ -67,6 +67,16 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
     dispatch(addShoppingListItems(toAdd));
   };
 
+  const addStaleStock = () => {
+    const toAdd = snacks.filter(
+      (snack) =>
+        snack.quantity !== 0 &&
+        snack.quantity - snack.expired_quantity === 0 &&
+        !hashSet?.has(hashItem(snack))
+    );
+    dispatch(addShoppingListItems(toAdd));
+  };
+
   const addOutOfStock = () => {
     const toAdd = outOfStock.filter((snack) => !hashSet?.has(hashItem(snack)));
     dispatch(addShoppingListItems(toAdd));
@@ -146,6 +156,14 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
             <span
               className={classNames({ [styles.dot]: true, [styles.dot__red]: true })}
               onClick={addOutOfStock}
+            >
+              +
+            </span>
+          </Tooltip>
+          <Tooltip title='Add Stale Snacks'>
+            <span
+              className={classNames({ [styles.dot]: true, [styles.dot__grey]: true })}
+              onClick={addStaleStock}
             >
               +
             </span>

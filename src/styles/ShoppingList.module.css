@@ -1,11 +1,17 @@
 @value colors: './Colors.module.css';
-@value BASE_RED, RED, ORANGE, WHITE from colors;
+@value BASE_RED, RED, ORANGE, WHITE, LIGHT_GREY, MID_GREY from colors;
 
 .action__container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 1rem;
+}
+
+.dot__container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .dot {
@@ -34,12 +40,22 @@
   border: 3px solid RED;
 }
 
+.dot__grey {
+  color: MID_GREY;
+  background-color: LIGHT_GREY;
+  border: 3px solid MID_GREY;
+}
+
 .dot__orange:hover {
   background-color: #FFDE9F;
 }
 
 .dot__red:hover {
-  background-color: #FBB9B4;
+  background-color: #fdc8c4;
+}
+
+.dot__grey:hover {
+  background-color: #D8D8D8;
 }
 
 .shoppingList__item {
