@@ -1,8 +1,17 @@
 @value colors: './Colors.module.css';
-@value LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE, INNER_LIGHT_GREY, MID_GREY from colors;
+@value RED, ORANGE, LIGHT_GREY, WHITE, DARK_GREY, BASE_BLUE, DARK_BLUE, INNER_LIGHT_GREY, MID_GREY from colors;
 
 @value effects: './Effects.module.css';
-@value DARK_SHADOW, DEFAULT_LIFT from effects;
+@value DARK_SHADOW, DEFAULT_LIFT, DEFAULT_SHADOW from effects;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  min-height: 45px;
+}
 
 .greeting {
   color: BASE_BLUE;
@@ -12,35 +21,57 @@
   align-items: center;
 }
 
-.tile {
+.tile__container {
   display: flex;
   flex-direction: row;
 }
 
-.nugget {
-  height: 67px;
+.tile__group {
+  display: flex;
+  flex-direction: row;
+}
+
+.tile {
+  height: 60px;
   display: flex;
   flex-direction: row;
   color: LIGHT_GREY;
-  border: 1px solid LIGHT_GREY;
   padding: 0 1rem;
-  margin-left: 1rem;
   align-items: center;
   border-radius: 12px;
   background-color:WHITE;
+  box-shadow: DEFAULT_SHADOW;
 }
 
-.nugget > h5 {
-  font-size: 36px;
+.tile__right {
+  margin: 0 1rem;
+}
+
+.tile__last {
+  margin-right: 0;
+}
+
+.tile > h5 {
+  font-size: 1.8rem;
   font-weight: bold;
   color: DARK_BLUE;
   padding-right: 2rem;
 }
 
-.nugget > p {
+.tile .out__tile {
+  color: RED;
+}
+
+.tile .low__tile {
+  color: ORANGE;
+}
+
+.tile > p {
   font-weight: bold;
-  line-height: 16px;
+  margin-top: 1rem;
   color: DARK_GREY;
+  text-align: left;
+  line-height: 1rem;
 }
 
 .elements__container {
@@ -75,17 +106,34 @@
   }
 }
 
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .tile__container {
+    margin-top: 1rem;
+  }
+}
+
 @media (max-width: 425px) {
-  .nugget {
-    margin: 0;
+  .tile__container {
+    flex-direction: column;
+  }
+
+  .tile {
     width: 50%;
   }
 
-  .nugget__left {
+  .tile__left {
     margin-right: 1rem;
   }
 
-  .nugget > h5 {
+  .tile__right {
+    margin: 0;
+  }
+
+  .tile > h5 {
     padding-right: 0.8rem;
   }
 
@@ -105,7 +153,7 @@
 }
 
 @media (max-width: 375pc) {
-  .nugget > h5 {
+  .tile > h5 {
     padding-right: 0.4rem;
   }
 }

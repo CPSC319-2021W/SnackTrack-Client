@@ -10,7 +10,7 @@ const UserCardSkeleton = ({ noHover }) => {
     <Card variant={'outlined'} className={ noHover ? styles.base__noHover : styles.base }>
       <div className={styles.action_area}>
         <Skeleton variant={'circle'} animation={'wave'} className={styles.image} />
-        <div className={styles.text}>
+        <div className={`${styles.text} ${styles.skeleton__text}`}>
           <Skeleton variant={'text'} animation={'wave'} className={styles.fullname}/>
           <Skeleton variant={'text'} animation={'wave'}/>
         </div>

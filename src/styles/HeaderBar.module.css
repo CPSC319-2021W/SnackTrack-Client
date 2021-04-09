@@ -6,7 +6,8 @@
 
 .header {
   height: 100px;
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
   background-color: WHITE;
   box-shadow: DARK_SHADOW;
 }

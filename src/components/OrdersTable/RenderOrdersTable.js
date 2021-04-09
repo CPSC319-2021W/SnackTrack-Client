@@ -180,7 +180,8 @@ const RenderOrdersTable = (props) => {
                       className={classNames({
                         [styles.cell]: true,
                         [styles.cell__small]: true,
-                        [styles.cell__medium]: column.id !== 'checkbox'
+                        [styles.cell__medium]: column.id !== 'checkbox',
+                        [styles.cell__lastChild__noSelect]: column.id === 'actions'
                       })}
                       title={column.id === 'snack_name' ? value : null}
                     >

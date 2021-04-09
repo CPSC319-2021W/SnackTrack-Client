@@ -230,6 +230,13 @@ export const theme = createMuiTheme({
         width: '20px',
         opacity: 0.75
       }
+    },
+    PrivateSwitchBase: {
+      root: {
+        '& > span': {
+          opacity: 1
+        }
+      }
     }
   },
   props: {
