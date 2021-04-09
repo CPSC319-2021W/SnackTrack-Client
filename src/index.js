@@ -1,4 +1,5 @@
 import ErrorBoundary from './components/ErrorBoundary';
+import PageScroll from './components/PageScroll';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -11,6 +12,7 @@ ReactDOM.render(
     <Provider store={Store}>
       <React.StrictMode>
         <Router>
+          <PageScroll />
           <Root />
         </Router>
       </React.StrictMode>
