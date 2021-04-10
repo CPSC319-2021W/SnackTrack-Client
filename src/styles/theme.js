@@ -4,7 +4,6 @@ import {
   DARK_BLUE,
   DARK_GREY,
   HEADER_GREY,
-  INNER_LIGHT_GREY,
   LIGHT_GREY,
   MID_GREY,
   RED,
@@ -114,7 +113,6 @@ export const theme = createMuiTheme({
       root: {
         height: '32px',
         margin: 0,
-        backgroundColor: INNER_LIGHT_GREY,
         border: `1.5px solid ${LIGHT_GREY}`,
         borderRadius: '6px',
         '&$focused': {

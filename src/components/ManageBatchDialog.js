@@ -209,7 +209,7 @@ const ManageBatchDialog = (props) => {
         >
           {newSnackBatch ? null : (
             <AppButton
-              secondary
+              cancel
               disabled={isSubmitLoading}
               loading={isDeleteLoading}
               onClick={deleteSnackBatch}

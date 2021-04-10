@@ -43,7 +43,7 @@ const StockStatusBoard = ({ snacks, error }) => {
     <Card className={styles.board__container}>
       <div className={styles.header}>
         <h5 className={styles.title}>Inventory Levels</h5>
-        <Tooltip title={ showAll ? 'Show Only High Priority' : 'Show All' }>
+        <Tooltip title={ showAll ? 'Show Only High Priority Snacks' : 'Show All Snacks' }>
           <span
             className={`${styles.show__button} ${showAll ? styles.show__high : styles.show__all}`}
             onClick={handleShowAll}
