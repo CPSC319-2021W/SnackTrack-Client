@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES } from '../constants';
+import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES, INFO_LABELS } from '../constants';
 import { Dialog, Divider, Switch } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
@@ -187,6 +187,7 @@ const EditSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
+                    info={INFO_LABELS.REORDER_POINT}
                     label='Reorder Point'
                     id='reorder'
                     name='reorder'

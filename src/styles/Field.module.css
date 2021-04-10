@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, INNER_LIGHT_GREY, WHITE from colors;
+@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, INNER_LIGHT_GREY, WHITE, DARK_BLUE from colors;
 
 .input__group {
   display: flex;
@@ -60,6 +60,13 @@
 
 .input__error {
   border: 2px solid RED;
+}
+
+.label__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .label__base {

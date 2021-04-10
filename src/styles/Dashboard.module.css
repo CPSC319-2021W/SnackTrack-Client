@@ -108,7 +108,27 @@
   .tile__container {
     margin-top: 1rem;
   }
+
+  .elements__container {
+    flex-direction: column;
+  }
+
+  .section__one {
+    width: 100%;
+    margin: 0;
+  }
 }
+
+/* @media (max-width: 600px) {
+  .elements__container {
+    flex-direction: column;
+  }
+
+  .section__one {
+    width: 100%;
+    margin: 0;
+  }
+} */
 
 @media (max-width: 425px) {
   .tile {
@@ -151,12 +171,12 @@
     padding: 0 1rem;
   }
 
-  .elements__container {
+  /* .elements__container {
     flex-direction: column;
   }
 
   .section__one {
     width: 100%;
     margin: 0;
-  }
+  } */
 }

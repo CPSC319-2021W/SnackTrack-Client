@@ -9,12 +9,12 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FIELD_ERROR_MESSAGES, INFO_LABELS } from '../constants';
 import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import DatePickerField from './DatePickerField';
 import { DateTime } from 'luxon';
 import { ReactComponent as DeleteIcon } from '../assets/icons/delete.svg';
-import { FIELD_ERROR_MESSAGES } from '../constants';
 import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import TextAreaField from './TextAreaField';
@@ -191,6 +191,7 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
+                    info={INFO_LABELS.REORDER_POINT}
                     label='Reorder Point'
                     id='reorder'
                     name='reorder'

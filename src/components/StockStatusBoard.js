@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import AppButton from './AppButton';
-import { Card } from '@material-ui/core';
+import { Card, Tooltip } from '@material-ui/core';
 import { GENERIC_ERROR } from '../constants';
 import StockStatusBar from './StockStatusBar';
 import dashStyles from '../styles/Dashboard.module.css';
@@ -44,13 +43,14 @@ const StockStatusBoard = ({ snacks, error }) => {
     <Card className={styles.board__container}>
       <div className={styles.header}>
         <h5 className={styles.title}>Inventory Levels</h5>
-        <AppButton
-          primary
-          disabled={error}
-          onClick={handleShowAll}
-        >
-          { showAll ? 'Show High Priority' : 'Show All' }
-        </AppButton>
+        <Tooltip title={ showAll ? 'Show Only High Priority' : 'Show All' }>
+          <span
+            className={`${styles.show__button} ${showAll ? styles.show__high : styles.show__all}`}
+            onClick={handleShowAll}
+          >
+            { showAll ? '!' : '*' }
+          </span>
+        </Tooltip>
       </div>
       { error
         ? renderError()

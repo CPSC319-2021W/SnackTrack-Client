@@ -64,7 +64,11 @@ export const CATEGORIES_LIST = [
   }
 ];
 
-export const GENERIC_ERROR = 'Oops. Well this is embarrassing.'; 
+export const GENERIC_ERROR = 'Oops. Well this is embarrassing.';
+
+export const INFO_LABELS = {
+  REORDER_POINT: 'Minimum quantity before snack is labelled Low Stock in inventory'
+};
 
 export const NOTIFICATIONS = {
   BATCH_SUCCESS: { type: 'success', message: 'New batch added!' },
