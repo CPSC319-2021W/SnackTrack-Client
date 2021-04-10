@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import ImageUploader from './ImageUploader';
+import InfoLabel from './InfoLabel';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import TextAreaField from './TextAreaField';
 import dialogStyles from '../styles/Dialog.module.css';
@@ -196,7 +197,10 @@ const EditSnackDialog = (props) => {
                 </div>
                 <div className={styles.frame__row}>
                   <div className={styles.switch__container}>
-                    <p className={styles.text__sub}>Active Snack</p>
+                    <div className={styles.switch__label}>
+                      <p className={styles.text__sub}>Active Snack</p>
+                      <InfoLabel info={INFO_LABELS.ACTIVE_SNACK} />
+                    </div>
                     <Switch
                       disableRipple
                       checked={isSnackActivated}

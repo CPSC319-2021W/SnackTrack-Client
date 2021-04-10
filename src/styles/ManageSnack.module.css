@@ -146,7 +146,12 @@
 
 .text__sub {
   font-weight: 600;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0.6rem 0.5rem 0;
+}
+
+.switch__label {
+  display: flex;
+  flex-direction: row;
 }
 
 @media (max-width: 590px) {
