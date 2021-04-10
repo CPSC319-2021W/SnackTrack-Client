@@ -67,8 +67,8 @@ export const CATEGORIES_LIST = [
 export const GENERIC_ERROR = 'Oops. Well this is embarrassing.';
 
 export const INFO_LABELS = {
-  REORDER_POINT: 'Minimum quantity before snack is labelled Low Stock in inventory',
-  ACTIVE_SNACK: 'Hidden from Employee Module but still in inventory'
+  REORDER_POINT: 'Snack is labelled Low Stock if its inventory level falls below this point',
+  ACTIVE_SNACK: 'Snack is hidden from Employee Module when toggled off'
 };
 
 export const NOTIFICATIONS = {
