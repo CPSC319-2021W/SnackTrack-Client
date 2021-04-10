@@ -66,6 +66,7 @@ const EditSnackDialog = (props) => {
     setIsDeleteLoading(true);
     try {
       await deleteSnack(selectedSnackToEdit.snack_id);
+      onHandleApiResponse('SNACK_DELETE_SUCCESS');
     } catch (err) {
       onHandleApiResponse('ERROR');
     }

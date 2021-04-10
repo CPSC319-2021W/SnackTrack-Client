@@ -86,6 +86,7 @@ const Inventory = () => {
     try {
       const snacksResponse = await getSnacks(false);
       setSnacks(snacksResponse.snacks);
+      setError(false);
     } catch (err) {
       console.log(err);
       setError(true);

@@ -73,7 +73,7 @@ export const INFO_LABELS = {
 
 export const NOTIFICATIONS = {
   BATCH_SUCCESS: { type: 'success', message: 'New batch added!' },
-  BATCH_DELETE_SUCCESS: { type: 'success', message: 'Batch deleted.' },
+  BATCH_DELETE_SUCCESS: { type: 'success', message: 'Batch successfully deleted.' },
   ORDER_SUCCESS: { type: 'success', message: 'Snack tracked! Enjoy!' },
   PAYMENT_SUCCESS: { type: 'success', message: 'Payment submitted. Thank you!' },
   CHANGES_SUCCESS: { type: 'success', message: 'Your changes have been saved.' },
@@ -115,9 +115,10 @@ export const NOTIFICATIONS = {
   },
   ADMIN_DEMOTION_SUCCESS: {
     type: 'success',
-    message: 'You have revoked this user\'s Admin permissions.'
+    message: 'You have revoked this user\'s Admin role.'
   },
-  SNACK_SUCCESS: { type: 'success', message: 'New snack added!'}
+  SNACK_SUCCESS: { type: 'success', message: 'New snack added!' },
+  SNACK_DELETE_SUCCESS: { type: 'success', message: 'Snack successfully deleted.' }
 };
 
 export const TRANSACTION_TYPES = {
