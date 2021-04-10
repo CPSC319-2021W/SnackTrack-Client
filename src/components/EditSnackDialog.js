@@ -128,12 +128,12 @@ const EditSnackDialog = (props) => {
         .max(128, 'Must be less than 128 characters'),
       price: Yup.string()
         .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .required(FIELD_ERROR_MESSAGES.EMPTY)
-        .matches(/^\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
+        .matches(/^\d*(\.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
       reorder: Yup.string()
-        .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .min(0, 'Must be at least 0')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN)
     })
   });

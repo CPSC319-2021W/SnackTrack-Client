@@ -1,5 +1,9 @@
 import { Card, Dialog, Divider } from '@material-ui/core';
 import { React, useEffect, useState } from 'react';
+import { DateTime } from 'luxon';
+import classNames from 'classnames';
+import { useDispatch } from 'react-redux';
+
 import { addBatch, deleteBatch, editBatch } from '../services/SnacksService';
 import {
   setApiResponse,
@@ -10,14 +14,11 @@ import {
   setIsEditBatchOpen,
   setSelectedBatch
 } from '../redux/features/snacks/snacksSlice';
-
 import AppButton from './AppButton';
 import DatePickerField from './DatePickerField';
-import { DateTime } from 'luxon';
+import { FIELD_ERROR_MESSAGES } from '../constants';
 import InputField from './InputField';
-import classNames from 'classnames';
 import styles from '../styles/Dialog.module.css';
-import { useDispatch } from 'react-redux';
 
 const ManageBatchDialog = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const ManageBatchDialog = (props) => {
   const today = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 });
 
   const [oldQuantity, setOldQuantity] = useState(0);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState('');
   const [date, setDate] = useState(today);
   const [errors, setErrors] = useState({
     quantity: null,
@@ -53,22 +54,28 @@ const ManageBatchDialog = (props) => {
   const onApiResponse = (response) => dispatch(setApiResponse(response));
 
   const handleChangeQuantity = (event) => {
-    let input = Number(event.target.value);
-    if (!isNaN(input)) {
-      if (input >= 0) {
-        setQuantity(input);
+    let input = event.target.value;
+    setQuantity(input);
+    if (isNaN(input) || input.indexOf(' ') !== -1 || input.indexOf('.') !== -1) {
+      setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.NAN }));
+    } else if (input === '') {
+      setErrors((prevState) => ({ ...prevState, quantity: null }));
+    } else {
+      if (Number(input) <= 0 || !Number.isInteger(Number(input))) {
+        setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.NAN }));
+      } else if (Number(input) > 999999) {
+        setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.OVER_SIX }));
+      } else {
         setErrors((prevState) => ({ ...prevState, quantity: null }));
       }
-    } else if (!quantity && isNaN(input)) {
-      setErrors((prevState) => ({ ...prevState, quantity: 'Oops - gotta be a number!' }));
     }
   };
 
   const handleChangeDate = (date) => {
     if (date && date.invalid) {
-      setErrors((prevState) => ({ ...prevState, date: 'Invalid date format.' }));
+      setErrors((prevState) => ({ ...prevState, date: FIELD_ERROR_MESSAGES.DATE_FORMAT }));
     } else if (date && date < today) {
-      setErrors((prevState) => ({ ...prevState, date: 'Expiry must be after today.' }));
+      setErrors((prevState) => ({ ...prevState, date: FIELD_ERROR_MESSAGES.DATE_RANGE }));
     } else {
       setErrors((prevState) => ({ ...prevState, date: null }));
       setDate(date);
@@ -79,11 +86,12 @@ const ManageBatchDialog = (props) => {
     if (event.key === 'Enter' || event.type === 'click') {
       setIsSubmitLoading(true);
       try {
+        const quant = Number(quantity);
         const dateString = date ? date.toUTC().toISO() : null;
         const newBatch = await func({
           snack_id,
           snack_batch_id,
-          quantity,
+          quantity: quant,
           expiration_dtm: dateString
         });
         onApiResponse(apiResponse);
@@ -118,7 +126,7 @@ const ManageBatchDialog = (props) => {
   useEffect(() => {
     if (newSnackBatch) {
       setDate(today);
-      setQuantity(0);
+      setQuantity('');
     } else {
       if (batch.expiration_dtm) {
         setDate(DateTime.fromISO(batch.expiration_dtm));

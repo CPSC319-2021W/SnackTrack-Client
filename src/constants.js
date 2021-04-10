@@ -127,9 +127,12 @@ export const TRANSACTION_TYPES = {
 };
 
 export const FIELD_ERROR_MESSAGES = {
-  PRICE: 'Enter a valid price!',
-  NAN: 'Gotta be a number!',
-  EMPTY: "Can't be blank!"
+  PRICE: 'Gotta be a valid price!',
+  NAN: 'Gotta be a valid quantity!',
+  OVER_SIX: 'Gotta be less than 6 digits!',
+  EMPTY: 'Can\'t be blank!',
+  DATE_FORMAT: 'Gotta be a valid date!',
+  DATE_RANGE: 'Can\'t be before today!'
 };
 
 export const GREETING = {
