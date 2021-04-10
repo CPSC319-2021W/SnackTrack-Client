@@ -91,7 +91,7 @@ export const NOTIFICATIONS = {
   },
   CLAIM_SUCCESS: {
     type: 'success',
-    message: 'Thanks! Orders that were approved will appear in your transaction history.'
+    message: 'Thanks! Orders that were claimed will appear in your transactions.'
   },
   ERROR: {
     type: 'error',
@@ -99,7 +99,7 @@ export const NOTIFICATIONS = {
   },
   CLAIM_ERROR: {
     type: 'error',
-    message: 'Please approve or decline pending orders before making new purchases.'
+    message: 'Please claim or decline pending orders before grabbing more snacks.'
   },
   USER_DELETE_SUCCESS: {
     type: 'success',
