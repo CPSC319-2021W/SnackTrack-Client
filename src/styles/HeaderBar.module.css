@@ -152,6 +152,7 @@
 .greeting {
   color: BASE_RED;
   font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .button_logout {
@@ -243,5 +244,9 @@
   .label__text {
     text-align: left;
     line-height: 1rem;
+  }
+
+  .greeting {
+    display: none;
   }
 }
