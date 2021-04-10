@@ -172,6 +172,10 @@
     width: 100%;
     flex-direction: column;
   }
+
+  .switch__container {
+    align-items: center;
+  }
   
   .frame__column {
     width: 100%;
