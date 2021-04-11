@@ -113,6 +113,7 @@ const EditSnackDialog = (props) => {
       };
       try {
         const snack = await editSnack(snackRequest);
+        snack.quantity = selectedSnackToEdit.quantity;
         onEditSnack(snack);
         onHandleApiResponse('CHANGES_SUCCESS');
       } catch (err) {
@@ -229,7 +230,7 @@ const EditSnackDialog = (props) => {
                 primary
                 type='submit'
                 loading={isSubmitLoading}
-                disabled={!addForm.isValid || !category}
+                disabled={!addForm.isValid || !category || isDeleteLoading}
                 onClick={addForm.handleSubmit}
               >
                 Save Changes
