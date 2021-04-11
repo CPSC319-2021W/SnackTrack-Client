@@ -108,7 +108,8 @@ const Inventory = () => {
     dispatch(setSnacks(newSnacks));
   };
 
-  const resetSnacks = async () => {
+  useEffect(async () => {
+    handleCloseToastNotification();
     try {
       const { snacks } = await getSnacks(false);
       const sortedSnacks = snacks.sort(
@@ -119,11 +120,6 @@ const Inventory = () => {
       console.log(err);
       setError(true);
     }
-  };
-
-  useEffect(async () => {
-    handleCloseToastNotification();
-    resetSnacks();
   }, []);
 
   useEffect(() => {
