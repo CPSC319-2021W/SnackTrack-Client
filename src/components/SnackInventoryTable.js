@@ -46,6 +46,9 @@ const SnackInventoryTable = (props) => {
     data,
     error,
     rowsPerPage,
+    onAddSnack,
+    onEditSnack,
+    onDeleteSnack,
     onAddBatchOrEdit,
     onDeleteBatch,
     onChangePage
@@ -109,7 +112,7 @@ const SnackInventoryTable = (props) => {
     await handleGetSnackBatch(snackId);
   };
 
-  const onEditSnack = (snack) => {
+  const onSelectSnackToEdit = (snack) => {
     setSnackToEdit(snack);
     setEditSnackOpen();
   };
@@ -192,7 +195,7 @@ const SnackInventoryTable = (props) => {
           small
           onClick={(e) => {
             e.stopPropagation();
-            onEditSnack(snack);
+            onSelectSnackToEdit(snack);
           }}
         >
           Edit Snack
@@ -368,10 +371,13 @@ const SnackInventoryTable = (props) => {
       </Table>
       <AddSnackDialog
         open={isAddSnackOpen}
+        onAddSnack={onAddSnack}
         onHandleApiResponse={handleApiResponse}
       />
       <EditSnackDialog
         open={isEditSnackOpen}
+        onEditSnack={onEditSnack}
+        onDeleteSnack={onDeleteSnack}
         onHandleApiResponse={handleApiResponse}
       />
       <ManageBatchDialog

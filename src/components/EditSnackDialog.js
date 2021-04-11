@@ -25,7 +25,7 @@ const options = CATEGORIES_LIST.map((category) => ({
 
 const EditSnackDialog = (props) => {
   const dispatch = useDispatch();
-  const { open, onHandleApiResponse } = props;
+  const { open, onEditSnack, onDeleteSnack, onHandleApiResponse } = props;
   const [category, setCategory] = useState('');
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isDeleteLoading, setIsDeleteLoading] = useState(false);
@@ -66,6 +66,7 @@ const EditSnackDialog = (props) => {
     setIsDeleteLoading(true);
     try {
       await deleteSnack(selectedSnackToEdit.snack_id);
+      onDeleteSnack(selectedSnackToEdit.snack_id);
       onHandleApiResponse('SNACK_DELETE_SUCCESS');
     } catch (err) {
       onHandleApiResponse('ERROR');
@@ -111,7 +112,9 @@ const EditSnackDialog = (props) => {
         order_threshold: values.reorder === '' ? null : values.reorder
       };
       try {
-        await editSnack(snackRequest);
+        const snack = await editSnack(snackRequest);
+        onEditSnack(snack);
+        onHandleApiResponse('CHANGES_SUCCESS');
       } catch (err) {
         onHandleApiResponse('ERROR');
       }
