@@ -39,6 +39,8 @@ const Dashboard = () => {
   );
   const [snacks, setSnacks] = useState([]);
   const [outOfStockSnacks, setOutOfStockSnacks] = useState([]);
+  const [fullyStaleSnacks, setFullyStaleSnacks] = useState([]);
+  const [lowStockSnacks, setLowStockSnacks] = useState([]);
 
   const [isConfirmationOpen, setConfirmationOpen] = useState(false);
   const [isConfirmationLoading, setConfirmationLoading] = useState(false);
@@ -113,10 +115,18 @@ const Dashboard = () => {
         };
       });
       const sortedSnacks = sortSnackInventory(mappedSnacks);
-      const outOfStock = snacks.filter((snack) => snack.quantity === 0);
-
+      const outOfStock = sortedSnacks.filter((snack) => snack.quantity === 0);
+      const fullyStale = sortedSnacks.filter(
+        (snack) => snack.quantity !== 0 && snack.quantity - snack.expired_quantity === 0);
+      const lowStock = sortedSnacks.filter(
+        (snack) => snack.quantity !== 0
+          && snack.quantity !== snack.expired_quantity
+          && (snack.quantity - snack.expired_quantity < (snack.order_threshold || DEFAULT_ORDER_THRESHOLD)));
+      
       setSnacks(sortedSnacks);
       setOutOfStockSnacks(outOfStock);
+      setFullyStaleSnacks(fullyStale);
+      setLowStockSnacks(lowStock);
       setSnacksError(false);
     } catch (err) {
       console.log(err);
@@ -151,24 +161,19 @@ const Dashboard = () => {
         <div className={dashStyles.tile__container}>
           <div className={`${dashStyles.tile} ${dashStyles.tile__left}`}>
             <h5 className={dashStyles.out__tile}>{outOfStockSnacks.length} </h5>
-            <p>Out of Stock Snacks</p>
+            <p>{`Out of Stock Snack${fullyStaleSnacks.length === 1 ? '' : 's'}`}</p>
           </div>
           <div className={`${dashStyles.tile} ${dashStyles.tile__mid}`}>
             <h5 className={dashStyles.stale__tile}>
-              { snacks.filter((snack) => snack.quantity !== 0
-                && snack.quantity - snack.expired_quantity === 0).length
-              }
+              { fullyStaleSnacks.length }
             </h5>
-            <p>Fully Stale Snacks</p>
+            <p>{`Fully Stale Snack${fullyStaleSnacks.length === 1 ? '' : 's'}`}</p>
           </div>
           <div className={`${dashStyles.tile} ${dashStyles.tile__right}`}>
             <h5 className={dashStyles.low__tile}>
-              { snacks.filter((snack) => snack.quantity !== 0
-                && snack.quantity !== snack.expired_quantity
-                && (snack.quantity - snack.expired_quantity < (snack.order_threshold || DEFAULT_ORDER_THRESHOLD))).length
-              }
+              { lowStockSnacks.length }
             </h5>
-            <p>Low Stock Snacks</p>
+            <p>{`Low Snack${lowStockSnacks.length === 1 ? '' : 's'}`}</p>
           </div>
         </div>
       </div>

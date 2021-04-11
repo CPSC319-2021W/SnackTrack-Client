@@ -9,12 +9,12 @@ import {
 } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FIELD_ERROR_MESSAGES, INFO_LABELS } from '../constants';
 import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import DatePickerField from './DatePickerField';
 import { DateTime } from 'luxon';
 import { ReactComponent as DeleteIcon } from '../assets/icons/delete.svg';
-import { FIELD_ERROR_MESSAGES } from '../constants';
 import ImageUploader from './ImageUploader';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import TextAreaField from './TextAreaField';
@@ -68,9 +68,9 @@ const AddSnackDialog = (props) => {
 
   const handleChangeDate = (date) => {
     if (date && date.invalid) {
-      setDateError('Invalid date format.');
+      setDateError(FIELD_ERROR_MESSAGES.DATE_FORMAT);
     } else if (date && date < today) {
-      setDateError('Expiry must be after today.');
+      setDateError(FIELD_ERROR_MESSAGES.DATE_RANGE);
     } else {
       setDateError('');
       setExpiryDate(date);
@@ -127,18 +127,18 @@ const AddSnackDialog = (props) => {
 
       price: Yup.string()
         .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .required(FIELD_ERROR_MESSAGES.EMPTY)
-        .matches(/^\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
+        .matches(/^\d*(\.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
 
       quantity: Yup.string()
-        .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .min(0, 'Must be at least 0')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN),
 
       reorder: Yup.string()
-        .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .min(0, 'Must be at least 0')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN)
     })
   });
@@ -191,6 +191,7 @@ const AddSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
+                    info={INFO_LABELS.REORDER_POINT}
                     label='Reorder Point'
                     id='reorder'
                     name='reorder'

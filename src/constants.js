@@ -64,11 +64,16 @@ export const CATEGORIES_LIST = [
   }
 ];
 
-export const GENERIC_ERROR = 'Oops. Well this is embarrassing.'; 
+export const GENERIC_ERROR = 'Oops. Well this is embarrassing.';
+
+export const INFO_LABELS = {
+  REORDER_POINT: 'Snack is labelled Low Stock if its inventory level falls below this point',
+  ACTIVE_SNACK: 'Snack is hidden from Employee Module when toggled off'
+};
 
 export const NOTIFICATIONS = {
   BATCH_SUCCESS: { type: 'success', message: 'New batch added!' },
-  BATCH_DELETE_SUCCESS: { type: 'success', message: 'Batch deleted.' },
+  BATCH_DELETE_SUCCESS: { type: 'success', message: 'Batch successfully deleted.' },
   ORDER_SUCCESS: { type: 'success', message: 'Snack tracked! Enjoy!' },
   PAYMENT_SUCCESS: { type: 'success', message: 'Payment submitted. Thank you!' },
   CHANGES_SUCCESS: { type: 'success', message: 'Your changes have been saved.' },
@@ -86,7 +91,7 @@ export const NOTIFICATIONS = {
   },
   CLAIM_SUCCESS: {
     type: 'success',
-    message: 'Thanks! Orders that were approved will appear in your transaction history.'
+    message: 'Thanks! Orders that were claimed will appear in your transactions.'
   },
   ERROR: {
     type: 'error',
@@ -94,7 +99,7 @@ export const NOTIFICATIONS = {
   },
   CLAIM_ERROR: {
     type: 'error',
-    message: 'Please approve or decline pending orders before making new purchases.'
+    message: 'Please claim or decline pending orders before grabbing more snacks.'
   },
   USER_DELETE_SUCCESS: {
     type: 'success',
@@ -110,9 +115,10 @@ export const NOTIFICATIONS = {
   },
   ADMIN_DEMOTION_SUCCESS: {
     type: 'success',
-    message: 'You have revoked this user\'s Admin permissions.'
+    message: 'You have revoked this user\'s Admin role.'
   },
-  SNACK_SUCCESS: { type: 'success', message: 'New snack added!'}
+  SNACK_SUCCESS: { type: 'success', message: 'New snack added!' },
+  SNACK_DELETE_SUCCESS: { type: 'success', message: 'Snack successfully deleted.' }
 };
 
 export const TRANSACTION_TYPES = {
@@ -122,9 +128,12 @@ export const TRANSACTION_TYPES = {
 };
 
 export const FIELD_ERROR_MESSAGES = {
-  PRICE: 'Enter a valid price!',
-  NAN: 'Gotta be a number!',
-  EMPTY: "Can't be blank!"
+  PRICE: 'Gotta be a valid price!',
+  NAN: 'Gotta be a valid quantity!',
+  OVER_SIX: 'Gotta be less than 6 digits!',
+  EMPTY: 'Can\'t be blank!',
+  DATE_FORMAT: 'Gotta be a valid date!',
+  DATE_RANGE: 'Can\'t be before today!'
 };
 
 export const GREETING = {

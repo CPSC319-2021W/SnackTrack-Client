@@ -34,6 +34,11 @@ const StockStatusBar = ({ snack }) => {
       rightStock =  Math.floor(((quantity - reorderPoint) / quantity) * 100);
     }
 
+    let totalWidth = leftStock + midStock + rightStock;
+    if (totalWidth !== 100) {
+      leftStock += 100 - totalWidth;
+    }
+
     return (
       <Fragment>
         <div

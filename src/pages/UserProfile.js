@@ -145,6 +145,7 @@ const UserProfile = () => {
       try {
         const orderResponse = await getUserOrders(id, 0, rowsPerPage);
         setOrdersResponse(orderResponse);
+        setOrdersError(false);
       } catch (err) {
         console.log(err);
         setOrdersError(true);
@@ -152,6 +153,7 @@ const UserProfile = () => {
       try {
         const paymentResponse = await getUserPayments(id, 0, rowsPerPage);
         setPaymentsResponse(paymentResponse);
+        setPaymentsError(false);
       } catch (err) {
         console.log(err);
         setPaymentsError(true);

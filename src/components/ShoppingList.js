@@ -98,7 +98,7 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
   const renderList = () => {
     return shoppingList.length > 0
       ? (
-        <div className={suggestionStyles.bean__container}>
+        <div ref={componentToSave} className={suggestionStyles.bean__container}>
           {shoppingList.map((item, i) => {
             return (
               <ShoppingListItem
@@ -140,7 +140,7 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
   }, [suggestions]);
 
   return (
-    <Card ref={componentToSave} className={suggestionStyles.card__base}>
+    <Card className={suggestionStyles.card__base}>
       <div className={suggestionStyles.header}>
         <h5 className={suggestionStyles.title}>Shopping List</h5>
         <AppButton

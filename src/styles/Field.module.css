@@ -1,5 +1,5 @@
 @value colors: './Colors.module.css';
-@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, INNER_LIGHT_GREY, WHITE from colors;
+@value DARK_GREY, LIGHT_GREY, RED, BASE_BLUE, INNER_LIGHT_GREY, WHITE, DARK_BLUE from colors;
 
 .input__group {
   display: flex;
@@ -27,7 +27,6 @@
   color: DARK_GREY;
   font-size: 14px;
   border: 1.5px solid LIGHT_GREY;
-  /* background-color: INNER_LIGHT_GREY; */
   border-radius: 6px;
   font-size: 0.75rem;
   padding: 0.25rem 0rem;
@@ -38,7 +37,6 @@
   color: DARK_GREY;
   font-size: 14px;
   border: 1.5px solid LIGHT_GREY;
-  /* background-color: INNER_LIGHT_GREY; */
   border-radius: 6px;
   font-size: 0.75rem;
   padding: 0.4rem 0rem;
@@ -60,6 +58,13 @@
 
 .input__error {
   border: 2px solid RED;
+}
+
+.label__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .label__base {

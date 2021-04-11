@@ -36,6 +36,7 @@
 .bar__container {
   text-align: left;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .snack__label {
@@ -46,7 +47,7 @@
 .bar__base {
   margin-top: 0.3rem;
   height: 24px;
-  width: 336px;
+  width: 100%;
   color: WHITE;
   font-weight: 600;
   text-align: center;
@@ -134,58 +135,42 @@
   border-radius: 6px;
 }
 
-@media (max-width: 1279px) {
-  .bar__base {
-    width: 238px;
-  }
+.show__button {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0.25rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2rem;
+  transition: 0.1s;
+}
+
+.show__high {
+  color: RED;
+  background-color: #fdd9d7;
+  border: 3px solid RED;
+}
+
+.show__all {
+  color: GREEN;
+  background-color: #AADAAC;
+  border: 3px solid GREEN;
+  font-size: 1.8rem;
+  line-height: 1.8rem;
 }
 
 @media (max-width: 960px) {
   .board__container {
     width: 50%;
   }
-
-  .bar__base {
-    width: 234px;
-  }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 768px) {
   .board__container {
     width: 100%;
-  }
-
-  .bar__base {
-    width: 358px;
-  }
-}
-
-@media (max-width: 414px) {
-  .bar__base {
-    width: 348px;
-  }
-}
-
-@media (max-width: 411px) {
-  .bar__base {
-    width: 346px;
-  }
-}
-
-@media (max-width: 375px) {
-  .bar__base {
-    width: 310px;
-  }
-}
-
-@media (max-width: 360px) {
-  .bar__base {
-    width: 294px;
-  }
-}
-
-@media (max-width: 320px) {
-  .bar__base {
-    width: 254px;
   }
 }

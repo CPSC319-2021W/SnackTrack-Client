@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES } from '../constants';
+import { CATEGORIES_LIST, FIELD_ERROR_MESSAGES, INFO_LABELS } from '../constants';
 import { Dialog, Divider, Switch } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppButton from './AppButton';
 import CategorySelect from './ManageSnack/CategorySelect';
 import ImageUploader from './ImageUploader';
+import InfoLabel from './InfoLabel';
 import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import TextAreaField from './TextAreaField';
 import dialogStyles from '../styles/Dialog.module.css';
@@ -65,6 +66,7 @@ const EditSnackDialog = (props) => {
     setIsDeleteLoading(true);
     try {
       await deleteSnack(selectedSnackToEdit.snack_id);
+      onHandleApiResponse('SNACK_DELETE_SUCCESS');
     } catch (err) {
       onHandleApiResponse('ERROR');
     }
@@ -127,12 +129,12 @@ const EditSnackDialog = (props) => {
         .max(128, 'Must be less than 128 characters'),
       price: Yup.string()
         .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .required(FIELD_ERROR_MESSAGES.EMPTY)
-        .matches(/^\d*(.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
+        .matches(/^\d*(\.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
       reorder: Yup.string()
-        .min(0, 'Must be at least $0')
-        .max(6, 'Must be less than 6 digits')
+        .min(0, 'Must be at least 0')
+        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
         .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN)
     })
   });
@@ -187,6 +189,7 @@ const EditSnackDialog = (props) => {
                     type='text'
                   />
                   <InputLiveFeedback
+                    info={INFO_LABELS.REORDER_POINT}
                     label='Reorder Point'
                     id='reorder'
                     name='reorder'
@@ -195,7 +198,10 @@ const EditSnackDialog = (props) => {
                 </div>
                 <div className={styles.frame__row}>
                   <div className={styles.switch__container}>
-                    <p className={styles.text__sub}>Active Snack</p>
+                    <div className={styles.switch__label}>
+                      <p className={styles.text__sub}>Active Snack</p>
+                      <InfoLabel info={INFO_LABELS.ACTIVE_SNACK} />
+                    </div>
                     <Switch
                       disableRipple
                       checked={isSnackActivated}
