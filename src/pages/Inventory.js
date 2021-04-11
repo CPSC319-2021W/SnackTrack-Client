@@ -23,7 +23,6 @@ const Inventory = () => {
   const rowsPerPage = 10;
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
-  // const [snacks, setSnacks] = useState(null);
   const [paginatedSnacks, setPaginatedSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
@@ -50,7 +49,7 @@ const Inventory = () => {
     setPaginatedSnacks(newSnackPage);
   };
 
-  const handleBatchAddOrEdit = (batch, oldQuantity) => {
+  const handleBatchAddOrEdit = (batch, oldQuantity, date) => {
     const { snack_id, snack_batch_id, quantity } = batch;
     const newSnacks = [].concat(snacks);
     const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
@@ -67,6 +66,7 @@ const Inventory = () => {
       );
       const newBatch = { ...snackBatches[ind] };
       newBatch.quantity = newBatches[ind].quantity + quantity - oldQuantity;
+      newBatch.expiration_dtm = date;
       newBatches[ind] = newBatch;
       setBatches(newBatches);
     }
