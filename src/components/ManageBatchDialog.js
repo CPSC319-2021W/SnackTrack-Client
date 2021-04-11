@@ -96,7 +96,7 @@ const ManageBatchDialog = (props) => {
         });
         onApiResponse(apiResponse);
         openToastNotification(true);
-        onAddBatchOrEdit(newBatch, oldQuantity);
+        onAddBatchOrEdit(newBatch, oldQuantity, dateString);
       } catch (err) {
         console.log(err);
         onApiResponse('ERROR');
