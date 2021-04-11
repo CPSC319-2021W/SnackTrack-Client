@@ -1,11 +1,12 @@
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { DateTime as dt } from 'luxon';
 
+import { setSnackBatches, setSnacks } from '../redux/features/snacks/snacksSlice';
 import { NOTIFICATIONS } from '../constants';
 import SnackInventoryTable from '../components/SnackInventoryTable';
 import ToastNotification from '../components/ToastNotification';
 import { getSnacks } from '../services/SnacksService';
-import { setSnackBatches } from '../redux/features/snacks/snacksSlice';
 import { setToastNotificationOpen } from '../redux/features/notifications/notificationsSlice';
 import styles from '../styles/Page.module.css';
 import { toPaginatedSnacks } from '../helpers/AdminHelpers';
@@ -22,12 +23,12 @@ const Inventory = () => {
   const rowsPerPage = 10;
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const [snacks, setSnacks] = useState(null);
+  // const [snacks, setSnacks] = useState(null);
   const [paginatedSnacks, setPaginatedSnacks] = useState(INITIAL_SNACKS);
   const { isToastNotificationOpen, apiResponse } = useSelector(
     (state) => state.notificationsReducer
   );
-  const { snackBatches } = useSelector((state) => state.snacksReducer);
+  const { snackBatches, snacks } = useSelector((state) => state.snacksReducer);
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
 
@@ -53,8 +54,10 @@ const Inventory = () => {
     const { snack_id, snack_batch_id, quantity } = batch;
     const newSnacks = [].concat(snacks);
     const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
-    newSnacks[index].quantity = newSnacks[index].quantity + quantity - oldQuantity;
-    setSnacks(newSnacks);
+    const oldSnack = newSnacks.find((snack) => snack.snack_id === snack_id);
+    const newSnack = {...oldSnack, quantity: oldSnack.quantity + quantity - oldQuantity};
+    newSnacks[index] = newSnack;
+    dispatch(setSnacks(newSnacks));
     if (oldQuantity === 0) {
       setBatches(snackBatches.concat([batch]));
     } else {
@@ -73,19 +76,45 @@ const Inventory = () => {
     const { snack_id, snack_batch_id, quantity } = batch;
     const newSnacks = [].concat(snacks);
     const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
-    newSnacks[index].quantity = newSnacks[index].quantity - quantity;
-    setSnacks(newSnacks);
+    const oldSnack = newSnacks.find((snack) => snack.snack_id === snack_id);
+    const newSnack = {...oldSnack, quantity: oldSnack.quantity - quantity};
+    newSnacks[index] = newSnack;
+    dispatch(setSnacks(newSnacks));
     const newBatches = [].concat(snackBatches);
     const ind = newBatches.findIndex((batch) => batch.snack_batch_id === snack_batch_id);
     newBatches.splice(ind, 1);
     setBatches(newBatches);
   };
 
+  const handleAddSnack = (snack) => {
+    const newSnacks = [].concat(snacks);
+    newSnacks.unshift(snack);
+    setPaginatedSnacks(INITIAL_SNACKS);
+    dispatch(setSnacks(newSnacks));
+  };
+
+  const handleEditSnack = (snack) => {
+    const { snack_id } = snack;
+    const newSnacks = [].concat(snacks);
+    const index = newSnacks.findIndex((snack) => snack.snack_id === snack_id);
+    newSnacks[index] = snack;
+    dispatch(setSnacks(newSnacks));
+  };
+
+  const handleDeleteSnack = (snackId) => {
+    const newSnacks = [].concat(snacks);
+    const index = newSnacks.findIndex((snack) => snack.snack_id === snackId);
+    newSnacks.splice(index, 1);
+    dispatch(setSnacks(newSnacks));
+  };
+
   useEffect(async () => {
     handleCloseToastNotification();
     try {
-      const snacksResponse = await getSnacks(false);
-      setSnacks(snacksResponse.snacks);
+      const { snacks } = await getSnacks(false);
+      const sortedSnacks = snacks.sort(
+        (a, b) => dt.fromISO(b.last_updated_dtm) - dt.fromISO(a.last_updated_dtm));
+      dispatch(setSnacks(sortedSnacks));
       setError(false);
     } catch (err) {
       console.log(err);
@@ -118,6 +147,9 @@ const Inventory = () => {
         data={paginatedSnacks}
         error={error}
         rowsPerPage={rowsPerPage}
+        onAddSnack={handleAddSnack}
+        onEditSnack={handleEditSnack}
+        onDeleteSnack={handleDeleteSnack}
         onAddBatchOrEdit={handleBatchAddOrEdit}
         onDeleteBatch={handleBatchDelete}
         onChangePage={handleChangePage}

@@ -124,6 +124,9 @@ const snacksSlice = createSlice({
     },
     setPopularSnacks: (state, action) => {
       state.popularSnacks = action.payload;
+    },
+    setSnacks: (state, action) => {
+      state.snacks = action.payload;
     }
   },
   extraReducers: {
@@ -163,7 +166,8 @@ export const {
   setSuggestionStateFalse,
   setSuggestionState,
   clearActiveStates,
-  setPopularSnacks
+  setPopularSnacks,
+  setSnacks
 } = snacksSlice.actions;
 
 export default snacksSlice.reducer;
