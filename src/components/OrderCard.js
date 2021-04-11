@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
+import { isCancelled, isPaid, isPaymentPending } from '../helpers/OrdersHelpers';
 
+import AppButton from './AppButton';
 import { Card } from '@material-ui/core';
 import classNames from 'classnames';
 import { DateTime as dt } from 'luxon';
-
-import { isCancelled, isPaid, isPaymentPending } from '../helpers/OrdersHelpers';
-import AppButton from './AppButton';
 import styles from '../styles/TransactionsCard.module.css';
 
 const OrderCard = (props) => {
@@ -21,6 +20,10 @@ const OrderCard = (props) => {
 
   const renderDate = () => {
     return dt.fromISO(transaction_dtm).toLocaleString(dt.DATE_MED_WITH_WEEKDAY);
+  };
+
+  const isWithinCancelTime = (transactionDTM) => {
+    return dt.fromISO(transactionDTM).plus({ hours: 8 }) > dt.now();
   };
 
   const renderStatus = (type) => {
@@ -48,10 +51,13 @@ const OrderCard = (props) => {
       );
     } else {
       return (
-        <span className={classNames({
-          [type ? styles.mobile__status__bar : styles.status__bar]: true,
-          [styles.status__orange]: true
-        })}>UNPAID
+        <span
+          className={classNames({
+            [type ? styles.mobile__status__bar : styles.status__bar]: true,
+            [styles.status__orange]: true
+          })}
+        >
+          UNPAID
         </span>
       );
     }
@@ -63,69 +69,56 @@ const OrderCard = (props) => {
   };
 
   const renderCancelButton = () => {
-    return (
-      isPaymentPending(payment_id, transaction_type_id)
-        ? (
-          <AppButton
-            secondary
-            small
-            onClick={() => onCancel(order)}
-          >
-            Cancel
-          </AppButton>
-        )
-        : null
-    );
+    return isPaymentPending(payment_id, transaction_type_id) &&
+      isWithinCancelTime(transaction_dtm) ? (
+        <AppButton secondary small onClick={() => onCancel(order)}>
+          Cancel
+        </AppButton>
+      ) : null;
   };
 
   return (
     <Fragment>
       <Card variant='outlined' className={styles.card__base}>
         <div className={styles.column__field}>
-          <p className={styles.column__text}>{ renderDate() }</p>
+          <p className={styles.column__text}>{renderDate()}</p>
         </div>
         <div className={styles.column__field}>
-          <p className={styles.column__text}>{ snack_name }</p>
+          <p className={styles.column__text}>{snack_name}</p>
         </div>
         <div className={styles.column__field__small}>
-          <p className={styles.column__text}>{ quantity }</p>
+          <p className={styles.column__text}>{quantity}</p>
         </div>
         <div className={styles.column__field__small}>
-          <p className={styles.column__text}>{ renderAmount() }</p>
+          <p className={styles.column__text}>{renderAmount()}</p>
         </div>
-        <div className={styles.column__field__small}>
-          { renderStatus() }
-        </div>
-        <div className={styles.column__field__small}>
-          { renderCancelButton() }
-        </div>
+        <div className={styles.column__field__small}>{renderStatus()}</div>
+        <div className={styles.column__field__small}>{renderCancelButton()}</div>
       </Card>
       <Card variant='outlined' className={styles.mobile__base}>
         <div className={styles.column__container__left}>
           <div>
-            <p className={classNames({
-              [styles.column__text__mobile]: true,
-              [styles.column__text__title]: true
-            })}>
-              { snack_name }
+            <p
+              className={classNames({
+                [styles.column__text__mobile]: true,
+                [styles.column__text__title]: true
+              })}
+            >
+              {snack_name}
             </p>
           </div>
           <div>
-            <p className={styles.column__text__mobile}>{ renderDate() }</p>
+            <p className={styles.column__text__mobile}>{renderDate()}</p>
           </div>
           <div>
             <p className={styles.column__text__mobile}>
-              { quantity } { quantity > 1 ? 'items' : 'item' } • { renderAmount() }
+              {quantity} {quantity > 1 ? 'items' : 'item'} • {renderAmount()}
             </p>
           </div>
         </div>
         <div className={styles.column__container__right}>
-          <div className={styles.status__container}>
-            { renderStatus('mobile') }
-          </div>
-          <div>
-            { renderCancelButton() }
-          </div>
+          <div className={styles.status__container}>{renderStatus('mobile')}</div>
+          <div>{renderCancelButton()}</div>
         </div>
       </Card>
     </Fragment>
