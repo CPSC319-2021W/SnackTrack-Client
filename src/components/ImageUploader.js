@@ -1,4 +1,8 @@
 import { React, useRef, useState } from 'react';
+import {
+  setApiResponse,
+  setToastNotificationOpen
+} from '../redux/features/notifications/notificationsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from '../components/AppButton';
@@ -15,6 +19,10 @@ const ImageUploader = (props) => {
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
+  const openToastNotification = () => dispatch(setToastNotificationOpen(true));
+
+  const setErrorMessage = () => dispatch(setApiResponse('INCORRECT_FILE_TYPE'));
+
   const setImageUploadData = (imageUploadData) => {
     dispatch(setSnackImageUploadData(imageUploadData));
   };
@@ -23,6 +31,12 @@ const ImageUploader = (props) => {
     setIsUploading(true);
     const [file] = e.target.files;
     if (file) {
+      if (file.type.substring(0, 6) !== 'image/') {
+        setErrorMessage();
+        setIsUploading(false);
+        openToastNotification();
+        return;
+      }
       const reader = new FileReader();
       const { current } = uploadedImage;
       current.file = file;
@@ -55,7 +69,11 @@ const ImageUploader = (props) => {
         className={styles.imageUploadGreyBox}
         onClick={() => imageUploader.current.click()}
       >
-        <img ref={uploadedImage} src={src ? src : imagePlaceholder} className={styles.imageUploadBox} />
+        <img
+          ref={uploadedImage}
+          src={src ? src : imagePlaceholder}
+          className={styles.imageUploadBox}
+        />
       </div>
       <input
         ref={imageUploader}
