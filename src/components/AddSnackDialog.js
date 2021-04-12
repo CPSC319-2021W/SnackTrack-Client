@@ -82,7 +82,6 @@ const AddSnackDialog = (props) => {
     setExpiryDate(null);
     addForm.resetForm();
     setIsBatchDetailsOpen(false);
-    dispatch(setSnackImageUploadData(null));
   }, [isAddSnackOpen]);
 
   const addForm = useFormik({
@@ -114,6 +113,7 @@ const AddSnackDialog = (props) => {
         onHandleApiResponse('ERROR');
       }
       actions.resetForm({ values: initialState });
+      dispatch(setSnackImageUploadData(null));
       setIsSubmitLoading(false);
       closeDialog();
     },

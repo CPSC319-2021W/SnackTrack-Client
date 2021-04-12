@@ -5,6 +5,7 @@ import { Dialog, Divider, Switch } from '@material-ui/core';
 import { Form, FormikProvider, useFormik } from 'formik';
 import { React, useEffect, useState } from 'react';
 import { deleteSnack, editSnack } from '../services/SnacksService';
+import { setIsEditSnackOpen, setSnackImageUploadData } from '../redux/features/snacks/snacksSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 import AppButton from './AppButton';
@@ -15,7 +16,6 @@ import InputLiveFeedback from './ManageSnack/InputLiveFeedback';
 import TextAreaField from './TextAreaField';
 import dialogStyles from '../styles/Dialog.module.css';
 import { saveImage } from '../services/ImagesService';
-import { setIsEditSnackOpen } from '../redux/features/snacks/snacksSlice';
 import styles from '../styles/ManageSnack.module.css';
 
 const options = CATEGORIES_LIST.map((category) => ({
@@ -120,6 +120,7 @@ const EditSnackDialog = (props) => {
         onHandleApiResponse('ERROR');
       }
       actions.resetForm({ values: blankState });
+      dispatch(setSnackImageUploadData(null));
       setIsSubmitLoading(false);
       closeDialog();
     },
