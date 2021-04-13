@@ -29,19 +29,19 @@ const ImageUploader = (props) => {
 
   const handleImageUpload = async (e) => {
     setIsUploading(true);
-    const [file] = e.target.files;
-    if (file) {
-      if (file.type.substring(0, 6) !== 'image/') {
-        setErrorMessage();
-        setIsUploading(false);
-        openToastNotification();
-        return;
-      }
-      const reader = new FileReader();
-      const { current } = uploadedImage;
-      current.file = file;
-      reader.onload = async () => {
-        try {
+    try {
+      const [file] = e.target.files;
+      if (file) {
+        if (file.type.substring(0, 6) !== 'image/' || file.type === 'image/webp') {
+          setErrorMessage();
+          setIsUploading(false);
+          openToastNotification();
+          return;
+        }
+        const reader = new FileReader();
+        const { current } = uploadedImage;
+        current.file = file;
+        reader.onload = async () => {
           Jimp.read(reader.result).then(async (image) => {
             const img = await image
               .cover(250, 250)
@@ -51,14 +51,16 @@ const ImageUploader = (props) => {
             setImageUploadData(img);
             current.src = img;
           });
-        } catch (err) {
-          console.log(err);
-        } finally {
-          setIsUploading(false);
-        }
-      };
-      reader.readAsDataURL(file);
-    } else {
+        };
+        reader.readAsDataURL(file);
+      } else {
+        setIsUploading(false);
+      }
+    } catch (err) {
+      setErrorMessage();
+      openToastNotification();
+      console.log(err);
+    } finally {
       setIsUploading(false);
     }
   };

@@ -123,7 +123,7 @@ export const NOTIFICATIONS = {
   SNACK_DELETE_SUCCESS: { type: 'success', message: 'Snack successfully deleted.' },
   INCORRECT_FILE_TYPE: {
     type: 'error',
-    message: 'Please upload an appropriate image file format.'
+    message: 'Please upload an appropriate image file format: JPEG, PNG, GIF.'
   }
 };
 
