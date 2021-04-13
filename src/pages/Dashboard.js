@@ -161,7 +161,7 @@ const Dashboard = () => {
         <div className={dashStyles.tile__container}>
           <div className={`${dashStyles.tile} ${dashStyles.tile__left}`}>
             <h5 className={dashStyles.out__tile}>{outOfStockSnacks.length} </h5>
-            <p>{`Out of Stock Snack${fullyStaleSnacks.length === 1 ? '' : 's'}`}</p>
+            <p>{`Out of Stock Snack${outOfStockSnacks.length === 1 ? '' : 's'}`}</p>
           </div>
           <div className={`${dashStyles.tile} ${dashStyles.tile__mid}`}>
             <h5 className={dashStyles.stale__tile}>
@@ -173,7 +173,7 @@ const Dashboard = () => {
             <h5 className={dashStyles.low__tile}>
               { lowStockSnacks.length }
             </h5>
-            <p>{`Low Snack${lowStockSnacks.length === 1 ? '' : 's'}`}</p>
+            <p>{`Low Stock Snack${lowStockSnacks.length === 1 ? '' : 's'}`}</p>
           </div>
         </div>
       </div>
