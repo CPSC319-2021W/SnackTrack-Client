@@ -16,23 +16,21 @@ import { ReactComponent as Fruits } from '../../assets/icons/fruits.svg';
 import { ReactComponent as Other } from '../../assets/icons/other.svg';
 
 const FilterButton = ({ category, lastChild, onToggle }) => {
-  const { name } = category;
+  const { name, selected } = category;
   const [hover, setHover] = useState(false);
-  const [isActive, setIsActive] = useState(false);
 
   const renderLabel = () => {
     return (
       <p className={classNames({
         [styles.unselectable]: true,
         [styles.categoryText]: true,
-        [styles.selectedText]: isActive || (isMobile ? false : hover) })}>
+        [styles.selectedText]: selected || (isMobile ? false : hover) })}>
         { name }
       </p>
     );
   };
 
   const handleToggle = () => {
-    setIsActive(!isActive);
     onToggle();
   };
 
@@ -41,7 +39,7 @@ const FilterButton = ({ category, lastChild, onToggle }) => {
       classNames({
         [styles.filter_hover]: hover,
         [styles.icon_button]: true,
-        'active': isActive
+        'active': selected
       })
     );
   };
