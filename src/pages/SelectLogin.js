@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 
-import { NOTIFICATIONS } from '../constants';
+import { DEFAULT_SEARCH_THRESHOLD, NOTIFICATIONS } from '../constants';
 import { ReactComponent as SnackTrackLogo } from '../assets/logos/snacktrack.svg';
 import UserCardSkeleton from '../components/UserCard/UserCardSkeleton';
 import UserLoginList from '../components/UserLoginList';
@@ -17,8 +17,13 @@ const SelectLogin = () => {
   const [usersToDisplay, setUsersToDisplay] = useState(users);
   const { usersSearchValue } = useSelector((state) => state.searchbarReducer);
 
+  users.forEach(user => {
+    user.full_name = `${user.first_name} ${user.last_name}`;
+  });
+
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'email_address']
+    keys: ['full_name', 'email_address'],
+    threshold: DEFAULT_SEARCH_THRESHOLD
   };
 
   const renderList = () => {

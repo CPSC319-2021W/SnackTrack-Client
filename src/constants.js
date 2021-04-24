@@ -26,6 +26,8 @@ export const DEFAULT_CATEGORIES = {
   OTHER: 'Other'
 };
 
+export const DEFAULT_SEARCH_THRESHOLD = 0.25;
+
 export const CATEGORIES_LIST = [
   {
     id: 1,

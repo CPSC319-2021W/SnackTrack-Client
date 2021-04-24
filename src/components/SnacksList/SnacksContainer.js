@@ -1,3 +1,4 @@
+import { DEFAULT_SEARCH_THRESHOLD, TRANSACTION_TYPES } from '../../constants';
 import { React, useEffect, useState } from 'react';
 import { selectOneSnack, setQuantity } from '../../redux/features/snacks/snacksSlice';
 import { setBalance, setSessionBalance } from '../../redux/features/users/usersSlice';
@@ -6,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import CategoryFilter from './CategoryFilter';
 import OrderSnackDialog from '../OrderSnackDialog';
 import SnackGrid from './SnackGrid';
-import { TRANSACTION_TYPES } from '../../constants';
 import { handleSearch } from '../../helpers/SearchHelpers';
 import { isAuthenticated } from '../../helpers/AuthHelper';
 import { makeOrder } from '../../services/TransactionsService';
@@ -27,7 +27,8 @@ const SnacksContainer = (props) => {
   const { snackSearchValue } = useSelector((state) => state.searchbarReducer);
 
   const searchOptions = {
-    keys: ['snack_name']
+    keys: ['snack_name'],
+    threshold: DEFAULT_SEARCH_THRESHOLD
   };
 
   const updateSnackQuantity = (snackId, newQuantity) => {

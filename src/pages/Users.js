@@ -1,3 +1,4 @@
+import { DEFAULT_SEARCH_THRESHOLD, NOTIFICATIONS } from '../constants';
 import { React, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CircularProgress } from '@material-ui/core';
@@ -6,7 +7,6 @@ import {
   setApiResponse,
   setToastNotificationOpen
 } from '../redux/features/notifications/notificationsSlice';
-import { NOTIFICATIONS } from '../constants';
 import ToastNotification from '../components/ToastNotification';
 import UserSearchBar from '../components/UserSearchBar';
 import UsersContainerAdmin from '../components/UsersContainerAdmin';
@@ -26,7 +26,8 @@ const Users = () => {
   );
 
   const searchOptions = {
-    keys: ['first_name', 'last_name', 'email_address']
+    keys: ['full_name', 'email_address'],
+    threshold: DEFAULT_SEARCH_THRESHOLD
   };
 
   const openToastNotification = (bool) => dispatch(setToastNotificationOpen(bool));
@@ -45,6 +46,10 @@ const Users = () => {
   useEffect(async () => {
     try {
       const { users } = await getUsersAdmin();
+      users.forEach(user => {
+        user.full_name = `${user.first_name} ${user.last_name}`;
+      });
+      users.sort(compareUsers);
       setUsers(users);
       setIsLoaded(users.length > 0);
     } catch (err) {
@@ -56,6 +61,24 @@ const Users = () => {
   useEffect(() => {
     handleSearch(users, usersSearchValue, setUsersToDisplay, searchOptions);
   }, [isLoaded, usersSearchValue]);
+
+  const compareUsers = (a, b) => {
+    return compareName(a,b) || compareAdmin(a,b);
+  };
+
+  const compareName = (a, b) => {
+    return a.full_name.localeCompare(b.full_name);
+  };
+
+  const compareAdmin = (a, b) => {
+    if (a.is_admin && !b.is_admin) {
+      return -1;
+    } else if (!a.is_admin && b.is_admin) {
+      return 1;
+    } else {
+      return 0;
+    }
+  };
 
   const renderList = () => {
     if (usersToDisplay.length === 0) {
