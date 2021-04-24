@@ -95,6 +95,10 @@ const SnacksContainer = (props) => {
   };
 
   const compareSnacks = (a, b) => {
+    return compareSnackStock(a, b) || compareSnackNames(a, b);
+  };
+
+  const compareSnackStock = (a, b) => {
     if (a.quantity > 0 && b.quantity <= 0) {
       // A is in stock and B is not
       return -1;
@@ -105,6 +109,10 @@ const SnacksContainer = (props) => {
       // otherwise maintain ordering
       return 0;
     }
+  };
+
+  const compareSnackNames = (a, b) => {
+    return a.snack_name.localeCompare(b.snack_name);
   };
 
   useEffect(() => {
