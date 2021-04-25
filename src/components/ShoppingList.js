@@ -139,6 +139,10 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
     }
   }, [suggestions]);
 
+  const compareSnacks = (a, b) => {
+    return a.snack_name.localeCompare(b.snack_name);
+  };
+
   return (
     <Card className={suggestionStyles.card__base}>
       <div className={suggestionStyles.header}>
@@ -178,7 +182,7 @@ const ShoppingList = ({ snacks, outOfStock, error }) => {
           </Tooltip>
         </div>
         <ShoppingListDropDown
-          data={snacks.filter((item) => !hashSet?.has(hashItem(item)))}
+          data={snacks.filter((item) => !hashSet?.has(hashItem(item))).sort(compareSnacks)}
           onSubmit={handleAddShoppingList}
         />
       </div>

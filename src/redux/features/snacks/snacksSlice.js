@@ -126,7 +126,9 @@ const snacksSlice = createSlice({
       state.popularSnacks = action.payload;
     },
     setSnacks: (state, action) => {
-      state.snacks = action.payload;
+      state.snacks = action.payload.sort((a, b) => {
+        return a.snack_name.localeCompare(b.snack_name);
+      });
     }
   },
   extraReducers: {
