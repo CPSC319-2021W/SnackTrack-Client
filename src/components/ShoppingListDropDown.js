@@ -15,6 +15,7 @@ const ShoppingListDropDown = (props) => {
   const { data, onSubmit } = props;
   const [allOptions, setAllOptions] = useState([]);
   const [searchedOptions, setSearchedOptions] = useState([]);
+  const [focused, setFocused] = useState(false);
 
   const searchOptions = {
     keys: ['label'],
@@ -83,19 +84,26 @@ const ShoppingListDropDown = (props) => {
     })
   };
 
+  const handleSubmit = (item) => {
+    onSubmit(item);
+    setFocused(false);
+  };
+
   return (
     <Select
       isSearchable
-      placeholder={'Add Snack'}
+      placeholder={focused ? null : 'Add Snack'}
       noOptionsMessage={() => 'No snacks found.'}
       options={searchedOptions}
       filterOption={(options) => options}
       styles={customStyles}
       value={null}
+      onBlur={() => setFocused(false)}
+      onFocus={() => setFocused(true)}
       onInputChange={(searchValue) =>
         handleSearch(allOptions, searchValue, setSearchedOptions, searchOptions)
       }
-      onChange={onSubmit}
+      onChange={handleSubmit}
     />
   );
 };
