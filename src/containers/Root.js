@@ -1,6 +1,7 @@
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 
+import { COMMON_PAGE_ERROR, ROUTES } from '../constants';
 import AdminRoute from '../routes/AdminRoute';
 import AuthLogin from '../pages/AuthLogin';
 import CommonRoute from '../routes/CommonRoute';
@@ -12,7 +13,6 @@ import Inventory from '../pages/Inventory';
 import LuxonUtils from '@date-io/luxon';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import PrivateRoute from '../routes/PrivateRoute';
-import { ROUTES } from '../constants';
 import React from 'react';
 import SelectLogin from '../pages/SelectLogin';
 import Snacks from '../pages/Snacks';
@@ -60,7 +60,11 @@ const Root = () => {
             <Route path={ROUTES.LOGIN} component={AuthLogin} />
             <Route
               path={ROUTES.COMMON}
-              component={() => (isAuthenticated() ? <Fallback /> : <SelectLogin />)}
+              component={() => (
+                isAuthenticated()
+                  ? <Fallback message={COMMON_PAGE_ERROR} />
+                  : <SelectLogin />
+              )}
             />
             <CommonRoute
               exact
