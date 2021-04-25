@@ -7,6 +7,7 @@ import {
 } from '../styles/Colors.module.css';
 import { React, useEffect, useState } from 'react';
 
+import { DEFAULT_SEARCH_THRESHOLD } from '../constants';
 import Select from 'react-select';
 import { handleSearch } from '../helpers/SearchHelpers';
 
@@ -16,7 +17,8 @@ const AddBatchSelect = (props) => {
   const [searchedOptions, setSearchedOptions] = useState([]);
 
   const searchOptions = {
-    keys: ['label']
+    keys: ['label'],
+    threshold: DEFAULT_SEARCH_THRESHOLD
   };
 
   useEffect(() => {
