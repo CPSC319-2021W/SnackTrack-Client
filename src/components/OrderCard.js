@@ -19,7 +19,7 @@ const OrderCard = (props) => {
   } = order;
 
   const renderDate = () => {
-    return dt.fromISO(transaction_dtm).toLocaleString(dt.DATE_MED_WITH_WEEKDAY);
+    return dt.fromISO(transaction_dtm).toLocaleString(dt.DATETIME_MED);
   };
 
   const isWithinCancelTime = (transactionDTM) => {

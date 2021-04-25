@@ -15,7 +15,7 @@ const PaymentCard = (props) => {
   } = payment;
 
   const renderDate = () => {
-    return dt.fromISO(payment_dtm).toLocaleString(dt.DATE_MED_WITH_WEEKDAY);
+    return dt.fromISO(payment_dtm).toLocaleString(dt.DATETIME_MED);
   };
 
   const renderAmount = () => {

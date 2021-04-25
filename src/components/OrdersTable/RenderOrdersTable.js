@@ -77,6 +77,15 @@ const RenderOrdersTable = (props) => {
     return [...Array(rowsToFill).keys()];
   };
 
+  const DATETIME_MED = {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: 'numeric'
+  };
+
+  const ONE_YEAR = 365 * 24 * 60 * 60 * 1000;
+
   const columns = [
     {
       id: 'checkbox',
@@ -93,7 +102,8 @@ const RenderOrdersTable = (props) => {
       id: 'transaction_dtm',
       label: 'Order Date',
       format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+        const format = (new Date - new Date(timestamp)) > ONE_YEAR ? dt.DATE_MED : DATETIME_MED;
+        return dt.fromISO(timestamp).toLocaleString(format);
       }
     },
     {

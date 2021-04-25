@@ -177,7 +177,7 @@ const PendingOrdersDialog = (props) => {
       id: 'transaction_dtm',
       label: 'Order Date',
       format: (timestamp) => {
-        return dt.fromISO(timestamp).toLocaleString(dt.DATE_SHORT);
+        return dt.fromISO(timestamp).toLocaleString(dt.DATETIME_SHORT);
       }
     },
     {
