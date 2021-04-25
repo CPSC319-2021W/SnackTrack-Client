@@ -66,6 +66,9 @@ export const CATEGORIES_LIST = [
 
 export const GENERIC_ERROR = 'Oops. Well this is embarrassing.';
 
+export const COMMON_PAGE_ERROR = 
+  'Looks like you tried accessing the common page without signing out of your account first.';
+
 export const INFO_LABELS = {
   REORDER_POINT:
     'Snack is labelled Low Stock if its inventory level falls below this point',
