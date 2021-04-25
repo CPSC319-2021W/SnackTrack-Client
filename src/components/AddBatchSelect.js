@@ -15,6 +15,7 @@ const AddBatchSelect = (props) => {
   const { data, selectedBatch, handleSelectBatch } = props;
   const [allOptions, setAllOptions] = useState([]);
   const [searchedOptions, setSearchedOptions] = useState([]);
+  const [focused, setFocused] = useState(false);
 
   const searchOptions = {
     keys: ['label'],
@@ -88,7 +89,7 @@ const AddBatchSelect = (props) => {
     <div>
       <Select
         isSearchable
-        placeholder={'Add Snack Batch'}
+        placeholder={focused ? null : 'Add Snack Batch'}
         noOptionsMessage={() => 'No snacks found.'}
         options={searchedOptions}
         filterOption={(options) => options}
@@ -98,6 +99,8 @@ const AddBatchSelect = (props) => {
             ? { value: selectedBatch.snack_id, label: selectedBatch.snack_name }
             : null
         }
+        onBlur={() => setFocused(false)}
+        onFocus={() => setFocused(true)}
         onInputChange={(searchValue) =>
           handleSearch(allOptions, searchValue, setSearchedOptions, searchOptions)
         }
