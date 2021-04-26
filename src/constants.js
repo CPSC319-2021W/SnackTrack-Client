@@ -164,3 +164,22 @@ export const TOP_SNACK_REQUEST = {
 };
 
 export const TOP_SNACK_LENGTH = 13;
+
+export const DEFAULT_TOP_SNACK_RANGE = [
+  {
+    id: 1,
+    name: 'All Time'
+  }, 
+  {
+    id: 2,
+    name: 'Past Week'
+  }, 
+  {
+    id: 3,
+    name: 'Past Month'
+  }, 
+  {
+    id: 4,
+    name: 'Past Year'
+  }
+];
