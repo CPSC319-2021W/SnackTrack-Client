@@ -61,8 +61,10 @@ const ManageBatchDialog = (props) => {
     } else if (input === '') {
       setErrors((prevState) => ({ ...prevState, quantity: null }));
     } else {
-      if (Number(input) <= 0 || !Number.isInteger(Number(input))) {
-        setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.NAN }));
+      if (!Number.isInteger(Number(input))) {
+        setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.NAI }));
+      } else if (Number(input) <= 0) {
+        setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.UNDER_ONE }));
       } else if (Number(input) > 999999) {
         setErrors((prevState) => ({ ...prevState, quantity: FIELD_ERROR_MESSAGES.OVER_SIX }));
       } else {

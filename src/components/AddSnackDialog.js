@@ -133,15 +133,17 @@ const AddSnackDialog = (props) => {
         .required(FIELD_ERROR_MESSAGES.EMPTY)
         .matches(/^\d*(\.\d{1,2})?$/, FIELD_ERROR_MESSAGES.PRICE),
 
-      quantity: Yup.string()
-        .min(0, 'Must be at least 0')
-        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
-        .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN),
+      quantity: Yup.number()
+        .typeError(FIELD_ERROR_MESSAGES.NAN)
+        .integer(FIELD_ERROR_MESSAGES.NAI)
+        .min(1, FIELD_ERROR_MESSAGES.UNDER_ONE)
+        .max(999999, FIELD_ERROR_MESSAGES.OVER_SIX),
 
-      reorder: Yup.string()
-        .min(0, 'Must be at least 0')
-        .max(6, FIELD_ERROR_MESSAGES.OVER_SIX)
-        .matches(/^[0-9]*$/, FIELD_ERROR_MESSAGES.NAN)
+      reorder: Yup.number()
+        .typeError(FIELD_ERROR_MESSAGES.NAN)
+        .integer(FIELD_ERROR_MESSAGES.NAI)
+        .min(0, FIELD_ERROR_MESSAGES.NAN)
+        .max(999999, FIELD_ERROR_MESSAGES.OVER_SIX)
     })
   });
 

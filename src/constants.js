@@ -140,8 +140,10 @@ export const TRANSACTION_TYPES = {
 
 export const FIELD_ERROR_MESSAGES = {
   PRICE: 'Gotta be a valid price!',
-  NAN: 'Gotta be a valid quantity!',
-  OVER_SIX: 'Gotta be less than 6 digits!',
+  NAN: 'Gotta be a number!',
+  NAI: 'Gotta be an integer!',
+  UNDER_ONE: 'Gotta be more!',
+  OVER_SIX: 'Gotta be less!',
   EMPTY: "Can't be blank!",
   DATE_FORMAT: 'Gotta be a valid date!',
   DATE_RANGE: "Can't be before today!"
