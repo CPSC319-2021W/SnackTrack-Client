@@ -19,15 +19,6 @@ const TopSnackSelect = (props) => {
   const { rangeValue, handleSelectRange } = props;
   const [focused, setFocused] = useState(false);
 
-  // useEffect(() => {
-  //   const options = DEFAULT_TOP_SNACK_RANGE.map((range) => ({
-  //     value: range.id,
-  //     label: range.name
-  //   }));
-  //   setAllOptions(options);
-  //   setSearchedOptions(options);
-  // }, [range]);
-
   const customStyles = {
     container: (base) => ({
       ...base,
