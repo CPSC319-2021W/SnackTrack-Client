@@ -30,10 +30,10 @@ const TopSnacksReport = () => {
           startDate = startDate.minus({ days: 7 }).toISO();
           break;
         case 3:
-          startDate = startDate.minus({ months: 1 }).toISO();
+          startDate = startDate.minus({ days: 30 }).toISO();
           break;
         case 4:
-          startDate = startDate.minus({ years: 1 }).toISO();
+          startDate = startDate.minus({ days: 180 }).toISO();
           break;
         } 
         const popularSnackResponse = await getPopularSnacks(

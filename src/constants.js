@@ -172,14 +172,14 @@ export const DEFAULT_TOP_SNACK_RANGE = [
   }, 
   {
     id: 2,
-    name: 'Past Week'
+    name: 'Past 7 Days'
   }, 
   {
     id: 3,
-    name: 'Past Month'
+    name: 'Past 30 Days'
   }, 
   {
     id: 4,
-    name: 'Past Year'
+    name: 'Past 180 Days'
   }
 ];
