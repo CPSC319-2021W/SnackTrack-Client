@@ -82,6 +82,7 @@ const TopSnackSelect = (props) => {
   return(
     <Select 
       isSearchable={false}
+      menuPosition={'fixed'}
       placeholder={selectedText}
       options={options}
       styles={customStyles}
