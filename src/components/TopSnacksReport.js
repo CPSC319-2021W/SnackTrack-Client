@@ -61,7 +61,9 @@ const TopSnacksReport = () => {
     <Card className={styles.card__base}>
       <div className={styles.header}>
         <h5 className={styles.title}>Most Popular Snacks (units sold)</h5>
-        <TopSnackSelect rangeValue={range} handleSelectRange={handleRangeSet}/>
+        <div className={styles.select__container}>
+          <TopSnackSelect rangeValue={range} handleSelectRange={handleRangeSet}/>
+        </div>
       </div>
       <div className={styles.container}>
         { popularSnacks
