@@ -15,13 +15,13 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: flex-start;
-  margin: 0 1rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
 }
 
-.header > p {
-  margin: 0 0 0.25rem 0;
+.header > h5 {
+  margin: 0;
 }
 
 .title {

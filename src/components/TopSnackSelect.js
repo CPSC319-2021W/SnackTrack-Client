@@ -5,7 +5,7 @@ import {
   LIGHT_BLUE,
   WHITE
 } from '../styles/Colors.module.css';
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 
 import { DEFAULT_TOP_SNACK_RANGE } from '../constants';
 import Select from 'react-select';
@@ -17,13 +17,19 @@ const options = DEFAULT_TOP_SNACK_RANGE.map((range) => ({
 
 const TopSnackSelect = (props) => {
   const { rangeValue, handleSelectRange } = props;
-  const [focused, setFocused] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+
+  useEffect(() => {
+    if(rangeValue) {
+      const [option] = DEFAULT_TOP_SNACK_RANGE.filter(option => option.id === rangeValue);
+      setSelectedText(option.name);
+    }
+  }, [rangeValue]);
 
   const customStyles = {
     container: (base) => ({
       ...base,
-      width: '170px',
-      marginRight: '1rem'
+      width: '170px'
     }),
     option: (base, state) => ({
       ...base,
@@ -74,18 +80,14 @@ const TopSnackSelect = (props) => {
   };
 
   return(
-    <div>
-      <Select 
-        isSearchable={false}
-        placeholder={focused ? null : 'All Time'}
-        options={options}
-        styles={customStyles}
-        value={rangeValue}
-        onBlur={() => setFocused(false)}
-        onFocus={() => setFocused(true)}
-        onChange={handleSelectRange}
-      />
-    </div>
+    <Select 
+      isSearchable={false}
+      placeholder={selectedText}
+      options={options}
+      styles={customStyles}
+      value={rangeValue}
+      onChange={handleSelectRange}
+    />
   );
 };
 

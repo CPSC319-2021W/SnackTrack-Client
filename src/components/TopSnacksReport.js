@@ -12,9 +12,12 @@ import styles from '../styles/TopSnacksReport.module.css';
 
 const TopSnacksReport = () => {
   const dispatch = useDispatch();
-  const [range, setRange] = useState('');
+  const DEFAULT_RANGE = 1;
+
+  const [range, setRange] = useState(DEFAULT_RANGE);
   const { popularSnacks } = useSelector((state) => state.snacksReducer);
   const today= DateTime.local().toISO();
+
   useEffect(async () => {
     if (range) {
       try {
@@ -42,6 +45,7 @@ const TopSnacksReport = () => {
       }
     }
   },[range]);
+
   const handleRangeSet = (options) => {
     setRange(options.value);
   };
@@ -56,9 +60,8 @@ const TopSnacksReport = () => {
   return (
     <Card className={styles.card__base}>
       <div className={styles.header}>
-        <h5 className={styles.title}>Most Popular Snacks</h5>
-        <p>(by units sold)</p>
-        <TopSnackSelect handleSelectRange={handleRangeSet}/>
+        <h5 className={styles.title}>Most Popular Snacks (units sold)</h5>
+        <TopSnackSelect rangeValue={range} handleSelectRange={handleRangeSet}/>
       </div>
       <div className={styles.container}>
         { popularSnacks
