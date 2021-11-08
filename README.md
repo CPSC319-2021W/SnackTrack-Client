@@ -1,3 +1,20 @@
+
+# SnackTrack Client
+
+## [SnackTrack Server repo](https://github.com/CPSC319-Galvanize/SnackTrack-Server)
+
+## [Production link](https://snacktrack.herokuapp.com/)
+## [Staging link](https://snacktrack-front-stg.herokuapp.com/login) (dev branch)
+
+Note: The project is hosted on Heroku's free tier, so the links sleep after one hour. If you see an 'Application Error', please be patient and refresh the link 3-4 times to wake up the project.
+
+---
+
+### Project Overview
+A fully mobile-responsive web app commissioned by [Galvanize](https://www.wegalvanize.com/) to manage snacks in their Vancouver office. An iPad-friendly app was built to allow Galvanize employees to quickly register their purchase, grab a snack, and worry about the payment later. The app keeps track of snack inventory levels, expiration dates, transactions, and payments. Admin users have elevated permissions to manage inventory and audit user payments.
+
+---
+
 ### :card_index_dividers:&nbsp;&nbsp;Project Architecture
 
 #### Overview
