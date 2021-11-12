@@ -53,7 +53,7 @@ At the end of every sprint (tentatively), we'll do a code freeze and merge the `
 * If you're working on a larger feature, discuss the general approach you're going to take with at least one FE team member before putting in too much work.
 * If you're a reviewer, be thorough, specific, and constructive in your feedback.
 * Don't forget to update your ticket's status in Jira along the way! `In Progress` &rarr; `Code Review` &rarr; `Done`
-* Be diligent about resolving marge conflicts before merging into `dev` to avoid breaking changes.
+* Be diligent about resolving merge conflicts before merging into `dev` to avoid breaking changes.
 * This is a living document – we'll add to it as we go along :seedling:
 
 #### Branches
