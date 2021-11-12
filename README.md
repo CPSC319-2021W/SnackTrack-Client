@@ -4,9 +4,8 @@
 ## [SnackTrack Server repo](https://github.com/CPSC319-2021W/SnackTrack-Server)
 
 ## [Production link](https://snacktrack.herokuapp.com/)
-## [Staging link](https://snacktrack-front-stg.herokuapp.com/login) (dev branch)
 
-Note: The project is hosted on Heroku's free tier, so the links sleep after one hour. If you see an 'Application Error', please be patient and refresh the link 3-4 times to wake up the project.
+Note: The project is hosted on Heroku's free tier, so the links sleep after one hour. If you see an 'Application error', please be patient and refresh the link 3-4 times to wake up the project.
 
 ---
 
