@@ -1,3 +1,19 @@
+
+# SnackTrack Client
+
+## [SnackTrack Server repo](https://github.com/CPSC319-2021W/SnackTrack-Server)
+
+## [Production link](https://snacktrack.herokuapp.com/)
+
+Note: The project is hosted on Heroku's free tier, so the links sleep after one hour. If you see an 'Application error', please be patient and refresh the link 3-4 times to wake up the project.
+
+---
+
+### Project Overview
+A fully mobile-responsive web app commissioned by a Vancouver software company to manage snacks in their office. An iPad-friendly app was built to allow their employees to quickly register their purchase, grab a snack, and worry about the payment later. The app keeps track of snack inventory levels, expiration dates, and transactional data. Payment details are also recorded in the app, though integrated funds transfer is out of scope. Admin users have elevated permissions to manage inventory and audit user payments.
+
+---
+
 ### :card_index_dividers:&nbsp;&nbsp;Project Architecture
 
 #### Overview
@@ -37,7 +53,7 @@ At the end of every sprint (tentatively), we'll do a code freeze and merge the `
 * If you're working on a larger feature, discuss the general approach you're going to take with at least one FE team member before putting in too much work.
 * If you're a reviewer, be thorough, specific, and constructive in your feedback.
 * Don't forget to update your ticket's status in Jira along the way! `In Progress` &rarr; `Code Review` &rarr; `Done`
-* Be diligent about resolving marge conflicts before merging into `dev` to avoid breaking changes.
+* Be diligent about resolving merge conflicts before merging into `dev` to avoid breaking changes.
 * This is a living document – we'll add to it as we go along :seedling:
 
 #### Branches
